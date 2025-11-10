@@ -26,26 +26,34 @@ enum layers {
 #define U_CPY LCMD(KC_C)  // Copy
 #define U_PST LCMD(KC_V)  // Paste
 
-// Mouse movement aliases
-#define MS_LEFT KC_MS_LEFT
-#define MS_DOWN KC_MS_DOWN
-#define MS_UP   KC_MS_UP
-#define MS_RGHT KC_MS_RIGHT
+// Mouse key placeholders (mouse keys not used)
+#define MS_LEFT KC_NO
+#define MS_DOWN KC_NO
+#define MS_UP   KC_NO
+#define MS_RGHT KC_NO
 
-// Mouse wheel aliases
-#define MS_WHLL KC_MS_WH_LEFT
-#define MS_WHLD KC_MS_WH_DOWN
-#define MS_WHLU KC_MS_WH_UP
-#define MS_WHLR KC_MS_WH_RIGHT
+// Mouse wheel placeholders
+#define MS_WHLL KC_NO
+#define MS_WHLD KC_NO
+#define MS_WHLU KC_NO
+#define MS_WHLR KC_NO
 
-// Mouse button aliases
-#define MS_BTN1 KC_MS_BTN1
-#define MS_BTN2 KC_MS_BTN2
-#define MS_BTN3 KC_MS_BTN3
+// Mouse button placeholders
+#define MS_BTN1 KC_NO
+#define MS_BTN2 KC_NO
+#define MS_BTN3 KC_NO
 
-// RGB aliases
-#define RM_TOGG RGB_TOG
-#define RM_NEXT RGB_MOD
-#define RM_HUEU RGB_HUI
-#define RM_SATU RGB_SAI
-#define RM_VALU RGB_VAI
+// RGB aliases (conditional on RGB support)
+#if defined(RGBLIGHT_ENABLE) || defined(RGB_MATRIX_ENABLE)
+    #define RM_TOGG RGB_TOG
+    #define RM_NEXT RGB_MOD
+    #define RM_HUEU RGB_HUI
+    #define RM_SATU RGB_SAI
+    #define RM_VALU RGB_VAI
+#else
+    #define RM_TOGG KC_NO
+    #define RM_NEXT KC_NO
+    #define RM_HUEU KC_NO
+    #define RM_SATU KC_NO
+    #define RM_VALU KC_NO
+#endif

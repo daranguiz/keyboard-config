@@ -18,7 +18,7 @@ MCU = atmega32u4
 BOOTLOADER = atmel-dfu
 
 # Keyboard-specific source files
-# NOTE: mods.c removed - using userspace version from users/dario/dario.c
+SRC += mods.c
 # TODO: Re-enable caps_word after build is working
 # SRC += ./features/caps_word.c
 
