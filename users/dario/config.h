@@ -9,6 +9,9 @@
 #define TAPPING_TERM 200
 #define TAPPING_TERM_PER_KEY
 
+// Custom macro for home row mod tapping term (TAPPING_TERM + 100)
+#define TAPPING_TERM_HRM 300
+
 // Chordal hold: opposite hands rule for tap-hold keys
 // Settles tap-hold as tap when same-hand key is pressed
 #define CHORDAL_HOLD

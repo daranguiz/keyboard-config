@@ -12,5 +12,3 @@ COMBO_ENABLE = no  # TODO: Re-enable after fixing introspection errors
 # Keyboard-specific source files
 # NOTE: mods.c removed - using userspace version from users/dario/dario.c
 SRC += ./oled.c
-# TODO: Re-enable caps_word after build is working
-# SRC += ./features/caps_word.c 
