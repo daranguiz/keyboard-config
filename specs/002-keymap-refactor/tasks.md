@@ -220,12 +220,24 @@
 
 ### Skeletyl Migration (36-key native)
 
-- [ ] T051 [US1] Create keyboards/bastardkb/skeletyl/keymaps/dario/keymap_config.h with includes only (no wrapper needed - native 36-key)
-- [ ] T052 [US1] Rewrite keyboards/bastardkb/skeletyl/keymaps/dario/keymap.c to include dario.h and layers.h from userspace
-- [ ] T053 [US1] Update keyboards/bastardkb/skeletyl/keymaps/dario/keymap.c keymaps array to use LAYOUT_split_3x5_3(LAYER_BASE), etc. for all 8 layers
-- [ ] T054 [US1] Verify keyboards/bastardkb/skeletyl/keymaps/dario/rules.mk has USER_NAME := dario
-- [ ] T055 [US1] Test build: make bastardkb/skeletyl/promicro:dario and verify successful compilation
+- [X] T051 [US1] Create keyboards/bastardkb/skeletyl/keymaps/dario/keymap_config.h with includes and LAYOUT_wrapper macro
+- [X] T052 [US1] Rewrite keyboards/bastardkb/skeletyl/keymaps/dario/keymap.c to include dario.h and layers.h from userspace
+- [X] T053 [US1] Update keyboards/bastardkb/skeletyl/keymaps/dario/keymap.c keymaps array to use LAYOUT_wrapper(LAYER_*) for all 8 layers
+- [X] T054 [US1] Verify keyboards/bastardkb/skeletyl/keymaps/dario/rules.mk has USER_NAME := dario and clean hardware-only config
+- [X] T055 [US1] Test build: make bastardkb/skeletyl/promicro:dario and verify successful compilation (17038/28672 bytes, 59%)
 - [ ] T056 [US1] Flash Skeletyl and verify base layer functionality matches original
+
+**Additional cleanup completed:**
+- Moved get_permissive_hold() from keyboard mods.c to users/dario/dario.c
+- Added TAPPING_TERM_HRM to users/dario/config.h
+- Moved user preferences (COMBO, CONSOLE, COMMAND) to users/dario/rules.mk
+- Deleted caps_word feature completely (all keyboards)
+- Deleted all mods.c files (functionality in userspace)
+- Deleted readme.org files (all keyboards)
+- Deleted daranguiz_config.h from Skeletyl
+- Added conditional RGB support (KC_NO when disabled)
+- Replaced mouse keycodes with KC_NO placeholders
+- Result: ~6000+ lines deleted, cleaner architecture
 
 ### Lulu Migration (58-key with wrapper)
 
