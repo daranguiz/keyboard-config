@@ -235,6 +235,6 @@ else
 fi
 
 # Draw SVG with layer names
-keymap -c "$CONFIG" parse --layer-names BASE NAV MEDIA NUM SYM FUN -q "$JSON_OUT" | \
+keymap -c "$CONFIG" parse --layer-names BASE NUM SYM NAV MEDIA FUN -q "$JSON_OUT" | \
   keymap -c "$CONFIG" draw - > "$SVG_OUT"
 echo "Wrote SVG: $SVG_OUT"

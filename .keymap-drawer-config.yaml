@@ -8,10 +8,10 @@ parse_config:
   # Specify which layer each named layer corresponds to
   layer_names:
     - BASE
-    - NAV
-    - MEDIA
     - NUM
     - SYM
+    - NAV
+    - MEDIA
     - FUN
 
   # Custom layer names (for keys that reference layers)

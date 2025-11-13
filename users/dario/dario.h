@@ -5,10 +5,10 @@
 // Layer definitions
 enum layers {
     BASE,
-    NAV,
-    MEDIA,
     NUM,
     SYM,
+    NAV,
+    MEDIA,
     FUN
 };
 
