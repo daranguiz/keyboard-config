@@ -200,3 +200,10 @@ qmk_userspace/
 ## GitHub Actions
 
 Firmware builds automatically on push via `.github/workflows/build_binaries.yaml`. Compiled firmware appears in the Releases tab.
+
+## Active Technologies
+- Python 3.11+ (decision: Python over Bash per user direction) + PyYAML 6.0.3 (already installed), pytest (recommended addition for testing) (003-unified-keymap-codegen)
+- File-based (YAML configuration files, generated C/header files for QMK, devicetree/keymap files for ZMK) (003-unified-keymap-codegen)
+
+## Recent Changes
+- 003-unified-keymap-codegen: Added Python 3.11+ (decision: Python over Bash per user direction) + PyYAML 6.0.3 (already installed), pytest (recommended addition for testing)

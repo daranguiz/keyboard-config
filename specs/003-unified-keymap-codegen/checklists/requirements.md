@@ -47,4 +47,6 @@ All validation items pass. The specification is complete and ready for planning 
 
 **2025-11-13 (2nd update)**: Clarified User Story 3 to emphasize that board-specific layout extensions are defined in the unified configuration layer and compiled down during generation. The QMK/ZMK directories must contain ONLY generated code with no user-editable configuration. Updated FR-009, FR-010, Board Configuration entity description, acceptance scenarios, and edge cases to reflect that all user configuration lives at the unified config level.
 
+**2025-11-13 (3rd update)**: Specified repository architecture decision for User Story 4. Selected **monorepo approach** (Option A) with structure: `config/` (unified keymap), `qmk/` (QMK-specific), `zmk/` (ZMK-specific), `scripts/` (codegen), and unified GitHub Actions. Updated assumptions to reflect monorepo structure and migration strategy. Current QMK userspace repo will be renamed/restructured to become the unified monorepo.
+
 No issues found during validation.
