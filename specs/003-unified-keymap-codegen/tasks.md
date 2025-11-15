@@ -197,12 +197,12 @@
 
 **Purpose**: Integrate visual keymap generation into pipeline (FR-023, FR-024, FR-025, FR-026)
 
-- [ ] T081 [P] Research keymap visualization options (keymap-drawer integration vs custom Python generator)
-- [ ] T082 Implement visualization generation in scripts/visualizer.py (SVG or PNG output)
-- [ ] T083 [P] Integrate visualizer into KeymapGenerator.generate_all() (call after keymap generation)
-- [ ] T084 [P] Ensure visualizations are placed in docs/keymaps/ directory (FR-025)
-- [ ] T085 Update build_all.sh to include visualization generation step
-- [ ] T086 Test visualization: run scripts/generate.py and verify docs/keymaps/ contains SVG/PNG diagrams for all boards
+- [X] T081 [P] Research keymap visualization options (keymap-drawer integration vs custom Python generator)
+- [X] T082 Implement visualization generation in scripts/visualizer.py (SVG or PNG output)
+- [X] T083 [P] Integrate visualizer into KeymapGenerator.generate_all() (call after keymap generation)
+- [X] T084 [P] Ensure visualizations are placed in docs/keymaps/ directory (FR-025)
+- [X] T085 Update build_all.sh to include visualization generation step
+- [X] T086 Test visualization: run scripts/generate.py and verify docs/keymaps/ contains SVG/PNG diagrams for all boards
 
 ---
 

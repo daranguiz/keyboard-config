@@ -34,6 +34,7 @@ from qmk_generator import QMKGenerator
 from zmk_generator import ZMKGenerator
 from file_writer import FileSystemWriter
 from validator import ConfigValidator
+from visualizer import KeymapVisualizer
 
 
 class KeymapGenerator:
@@ -193,6 +194,21 @@ class KeymapGenerator:
         if failure_count > 0:
             print(f"❌ Failed: {failure_count} boards")
         print(f"{'='*60}")
+
+        # Generate visualizations for all QMK boards
+        print(f"\n📊 Generating keymap visualizations...")
+        visualizer = KeymapVisualizer(self.repo_root)
+
+        if visualizer.is_available():
+            viz_results = visualizer.generate_all(self.board_inventory.boards)
+            viz_success = sum(1 for path in viz_results.values() if path is not None)
+
+            if viz_success > 0:
+                print(f"✅ Generated {viz_success} visualizations in docs/keymaps/")
+            else:
+                print(f"⚠️  No visualizations generated")
+        else:
+            print(f"⚠️  keymap-drawer or qmk CLI not available, skipping visualization")
 
         return 0 if failure_count == 0 else 1
 

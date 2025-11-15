@@ -73,35 +73,14 @@ build_keyboard "boardsource/lulu/rp2040" "dario" "Lulu"
 build_keyboard "lily58/rev1" "dario" "Lily58"
 
 echo ""
-echo "------------------------------------------------"
-echo "Phase 2: Generating keymap visualizations"
-echo "------------------------------------------------"
-echo ""
-
-# Generate visualizations for successfully built keyboards
-VIZ_SUCCESS=0
-VIZ_FAIL=0
-
-for keyboard in "${KEYBOARDS[@]}"; do
-    keyboard_name=$(basename "$keyboard")
-    echo -e "${BLUE}Generating visualization for ${keyboard_name}...${NC}"
-
-    if bash tools/gen-keymap-visual.sh "${keyboard}" dario 2>&1 | grep -E "Wrote SVG|Generated JSON"; then
-        echo -e "${GREEN}✓ ${keyboard_name} visualization generated${NC}"
-        VIZ_SUCCESS=$((VIZ_SUCCESS + 1))
-    else
-        echo -e "${YELLOW}✗ ${keyboard_name} visualization failed${NC}"
-        VIZ_FAIL=$((VIZ_FAIL + 1))
-    fi
-    echo ""
-done
+# Note: Keymap visualizations are now generated automatically by scripts/generate.py
+# during Phase 0 (no separate phase needed)
 
 # Summary
 echo "================================================"
 echo "Build Summary"
 echo "================================================"
 echo -e "Firmware builds: ${GREEN}${SUCCESS_COUNT} successful${NC}, ${YELLOW}${FAIL_COUNT} failed${NC}"
-echo -e "Visualizations:  ${GREEN}${VIZ_SUCCESS} successful${NC}, ${YELLOW}${VIZ_FAIL} failed${NC}"
 echo ""
 
 if [ $FAIL_COUNT -eq 0 ]; then
