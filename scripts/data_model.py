@@ -190,9 +190,11 @@ class Board:
     def get_output_directory(self) -> str:
         """Get the output directory for generated keymaps"""
         if self.firmware == "qmk":
-            # QMK userspace expects: keyboards/<keyboard>/keymaps/<keymap_name>
-            return f"keyboards/{self.qmk_keyboard}/keymaps/dario"
+            # QMK userspace root is qmk/ (set via QMK_USERSPACE environment variable)
+            # Within that, QMK requires: keyboards/<keyboard>/keymaps/<keymap_name>
+            return f"qmk/keyboards/{self.qmk_keyboard}/keymaps/dario"
         else:  # zmk
+            # ZMK keymaps go in zmk/keymaps/
             return f"zmk/keymaps/{self.zmk_shield}_dario"
 
 

@@ -63,8 +63,8 @@ class QMKTranslator:
             return unified
 
         # Handle special QMK keycodes that don't use KC_ prefix
-        # RGB controls (these are actual keycodes without KC_ prefix)
-        special_prefixes = ['RGB_']
+        # RGB controls, RGB Matrix controls (these are actual keycodes without KC_ prefix)
+        special_prefixes = ['RGB_', 'RM_']
 
         # Check if it's a function-like macro (contains parentheses)
         if '(' in unified:

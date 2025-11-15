@@ -153,19 +153,19 @@
 
 ### Implementation for User Story 4
 
-- [ ] T059 [P] [US4] Create migration script scripts/migrate_layers.py with parse_layer_macro() function
-- [ ] T060 [P] [US4] Implement translate_to_unified() in scripts/migrate_layers.py (LGUI_T(KC_A) → hrm:LGUI:A, LT(NAV, SPC) → lt:NAV:SPC)
-- [ ] T061 [US4] Parse existing users/dario/layers.h and convert to config/keymap.yaml (migrate all 8 layers)
-- [ ] T062 [US4] Backup existing keyboards/ directory to keyboards.backup/
-- [ ] T063 [P] [US4] Create qmk/config/global/config.h with shared QMK settings (chordal hold, tapping terms)
-- [ ] T064 [P] [US4] Create qmk/config/global/rules.mk with shared QMK features (BOOTMAGIC_ENABLE, MOUSEKEY_ENABLE, LTO_ENABLE)
-- [ ] T065 [P] [US4] Migrate keyboards/bastardkb/skeletyl/keymaps/dario/rules.mk → qmk/config/boards/skeletyl.mk
-- [ ] T066 [P] [US4] Migrate keyboards/boardsource/lulu/keymaps/dario/ OLED/RGB settings → qmk/config/boards/lulu.mk
-- [ ] T067 [P] [US4] Migrate keyboards/lily58/keymaps/dario/ OLED/WPM settings → qmk/config/boards/lily58.mk
-- [ ] T068 [US4] Update build_all.sh to run scripts/generate.py before qmk userspace-compile
-- [ ] T069 [US4] Create .github/workflows/build-all.yml with unified QMK + ZMK build (Python setup, generate, compile, upload artifacts)
-- [ ] T070 [US4] Update CLAUDE.md with new architecture (config/, qmk/, zmk/, scripts/ structure, generator workflow)
-- [ ] T071 [US4] Test migration: run scripts/generate.py and verify all QMK boards compile successfully
+- [X] T059 [P] [US4] Create migration script scripts/migrate_layers.py with parse_layer_macro() function
+- [X] T060 [P] [US4] Implement translate_to_unified() in scripts/migrate_layers.py (LGUI_T(KC_A) → hrm:LGUI:A, LT(NAV, SPC) → lt:NAV:SPC)
+- [X] T061 [US4] Parse existing users/dario/layers.h and convert to config/keymap.yaml (migrate all 8 layers)
+- [X] T062 [US4] Backup existing keyboards/ directory to keyboards.backup/
+- [X] T063 [P] [US4] Create qmk/config/global/config.h with shared QMK settings (chordal hold, tapping terms)
+- [X] T064 [P] [US4] Create qmk/config/global/rules.mk with shared QMK features (BOOTMAGIC_ENABLE, MOUSEKEY_ENABLE, LTO_ENABLE)
+- [X] T065 [P] [US4] Migrate keyboards/bastardkb/skeletyl/keymaps/dario/rules.mk → qmk/config/boards/skeletyl.mk
+- [X] T066 [P] [US4] Migrate keyboards/boardsource/lulu/keymaps/dario/ OLED/RGB settings → qmk/config/boards/lulu.mk
+- [X] T067 [P] [US4] Migrate keyboards/lily58/keymaps/dario/ OLED/WPM settings → qmk/config/boards/lily58.mk
+- [X] T068 [US4] Update build_all.sh to run scripts/generate.py before qmk userspace-compile
+- [X] T069 [US4] Create .github/workflows/build-all.yml with unified QMK + ZMK build (Python setup, generate, compile, upload artifacts)
+- [X] T070 [US4] Update CLAUDE.md with new architecture (config/, qmk/, zmk/, scripts/ structure, generator workflow)
+- [X] T071 [US4] Test migration: run scripts/generate.py and verify all QMK boards compile successfully
 - [ ] T072 [US4] Test CI/CD: push to branch and verify GitHub Actions builds all firmware binaries
 
 **Checkpoint**: Repository is fully migrated to monorepo structure, all builds work locally and in CI/CD

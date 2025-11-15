@@ -5,21 +5,21 @@
 ## BASE Layer
 
 ```
- 0: &kp TAB
+ 0: &none
  1: &kp Q
  2: &kp W
  3: &kp F
  4: &kp P
  5: &kp G
 
- 6: &kp ESC
+ 6: &none
  7: &hrm LGUI A
  8: &hrm LALT R
  9: &hrm LCTL S
 10: &hrm LSFT T
 11: &kp D
 
-12: &kp LSFT
+12: &none
 13: &kp Z
 14: &lt 5 X
 15: &kp C
@@ -31,21 +31,21 @@
 20: &kp U
 21: &kp Y
 22: &kp QUOT
-23: &kp BSLS
+23: &none
 
 24: &kp H
 25: &hrm LSFT N
 26: &hrm LCTL E
 27: &hrm LALT I
 28: &hrm LGUI O
-29: &kp MINS
+29: &none
 
 30: &kp K
 31: &kp M
 32: &kp COMM
-33: &kp ALGR_T(KC_DOT)
+33: &mt RALT DOT
 34: &kp SLSH
-35: &kp RSFT
+35: &none
 
 36: &kp ENT
 37: &lt 1 SPC
@@ -128,15 +128,15 @@
 12: &none
 13: &none
 14: &kp ALGR
-15: &bt BT_prev
-16: &bt BT_next
-17: &bt BT_clear
+15: &none
+16: &none
+17: &none
 
-18: &none
-19: &none
-20: &none
-21: &none
-22: &none
+18: &kp RM_TOGG
+19: &kp RM_NEXT
+20: &kp RM_HUEU
+21: &kp RM_SATU
+22: &kp RM_VALU
 23: &none
 
 24: &none
@@ -295,7 +295,7 @@
 19: &none
 20: &none
 21: &none
-22: &bootloader
+22: &none
 23: &none
 
 24: &none

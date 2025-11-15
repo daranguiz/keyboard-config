@@ -13,12 +13,12 @@
 
         base_layer {
             bindings = <
-                &kp TAB              &kp Q                &kp W                &kp F                &kp P                &kp G
-                &kp ESC              &hrm LGUI A          &hrm LALT R          &hrm LCTL S          &hrm LSFT T          &kp D
-                &kp LSFT             &kp Z                &lt 5 X              &kp C                &kp V                &kp B
-                &kp J                &kp L                &kp U                &kp Y                &kp QUOT             &kp BSLS
-                &kp H                &hrm LSFT N          &hrm LCTL E          &hrm LALT I          &hrm LGUI O          &kp MINS
-                &kp K                &kp M                &kp COMM             &kp ALGR_T(KC_DOT)   &kp SLSH             &kp RSFT
+                &none                &kp Q                &kp W                &kp F                &kp P                &kp G
+                &none                &hrm LGUI A          &hrm LALT R          &hrm LCTL S          &hrm LSFT T          &kp D
+                &none                &kp Z                &lt 5 X              &kp C                &kp V                &kp B
+                &kp J                &kp L                &kp U                &kp Y                &kp QUOT             &none
+                &kp H                &hrm LSFT N          &hrm LCTL E          &hrm LALT I          &hrm LGUI O          &none
+                &kp K                &kp M                &kp COMM             &mt RALT DOT         &kp SLSH             &none
                 &kp ENT              &lt 1 SPC            &lt 2 TAB            &lt 4 DEL            &kp LSFT             &lt 3 BSPC
             >;
         };
@@ -39,8 +39,8 @@
             bindings = <
                 &none                &none                &none                &none                &none                &none
                 &none                &kp LGUI             &kp LALT             &kp LCTL             &kp LSFT             &none
-                &none                &none                &kp ALGR             &bt BT_prev          &bt BT_next          &bt BT_clear
-                &none                &none                &none                &none                &none                &none
+                &none                &none                &kp ALGR             &none                &none                &none
+                &kp RM_TOGG          &kp RM_NEXT          &kp RM_HUEU          &kp RM_SATU          &kp RM_VALU          &none
                 &none                &kp MPRV             &kp VOLD             &kp VOLU             &kp MNXT             &none
                 &none                &none                &none                &none                &none                &none
                 &none                &none                &none                &kp MSTP             &kp MPLY             &kp MUTE
@@ -76,7 +76,7 @@
                 &none                &kp F12              &kp F7               &kp F8               &kp F9               &kp PSCR
                 &none                &kp F11              &kp F4               &kp F5               &kp F6               &kp SCRL
                 &none                &kp F10              &kp F1               &kp F2               &kp F3               &kp PAUS
-                &none                &none                &none                &none                &bootloader          &none
+                &none                &none                &none                &none                &none                &none
                 &none                &kp LSFT             &kp LCTL             &kp LALT             &kp LGUI             &none
                 &none                &none                &none                &kp ALGR             &none                &none
                 &kp APP              &kp SPC              &kp TAB              &none                &none                &none

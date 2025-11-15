@@ -243,16 +243,17 @@ keyboard-config/            # Root (renamed from qmk_userspace)
 │   ├── boards.yaml         # Board inventory with firmware/extension mapping
 │   └── aliases.yaml        # Firmware-agnostic behavior aliases (hrm, lt, etc.)
 │
-├── qmk/                    # ✨ REORGANIZED: QMK-specific files
-│   ├── keymaps/            # GENERATED: QMK keymaps (auto-generated, do not edit)
-│   │   ├── bastardkb_skeletyl_promicro_dario/
-│   │   │   ├── keymap.c    # Generated from config/keymap.yaml
-│   │   │   ├── config.h    # Generated settings
-│   │   │   └── README.md   # Generated with ASCII art visualization
-│   │   ├── boardsource_lulu_rp2040_dario/
-│   │   └── lily58_rev1_dario/
-│   │
-│   └── config/             # MANUAL: QMK-specific settings (user-editable)
+├── keyboards/              # QMK keymaps (GENERATED - DO NOT EDIT)
+│   │                       # NOTE: Must be in keyboards/ for QMK userspace to find them
+│   ├── bastardkb/skeletyl/promicro/keymaps/dario/
+│   │   ├── keymap.c        # Generated from config/keymap.yaml
+│   │   ├── config.h        # Generated settings
+│   │   ├── rules.mk        # Generated rules
+│   │   └── README.md       # Generated with ASCII art visualization
+│   ├── boardsource/lulu/rp2040/keymaps/dario/
+│   └── lily58/rev1/keymaps/dario/
+│
+├── qmk/config/             # QMK-specific settings (user-editable)
 │       ├── global/         # Shared QMK settings
 │       │   ├── config.h    # Global QMK config (chordal hold, tapping terms)
 │       │   └── rules.mk    # Global feature flags

@@ -1,11 +1,11 @@
-# Board-specific features for Boardsource Lulu (RP2040)
-# These settings are specific to the Lulu hardware
+# Board-specific QMK features for Boardsource Lulu (RP2040)
+# This file is manually maintained
 
-# OLED display support
-OLED_ENABLE = yes
+# Lulu-specific features
+MOUSEKEY_ENABLE = yes          # Mouse keys
+OLED_ENABLE = yes              # OLED display
+RGB_MATRIX_ENABLE = yes        # RGB matrix lighting
 
-# RGB Matrix support (per-key RGB LEDs)
-RGB_MATRIX_ENABLE = yes
-
-# Split keyboard support
-SPLIT_KEYBOARD = yes
+# Optional features
+ENCODER_ENABLE = no            # Rotary encoders (if present)
+WPM_ENABLE = no                # Words per minute tracking

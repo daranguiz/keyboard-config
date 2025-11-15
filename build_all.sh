@@ -6,6 +6,12 @@ echo "Building all QMK keyboards"
 echo "================================================"
 echo ""
 
+# Set QMK_USERSPACE to the qmk/ subdirectory
+# This tells QMK to treat qmk/ as the userspace root
+export QMK_USERSPACE="$(cd "$(dirname "${BASH_SOURCE[0]}")/qmk" && pwd)"
+echo "QMK_USERSPACE set to: $QMK_USERSPACE"
+echo ""
+
 # Color codes for output
 GREEN='\033[0;32m'
 BLUE='\033[0;34m'
@@ -39,6 +45,22 @@ build_keyboard() {
         return 1
     fi
 }
+
+# Generate keymaps first
+echo "------------------------------------------------"
+echo "Phase 0: Generating keymaps from unified config"
+echo "------------------------------------------------"
+echo ""
+
+echo -e "${BLUE}Running keymap generator...${NC}"
+if python3 scripts/generate.py; then
+    echo -e "${GREEN}✓ Keymap generation successful${NC}"
+    echo ""
+else
+    echo -e "${YELLOW}✗ Keymap generation failed${NC}"
+    echo "Cannot proceed with builds without generated keymaps"
+    exit 1
+fi
 
 # Build all keyboards
 echo "------------------------------------------------"

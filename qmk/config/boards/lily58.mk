@@ -1,11 +1,11 @@
-# Board-specific features for Lily58 Rev1
-# These settings are specific to the Lily58 hardware
+# Board-specific QMK features for Lily58 Rev1
+# This file is manually maintained
 
-# OLED display support
-OLED_ENABLE = yes
+# Lily58-specific features
+MOUSEKEY_ENABLE = yes          # Mouse keys
+OLED_ENABLE = yes              # OLED display
+WPM_ENABLE = yes               # Words per minute tracking for OLED
 
-# WPM (words per minute) calculation for OLED
-WPM_ENABLE = yes
-
-# Split keyboard support
-SPLIT_KEYBOARD = yes
+# Optional features
+ENCODER_ENABLE = no            # Rotary encoders (if present)
+RGB_MATRIX_ENABLE = no         # RGB lighting (not used on Lily58)

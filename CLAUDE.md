@@ -4,9 +4,23 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## About This Project
 
-This is a QMK External Userspace repository for custom keyboard firmware. It contains keymaps for multiple split ergonomic keyboards using a modular, shared keymap system based on Miryoku principles with Mac-specific clipboard shortcuts.
+This is a QMK External Userspace repository for custom keyboard firmware. It contains keymaps for multiple split ergonomic keyboards using a **unified keymap code generation system** based on Miryoku principles with Mac-specific clipboard shortcuts.
 
 **IMPORTANT**: For governance principles and mandatory project rules, see [.specify/memory/constitution.md](.specify/memory/constitution.md). This file provides operational guidance; the constitution defines the non-negotiable architectural principles that must be followed.
+
+### Unified Keymap System
+
+The repository uses a code generation approach where all keymaps are defined in a single YAML configuration file ([config/keymap.yaml](config/keymap.yaml)) and automatically generated for each keyboard:
+
+- **Single source of truth**: Edit `config/keymap.yaml` to update all keyboards at once
+- **Firmware-agnostic**: Supports both QMK and ZMK from the same config
+- **Board-specific extensions**: Larger boards automatically get appropriate extensions
+- **Generated files**: `keyboards/*/keymaps/dario/` contains auto-generated code (DO NOT EDIT)
+
+**Workflow**:
+1. Edit `config/keymap.yaml` (unified keymap definition)
+2. Run `python3 scripts/generate.py` to generate keymaps
+3. Build with `./build_all.sh` or `qmk userspace-compile`
 
 ## Build Commands
 
@@ -15,8 +29,11 @@ This is a QMK External Userspace repository for custom keyboard firmware. It con
 # From the main qmk_firmware directory (not this repo)
 qmk setup
 
-# Point QMK to this userspace (run from within this repo)
-qmk config user.overlay_dir="$(realpath .)"
+# Point QMK to the qmk/ subdirectory (run from within this repo)
+qmk config user.overlay_dir="$(realpath qmk)"
+
+# Or use environment variable (recommended for build scripts)
+export QMK_USERSPACE="$(realpath qmk)"
 ```
 
 ### Building Firmware
@@ -73,25 +90,24 @@ qmk userspace-remove -kb <keyboard> -km <keymap>
 
 The codebase uses a **single source of truth** approach for keymap definitions to avoid duplication across keyboards:
 
-#### Core Files in `users/dario/`:
-- **`layers.h`**: Central layer definitions as macros (LAYER_BASE, LAYER_NAV, etc.)
-  - Defines the canonical 3x5_3 (36-key) layout used across all boards
-  - Contains 8 layers: BASE (Colemak), NAV, MOUSE, MEDIA, NUM, SYM, FUN, BUTTON
+#### Core Files in `qmk/users/dario/`:
 - **`dario.h`**: Layer enum, shared keycodes, and aliases
   - U_NA, U_NU, U_NP constants for unavailable/unused/non-present keys
   - Mac clipboard shortcuts (U_UND, U_RDO, U_CUT, U_CPY, U_PST)
   - Mouse and RGB control aliases
+  - Layer enums exported for generated keymaps
 - **`dario.c`**: Custom keycode processing (currently minimal)
-- **`rules.mk`**: Shared feature flags for all keyboards
-  - Enables: Bootmagic, Mousekey, NKRO, Split keyboard support, LTO
+- **`config.h`**: Shared QMK settings (now migrated to `qmk/config/global/config.h`)
+- **`rules.mk`**: Shared feature flags (now migrated to `qmk/config/global/rules.mk`)
 
-#### Per-Keyboard Files in `keyboards/*/keymaps/dario/`:
-- **`keymap.c`**: Instantiates the layers using keyboard-specific LAYOUT macros
-  - Skeletyl/Lulu: Use `LAYOUT_split_3x5_3` directly
-  - Lily58: Uses custom `LAYOUT_miryoku` and `LAYOUT_miryoku_with_grv` wrappers to map 36-key layouts to the full Lily58 matrix, includes GAME layer
-- **`config.h`**: Keyboard-specific configuration (tapping terms, features)
-- **`keymap_config.h`**: Layer definitions and clipboard macro choices
-- **`rules.mk`**: Optional keyboard-specific feature overrides
+#### Generated Files in `qmk/keyboards/*/keymaps/dario/` (AUTO-GENERATED - DO NOT EDIT):
+- **`keymap.c`**: Auto-generated from `config/keymap.yaml`
+  - Uses board-appropriate LAYOUT macros (LAYOUT_split_3x5_3, LAYOUT, etc.)
+  - Includes "dario.h" for layer enums and shared constants
+  - Contains complete layer definitions for the specific board size
+- **`config.h`**: Generated keyboard-specific configuration
+- **`rules.mk`**: Generated rules with USER_NAME := dario
+- **`README.md`**: Generated documentation with ASCII art visualizations
 
 ### Key Design Principles
 
@@ -144,58 +160,90 @@ The codebase uses a **single source of truth** approach for keymap definitions t
 **Note**: All changes must comply with the [project constitution](.specify/memory/constitution.md), which defines mandatory principles for upstream modularity, 36-key layout consistency, extension modularity, keyboard inventory transparency, and visual keymap documentation.
 
 ### Adding a New Keyboard
-1. Create keymap directory: `mkdir -p keyboards/<keyboard>/keymaps/dario`
-2. Create `keymap.c` that includes `"keymap_config.h"` (if wrapper needed), `"dario.h"`, and `"layers.h"`
-3. Create `keymap_config.h` with `LAYOUT_wrapper` and `LAYOUT_split_3x5_3` macros if keyboard has >36 keys
-4. Create `rules.mk` with `USER_NAME := dario` and keyboard-specific features
+1. Add board entry to `config/boards.yaml` with keyboard details (firmware, layout_size, features)
+2. If needed, create board-specific config in `qmk/config/boards/<board>.mk` for QMK-specific features
+3. If board has extensions, add them to layers in `config/keymap.yaml` under `extensions:`
+4. Run `python3 scripts/generate.py` to generate keymap files
 5. Add to build targets: `qmk userspace-add -kb <keyboard> -km dario`
-6. **REQUIRED**: Add ASCII art layer visualizations to keymap documentation (Principle V)
+6. Build and test: `qmk compile -kb <keyboard> -km dario`
 
 ### Modifying the Shared Keymap
-- Edit `users/dario/layers.h` to change the 36-key layout
-- **CRITICAL**: Changes automatically apply to ALL keyboards that use the layer macros (Principle II)
-- **REQUIRED**: Update ASCII art visualizations in all affected keymaps (Principle V)
-- Rebuild all keyboards with `qmk userspace-compile` to verify
+- Edit `config/keymap.yaml` to change layer definitions
+- **CRITICAL**: Changes automatically apply to ALL keyboards (Principle II)
+- Run `python3 scripts/generate.py` to regenerate all keymaps
+- **AUTOMATIC**: ASCII art visualizations are automatically regenerated (Principle V)
+- Rebuild all keyboards with `./build_all.sh` or `qmk userspace-compile` to verify
 
 ### Keyboard-Specific Customizations
-- Extra keys (number row, extra thumb keys): Define in keyboard's keymap.c
-- Keyboard-specific features (OLED, encoders, RGB): Add to keyboard's config.h and rules.mk
-- Layout wrappers: Define LAYOUT_* macros in keyboard's config.h (see Lily58 example)
+- Extra keys (number row, extra thumb keys): Add extensions in `config/keymap.yaml` under layer `extensions:`
+- Keyboard-specific features (OLED, encoders, RGB): Add to `qmk/config/boards/<board>.mk`
+- Board-specific layers (like GAME): Define in `config/keymap.yaml` and reference in `config/boards.yaml` under `extra_layers`
 
 ## File Organization
+
+### New Architecture (Post-Migration)
 ```
 qmk_userspace/
-├── users/dario/                      # Shared userspace code
-│   ├── layers.h                      # Single source of truth for 36-key layouts
-│   ├── dario.h                       # Shared constants and layer enums
-│   ├── dario.c                       # Custom keycode handlers
-│   ├── config.h                      # Shared config
-│   └── rules.mk                      # Shared features
-├── keyboards/                        # Per-keyboard keymaps
-│   ├── bastardkb/skeletyl/keymaps/dario/
-│   │   ├── keymap.c                  # Uses LAYOUT_wrapper(LAYER_*)
-│   │   ├── keymap_config.h           # LAYOUT_wrapper macro
-│   │   └── rules.mk                  # USER_NAME := dario
-│   ├── boardsource/lulu/keymaps/dario/
-│   │   ├── keymap.c                  # Uses LAYOUT_wrapper(LAYER_*)
-│   │   ├── keymap_config.h           # 36→58 key wrapper
-│   │   ├── oled.c                    # OLED display implementation
-│   │   └── rules.mk                  # OLED_ENABLE, RGB_MATRIX_ENABLE
-│   └── lily58/keymaps/dario/
-│       ├── keymap.c                  # Uses LAYOUT_wrapper(LAYER_*)
-│       ├── keymap_config.h           # 36→58 key wrapper
-│       ├── oled.c                    # Luna pet animation
-│       ├── oled.h                    # OLED header
-│       └── rules.mk                  # OLED_ENABLE, WPM_ENABLE
-├── scripts/
-│   └── generate_keymap_diagram.sh    # Keymap visualization generator
-├── docs/keymaps/                     # Generated keymap SVGs
-│   └── *.svg                         # Visualization outputs
-├── qmk.json                          # Build targets (managed by qmk CLI)
-├── build_all.sh                      # Build all + generate visualizations
-├── .keymap-drawer-config.yaml        # Keymap visualization config
+├── config/                           # ✨ Unified configuration (user-editable)
+│   ├── keymap.yaml                   # Single source of truth for all keymaps
+│   ├── boards.yaml                   # Board inventory and configuration
+│   └── aliases.yaml                  # Firmware-agnostic behavior aliases
+│
+├── qmk/                              # QMK userspace root (QMK_USERSPACE points here)
+│   ├── config/                       # QMK-specific settings (user-editable)
+│   │   ├── global/
+│   │   │   ├── config.h              # Global QMK settings (chordal hold, tapping)
+│   │   │   └── rules.mk              # Global feature flags
+│   │   └── boards/
+│   │       ├── skeletyl.mk           # Board-specific features
+│   │       ├── lulu.mk               # OLED, RGB settings
+│   │       └── lily58.mk             # OLED, WPM settings
+│   │
+│   ├── keyboards/                    # QMK keymaps (AUTO-GENERATED - DO NOT EDIT)
+│   │   ├── bastardkb/skeletyl/promicro/keymaps/dario/
+│   │   │   ├── keymap.c              # Generated from config/keymap.yaml
+│   │   │   ├── config.h              # Generated config
+│   │   │   ├── rules.mk              # Generated rules
+│   │   │   └── README.md             # Generated documentation
+│   │   ├── boardsource/lulu/rp2040/keymaps/dario/
+│   │   ├── lily58/rev1/keymaps/dario/
+│   │   └── crkbd/rev1/keymaps/dario/
+│   │
+│   └── users/dario/                  # Shared userspace code (for QMK integration)
+│       ├── dario.h                   # Layer enums and shared constants
+│       ├── dario.c                   # Custom keycode processing
+│       ├── config.h                  # Shared settings
+│       └── rules.mk                  # Shared features
+│
+├── zmk/                              # ZMK firmware files
+│   ├── keymaps/                      # ZMK keymaps (AUTO-GENERATED - DO NOT EDIT)
+│   │   └── corne_dario/
+│   │       ├── corne.keymap          # Generated from config/keymap.yaml
+│   │       └── README.md             # Generated documentation
+│   └── config/                       # ZMK-specific settings (user-editable)
+│       └── boards/                   # Board-specific ZMK settings
+│
+├── scripts/                          # Code generation and build tools
+│   ├── generate.py                   # Main generator (Python)
+│   ├── migrate_layers.py             # Migration tool (one-time use)
+│   ├── config_parser.py              # YAML parser
+│   ├── qmk_generator.py              # QMK code generator
+│   ├── qmk_translator.py             # QMK keycode translator
+│   ├── zmk_generator.py              # ZMK code generator
+│   ├── zmk_translator.py             # ZMK keycode translator
+│   ├── layer_compiler.py             # Layer compilation logic
+│   └── data_model.py                 # Data structures
+│
+├── build_all.sh                      # Build all keyboards (sets QMK_USERSPACE, runs generator)
+├── qmk.json                          # Build targets
 └── *.hex, *.uf2                      # Compiled firmware outputs
 ```
+
+**Key Points:**
+- **QMK userspace root is `qmk/`**: Set `QMK_USERSPACE` to this directory
+- **Clear firmware separation**: QMK files in `qmk/`, ZMK files in `zmk/`
+- **Unified config in `config/`**: Firmware-agnostic YAML configuration
+- **Generated vs Manual**: Generated files are clearly marked with AUTO-GENERATED warnings
 
 ## GitHub Actions
 

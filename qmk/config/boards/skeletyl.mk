@@ -1,7 +1,14 @@
-# Board-specific features for Bastard Keyboards Skeletyl
-# These settings are specific to the Skeletyl hardware
+# Board-specific QMK features for Bastard Keyboards Skeletyl
+# This file is manually maintained
 
-# Split keyboard support
-SPLIT_KEYBOARD = yes
+# Basic features (inherited from global, can override here if needed)
+# BOOTMAGIC_ENABLE = yes
+# NKRO_ENABLE = yes
 
-# Minimal configuration - Skeletyl is a basic 36-key split
+# Skeletyl-specific features
+MOUSEKEY_ENABLE = yes       # Mouse keys
+
+# Features not used on Skeletyl
+OLED_ENABLE = no
+RGB_MATRIX_ENABLE = no
+ENCODER_ENABLE = no

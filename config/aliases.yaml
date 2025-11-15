@@ -23,6 +23,13 @@ behaviors:
     params: [action]
     firmware_support: [zmk]  # ZMK only
 
+  ALGR_T:
+    description: "AltGr mod-tap (hold for AltGr, tap for key)"
+    qmk_pattern: "ALGR_T(KC_{key})"
+    zmk_pattern: "&mt RALT {key}"
+    params: [key]
+    firmware_support: [qmk, zmk]
+
 # Keycode mappings for special cases
 keycodes:
   NONE:

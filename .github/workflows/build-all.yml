@@ -1,0 +1,77 @@
+name: Build All Firmwares (QMK + ZMK)
+
+on:
+  push:
+    branches: [ main, 003-unified-keymap-codegen ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate-keymaps:
+    name: 'Generate Keymaps from Unified Config'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Python dependencies
+        run: |
+          pip install pyyaml pytest
+
+      - name: Run keymap generator
+        run: |
+          python3 scripts/generate.py
+
+      - name: Upload generated keymaps
+        uses: actions/upload-artifact@v4
+        with:
+          name: generated-keymaps
+          path: |
+            qmk/keyboards/
+            qmk/users/
+            zmk/keymaps/
+          retention-days: 7
+
+  build-qmk:
+    name: 'Build QMK Firmware'
+    needs: generate-keymaps
+    uses: qmk/.github/.github/workflows/qmk_userspace_build.yml@main
+    with:
+      qmk_repo: qmk/qmk_firmware
+      qmk_ref: master
+      # Set QMK_USERSPACE to the qmk/ subdirectory
+      userspace_path: qmk
+
+  publish-qmk:
+    name: 'Publish QMK Firmware'
+    uses: qmk/.github/.github/workflows/qmk_userspace_publish.yml@main
+    if: always() && !cancelled()
+    needs: build-qmk
+
+  # ZMK build will be added here when ZMK boards are configured
+  # build-zmk:
+  #   name: 'Build ZMK Firmware'
+  #   needs: generate-keymaps
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout ZMK
+  #       uses: actions/checkout@v4
+  #       with:
+  #         repository: zmkfirmware/zmk
+  #         path: zmk-firmware
+  #     - name: Download generated keymaps
+  #       uses: actions/download-artifact@v4
+  #       with:
+  #         name: generated-keymaps
+  #     - name: Build ZMK
+  #       run: |
+  #         # ZMK build commands here
