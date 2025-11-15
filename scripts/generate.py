@@ -5,7 +5,7 @@ Main entry point for unified keymap code generation
 This script generates QMK and ZMK keymaps from unified YAML configuration.
 
 Usage:
-    python3 scripts/generate.py [--board BOARD_ID] [--validate-only]
+    python3 scripts/generate.py [--board BOARD_ID] [--validate] [--verbose]
 
 Examples:
     # Generate for all boards
@@ -15,7 +15,10 @@ Examples:
     python3 scripts/generate.py --board skeletyl
 
     # Validate configuration without generating
-    python3 scripts/generate.py --validate-only
+    python3 scripts/generate.py --validate
+
+    # Enable verbose output
+    python3 scripts/generate.py --verbose
 """
 
 import sys
@@ -35,23 +38,26 @@ from zmk_generator import ZMKGenerator
 from file_writer import FileSystemWriter
 from validator import ConfigValidator
 from visualizer import KeymapVisualizer
+from generate_keyboards_md import generate_keyboards_md
 
 
 class KeymapGenerator:
     """Main generator orchestrator"""
 
-    def __init__(self, repo_root: Path):
+    def __init__(self, repo_root: Path, verbose: bool = False):
         """
         Initialize generator
 
         Args:
             repo_root: Repository root directory
+            verbose: Enable verbose output
         """
         self.repo_root = repo_root
         self.config_dir = repo_root / "config"
+        self.verbose = verbose
 
         # Parse configuration
-        print("📖 Parsing configuration...")
+        self._log("📖 Parsing configuration...")
         self.keymap_config = YAMLConfigParser.parse_keymap(
             self.config_dir / "keymap.yaml"
         )
@@ -65,15 +71,20 @@ class KeymapGenerator:
             self.config_dir / "aliases.yaml"
         )
 
-        print(f"✅ Loaded {len(self.keymap_config.layers)} layers, "
-              f"{len(self.board_inventory.boards)} boards")
+        self._log(f"✅ Loaded {len(self.keymap_config.layers)} layers, "
+                  f"{len(self.board_inventory.boards)} boards")
+
+        if self.verbose:
+            print(f"  Layers: {', '.join(self.keymap_config.layers.keys())}")
+            print(f"  Boards: {', '.join(self.board_inventory.boards.keys())}")
+            print(f"  Aliases: {len(self.aliases)} behavior aliases")
 
         # Validate configuration
-        print("🔍 Validating configuration...")
+        self._log("🔍 Validating configuration...")
         validator = ConfigValidator()
         validator.validate_keymap_config(self.keymap_config.layers)
         validator.validate_board_config(list(self.board_inventory.boards.values()))
-        print("✅ Configuration is valid")
+        self._log("✅ Configuration is valid")
 
         # Initialize translators
         self.qmk_translator = QMKTranslator(self.aliases, self.special_keycodes)
@@ -85,6 +96,15 @@ class KeymapGenerator:
 
         # Initialize compiler
         self.compiler = LayerCompiler(self.qmk_translator, self.zmk_translator)
+
+    def _log(self, message: str):
+        """Print message (always shown)"""
+        print(message)
+
+    def _verbose(self, message: str):
+        """Print message only if verbose mode is enabled"""
+        if self.verbose:
+            print(message)
 
     def generate_for_board(self, board_id: str) -> bool:
         """
@@ -101,7 +121,16 @@ class KeymapGenerator:
             print(f"❌ Board '{board_id}' not found in config/boards.yaml")
             return False
 
-        print(f"\n🔨 Generating keymap for {board.name}...")
+        self._log(f"\n🔨 Generating keymap for {board.name}...")
+
+        if self.verbose:
+            print(f"  Board ID: {board_id}")
+            print(f"  Firmware: {board.firmware}")
+            print(f"  Layout size: {board.layout_size}")
+            if board.qmk_keyboard:
+                print(f"  QMK keyboard: {board.qmk_keyboard}")
+            if board.zmk_shield:
+                print(f"  ZMK shield: {board.zmk_shield}")
 
         try:
             # Compile all layers for this board
@@ -112,12 +141,16 @@ class KeymapGenerator:
                 if layer.full_layout is not None:
                     # Skip if board doesn't explicitly request this layer
                     if layer.name not in board.extra_layers:
+                        self._verbose(f"  Skipping layer {layer.name} (not in extra_layers)")
                         continue
 
+                self._verbose(f"  Compiling layer {layer.name}...")
                 compiled_layer = self.compiler.compile_layer(
                     layer, board, board.firmware
                 )
                 compiled_layers.append(compiled_layer)
+
+            self._verbose(f"  Compiled {len(compiled_layers)} layers")
 
             # Generate files based on firmware
             if board.firmware == "qmk":
@@ -231,6 +264,17 @@ class KeymapGenerator:
         else:
             print(f"⚠️  keymap-drawer not available, skipping visualization")
 
+        # Generate KEYBOARDS.md from boards.yaml (Principle IV)
+        print(f"\n📋 Updating KEYBOARDS.md...")
+        try:
+            generate_keyboards_md(
+                self.config_dir / "boards.yaml",
+                self.repo_root / "KEYBOARDS.md"
+            )
+            self._verbose("  ✅ KEYBOARDS.md updated")
+        except Exception as e:
+            print(f"⚠️  Failed to update KEYBOARDS.md: {e}")
+
         return 0 if failure_count == 0 else 1
 
 
@@ -245,9 +289,15 @@ def main():
         metavar="BOARD_ID"
     )
     parser.add_argument(
-        "--validate-only",
+        "--validate", "--validate-only",
         action="store_true",
+        dest="validate_only",
         help="Validate configuration without generating files"
+    )
+    parser.add_argument(
+        "-v", "--verbose",
+        action="store_true",
+        help="Enable verbose output (detailed progress information)"
     )
 
     args = parser.parse_args()
@@ -257,7 +307,7 @@ def main():
 
     try:
         # Initialize generator (this validates configuration)
-        generator = KeymapGenerator(repo_root)
+        generator = KeymapGenerator(repo_root, verbose=args.verbose)
 
         if args.validate_only:
             print("\n✅ Configuration is valid!")
