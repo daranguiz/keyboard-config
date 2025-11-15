@@ -182,8 +182,29 @@ class KeymapGenerator:
         """
         success_count = 0
         failure_count = 0
+        compiled_layers_by_board = {}  # Store compiled layers for visualization
 
         for board_id in self.board_inventory.boards.keys():
+            board = self.board_inventory.boards[board_id]
+
+            # Compile layers for this board
+            compiled_layers = []
+            for layer in self.keymap_config.layers.values():
+                # If the layer has full_layout, it's only for boards with extra_layers
+                if layer.full_layout is not None:
+                    # Skip if board doesn't explicitly request this layer
+                    if layer.name not in board.extra_layers:
+                        continue
+
+                compiled_layer = self.compiler.compile_layer(
+                    layer, board, board.firmware
+                )
+                compiled_layers.append(compiled_layer)
+
+            # Store for visualization
+            compiled_layers_by_board[board_id] = compiled_layers
+
+            # Generate keymap files
             if self.generate_for_board(board_id):
                 success_count += 1
             else:
@@ -195,12 +216,12 @@ class KeymapGenerator:
             print(f"❌ Failed: {failure_count} boards")
         print(f"{'='*60}")
 
-        # Generate visualizations for all QMK boards
+        # Generate visualizations for all boards
         print(f"\n📊 Generating keymap visualizations...")
         visualizer = KeymapVisualizer(self.repo_root)
 
         if visualizer.is_available():
-            viz_results = visualizer.generate_all(self.board_inventory.boards)
+            viz_results = visualizer.generate_all(self.board_inventory, compiled_layers_by_board)
             viz_success = sum(1 for path in viz_results.values() if path is not None)
 
             if viz_success > 0:
@@ -208,7 +229,7 @@ class KeymapGenerator:
             else:
                 print(f"⚠️  No visualizations generated")
         else:
-            print(f"⚠️  keymap-drawer or qmk CLI not available, skipping visualization")
+            print(f"⚠️  keymap-drawer not available, skipping visualization")
 
         return 0 if failure_count == 0 else 1
 
