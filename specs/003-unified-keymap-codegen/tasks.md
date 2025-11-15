@@ -166,7 +166,7 @@
 - [X] T069 [US4] Create .github/workflows/build-all.yml with unified QMK + ZMK build (Python setup, generate, compile, upload artifacts)
 - [X] T070 [US4] Update CLAUDE.md with new architecture (config/, qmk/, zmk/, scripts/ structure, generator workflow)
 - [X] T071 [US4] Test migration: run scripts/generate.py and verify all QMK boards compile successfully
-- [ ] T072 [US4] Test CI/CD: push to branch and verify GitHub Actions builds all firmware binaries
+- [X] T072 [US4] Test CI/CD: push to branch and verify GitHub Actions builds all firmware binaries
 
 **Checkpoint**: Repository is fully migrated to monorepo structure, all builds work locally and in CI/CD
 
@@ -180,14 +180,14 @@
 
 ### Implementation for User Story 5
 
-- [ ] T073 [P] [US5] Create scripts/add_board.sh with argument parsing (board_id, firmware, keyboard, layout_size)
-- [ ] T074 [US5] Implement add_board.sh YAML append logic (add new board entry to config/boards.yaml)
-- [ ] T075 [P] [US5] Create template for qmk/config/boards/<board>.mk in scripts/templates/qmk_board.mk.template
-- [ ] T076 [P] [US5] Create template for zmk/config/boards/<board>.conf in scripts/templates/zmk_board.conf.template
-- [ ] T077 [US5] Implement scripts/add_board.sh template instantiation (create board-specific config files from templates)
-- [ ] T078 [US5] Add execution permission to scripts/add_board.sh (chmod +x)
-- [ ] T079 [US5] Test add_board.sh: add a new 36-key QMK board and verify config/boards.yaml is updated
-- [ ] T080 [US5] Test generation for new board: run scripts/generate.py and verify new board keymap is created
+- [X] T073 [P] [US5] Create scripts/add_board.sh with argument parsing (board_id, firmware, keyboard, layout_size)
+- [X] T074 [US5] Implement add_board.sh YAML append logic (add new board entry to config/boards.yaml)
+- [X] T075 [P] [US5] Create template for qmk/config/boards/<board>.mk in scripts/templates/qmk_board.mk.template
+- [X] T076 [P] [US5] Create template for zmk/config/boards/<board>.conf in scripts/templates/zmk_board.conf.template
+- [X] T077 [US5] Implement scripts/add_board.sh template instantiation (create board-specific config files from templates)
+- [X] T078 [US5] Add execution permission to scripts/add_board.sh (chmod +x)
+- [X] T079 [US5] Test add_board.sh: add a new 36-key QMK board and verify config/boards.yaml is updated
+- [X] T080 [US5] Test generation for new board: run scripts/generate.py and verify new board keymap is created
 
 **Checkpoint**: New boards can be added with a single command, keymap generation works immediately
 

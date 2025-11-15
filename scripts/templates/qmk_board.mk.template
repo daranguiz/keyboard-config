@@ -1,0 +1,26 @@
+# QMK Board Configuration: {{BOARD_NAME}}
+# Board ID: {{BOARD_ID}}
+# Keyboard: {{QMK_KEYBOARD}}
+# Generated: {{TIMESTAMP}}
+
+# Basic features
+BOOTMAGIC_ENABLE = yes
+MOUSEKEY_ENABLE = yes
+EXTRAKEY_ENABLE = yes
+NKRO_ENABLE = yes
+
+# Optimization
+LTO_ENABLE = yes
+CONSOLE_ENABLE = no
+COMMAND_ENABLE = no
+
+# Optional features (uncomment as needed)
+# OLED_ENABLE = yes
+# RGB_MATRIX_ENABLE = yes
+# ENCODER_ENABLE = yes
+# AUDIO_ENABLE = no
+# BACKLIGHT_ENABLE = no
+# RGBLIGHT_ENABLE = no
+# WPM_ENABLE = no
+
+# Add board-specific features below
