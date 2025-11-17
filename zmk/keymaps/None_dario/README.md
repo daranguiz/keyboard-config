@@ -21,7 +21,7 @@
 
 12: &none
 13: &kp Z
-14: &lt FUN X
+14: &kp X
 15: &kp C
 16: &kp V
 17: &kp B
@@ -44,7 +44,7 @@
 31: &kp M
 32: &kp COMMA
 33: &kp DOT
-34: &kp FSLH
+34: &lt FUN SLSH
 35: &none
 
 36: &kp ENTER
@@ -65,7 +65,7 @@
  4: &kp N6
  5: &kp RBRC
 
- 6: &none
+ 6: &kp LBRC
  7: &kp SCLN
  8: &kp N1
  9: &kp N2
@@ -80,18 +80,18 @@
 17: &kp BSLH
 
 18: &none
-19: &none
-20: &none
-21: &none
-22: &none
-23: &bootloader
+19: &bt BT_SEL 0
+20: &bt BT_SEL 1
+21: &bt BT_SEL 2
+22: &bt BT_CLR
+23: &none
 
 24: &none
 25: &kp LSFT
 26: &kp LCTL
 27: &kp LALT
 28: &kp LGUI
-29: &none
+29: &kp LBRC
 
 30: &none
 31: &none
@@ -136,8 +136,8 @@
 19: &none
 20: &none
 21: &none
-22: &none
-23: &bootloader
+22: &bootloader
+23: &none
 
 24: &none
 25: &kp LSFT
@@ -164,7 +164,7 @@
 ## NAV Layer
 
 ```
- 0: &bootloader
+ 0: &none
  1: &none
  2: &none
  3: &none
@@ -217,8 +217,8 @@
 ## MEDIA Layer
 
 ```
- 0: &bootloader
- 1: &none
+ 0: &none
+ 1: &bootloader
  2: &none
  3: &none
  4: &none
@@ -243,21 +243,21 @@
 20: &none
 21: &none
 22: &none
-23: &bt BT_SEL 0
+23: &none
 
 24: &none
 25: &kp C_PREV
 26: &kp VOLD
 27: &kp VOLU
 28: &kp C_NEXT
-29: &bt BT_SEL 0
+29: &none
 
 30: &none
 31: &none
 32: &none
 33: &none
 34: &none
-35: &bt BT_CLR
+35: &none
 
 36: &none
 37: &none
@@ -296,7 +296,7 @@
 20: &none
 21: &none
 22: &none
-23: &bootloader
+23: &none
 
 24: &none
 25: &kp LSFT
@@ -308,7 +308,7 @@
 30: &none
 31: &none
 32: &none
-33: &kp RALT
+33: &none
 34: &none
 35: &none
 

@@ -9,19 +9,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [BASE] = LAYOUT_split_3x6_3(
         KC_NO               , KC_Q                , KC_W                , KC_F                , KC_P                , KC_G                ,
         KC_LBRC             , LGUI_T(KC_A)        , LALT_T(KC_R)        , LCTL_T(KC_S)        , LSFT_T(KC_T)        , KC_D                ,
-        KC_NO               , KC_Z                , LT(FUN, KC_X)       , KC_C                , KC_V                , KC_B                ,
+        KC_NO               , KC_Z                , KC_X                , KC_C                , KC_V                , KC_B                ,
         KC_J                , KC_L                , KC_U                , KC_Y                , KC_QUOT             , KC_NO               ,
         KC_H                , LSFT_T(KC_N)        , LCTL_T(KC_E)        , LALT_T(KC_I)        , LGUI_T(KC_O)        , KC_RBRC             ,
-        KC_K                , KC_M                , KC_COMM             , KC_DOT              , KC_SLSH             , KC_NO               ,
+        KC_K                , KC_M                , KC_COMM             , KC_DOT              , LT(FUN, KC_SLSH)    , KC_NO               ,
                                     KC_ENT              , LT(NAV, KC_SPC)     , LT(MEDIA, KC_TAB)   ,
                                     LT(SYM, KC_DEL)     , KC_LSFT             , LT(NUM, KC_BSPC)    
     ),
     [NUM] = LAYOUT_split_3x6_3(
         KC_NO               , KC_LBRC             , KC_4                , KC_5                , KC_6                , KC_RBRC             ,
-        KC_NO               , KC_SCLN             , KC_1                , KC_2                , KC_3                , KC_EQL              ,
+        KC_LCBR             , KC_SCLN             , KC_1                , KC_2                , KC_3                , KC_EQL              ,
         KC_NO               , KC_GRV              , KC_7                , KC_8                , KC_9                , KC_BSLS             ,
-        KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               , QK_BOOT             ,
-        KC_NO               , KC_LSFT             , KC_LCTL             , KC_LALT             , KC_LGUI             , KC_NO               ,
+        KC_NO               , KC_BT_SEL_0         , KC_BT_SEL_1         , KC_BT_SEL_2         , KC_BT_CLR           , KC_NO               ,
+        KC_NO               , KC_LSFT             , KC_LCTL             , KC_LALT             , KC_LGUI             , KC_LCBR             ,
         KC_NO               , KC_NO               , KC_NO               , KC_ALGR             , KC_NO               , KC_NO               ,
                                     KC_COLN             , KC_0                , KC_MINS             ,
                                     KC_NO               , KC_NO               , KC_NO               
@@ -30,14 +30,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_NO               , KC_LCBR             , KC_DLR              , KC_PERC             , KC_CIRC             , KC_RCBR             ,
         KC_NO               , KC_COLN             , KC_EXLM             , KC_AT               , KC_HASH             , KC_PLUS             ,
         KC_NO               , KC_TILD             , KC_AMPR             , KC_ASTR             , KC_LPRN             , KC_PIPE             ,
-        KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               , QK_BOOT             ,
+        KC_NO               , KC_NO               , KC_NO               , KC_NO               , QK_BOOT             , KC_NO               ,
         KC_NO               , KC_LSFT             , KC_LCTL             , KC_LALT             , KC_LGUI             , KC_NO               ,
         KC_NO               , KC_NO               , KC_NO               , KC_ALGR             , KC_NO               , KC_NO               ,
                                     KC_LPRN             , KC_RPRN             , KC_UNDS             ,
                                     KC_NO               , KC_NO               , KC_NO               
     ),
     [NAV] = LAYOUT_split_3x6_3(
-        QK_BOOT             , KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               ,
+        KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               ,
         KC_NO               , KC_LGUI             , KC_LALT             , KC_LCTL             , KC_LSFT             , KC_NO               ,
         KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               ,
         KC_ESC              , KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               ,
@@ -47,12 +47,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                     KC_DEL              , KC_ENT              , KC_BSPC             
     ),
     [MEDIA] = LAYOUT_split_3x6_3(
-        QK_BOOT             , KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               ,
+        KC_NO               , QK_BOOT             , KC_NO               , KC_NO               , KC_NO               , KC_NO               ,
         KC_NO               , KC_LGUI             , KC_LALT             , KC_LCTL             , KC_LSFT             , KC_NO               ,
         KC_NO               , KC_NO               , KC_ALGR             , KC_NO               , KC_NO               , KC_NO               ,
-        RM_TOGG             , RM_NEXT             , RM_HUEU             , RM_SATU             , RM_VALU             , KC_BT_SEL_0         ,
-        KC_NO               , KC_MPRV             , KC_VOLD             , KC_VOLU             , KC_MNXT             , KC_BT_SEL_0         ,
-        KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_BT_CLR           ,
+        RM_TOGG             , RM_NEXT             , RM_HUEU             , RM_SATU             , RM_VALU             , KC_NO               ,
+        KC_NO               , KC_MPRV             , KC_VOLD             , KC_VOLU             , KC_MNXT             , KC_NO               ,
+        KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               ,
                                     KC_NO               , KC_NO               , KC_NO               ,
                                     KC_MSTP             , KC_MPLY             , KC_MUTE             
     ),
@@ -60,9 +60,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_NO               , KC_F12              , KC_F7               , KC_F8               , KC_F9               , KC_PSCR             ,
         KC_NO               , KC_F11              , KC_F4               , KC_F5               , KC_F6               , KC_SCRL             ,
         KC_NO               , KC_F10              , KC_F1               , KC_F2               , KC_F3               , KC_PAUS             ,
-        KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               , QK_BOOT             ,
+        KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               ,
         KC_NO               , KC_LSFT             , KC_LCTL             , KC_LALT             , KC_LGUI             , KC_NO               ,
-        KC_NO               , KC_NO               , KC_NO               , KC_ALGR             , KC_NO               , KC_NO               ,
+        KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               ,
                                     KC_APP              , KC_SPC              , KC_TAB              ,
                                     KC_NO               , KC_NO               , KC_NO               
     ),

@@ -23,14 +23,14 @@
             bindings = <
                 &kp Q &kp W &kp F &kp P &kp G &kp J &kp L &kp U &kp Y &kp SQT
                 &hml LGUI A &hml LALT R &hml LCTL S &hml LSFT T &kp D &kp H &hmr LSFT N &hmr LCTL E &hmr LALT I &hmr LGUI O
-                &kp Z &lt FUN X &kp C &kp V &kp B &kp K &kp M &kp COMMA &kp DOT &kp FSLH
+                &kp Z &kp X &kp C &kp V &kp B &kp K &kp M &kp COMMA &kp DOT &lt FUN SLSH
                 &kp ENTER &lt NAV SPC &lt MEDIA TAB &lt SYM DEL &kp LSFT &lt NUM BSPC
             >;
         };
 
         num_layer {
             bindings = <
-                &kp LBRC &kp N4 &kp N5 &kp N6 &kp RBRC &none &none &none &none &none
+                &kp LBRC &kp N4 &kp N5 &kp N6 &kp RBRC &none &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_CLR
                 &kp SCLN &kp N1 &kp N2 &kp N3 &kp EQL &none &kp LSFT &kp LCTL &kp LALT &kp LGUI
                 &kp GRAVE &kp N7 &kp N8 &kp N9 &kp BSLH &none &none &none &kp RALT &none
                 &kp COLN &kp N0 &kp MINUS &none &none &none
@@ -39,7 +39,7 @@
 
         sym_layer {
             bindings = <
-                &kp LBRC &kp DOLLAR &kp PERCENT &kp CARET &kp RBRC &none &none &none &none &none
+                &kp LBRC &kp DOLLAR &kp PERCENT &kp CARET &kp RBRC &none &none &none &none &bootloader
                 &kp COLN &kp EXCL &kp AT &kp HASH &kp PLUS &none &kp LSFT &kp LCTL &kp LALT &kp LGUI
                 &kp TILD &kp AMPERSAND &kp ASTERISK &kp LPRN &kp PIPE &none &none &none &kp RALT &none
                 &kp LPRN &kp RPRN &kp UNDERSCORE &none &none &none
@@ -57,7 +57,7 @@
 
         media_layer {
             bindings = <
-                &none &none &none &none &none &none &none &none &none &none
+                &bootloader &none &none &none &none &none &none &none &none &none
                 &kp LGUI &kp LALT &kp LCTL &kp LSFT &none &none &kp C_PREV &kp VOLD &kp VOLU &kp C_NEXT
                 &none &kp RALT &none &none &none &none &none &none &none &none
                 &none &none &none &kp C_STOP &kp C_PLAY_PAUSE &kp C_MUTE
@@ -68,7 +68,7 @@
             bindings = <
                 &kp F12 &kp F7 &kp F8 &kp F9 &kp PRINTSCREEN &none &none &none &none &none
                 &kp F11 &kp F4 &kp F5 &kp F6 &kp SCROLLLOCK &none &kp LSFT &kp LCTL &kp LALT &kp LGUI
-                &kp F10 &kp F1 &kp F2 &kp F3 &kp PAUS &none &none &none &kp RALT &none
+                &kp F10 &kp F1 &kp F2 &kp F3 &kp PAUS &none &none &none &none &none
                 &kp K_APP &kp SPC &kp TAB &none &none &none
             >;
         };
