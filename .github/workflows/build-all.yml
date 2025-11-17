@@ -46,7 +46,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: zmkfirmware/zmk
-          path: zmk
+          path: zmk_firmware
 
       - name: Set up Docker Buildx (for ZMK)
         uses: docker/setup-buildx-action@v3
@@ -58,7 +58,7 @@ jobs:
         run: |
           export QMK_FIRMWARE_PATH="${GITHUB_WORKSPACE}/qmk_firmware"
           export QMK_HOME="${GITHUB_WORKSPACE}/qmk_firmware"
-          export ZMK_REPO="${GITHUB_WORKSPACE}/zmk"
+          export ZMK_REPO="${GITHUB_WORKSPACE}/zmk_firmware"
           ./build_all.sh
 
       - name: Upload build artifacts
