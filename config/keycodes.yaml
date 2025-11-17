@@ -233,15 +233,19 @@ PLUS:  # +
 LBRC:  # [
   qmk: "KC_LBRC"
   zmk: "&kp LBKT"
+  display_name: "["
 RBRC:  # ]
   qmk: "KC_RBRC"
   zmk: "&kp RBKT"
+  display_name: "]"
 LCBR:  # {
   qmk: "KC_LCBR"
   zmk: "&kp LBRC"
+  display_name: "{"
 RCBR:  # }
   qmk: "KC_RCBR"
   zmk: "&kp RBRC"
+  display_name: "}"
 LPRN:  # (
   qmk: "KC_LPRN"
   zmk: "&kp LPAR"

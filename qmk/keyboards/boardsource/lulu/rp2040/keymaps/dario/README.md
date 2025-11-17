@@ -285,11 +285,11 @@ qmk compile -kb boardsource/lulu/rp2040 -km dario
 15: KC_NO
 16: KC_NO
 17: KC_NO
-18: RM_TOGG
-19: RM_NEXT
-20: RM_HUEU
-21: RM_SATU
-22: RM_VALU
+18: KC_NO
+19: KC_NO
+20: KC_NO
+21: KC_NO
+22: KC_NO
 23: KC_NO
 24: KC_NO
 25: KC_LGUI

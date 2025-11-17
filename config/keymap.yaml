@@ -92,7 +92,7 @@ layers:
         - [LGUI           , LALT           , LCTL           , LSFT           , NONE           ]
         - [NONE           , NONE           , NONE           , NONE           , NONE           ]
       right:
-        - [RM_TOGG        , RM_NEXT        , RM_HUEU        , RM_SATU        , RM_VALU        ]
+        - [NONE           , NONE           , NONE           , NONE           , NONE]
         - [NONE           , MPRV           , VOLD           , VOLU           , MNXT           ]
         - [NONE           , NONE           , NONE           , NONE           , NONE           ]
       thumbs:
