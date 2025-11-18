@@ -48,17 +48,12 @@ jobs:
           repository: zmkfirmware/zmk
           path: zmk_firmware
 
-      - name: Set up Docker Buildx (for ZMK)
-        uses: docker/setup-buildx-action@v3
-
-      - name: Install devcontainer CLI (for ZMK build)
-        run: npm install -g @devcontainers/cli
-
       - name: Build all firmwares
         run: |
           export QMK_FIRMWARE_PATH="${GITHUB_WORKSPACE}/qmk_firmware"
           export QMK_HOME="${GITHUB_WORKSPACE}/qmk_firmware"
           export ZMK_REPO="${GITHUB_WORKSPACE}/zmk_firmware"
+          export USE_DOCKER_BUILD=1
           ./build_all.sh
 
       - name: Upload build artifacts

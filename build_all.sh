@@ -79,8 +79,15 @@ echo "Phase 2: ZMK Firmware"
 echo "================================================"
 echo ""
 
-if [ -f "$REPO_ROOT/zmk/build_zmk.sh" ]; then
-    if bash "$REPO_ROOT/zmk/build_zmk.sh"; then
+# Choose build script based on environment
+if [ "$USE_DOCKER_BUILD" = "1" ]; then
+    ZMK_BUILD_SCRIPT="$REPO_ROOT/zmk/build_zmk_docker.sh"
+else
+    ZMK_BUILD_SCRIPT="$REPO_ROOT/zmk/build_zmk.sh"
+fi
+
+if [ -f "$ZMK_BUILD_SCRIPT" ]; then
+    if bash "$ZMK_BUILD_SCRIPT"; then
         ZMK_SUCCESS=true
     else
         echo -e "${YELLOW}⚠ ZMK builds failed${NC}"
