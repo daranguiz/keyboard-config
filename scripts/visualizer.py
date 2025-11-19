@@ -3,10 +3,14 @@ Keymap visualization generation using keymap-drawer
 """
 
 import json
+import os
 import subprocess
 import shutil
+import tempfile
+import yaml
+from contextlib import contextmanager
 from pathlib import Path
-from typing import Optional, List, Dict
+from typing import Optional, List, Dict, Iterator
 from config_parser import YAMLConfigParser
 from qmk_translator import QMKTranslator
 from svglib.svglib import svg2rlg
@@ -46,6 +50,114 @@ class KeymapVisualizer:
     def is_available(self) -> bool:
         """Check if keymap-drawer CLI is available"""
         return shutil.which("keymap") is not None
+
+    @contextmanager
+    def _get_layout_specific_config(self, layout_size: str) -> Iterator[Path]:
+        """
+        Create a layout-specific config file with correct key position styling
+
+        Args:
+            layout_size: Layout size identifier (e.g., "3x5_3", "3x6_3")
+
+        Returns:
+            Path to the layout-specific config file
+        """
+        # Load base config
+        with open(self.config_file) as f:
+            config = yaml.safe_load(f)
+
+        # Update ortho_layout for the specific board size
+        if layout_size == "3x6_3":
+            config['draw_config']['ortho_layout'] = {
+                'split': True,
+                'rows': 3,
+                'columns': 6,
+                'thumbs': 3
+            }
+
+            # Update CSS for 3x6_3 key positions
+            # For 3x6_3: rows are interleaved (L1: 0-5, R1: 6-11, L2: 12-17, R2: 18-23, L3: 24-29, R3: 30-35, LT: 36-38, RT: 39-41)
+            # Home row: L 13-16, R 19-22
+            # Thumbs: 36=ENT, 37=NAV, 38=MEDIA, 39=SYM, 40=LSFT, 41=NUM
+            # Corner: 34=FUN
+            config['draw_config']['svg_extra_style'] = '''
+    /* Remove underline from layer activator text */
+    text.layer-activator {
+      text-decoration: none !important;
+    }
+
+    /* Remove bold from hold text (layer names on modifier keys) */
+    text.hold {
+      font-weight: normal !important;
+    }
+
+    /* Highlight layer-tap keys with bright green */
+    .layer-BASE .keypos-34 rect,
+    .layer-BASE .keypos-37 rect,
+    .layer-BASE .keypos-38 rect,
+    .layer-BASE .keypos-39 rect,
+    .layer-BASE .keypos-41 rect {
+      fill: #4CAF50 !important;
+      stroke: none !important;
+      opacity: 1 !important;
+    }
+    .layer-BASE .keypos-34 text,
+    .layer-BASE .keypos-37 text,
+    .layer-BASE .keypos-38 text,
+    .layer-BASE .keypos-39 text,
+    .layer-BASE .keypos-41 text {
+      fill: white !important;
+    }
+
+    /* Highlight home row mods with lighter green stroke */
+    .layer-BASE .keypos-13 rect,
+    .layer-BASE .keypos-14 rect,
+    .layer-BASE .keypos-15 rect,
+    .layer-BASE .keypos-16 rect,
+    .layer-BASE .keypos-19 rect,
+    .layer-BASE .keypos-20 rect,
+    .layer-BASE .keypos-21 rect,
+    .layer-BASE .keypos-22 rect {
+      stroke: #66BB6A !important;
+      stroke-width: 2 !important;
+    }
+
+    /* On other layers, highlight the key that keeps you on that layer */
+    .layer-NAV .keypos-37 rect,
+    .layer-MEDIA .keypos-38 rect,
+    .layer-NUM .keypos-41 rect,
+    .layer-SYM .keypos-39 rect,
+    .layer-FUN .keypos-34 rect {
+      fill: #FF9800 !important;
+      stroke: none !important;
+    }
+    .layer-NAV .keypos-37 text,
+    .layer-MEDIA .keypos-38 text,
+    .layer-NUM .keypos-41 text,
+    .layer-SYM .keypos-39 text,
+    .layer-FUN .keypos-34 text {
+      fill: white !important;
+    }
+
+    /* Make sure ghost keys (on other layers) are clearly different */
+    .key.ghost rect {
+      opacity: 0.3 !important;
+    }
+'''
+
+        # Write to temp config file in system temp directory
+        fd, temp_path = tempfile.mkstemp(
+            prefix=f"keymap-drawer-{layout_size}-", suffix=".yaml"
+        )
+        temp_config = Path(temp_path)
+        with os.fdopen(fd, 'w') as f:
+            yaml.dump(config, f, default_flow_style=False, allow_unicode=True)
+
+        try:
+            yield temp_config
+        finally:
+            if temp_config.exists():
+                temp_config.unlink()
 
     def _translate_keycode_for_display(self, keycode: str) -> str:
         """
@@ -217,43 +329,39 @@ class KeymapVisualizer:
             # Write JSON file
             json_file.write_text(json.dumps(keymap_data, indent=2))
 
-            # Parse with keymap-drawer
-            parse_cmd = ["keymap", "parse", "-q", str(json_file)]
-            if self.config_file.exists():
-                parse_cmd.insert(1, "-c")
-                parse_cmd.insert(2, str(self.config_file))
+            # Get layout-specific config (handles ortho_layout and CSS styling)
+            with self._get_layout_specific_config(board.layout_size) as layout_config:
+                # Parse with keymap-drawer (config must come before subcommand)
+                parse_cmd = ["keymap", "-c", str(layout_config), "parse", "-q", str(json_file)]
 
-            parse_result = subprocess.run(
-                parse_cmd,
-                capture_output=True,
-                text=True,
-                check=True
-            )
+                parse_result = subprocess.run(
+                    parse_cmd,
+                    capture_output=True,
+                    text=True,
+                    check=True
+                )
 
-            parsed_keymap = parse_result.stdout
+                parsed_keymap = parse_result.stdout
 
-            # Post-process: Rename layers from L0-L5 to friendly names
-            # keymap-drawer's layer_names config doesn't actually rename layers in parse output
-            layer_names = ["BASE", "NUM", "SYM", "NAV", "MEDIA", "FUN"]
-            for i, name in enumerate(layer_names):
-                parsed_keymap = parsed_keymap.replace(f"L{i}:", f"{name}:")
+                # Post-process: Rename layers from L0-L5 to friendly names
+                # keymap-drawer's layer_names config doesn't actually rename layers in parse output
+                layer_names = ["BASE", "NUM", "SYM", "NAV", "MEDIA", "FUN"]
+                for i, name in enumerate(layer_names):
+                    parsed_keymap = parsed_keymap.replace(f"L{i}:", f"{name}:")
 
-            # Draw SVG
-            draw_cmd = ["keymap", "draw", "-"]
-            if self.config_file.exists():
-                draw_cmd.insert(1, "-c")
-                draw_cmd.insert(2, str(self.config_file))
+                # Draw SVG (config must come before subcommand)
+                draw_cmd = ["keymap", "-c", str(layout_config), "draw", "-"]
 
-            draw_result = subprocess.run(
-                draw_cmd,
-                input=parsed_keymap,
-                capture_output=True,
-                text=True,
-                check=True
-            )
+                draw_result = subprocess.run(
+                    draw_cmd,
+                    input=parsed_keymap,
+                    capture_output=True,
+                    text=True,
+                    check=True
+                )
 
-            # Write SVG file
-            svg_file.write_text(draw_result.stdout)
+                # Write SVG file
+                svg_file.write_text(draw_result.stdout)
 
             return svg_file
 
@@ -405,15 +513,23 @@ class KeymapVisualizer:
         Returns:
             Path to generated SVG file, or None if generation failed
         """
+        import shutil
+
         # Generate full visualization (goes to docs/)
         svg_file = self._generate_svg_for_layers(layout_size, representative_board, superset_layers, suffix="", is_final=True)
 
-        # Generate split versions for printing (3 layers each) - goes to out/visualizations/
+        # Copy final SVG to out/visualizations/ for build artifacts
+        if svg_file:
+            out_svg = self.output_dir / svg_file.name
+            shutil.copy2(svg_file, out_svg)
+
+        # Generate split versions for printing (3 layers each) - temporary, for PDF generation
         print_svgs = []
         if len(superset_layers) > 3:
             first_half = superset_layers[:3]
             second_half = superset_layers[3:]
 
+            # Generate print split SVGs (will be deleted after PDF creation)
             svg1 = self._generate_svg_for_layers(layout_size, representative_board, first_half, suffix="_print1", is_final=False)
             svg2 = self._generate_svg_for_layers(layout_size, representative_board, second_half, suffix="_print2", is_final=False)
 
@@ -427,6 +543,16 @@ class KeymapVisualizer:
                 pdf_file = self._combine_svgs_to_pdf(layout_size, print_svgs)
                 if pdf_file:
                     print(f"    📄 {pdf_file.name}")
+
+                # Delete the intermediate print split SVGs and JSONs
+                for svg in print_svgs:
+                    if svg.exists():
+                        svg.unlink()
+                # Also delete JSON files
+                for suffix in ["", "_print1", "_print2"]:
+                    json_file = self.output_dir / f"layout_{layout_size}{suffix}.json"
+                    if json_file.exists():
+                        json_file.unlink()
 
         return svg_file
 
@@ -545,42 +671,38 @@ class KeymapVisualizer:
             # Write JSON file
             json_file.write_text(json.dumps(keymap_data, indent=2))
 
-            # Parse with keymap-drawer
-            parse_cmd = ["keymap", "parse", "-q", str(json_file)]
-            if self.config_file.exists():
-                parse_cmd.insert(1, "-c")
-                parse_cmd.insert(2, str(self.config_file))
+            # Get layout-specific config (handles ortho_layout and CSS styling)
+            with self._get_layout_specific_config(layout_size) as layout_config:
+                # Parse with keymap-drawer (config must come before subcommand)
+                parse_cmd = ["keymap", "-c", str(layout_config), "parse", "-q", str(json_file)]
 
-            parse_result = subprocess.run(
-                parse_cmd,
-                capture_output=True,
-                text=True,
-                check=True
-            )
+                parse_result = subprocess.run(
+                    parse_cmd,
+                    capture_output=True,
+                    text=True,
+                    check=True
+                )
 
-            parsed_keymap = parse_result.stdout
+                parsed_keymap = parse_result.stdout
 
-            # Post-process: Rename layers from L0-L5 to friendly names
-            layer_names = [layer['name'] for layer in layers]
-            for i, name in enumerate(layer_names):
-                parsed_keymap = parsed_keymap.replace(f"L{i}:", f"{name}:")
+                # Post-process: Rename layers from L0-L5 to friendly names
+                layer_names = [layer['name'] for layer in layers]
+                for i, name in enumerate(layer_names):
+                    parsed_keymap = parsed_keymap.replace(f"L{i}:", f"{name}:")
 
-            # Draw SVG
-            draw_cmd = ["keymap", "draw", "-"]
-            if self.config_file.exists():
-                draw_cmd.insert(1, "-c")
-                draw_cmd.insert(2, str(self.config_file))
+                # Draw SVG (config must come before subcommand)
+                draw_cmd = ["keymap", "-c", str(layout_config), "draw", "-"]
 
-            draw_result = subprocess.run(
-                draw_cmd,
-                input=parsed_keymap,
-                capture_output=True,
-                text=True,
-                check=True
-            )
+                draw_result = subprocess.run(
+                    draw_cmd,
+                    input=parsed_keymap,
+                    capture_output=True,
+                    text=True,
+                    check=True
+                )
 
-            # Write SVG file
-            svg_file.write_text(draw_result.stdout)
+                # Write SVG file
+                svg_file.write_text(draw_result.stdout)
 
             if suffix:
                 print(f"    ✅ {svg_file.name}")

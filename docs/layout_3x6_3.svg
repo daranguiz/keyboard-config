@@ -195,68 +195,69 @@ path.combo {
 }
 /* End Tabler Icons Cleanup */
 
-/* Remove underline from layer activator text */
-text.layer-activator {
-  text-decoration: none !important;
-}
 
-/* Remove bold from hold text (layer names on modifier keys) */
-text.hold {
-  font-weight: normal !important;
-}
+    /* Remove underline from layer activator text */
+    text.layer-activator {
+      text-decoration: none !important;
+    }
 
-/* Highlight layer-tap thumb keys (positions 21, 31-33, 35) with bright green */
-.layer-BASE .keypos-31 rect,
-.layer-BASE .keypos-32 rect,
-.layer-BASE .keypos-33 rect,
-.layer-BASE .keypos-35 rect,
-.layer-BASE .keypos-29 rect {
-  fill: #4CAF50 !important;
-  stroke: none !important;
-  opacity: 1 !important;
-}
-.layer-BASE .keypos-31 text,
-.layer-BASE .keypos-32 text,
-.layer-BASE .keypos-33 text,
-.layer-BASE .keypos-35 text,
-.layer-BASE .keypos-29 text {
-  fill: white !important;
-}
+    /* Remove bold from hold text (layer names on modifier keys) */
+    text.hold {
+      font-weight: normal !important;
+    }
 
-/* Highlight home row mods (positions 10-13, 16-19) with lighter green stroke */
-.layer-BASE .keypos-10 rect,
-.layer-BASE .keypos-11 rect,
-.layer-BASE .keypos-12 rect,
-.layer-BASE .keypos-13 rect,
-.layer-BASE .keypos-16 rect,
-.layer-BASE .keypos-17 rect,
-.layer-BASE .keypos-18 rect,
-.layer-BASE .keypos-19 rect {
-  stroke: #66BB6A !important;
-  stroke-width: 2 !important;
-}
+    /* Highlight layer-tap keys with bright green */
+    .layer-BASE .keypos-34 rect,
+    .layer-BASE .keypos-37 rect,
+    .layer-BASE .keypos-38 rect,
+    .layer-BASE .keypos-39 rect,
+    .layer-BASE .keypos-41 rect {
+      fill: #4CAF50 !important;
+      stroke: none !important;
+      opacity: 1 !important;
+    }
+    .layer-BASE .keypos-34 text,
+    .layer-BASE .keypos-37 text,
+    .layer-BASE .keypos-38 text,
+    .layer-BASE .keypos-39 text,
+    .layer-BASE .keypos-41 text {
+      fill: white !important;
+    }
 
-/* On other layers, highlight the key that keeps you on that layer */
-.layer-NAV .keypos-31 rect,
-.layer-MEDIA .keypos-32 rect,
-.layer-NUM .keypos-35 rect,
-.layer-SYM .keypos-33 rect,
-.layer-FUN .keypos-29 rect {
-  fill: #FF9800 !important;
-  stroke: none !important;
-}
-.layer-NAV .keypos-31 text,
-.layer-MEDIA .keypos-32 text,
-.layer-NUM .keypos-35 text,
-.layer-SYM .keypos-33 text,
-.layer-FUN .keypos-29 text {
-  fill: white !important;
-}
+    /* Highlight home row mods with lighter green stroke */
+    .layer-BASE .keypos-13 rect,
+    .layer-BASE .keypos-14 rect,
+    .layer-BASE .keypos-15 rect,
+    .layer-BASE .keypos-16 rect,
+    .layer-BASE .keypos-19 rect,
+    .layer-BASE .keypos-20 rect,
+    .layer-BASE .keypos-21 rect,
+    .layer-BASE .keypos-22 rect {
+      stroke: #66BB6A !important;
+      stroke-width: 2 !important;
+    }
 
-/* Make sure ghost keys (on other layers) are clearly different */
-.key.ghost rect {
-  opacity: 0.3 !important;
-}
+    /* On other layers, highlight the key that keeps you on that layer */
+    .layer-NAV .keypos-37 rect,
+    .layer-MEDIA .keypos-38 rect,
+    .layer-NUM .keypos-41 rect,
+    .layer-SYM .keypos-39 rect,
+    .layer-FUN .keypos-34 rect {
+      fill: #FF9800 !important;
+      stroke: none !important;
+    }
+    .layer-NAV .keypos-37 text,
+    .layer-MEDIA .keypos-38 text,
+    .layer-NUM .keypos-41 text,
+    .layer-SYM .keypos-39 text,
+    .layer-FUN .keypos-34 text {
+      fill: white !important;
+    }
+
+    /* Make sure ghost keys (on other layers) are clearly different */
+    .key.ghost rect {
+      opacity: 0.3 !important;
+    }
 </style>
 <g transform="translate(30, 0)" class="layer-BASE">
 <text x="0" y="28" class="label" id="BASE">BASE:</text>
