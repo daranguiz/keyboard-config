@@ -126,14 +126,6 @@ fi
 
 echo ""
 
-# Copy visualizations to output directory
-if [ -d "$REPO_ROOT/docs/keymaps" ]; then
-    # Copy main SVG visualizations (not the print splits)
-    cp "$REPO_ROOT/docs/keymaps"/layout_*[!1-9].svg "$OUTPUT_DIR/visualizations/" 2>/dev/null || true
-    # Copy PDF files
-    cp "$REPO_ROOT/docs/keymaps"/*.pdf "$OUTPUT_DIR/visualizations/" 2>/dev/null || true
-fi
-
 # Show all firmware files
 echo "Build artifacts in: $OUTPUT_DIR"
 echo ""

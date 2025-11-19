@@ -20,7 +20,10 @@ class KeymapVisualizer:
 
     def __init__(self, repo_root: Path, qmk_translator: Optional[QMKTranslator] = None):
         self.repo_root = repo_root
-        self.output_dir = repo_root / "docs" / "keymaps"
+        # Final SVGs go to docs/ root (for README embedding)
+        self.docs_dir = repo_root / "docs"
+        # Intermediate files (JSON, print splits, PDFs) go to out/visualizations/
+        self.output_dir = repo_root / "out" / "visualizations"
         self.config_file = repo_root / ".keymap-drawer-config.yaml"
         self.config_dir = repo_root / "config"
         self.qmk_translator = qmk_translator
@@ -28,7 +31,8 @@ class KeymapVisualizer:
         # Load keycode display mappings
         self.keycodes = self._load_keycodes()
 
-        # Ensure output directory exists
+        # Ensure output directories exist
+        self.docs_dir.mkdir(parents=True, exist_ok=True)
         self.output_dir.mkdir(parents=True, exist_ok=True)
 
     def _load_keycodes(self) -> Dict:
@@ -401,24 +405,24 @@ class KeymapVisualizer:
         Returns:
             Path to generated SVG file, or None if generation failed
         """
-        # Generate full visualization
-        svg_file = self._generate_svg_for_layers(layout_size, representative_board, superset_layers, suffix="")
+        # Generate full visualization (goes to docs/)
+        svg_file = self._generate_svg_for_layers(layout_size, representative_board, superset_layers, suffix="", is_final=True)
 
-        # Generate split versions for printing (3 layers each)
+        # Generate split versions for printing (3 layers each) - goes to out/visualizations/
         print_svgs = []
         if len(superset_layers) > 3:
             first_half = superset_layers[:3]
             second_half = superset_layers[3:]
 
-            svg1 = self._generate_svg_for_layers(layout_size, representative_board, first_half, suffix="_print1")
-            svg2 = self._generate_svg_for_layers(layout_size, representative_board, second_half, suffix="_print2")
+            svg1 = self._generate_svg_for_layers(layout_size, representative_board, first_half, suffix="_print1", is_final=False)
+            svg2 = self._generate_svg_for_layers(layout_size, representative_board, second_half, suffix="_print2", is_final=False)
 
             if svg1:
                 print_svgs.append(svg1)
             if svg2:
                 print_svgs.append(svg2)
 
-            # Combine into PDF
+            # Combine into PDF (goes to out/visualizations/)
             if print_svgs:
                 pdf_file = self._combine_svgs_to_pdf(layout_size, print_svgs)
                 if pdf_file:
@@ -475,7 +479,7 @@ class KeymapVisualizer:
         c.save()
         return pdf_file
 
-    def _generate_svg_for_layers(self, layout_size: str, representative_board, layers: List[Dict], suffix: str = "") -> Optional[Path]:
+    def _generate_svg_for_layers(self, layout_size: str, representative_board, layers: List[Dict], suffix: str = "", is_final: bool = False) -> Optional[Path]:
         """
         Generate SVG visualization for specific layers
 
@@ -484,13 +488,22 @@ class KeymapVisualizer:
             representative_board: A board object to use for QMK metadata
             layers: List of dicts with 'name' and 'keycodes'
             suffix: Optional suffix for filename (e.g., "_print1")
+            is_final: If True, outputs final SVG to docs/; otherwise to out/visualizations/
 
         Returns:
             Path to generated SVG file, or None if generation failed
         """
-        # Output file paths
+        # Choose output directory based on whether this is a final or intermediate file
+        if is_final:
+            # Final SVGs (no suffix) go to docs/ for README embedding
+            svg_output_dir = self.docs_dir
+        else:
+            # Intermediate files (print splits, etc.) go to out/visualizations/
+            svg_output_dir = self.output_dir
+
+        # JSON files always go to out/visualizations/
         json_file = self.output_dir / f"layout_{layout_size}{suffix}.json"
-        svg_file = self.output_dir / f"layout_{layout_size}{suffix}.svg"
+        svg_file = svg_output_dir / f"layout_{layout_size}{suffix}.svg"
 
         try:
             # Determine QMK keyboard metadata
