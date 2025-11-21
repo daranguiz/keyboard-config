@@ -11,6 +11,33 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(dirname "$SCRIPT_DIR")"
 OUTPUT_DIR="$REPO_ROOT/out/qmk"
 
+# Determine QMK_HOME: use env var if set, otherwise use qmk config
+if [ -n "$QMK_FIRMWARE_PATH" ] && [ -d "$QMK_FIRMWARE_PATH" ]; then
+    QMK_HOME="$QMK_FIRMWARE_PATH"
+    echo "Using QMK_FIRMWARE_PATH: $QMK_HOME"
+    # Initialize QMK setup if not already done
+    if ! qmk config -ro user.qmk_home 2>/dev/null | grep -q "$QMK_HOME"; then
+        echo "Initializing QMK setup..."
+        qmk config user.qmk_home="$QMK_HOME"
+    fi
+elif [ -n "$QMK_HOME" ] && [ -d "$QMK_HOME" ]; then
+    echo "Using QMK_HOME env var: $QMK_HOME"
+    # Initialize QMK setup if not already done
+    if ! qmk config -ro user.qmk_home 2>/dev/null | grep -q "$QMK_HOME"; then
+        echo "Initializing QMK setup..."
+        qmk config user.qmk_home="$QMK_HOME"
+    fi
+else
+    QMK_HOME="$(qmk config -ro user.qmk_home 2>/dev/null | cut -d'=' -f2-)"
+    if [ -z "$QMK_HOME" ] || [ ! -d "$QMK_HOME" ]; then
+        echo "Error: QMK firmware not found. Please either:"
+        echo "  1. Set QMK_HOME or QMK_FIRMWARE_PATH environment variable, or"
+        echo "  2. Run 'qmk setup' first"
+        exit 1
+    fi
+    echo "Using qmk config (user.qmk_home): $QMK_HOME"
+fi
+
 # Ensure QMK CLI points at this userspace (handles repo renames)
 CURRENT_OVERLAY="$(qmk config -ro user.overlay_dir 2>/dev/null | cut -d'=' -f2-)"
 if [ "$CURRENT_OVERLAY" != "$SCRIPT_DIR" ]; then
@@ -20,7 +47,6 @@ if [ "$CURRENT_OVERLAY" != "$SCRIPT_DIR" ]; then
 fi
 
 # Prepare upstream qmk_firmware workspace
-QMK_HOME="$(qmk config -ro user.qmk_home 2>/dev/null | cut -d'=' -f2-)"
 if [ -n "$QMK_HOME" ] && [ -d "$QMK_HOME" ]; then
     BUILD_DIR="$QMK_HOME/.build"
     if [ -d "$BUILD_DIR" ]; then
