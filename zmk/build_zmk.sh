@@ -162,10 +162,10 @@ for i in "${!BOARDS[@]}"; do
     echo -e "${BLUE}Keymap: $ZMK_CONFIG${NC}"
 
     # Copy config into container (keymap + behaviors)
-    docker exec "$CONTAINER_ID" rm -rf /tmp/zmk-config
-    docker exec "$CONTAINER_ID" mkdir -p /tmp/zmk-config
-    docker cp "$ZMK_CONFIG/." "$CONTAINER_ID:/tmp/zmk-config/"
-    docker cp "$SCRIPT_DIR/config/dario_behaviors.dtsi" "$CONTAINER_ID:/tmp/zmk-config/"
+    docker exec "$CONTAINER_ID" rm -rf /tmp/zmk-config >/dev/null 2>&1
+    docker exec "$CONTAINER_ID" mkdir -p /tmp/zmk-config >/dev/null 2>&1
+    docker cp "$ZMK_CONFIG/." "$CONTAINER_ID:/tmp/zmk-config/" >/dev/null 2>&1
+    docker cp "$SCRIPT_DIR/config/dario_behaviors.dtsi" "$CONTAINER_ID:/tmp/zmk-config/" >/dev/null 2>&1
 
     # Build inside container
     if docker exec -w /workspaces/zmk "$CONTAINER_ID" /bin/bash -c \

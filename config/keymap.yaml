@@ -69,7 +69,7 @@ layers:
       left:
         - [LCBR           , DLR            , PERC           , CIRC           , RCBR           ]
         - [QUES           , EXLM           , AT             , HASH           , PLUS           ]
-        - [TILD           , AMPR           , ASTR           , QUES           , PIPE           ]
+        - [TILD           , AMPR           , ASTR           , COLN           , PIPE           ]
       right:
         - [NONE           , NONE           , NONE           , NONE           , NONE        ]
         - [NONE           , LSFT           , LCTL           , LALT           , LGUI           ]

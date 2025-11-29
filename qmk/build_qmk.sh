@@ -91,8 +91,8 @@ if qmk userspace-compile; then
 
     # QMK outputs to both ~/qmk_firmware/ and qmk/ directory
     # Collect all firmware files and move to output
-    find "$SCRIPT_DIR" -maxdepth 1 -type f \( -name "*.hex" -o -name "*.uf2" \) -exec mv {} "$OUTPUT_DIR/" \; 2>/dev/null || true
-    find ~/qmk_firmware -maxdepth 1 -type f \( -name "*.hex" -o -name "*.uf2" \) -exec cp {} "$OUTPUT_DIR/" \; 2>/dev/null || true
+    find "$SCRIPT_DIR" -maxdepth 1 -type f \( -name "*.hex" -o -name "*.uf2" \) -exec mv {} "$OUTPUT_DIR/" \; >/dev/null 2>&1 || true
+    find ~/qmk_firmware -maxdepth 1 -type f \( -name "*.hex" -o -name "*.uf2" \) -exec cp {} "$OUTPUT_DIR/" \; >/dev/null 2>&1 || true
 
     # Show firmware files
     echo ""

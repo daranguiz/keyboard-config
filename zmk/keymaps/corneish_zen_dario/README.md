@@ -182,7 +182,7 @@
 13: &kp TILDE
 14: &kp AMPERSAND
 15: &kp ASTERISK
-16: &kp QUESTION
+16: &kp COLON
 17: &kp PIPE
 
 18: &none

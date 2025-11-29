@@ -51,7 +51,7 @@
             bindings = <
                 &none &kp LBRC &kp DOLLAR &kp PERCENT &kp CARET &kp RBRC &none &none &none &none &none &none
                 &none &kp QUESTION &kp EXCL &kp AT &kp HASH &kp PLUS &none &kp LSHFT &kp LCTRL &kp LALT &kp LGUI &none
-                &none &kp TILDE &kp AMPERSAND &kp ASTERISK &kp QUESTION &kp PIPE &bootloader &none &none &none &none &none
+                &none &kp TILDE &kp AMPERSAND &kp ASTERISK &kp COLON &kp PIPE &bootloader &none &none &none &none &none
                 &kp LPAR &kp RPAR &kp UNDERSCORE &none &none &none
             >;
         };

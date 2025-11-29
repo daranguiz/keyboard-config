@@ -244,7 +244,7 @@ qmk compile -kb lily58/rev1 -km dario
 37: KC_TILD
 38: KC_AMPR
 39: KC_ASTR
-40: KC_QUES
+40: KC_COLN
 41: KC_PIPE
 42: KC_NO
 43: KC_NO

@@ -130,23 +130,23 @@ echo ""
 echo "Build artifacts in: $OUTPUT_DIR"
 echo ""
 echo "QMK firmware:"
-ls -lh "$OUTPUT_DIR/qmk"/*.hex "$OUTPUT_DIR/qmk"/*.uf2 2>/dev/null || echo "  (no QMK firmware files found)"
+ls -1 "$OUTPUT_DIR/qmk"/*.hex "$OUTPUT_DIR/qmk"/*.uf2 2>/dev/null | xargs -n1 basename || echo "  (no QMK firmware files found)"
 
 echo ""
 echo "ZMK firmware:"
-ls -lh "$OUTPUT_DIR/zmk"/*.uf2 2>/dev/null || echo "  (no ZMK firmware files found)"
+ls -1 "$OUTPUT_DIR/zmk"/*.uf2 2>/dev/null | xargs -n1 basename || echo "  (no ZMK firmware files found)"
 
 echo ""
 echo "Visualizations:"
-ls -lh "$OUTPUT_DIR/visualizations"/*.svg 2>/dev/null || echo "  (no visualizations found)"
+ls -1 "$OUTPUT_DIR/visualizations"/*.svg 2>/dev/null | xargs -n1 basename || echo "  (no visualizations found)"
 
 echo ""
 
 # Exit with appropriate code
-if [ "$QMK_SUCCESS" = true ] || [ "$ZMK_SUCCESS" = true ]; then
-    echo -e "${GREEN}✓ Build completed!${NC}"
+if [ "$QMK_SUCCESS" = true ] && [ "$ZMK_SUCCESS" = true ]; then
+    echo -e "${GREEN}✓ Build completed successfully!${NC}"
     exit 0
 else
-    echo -e "${YELLOW}✗ All builds failed${NC}"
+    echo -e "${YELLOW}✗ Build failed${NC}"
     exit 1
 fi
