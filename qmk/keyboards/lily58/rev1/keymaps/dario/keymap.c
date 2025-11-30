@@ -30,7 +30,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_NO               , KC_B                , KC_F                , KC_L                , KC_K                , KC_Q                , KC_P                , KC_G                , KC_O                , KC_U                , KC_DOT              , KC_NO               ,
         KC_NO               , LGUI_T(KC_N)        , LALT_T(KC_S)        , LCTL_T(KC_H)        , LSFT_T(KC_T)        , KC_M                , KC_Y                , RSFT_T(KC_C)        , RCTL_T(KC_A)        , RALT_T(KC_E)        , RGUI_T(KC_I)        , KC_ENT              ,
         KC_NO               , KC_X                , KC_V                , KC_J                , KC_D                , KC_Z                , KC_NO               , KC_NO               , KC_QUOT             , KC_W                , KC_SLSH             , KC_SCLN             , KC_COMM             , KC_NO               ,
-        KC_NO               , LT(MEDIA, KC_ENT)   , KC_R                , LSFT_T(KC_TAB)      , LSFT_T(KC_DEL)      , LT(SYM, KC_SPC)     , LT(NUM, KC_BSPC)    , KC_NO               
+        KC_NO               , LT(MEDIA, KC_ENT)   , LT(NAV, KC_R)       , LSFT_T(KC_TAB)      , LSFT_T(KC_DEL)      , LT(SYM, KC_SPC)     , LT(NUM, KC_BSPC)    , KC_NO               
     ),
     [NUM] = LAYOUT(
         KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               ,

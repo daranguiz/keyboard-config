@@ -54,7 +54,7 @@ layers:
         - [Y              , hrm:RSFT:C     , hrm:RCTL:A     , hrm:RALT:E     , hrm:RGUI:I     ]
         - [QUOT           , W              , SLSH           , SCLN           , COMM           ]
       thumbs:
-        - [lt:MEDIA:ENT   , R              , mt:LSFT:TAB    ]
+        - [lt:MEDIA:ENT   , lt:NAV:R              , mt:LSFT:TAB    ]
         - [mt:LSFT:DEL    , lt:SYM:SPC     , lt:NUM:BSPC    ]
 
         # constraints

@@ -154,7 +154,7 @@
 35: &none
 
 36: &lt MEDIA ENTER
-37: &kp R
+37: &lt NAV R
 38: &mt LSFT TAB
 39: &mt LSFT DEL
 40: &lt SYM SPACE

@@ -57,7 +57,7 @@ qmk compile -kb bastardkb/skeletyl/promicro -km dario
 ├─────────┼─────────┼─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┼─────────┼─────────┤
 │ KC_X    │ KC_V    │ KC_J    │ KC_D    │ KC_Z    │   │ KC_QUOT │ KC_W    │ KC_SLSH │ KC_SCLN │ KC_COMM │
 ╰─────────┴─────────┴─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┴─────────┴─────────╯
-                              │ LT(MEDIA, KC_ENT) │ KC_R    │   │ LT(SYM, KC_SPC) │ LT(NUM, KC_BSPC) │
+                              │ LT(MEDIA, KC_ENT) │ LT(NAV, KC_R) │   │ LT(SYM, KC_SPC) │ LT(NUM, KC_BSPC) │
                               │ LSFT_T(KC_TAB) │         │   │         │         │
                               ╰─────────┴─────────╯   ╰─────────┴─────────╯
 

@@ -193,7 +193,7 @@ qmk compile -kb boardsource/lulu/rp2040 -km dario
 49: KC_NO
 50: KC_NO
 51: LT(MEDIA, KC_ENT)
-52: KC_R
+52: LT(NAV, KC_R)
 53: LSFT_T(KC_TAB)
 54: LSFT_T(KC_DEL)
 55: LT(SYM, KC_SPC)

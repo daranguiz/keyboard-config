@@ -44,7 +44,7 @@
                 &none &kp B &kp F &kp L &kp K &kp Q &kp P &kp G &kp O &kp U &kp DOT &none
                 &none &hml LGUI N &hml LALT S &hml LCTL H &hml LSFT T &kp M &kp Y &hmr RSFT C &hmr RCTL A &hmr RALT E &hmr RGUI I &kp ENTER
                 &none &kp X &kp V &kp J &kp D &kp Z &kp SQT &kp W &kp FSLH &kp SEMI &kp COMMA &none
-                &lt MEDIA ENTER &kp R &mt LSFT TAB &mt LSFT DEL &lt SYM SPACE &lt NUM BSPC
+                &lt MEDIA ENTER &lt NAV R &mt LSFT TAB &mt LSFT DEL &lt SYM SPACE &lt NUM BSPC
             >;
         };
 

@@ -210,6 +210,7 @@ path.combo {
     .layer-GALLIUM .keypos-33 rect,
     .layer-GALLIUM .keypos-35 rect,
     .layer-NIGHT .keypos-30 rect,
+    .layer-NIGHT .keypos-31 rect,
     .layer-NIGHT .keypos-34 rect,
     .layer-NIGHT .keypos-35 rect {
       fill: #4CAF50 !important;
@@ -225,6 +226,7 @@ path.combo {
     .layer-GALLIUM .keypos-33 text,
     .layer-GALLIUM .keypos-35 text,
     .layer-NIGHT .keypos-30 text,
+    .layer-NIGHT .keypos-31 text,
     .layer-NIGHT .keypos-34 text,
     .layer-NIGHT .keypos-35 text {
       fill: white !important;
@@ -751,7 +753,9 @@ path.combo {
 </a></g>
 <g transform="translate(308, 196)" class="key keypos-31">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
-<text x="0" y="0" class="key tap">R</text>
+<text x="0" y="0" class="key tap">
+<tspan x="0" dy="-0.6em">LT(NAV,</tspan><tspan x="0" dy="1.2em">R)</tspan>
+</text>
 </g>
 <g transform="translate(364, 196)" class="key keypos-32">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
