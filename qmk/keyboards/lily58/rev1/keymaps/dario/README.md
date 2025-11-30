@@ -39,7 +39,7 @@ qmk compile -kb lily58/rev1 -km dario
 21: KC_Y
 22: KC_QUOT
 23: KC_NO
-24: KC_LBRC
+24: KC_NO
 25: LGUI_T(KC_A)
 26: LALT_T(KC_R)
 27: LCTL_T(KC_S)
@@ -50,7 +50,7 @@ qmk compile -kb lily58/rev1 -km dario
 32: RCTL_T(KC_E)
 33: RALT_T(KC_I)
 34: RGUI_T(KC_O)
-35: KC_RBRC
+35: KC_ENT
 36: KC_NO
 37: KC_Z
 38: KC_X
@@ -134,6 +134,69 @@ qmk compile -kb lily58/rev1 -km dario
 53: LT(MEDIA, KC_TAB)
 54: LT(SYM, KC_DEL)
 55: KC_LSFT
+56: LT(NUM, KC_BSPC)
+57: KC_NO
+```
+
+## BASE_NIGHT Layer
+
+```
+ 0: KC_NO
+ 1: KC_NO
+ 2: KC_NO
+ 3: KC_NO
+ 4: KC_NO
+ 5: KC_NO
+ 6: KC_NO
+ 7: KC_NO
+ 8: KC_NO
+ 9: KC_NO
+10: KC_NO
+11: KC_NO
+12: KC_NO
+13: KC_B
+14: KC_F
+15: KC_L
+16: KC_K
+17: KC_Q
+18: KC_P
+19: KC_G
+20: KC_O
+21: KC_U
+22: KC_DOT
+23: KC_NO
+24: KC_NO
+25: LGUI_T(KC_N)
+26: LALT_T(KC_S)
+27: LCTL_T(KC_H)
+28: LSFT_T(KC_T)
+29: KC_M
+30: KC_Y
+31: RSFT_T(KC_C)
+32: RCTL_T(KC_A)
+33: RALT_T(KC_E)
+34: RGUI_T(KC_I)
+35: KC_ENT
+36: KC_NO
+37: KC_X
+38: KC_V
+39: KC_J
+40: KC_D
+41: KC_Z
+42: KC_NO
+43: KC_NO
+44: KC_QUOT
+45: KC_W
+46: KC_SLSH
+47: KC_SCLN
+48: KC_COMM
+49: KC_NO
+50: KC_NO
+51: LT(NAV, KC_DEL)
+52: KC_R
+53: LT(MEDIA, KC_TAB)
+54: KC_LSFT
+55: LT(SYM, KC_SPC)
 56: LT(NUM, KC_BSPC)
 57: KC_NO
 ```
@@ -345,7 +408,7 @@ qmk compile -kb lily58/rev1 -km dario
 12: KC_NO
 13: DF(BASE_COLEMAK)
 14: DF(BASE_GALLIUM)
-15: KC_NO
+15: DF(BASE_NIGHT)
 16: KC_NO
 17: KC_NO
 18: KC_NO

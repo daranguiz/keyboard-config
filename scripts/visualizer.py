@@ -52,6 +52,174 @@ class KeymapVisualizer:
         """Check if keymap-drawer CLI is available"""
         return shutil.which("keymap") is not None
 
+    def _get_base_layer_names(self) -> List[str]:
+        """Get all BASE_* layer names from keymap.yaml"""
+        keymap_config = YAMLConfigParser.parse_keymap(
+            self.config_dir / "keymap.yaml"
+        )
+        return [name for name in keymap_config.layers.keys() if name.startswith("BASE_")]
+
+    def _get_layer_tap_positions_for_layer(self, layer_name: str, layout_size: str) -> List[int]:
+        """
+        Get the actual positions of layer-tap keys for a specific layer
+
+        Args:
+            layer_name: Name of the layer
+            layout_size: Layout size identifier
+
+        Returns:
+            List of key positions that have layer-tap (lt:) keys
+        """
+        # Load the keymap config
+        keymap_config = YAMLConfigParser.parse_keymap(
+            self.config_dir / "keymap.yaml"
+        )
+
+        if layer_name not in keymap_config.layers:
+            return []
+
+        layer = keymap_config.layers[layer_name]
+
+        # Build the full keycode list for this layer
+        keycodes = self._build_superset_layer(layer, layout_size)
+
+        # Reorder to QMK format to match SVG positions
+        reordered = self._reorder_keys_for_qmk(keycodes, layout_size)
+
+        # Find positions with lt: prefix
+        layer_tap_positions = []
+        for i, keycode in enumerate(reordered):
+            if keycode.startswith("lt:"):
+                layer_tap_positions.append(i)
+
+        return layer_tap_positions
+
+    def _generate_dynamic_css(self, layout_size: str, base_layers: List[str]) -> str:
+        """
+        Generate dynamic CSS for layer highlighting based on layout and layer names
+
+        Args:
+            layout_size: Layout size identifier (e.g., "3x5_3", "3x6_3")
+            base_layers: List of BASE_* layer names
+
+        Returns:
+            CSS string with dynamic layer highlighting
+        """
+        # Define home row positions for each layout
+        if layout_size == "3x6_3":
+            # For 3x6_3: rows are interleaved (L1: 0-5, R1: 6-11, L2: 12-17, R2: 18-23, L3: 24-29, R3: 30-35, LT: 36-38, RT: 39-41)
+            home_row_positions = [13, 14, 15, 16, 19, 20, 21, 22]  # L 13-16, R 19-22
+        elif layout_size == "3x5_3":
+            # For 3x5_3: similar interleaving but smaller (L1: 0-4, R1: 5-9, L2: 10-14, R2: 15-19, L3: 20-24, R3: 25-29, LT: 30-32, RT: 33-35)
+            home_row_positions = [10, 11, 12, 13, 15, 16, 17, 18]  # L 10-13, R 15-18
+        else:
+            # Default/unknown layout - use 3x5_3 as fallback
+            home_row_positions = [10, 11, 12, 13, 15, 16, 17, 18]
+
+        # Build CSS selectors dynamically for each BASE layer's actual layer-tap positions
+        base_layer_selectors = []
+        base_layer_text_selectors = []
+
+        for layer in base_layers:
+            # Get the actual layer-tap positions for this specific layer
+            layer_tap_positions = self._get_layer_tap_positions_for_layer(layer, layout_size)
+
+            for pos in layer_tap_positions:
+                base_layer_selectors.append(f"    .layer-{layer} .keypos-{pos} rect")
+                base_layer_text_selectors.append(f"    .layer-{layer} .keypos-{pos} text")
+
+        home_row_selectors = []
+        for layer in base_layers:
+            for pos in home_row_positions:
+                home_row_selectors.append(f"    .layer-{layer} .keypos-{pos} rect")
+
+        # Generate CSS
+        css = '''
+    /* Remove underline from layer activator text */
+    text.layer-activator {
+      text-decoration: none !important;
+    }
+
+    /* Remove bold from hold text (layer names on modifier keys) */
+    text.hold {
+      font-weight: normal !important;
+    }
+
+    /* Highlight layer-tap keys with bright green on all BASE layers */
+'''
+        css += ",\n".join(base_layer_selectors)
+        css += ''' {
+      fill: #4CAF50 !important;
+      stroke: none !important;
+      opacity: 1 !important;
+    }
+'''
+        css += ",\n".join(base_layer_text_selectors)
+        css += ''' {
+      fill: white !important;
+    }
+
+    /* Highlight home row mods with lighter green stroke on all BASE layers */
+'''
+        css += ",\n".join(home_row_selectors)
+        css += ''' {
+      stroke: #66BB6A !important;
+      stroke-width: 2 !important;
+    }
+
+    /* On other layers, highlight the key that keeps you on that layer */
+'''
+
+        # For non-BASE layers, find the position of the layer-tap key that activates them
+        # We'll look in any BASE layer to find where lt:NAV, lt:MEDIA, etc. are located
+        layer_activator_positions = {}
+
+        # Use the first BASE layer to find activator positions
+        if base_layers:
+            first_base = base_layers[0]
+            keymap_config = YAMLConfigParser.parse_keymap(self.config_dir / "keymap.yaml")
+            layer = keymap_config.layers[first_base]
+            keycodes = self._build_superset_layer(layer, layout_size)
+            reordered = self._reorder_keys_for_qmk(keycodes, layout_size)
+
+            # Find positions for each layer activator
+            for i, keycode in enumerate(reordered):
+                if keycode.startswith("lt:"):
+                    parts = keycode.split(":")
+                    if len(parts) >= 2:
+                        layer_name = parts[1]
+                        layer_activator_positions[layer_name] = i
+
+        # Generate CSS for layer activators
+        activator_selectors = []
+        activator_text_selectors = []
+
+        for layer_name, pos in layer_activator_positions.items():
+            activator_selectors.append(f"    .layer-{layer_name} .keypos-{pos} rect")
+            activator_text_selectors.append(f"    .layer-{layer_name} .keypos-{pos} text")
+
+        if activator_selectors:
+            css += ",\n".join(activator_selectors)
+            css += ''' {
+      fill: #FF9800 !important;
+      stroke: none !important;
+    }
+'''
+            css += ",\n".join(activator_text_selectors)
+            css += ''' {
+      fill: white !important;
+    }
+'''
+
+        css += '''
+
+    /* Make sure ghost keys (on other layers) are clearly different */
+    .key.ghost rect {
+      opacity: 0.3 !important;
+    }
+'''
+        return css
+
     @contextmanager
     def _get_layout_specific_config(self, layout_size: str) -> Iterator[Path]:
         """
@@ -67,6 +235,9 @@ class KeymapVisualizer:
         with open(self.config_file) as f:
             config = yaml.safe_load(f)
 
+        # Get all BASE layer names dynamically
+        base_layers = self._get_base_layer_names()
+
         # Update ortho_layout for the specific board size
         if layout_size == "3x6_3":
             config['draw_config']['ortho_layout'] = {
@@ -76,93 +247,8 @@ class KeymapVisualizer:
                 'thumbs': 3
             }
 
-            # Update CSS for 3x6_3 key positions
-            # For 3x6_3: rows are interleaved (L1: 0-5, R1: 6-11, L2: 12-17, R2: 18-23, L3: 24-29, R3: 30-35, LT: 36-38, RT: 39-41)
-            # Home row: L 13-16, R 19-22
-            # Thumbs: 36=ENT, 37=NAV, 38=MEDIA, 39=SYM, 40=LSFT, 41=NUM
-            # Corner: 34=FUN
-            config['draw_config']['svg_extra_style'] = '''
-    /* Remove underline from layer activator text */
-    text.layer-activator {
-      text-decoration: none !important;
-    }
-
-    /* Remove bold from hold text (layer names on modifier keys) */
-    text.hold {
-      font-weight: normal !important;
-    }
-
-    /* Highlight layer-tap keys with bright green on all BASE layers */
-    .layer-BASE_COLEMAK .keypos-34 rect,
-    .layer-BASE_COLEMAK .keypos-37 rect,
-    .layer-BASE_COLEMAK .keypos-38 rect,
-    .layer-BASE_COLEMAK .keypos-39 rect,
-    .layer-BASE_COLEMAK .keypos-41 rect,
-    .layer-BASE_GALLIUM .keypos-34 rect,
-    .layer-BASE_GALLIUM .keypos-37 rect,
-    .layer-BASE_GALLIUM .keypos-38 rect,
-    .layer-BASE_GALLIUM .keypos-39 rect,
-    .layer-BASE_GALLIUM .keypos-41 rect {
-      fill: #4CAF50 !important;
-      stroke: none !important;
-      opacity: 1 !important;
-    }
-    .layer-BASE_COLEMAK .keypos-34 text,
-    .layer-BASE_COLEMAK .keypos-37 text,
-    .layer-BASE_COLEMAK .keypos-38 text,
-    .layer-BASE_COLEMAK .keypos-39 text,
-    .layer-BASE_COLEMAK .keypos-41 text,
-    .layer-BASE_GALLIUM .keypos-34 text,
-    .layer-BASE_GALLIUM .keypos-37 text,
-    .layer-BASE_GALLIUM .keypos-38 text,
-    .layer-BASE_GALLIUM .keypos-39 text,
-    .layer-BASE_GALLIUM .keypos-41 text {
-      fill: white !important;
-    }
-
-    /* Highlight home row mods with lighter green stroke on all BASE layers */
-    .layer-BASE_COLEMAK .keypos-13 rect,
-    .layer-BASE_COLEMAK .keypos-14 rect,
-    .layer-BASE_COLEMAK .keypos-15 rect,
-    .layer-BASE_COLEMAK .keypos-16 rect,
-    .layer-BASE_COLEMAK .keypos-19 rect,
-    .layer-BASE_COLEMAK .keypos-20 rect,
-    .layer-BASE_COLEMAK .keypos-21 rect,
-    .layer-BASE_COLEMAK .keypos-22 rect,
-    .layer-BASE_GALLIUM .keypos-13 rect,
-    .layer-BASE_GALLIUM .keypos-14 rect,
-    .layer-BASE_GALLIUM .keypos-15 rect,
-    .layer-BASE_GALLIUM .keypos-16 rect,
-    .layer-BASE_GALLIUM .keypos-19 rect,
-    .layer-BASE_GALLIUM .keypos-20 rect,
-    .layer-BASE_GALLIUM .keypos-21 rect,
-    .layer-BASE_GALLIUM .keypos-22 rect {
-      stroke: #66BB6A !important;
-      stroke-width: 2 !important;
-    }
-
-    /* On other layers, highlight the key that keeps you on that layer */
-    .layer-NAV .keypos-37 rect,
-    .layer-MEDIA .keypos-38 rect,
-    .layer-NUM .keypos-41 rect,
-    .layer-SYM .keypos-39 rect,
-    .layer-FUN .keypos-34 rect {
-      fill: #FF9800 !important;
-      stroke: none !important;
-    }
-    .layer-NAV .keypos-37 text,
-    .layer-MEDIA .keypos-38 text,
-    .layer-NUM .keypos-41 text,
-    .layer-SYM .keypos-39 text,
-    .layer-FUN .keypos-34 text {
-      fill: white !important;
-    }
-
-    /* Make sure ghost keys (on other layers) are clearly different */
-    .key.ghost rect {
-      opacity: 0.3 !important;
-    }
-'''
+        # Generate dynamic CSS based on layout size and BASE layers
+        config['draw_config']['svg_extra_style'] = self._generate_dynamic_css(layout_size, base_layers)
 
         # Write to temp config file in system temp directory
         fd, temp_path = tempfile.mkstemp(

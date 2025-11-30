@@ -7,6 +7,7 @@
 enum layers {
     BASE_COLEMAK,
     BASE_GALLIUM,
+    BASE_NIGHT,
     NUM,
     SYM,
     NAV,

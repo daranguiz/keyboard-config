@@ -12,7 +12,7 @@
  4: &kp P
  5: &kp G
 
- 6: &kp LBKT
+ 6: &none
  7: &hml LGUI A
  8: &hml LALT R
  9: &hml LCTL S
@@ -38,7 +38,7 @@
 26: &hmr RCTL E
 27: &hmr RALT I
 28: &hmr RGUI O
-29: &kp RBKT
+29: &kp ENTER
 
 30: &kp K
 31: &kp M
@@ -105,6 +105,59 @@
 38: &lt MEDIA TAB
 39: &lt SYM DEL
 40: &kp LSHFT
+41: &lt NUM BSPC
+```
+
+## BASE_NIGHT Layer
+
+```
+ 0: &none
+ 1: &kp B
+ 2: &kp F
+ 3: &kp L
+ 4: &kp K
+ 5: &kp Q
+
+ 6: &none
+ 7: &hml LGUI N
+ 8: &hml LALT S
+ 9: &hml LCTL H
+10: &hml LSFT T
+11: &kp M
+
+12: &none
+13: &kp X
+14: &kp V
+15: &kp J
+16: &kp D
+17: &kp Z
+
+18: &kp P
+19: &kp G
+20: &kp O
+21: &kp U
+22: &kp DOT
+23: &none
+
+24: &kp Y
+25: &hmr RSFT C
+26: &hmr RCTL A
+27: &hmr RALT E
+28: &hmr RGUI I
+29: &kp ENTER
+
+30: &kp SQT
+31: &kp W
+32: &kp FSLH
+33: &kp SEMI
+34: &kp COMMA
+35: &none
+
+36: &lt NAV DEL
+37: &kp R
+38: &lt MEDIA TAB
+39: &kp LSHFT
+40: &lt SYM SPACE
 41: &lt NUM BSPC
 ```
 
@@ -273,7 +326,7 @@
  0: &none
  1: &to BASE_COLEMAK
  2: &to BASE_GALLIUM
- 3: &none
+ 3: &to BASE_NIGHT
  4: &none
  5: &none
 

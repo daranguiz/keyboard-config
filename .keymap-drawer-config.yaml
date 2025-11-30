@@ -89,6 +89,7 @@ parse_config:
     # Default layer switching
     "DF(BASE_COLEMAK)": "CLMK"
     "DF(BASE_GALLIUM)": "GALM"
+    "DF(BASE_NIGHT)": "NIGHT"
 
 draw_config:
   ortho_layout:

@@ -16,8 +16,8 @@ layers:
         - [lt:SYM:DEL     , LSFT           , lt:NUM:BSPC    ]
     extensions:
       3x6_3:
-        outer_pinky_left: [NONE, LBRC, NONE]
-        outer_pinky_right: [NONE, RBRC, NONE]
+        outer_pinky_left: [NONE, NONE, NONE]
+        outer_pinky_right: [NONE, ENT, NONE]
       3x5_3_pinky:
         outer_pinky_left: LBRC
         outer_pinky_right: RBRC
@@ -39,6 +39,38 @@ layers:
       3x6_3:
         outer_pinky_left: [NONE, LBRC, NONE]
         outer_pinky_right: [NONE, RBRC, NONE]
+      3x5_3_pinky:
+        outer_pinky_left: LBRC
+        outer_pinky_right: RBRC
+
+  BASE_NIGHT:
+    core: # (3x5)
+      left:
+        - [B              , F              , L              , K              , Q              ]
+        - [hrm:LGUI:N     , hrm:LALT:S     , hrm:LCTL:H     , hrm:LSFT:T     , M              ]
+        - [X              , V              , J              , D              , Z              ]
+      right:
+        - [P              , G              , O              , U              , DOT            ]
+        - [Y              , hrm:RSFT:C     , hrm:RCTL:A     , hrm:RALT:E     , hrm:RGUI:I     ]
+        - [QUOT           , W              , SLSH           , SCLN           , COMM           ]
+      thumbs:
+        - [lt:NAV:DEL     , R              , lt:MEDIA:TAB   ]
+        - [LSFT           , lt:SYM:SPC     , lt:NUM:BSPC    ]
+
+        # constraints
+        # Space and R are used frequently, so should be opposite
+        # R must be shiftable, so should be opposite
+        # Shift should be holdable through Space, so should be opposite <-- conflict
+        #
+        # NAV on R
+        # NUM on R
+        # SYM on L
+        #
+        # future idea: ENT on R ring finger
+    extensions:
+      3x6_3:
+        outer_pinky_left: [NONE, NONE, NONE]
+        outer_pinky_right: [NONE, ENT, NONE]
       3x5_3_pinky:
         outer_pinky_left: LBRC
         outer_pinky_right: RBRC
@@ -109,7 +141,7 @@ layers:
   MEDIA:
     core: # (3x5)
       left:
-        - [df:BASE_COLEMAK, df:BASE_GALLIUM, NONE           , NONE           , NONE           ]
+        - [df:BASE_COLEMAK, df:BASE_GALLIUM, df:BASE_NIGHT  , NONE           , NONE           ]
         - [LGUI           , LALT           , LCTL           , LSFT           , NONE           ]
         - [NONE           , NONE           , NONE           , NONE           , DFU           ]
       right:
