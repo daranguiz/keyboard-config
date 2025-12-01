@@ -143,7 +143,7 @@ path.combo {
     /* Highlight layer-tap keys with bright green on all BASE layers */
     .layer-NIGHT .keypos-36 rect,
     .layer-NIGHT .keypos-37 rect,
-    .layer-NIGHT .keypos-40 rect,
+    .layer-NIGHT .keypos-39 rect,
     .layer-NIGHT .keypos-41 rect {
       fill: #4CAF50 !important;
       stroke: none !important;
@@ -151,7 +151,7 @@ path.combo {
     }
     .layer-NIGHT .keypos-36 text,
     .layer-NIGHT .keypos-37 text,
-    .layer-NIGHT .keypos-40 text,
+    .layer-NIGHT .keypos-39 text,
     .layer-NIGHT .keypos-41 text {
       fill: white !important;
     }
@@ -166,23 +166,23 @@ path.combo {
     .layer-NIGHT .keypos-21 rect,
     .layer-NIGHT .keypos-22 rect,
     .layer-NIGHT .keypos-38 rect,
-    .layer-NIGHT .keypos-39 rect {
+    .layer-NIGHT .keypos-40 rect {
       stroke: #66BB6A !important;
       stroke-width: 2 !important;
     }
 
     /* On other layers, highlight the key that keeps you on that layer */
-    .layer-SYM_NIGHT .keypos-36 rect,
-    .layer-NUM_NIGHT .keypos-37 rect,
-    .layer-NAV_NIGHT .keypos-40 rect,
-    .layer-MEDIA_NIGHT .keypos-41 rect {
+    .layer-MEDIA .keypos-36 rect,
+    .layer-NAV .keypos-37 rect,
+    .layer-SYM .keypos-39 rect,
+    .layer-NUM .keypos-41 rect {
       fill: #FF9800 !important;
       stroke: none !important;
     }
-    .layer-SYM_NIGHT .keypos-36 text,
-    .layer-NUM_NIGHT .keypos-37 text,
-    .layer-NAV_NIGHT .keypos-40 text,
-    .layer-MEDIA_NIGHT .keypos-41 text {
+    .layer-MEDIA .keypos-36 text,
+    .layer-NAV .keypos-37 text,
+    .layer-SYM .keypos-39 text,
+    .layer-NUM .keypos-41 text {
       fill: white !important;
     }
 
@@ -344,33 +344,33 @@ path.combo {
 </g>
 <g transform="translate(224, 205)" class="key keypos-36">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
-<text x="0" y="0" class="key tap">Bksp</text>
-<text x="0" y="24" class="key hold">SYM</text>
+<text x="0" y="0" class="key tap">Enter</text>
+<text x="0" y="24" class="key hold">MEDIA</text>
 </g>
 <g transform="translate(286, 213) rotate(15.0)" class="key keypos-37">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
 <text x="0" y="0" class="key tap">R</text>
-<text x="0" y="24" class="key hold">NUM</text>
+<text x="0" y="24" class="key hold">NAV</text>
 </g>
 <g transform="translate(351, 224) rotate(30.0)" class="key keypos-38">
-<rect rx="6" ry="6" x="-26" y="-40" width="52" height="80" class="key"/>
-<text x="0" y="0" class="key tap">DEL</text>
-<text x="0" y="38" class="key hold">LSFT</text>
-</g>
-<g transform="translate(489, 224) rotate(-30.0)" class="key keypos-39">
 <rect rx="6" ry="6" x="-26" y="-40" width="52" height="80" class="key"/>
 <text x="0" y="0" class="key tap">TAB</text>
 <text x="0" y="38" class="key hold">LSFT</text>
 </g>
+<g transform="translate(489, 224) rotate(-30.0)" class="key keypos-39">
+<rect rx="6" ry="6" x="-26" y="-40" width="52" height="80" class="key"/>
+<text x="0" y="0" class="key tap">Del</text>
+<text x="0" y="38" class="key hold">SYM</text>
+</g>
 <g transform="translate(554, 213) rotate(-15.0)" class="key keypos-40">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
-<text x="0" y="0" class="key tap">Space</text>
-<text x="0" y="24" class="key hold">NAV</text>
+<text x="0" y="0" class="key tap">SPC</text>
+<text x="0" y="24" class="key hold">RSFT</text>
 </g>
 <g transform="translate(616, 205)" class="key keypos-41">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
-<text x="0" y="0" class="key tap">Enter</text>
-<text x="0" y="24" class="key hold">MEDIA</text>
+<text x="0" y="0" class="key tap">Bksp</text>
+<text x="0" y="24" class="key hold">NUM</text>
 </g>
 </g>
 </g>

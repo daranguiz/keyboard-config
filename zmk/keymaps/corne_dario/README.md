@@ -47,12 +47,65 @@
 34: &kp COMMA
 35: &none
 
-36: &lt SYM_NIGHT BSPC
-37: &lt NUM_NIGHT R
+36: &lt MEDIA ENTER
+37: &lt NAV R
+38: &mt LSFT TAB
+39: &lt SYM DEL
+40: &mt RSFT SPACE
+41: &lt NUM BSPC
+```
+
+## BASE_NIGHT_V2 Layer
+
+```
+ 0: &none
+ 1: &kp B
+ 2: &kp F
+ 3: &kp L
+ 4: &kp K
+ 5: &kp Q
+
+ 6: &none
+ 7: &hml LGUI N
+ 8: &hml LALT S
+ 9: &hml LCTL H
+10: &hml LSFT T
+11: &kp M
+
+12: &none
+13: &kp X
+14: &kp V
+15: &kp J
+16: &kp D
+17: &kp Z
+
+18: &kp P
+19: &kp G
+20: &kp O
+21: &kp U
+22: &kp DOT
+23: &none
+
+24: &kp Y
+25: &hmr RSFT C
+26: &hmr RCTL A
+27: &hmr RALT E
+28: &hmr RGUI I
+29: &kp ENTER
+
+30: &kp SQT
+31: &kp W
+32: &kp FSLH
+33: &kp MINUS
+34: &kp COMMA
+35: &none
+
+36: &lt NUM_NIGHT_V2 BSPC
+37: &lt SYM_NIGHT_V2 R
 38: &mt LSFT DEL
 39: &mt LSFT TAB
-40: &lt NAV_NIGHT SPACE
-41: &lt MEDIA_NIGHT ENTER
+40: &lt NAV_NIGHT_V2 SPACE
+41: &lt MEDIA_NIGHT_V2 ENTER
 ```
 
 ## BASE_COLEMAK Layer
@@ -98,59 +151,6 @@
 32: &kp COMMA
 33: &kp DOT
 34: &kp FSLH
-35: &none
-
-36: &kp ENTER
-37: &lt NAV SPACE
-38: &lt MEDIA TAB
-39: &lt SYM DEL
-40: &kp LSHFT
-41: &lt NUM BSPC
-```
-
-## BASE_GALLIUM Layer
-
-```
- 0: &none
- 1: &kp B
- 2: &kp L
- 3: &kp D
- 4: &kp C
- 5: &kp V
-
- 6: &kp LBKT
- 7: &hml LGUI N
- 8: &hml LALT R
- 9: &hml LCTL T
-10: &hml LSFT S
-11: &kp G
-
-12: &none
-13: &kp X
-14: &kp Q
-15: &kp M
-16: &kp W
-17: &kp Z
-
-18: &kp J
-19: &kp Y
-20: &kp O
-21: &kp U
-22: &kp COMMA
-23: &none
-
-24: &kp P
-25: &hmr RSFT H
-26: &hmr RCTL A
-27: &hmr RALT E
-28: &hmr RGUI I
-29: &kp RBKT
-
-30: &kp K
-31: &kp F
-32: &kp SQT
-33: &kp SEMI
-34: &kp DOT
 35: &none
 
 36: &kp ENTER
@@ -325,8 +325,8 @@
 ```
  0: &none
  1: &to BASE_NIGHT
- 2: &to BASE_COLEMAK
- 3: &to BASE_GALLIUM
+ 2: &to BASE_NIGHT_V2
+ 3: &to BASE_COLEMAK
  4: &none
  5: &none
 
@@ -426,13 +426,13 @@
 41: &none
 ```
 
-## NUM_NIGHT Layer
+## NUM_NIGHT_V2 Layer
 
 ```
  0: &none
  1: &none
- 2: &none
- 3: &none
+ 2: &kp LBKT
+ 3: &kp RBKT
  4: &none
  5: &none
 
@@ -441,34 +441,34 @@
  8: &kp LALT
  9: &kp LCTRL
 10: &kp LSHFT
-11: &none
+11: &kp PIPE
 
 12: &none
-13: &kp LG(Z)
-14: &kp LG(X)
-15: &kp LG(C)
-16: &kp LG(V)
-17: &kp LG(LS(Z))
+13: &none
+14: &none
+15: &none
+16: &none
+17: &none
 
-18: &kp LBKT
-19: &kp N4
-20: &kp N5
-21: &kp N6
-22: &kp RBKT
+18: &kp CARET
+19: &kp N7
+20: &kp N8
+21: &kp N9
+22: &kp PERCENT
 23: &none
 
-24: &kp FSLH
-25: &kp N1
-26: &kp N2
-27: &kp N3
-28: &kp EQUAL
-29: &kp LBRC
+24: &kp HASH
+25: &kp N4
+26: &kp N5
+27: &kp N6
+28: &kp GRAVE
+29: &none
 
-30: &kp GRAVE
-31: &kp N7
-32: &kp N8
-33: &kp N9
-34: &kp BSLH
+30: &kp DOLLAR
+31: &kp N1
+32: &kp N2
+33: &kp N3
+34: &kp TILDE
 35: &none
 
 36: &none
@@ -476,17 +476,17 @@
 38: &none
 39: &kp COLON
 40: &kp N0
-41: &kp MINUS
+41: &kp AT
 ```
 
-## SYM_NIGHT Layer
+## SYM_NIGHT_V2 Layer
 
 ```
  0: &none
- 1: &none
- 2: &none
- 3: &none
- 4: &none
+ 1: &kp ASTERISK
+ 2: &kp PERCENT
+ 3: &kp DOLLAR
+ 4: &kp DQT
  5: &none
 
  6: &none
@@ -494,45 +494,45 @@
  8: &kp LALT
  9: &kp LCTRL
 10: &kp LSHFT
-11: &none
+11: &kp BSLH
 
 12: &none
 13: &none
 14: &none
 15: &none
-16: &none
-17: &bootloader
+16: &kp AMPERSAND
+17: &none
 
-18: &kp LBRC
-19: &kp DOLLAR
-20: &kp PERCENT
-21: &kp CARET
-22: &kp RBRC
+18: &kp PLUS
+19: &kp LT
+20: &kp LBRC
+21: &kp RBRC
+22: &kp GT
 23: &none
 
-24: &kp QUESTION
-25: &kp EXCL
-26: &kp AT
-27: &kp HASH
-28: &kp PLUS
+24: &kp EXCL
+25: &kp EQUAL
+26: &kp LPAR
+27: &kp RPAR
+28: &kp SEMI
 29: &none
 
-30: &kp TILDE
-31: &kp AMPERSAND
-32: &kp ASTERISK
-33: &kp COLON
-34: &kp PIPE
+30: &kp UNDERSCORE
+31: &kp MINUS
+32: &kp LBKT
+33: &kp RBKT
+34: &kp COLON
 35: &none
 
 36: &none
 37: &none
 38: &none
-39: &kp LPAR
-40: &kp RPAR
-41: &kp UNDERSCORE
+39: &kp QUESTION
+40: &kp SPACE
+41: &kp FSLH
 ```
 
-## NAV_NIGHT Layer
+## NAV_NIGHT_V2 Layer
 
 ```
  0: &none
@@ -585,13 +585,13 @@
 41: &none
 ```
 
-## MEDIA_NIGHT Layer
+## MEDIA_NIGHT_V2 Layer
 
 ```
  0: &none
  1: &to BASE_NIGHT
- 2: &to BASE_COLEMAK
- 3: &to BASE_GALLIUM
+ 2: &to BASE_NIGHT_V2
+ 3: &to BASE_COLEMAK
  4: &none
  5: &none
 

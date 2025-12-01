@@ -192,6 +192,15 @@ F12:
 QUOT:  # '
   qmk: "KC_QUOT"
   zmk: "&kp SQT"
+DQUO:  # "
+  qmk: "KC_DQUO"
+  zmk: "&kp DQT"
+LABK:  # <
+  qmk: "KC_LT"
+  zmk: "&kp LT"
+RABK:  # >
+  qmk: "KC_GT"
+  zmk: "&kp GT"
 COMM:  # ,
   qmk: "KC_COMM"
   zmk: "&kp COMMA"

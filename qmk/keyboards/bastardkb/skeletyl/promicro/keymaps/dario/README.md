@@ -23,7 +23,24 @@ qmk compile -kb bastardkb/skeletyl/promicro -km dario
 ├─────────┼─────────┼─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┼─────────┼─────────┤
 │ KC_X    │ KC_V    │ KC_J    │ KC_D    │ KC_Z    │   │ KC_QUOT │ KC_W    │ KC_SLSH │ KC_SCLN │ KC_COMM │
 ╰─────────┴─────────┴─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┴─────────┴─────────╯
-                              │ LT(SYM_NIGHT, KC_BSPC) │ LT(NUM_NIGHT, KC_R) │   │ LT(NAV_NIGHT, KC_SPC) │ LT(MEDIA_NIGHT, KC_ENT) │
+                              │ LT(MEDIA, KC_ENT) │ LT(NAV, KC_R) │   │ RSFT_T(KC_SPC) │ LT(NUM, KC_BSPC) │
+                              │ LSFT_T(KC_TAB) │         │   │         │         │
+                              ╰─────────┴─────────╯   ╰─────────┴─────────╯
+
+```
+
+## BASE_NIGHT_V2 Layer
+
+```
+
+╭─────────┬─────────┬─────────┬─────────┬─────────╮   ╭─────────┬─────────┬─────────┬─────────┬─────────╮
+│ KC_B    │ KC_F    │ KC_L    │ KC_K    │ KC_Q    │   │ KC_P    │ KC_G    │ KC_O    │ KC_U    │ KC_DOT  │
+├─────────┼─────────┼─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┼─────────┼─────────┤
+│ LGUI_T(KC_N) │ LALT_T(KC_S) │ LCTL_T(KC_H) │ LSFT_T(KC_T) │ KC_M    │   │ KC_Y    │ RSFT_T(KC_C) │ RCTL_T(KC_A) │ RALT_T(KC_E) │ RGUI_T(KC_I) │
+├─────────┼─────────┼─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┼─────────┼─────────┤
+│ KC_X    │ KC_V    │ KC_J    │ KC_D    │ KC_Z    │   │ KC_QUOT │ KC_W    │ KC_SLSH │ KC_MINS │ KC_COMM │
+╰─────────┴─────────┴─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┴─────────┴─────────╯
+                              │ LT(NUM_NIGHT_V2, KC_BSPC) │ LT(SYM_NIGHT_V2, KC_R) │   │ LT(NAV_NIGHT_V2, KC_SPC) │ LT(MEDIA_NIGHT_V2, KC_ENT) │
                               │ LSFT_T(KC_DEL) │         │   │         │         │
                               ╰─────────┴─────────╯   ╰─────────┴─────────╯
 
@@ -39,23 +56,6 @@ qmk compile -kb bastardkb/skeletyl/promicro -km dario
 │ LGUI_T(KC_A) │ LALT_T(KC_R) │ LCTL_T(KC_S) │ LSFT_T(KC_T) │ KC_D    │   │ KC_H    │ RSFT_T(KC_N) │ RCTL_T(KC_E) │ RALT_T(KC_I) │ RGUI_T(KC_O) │
 ├─────────┼─────────┼─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┼─────────┼─────────┤
 │ KC_Z    │ KC_X    │ KC_C    │ KC_V    │ KC_B    │   │ KC_K    │ KC_M    │ KC_COMM │ KC_DOT  │ KC_SLSH │
-╰─────────┴─────────┴─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┴─────────┴─────────╯
-                              │ KC_ENT  │ LT(NAV, KC_SPC) │   │ KC_LSFT │ LT(NUM, KC_BSPC) │
-                              │ LT(MEDIA, KC_TAB) │         │   │         │         │
-                              ╰─────────┴─────────╯   ╰─────────┴─────────╯
-
-```
-
-## BASE_GALLIUM Layer
-
-```
-
-╭─────────┬─────────┬─────────┬─────────┬─────────╮   ╭─────────┬─────────┬─────────┬─────────┬─────────╮
-│ KC_B    │ KC_L    │ KC_D    │ KC_C    │ KC_V    │   │ KC_J    │ KC_Y    │ KC_O    │ KC_U    │ KC_COMM │
-├─────────┼─────────┼─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┼─────────┼─────────┤
-│ LGUI_T(KC_N) │ LALT_T(KC_R) │ LCTL_T(KC_T) │ LSFT_T(KC_S) │ KC_G    │   │ KC_P    │ RSFT_T(KC_H) │ RCTL_T(KC_A) │ RALT_T(KC_E) │ RGUI_T(KC_I) │
-├─────────┼─────────┼─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┼─────────┼─────────┤
-│ KC_X    │ KC_Q    │ KC_M    │ KC_W    │ KC_Z    │   │ KC_K    │ KC_F    │ KC_QUOT │ KC_SCLN │ KC_DOT  │
 ╰─────────┴─────────┴─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┴─────────┴─────────╯
                               │ KC_ENT  │ LT(NAV, KC_SPC) │   │ KC_LSFT │ LT(NUM, KC_BSPC) │
                               │ LT(MEDIA, KC_TAB) │         │   │         │         │
@@ -119,7 +119,7 @@ qmk compile -kb bastardkb/skeletyl/promicro -km dario
 ```
 
 ╭─────────┬─────────┬─────────┬─────────┬─────────╮   ╭─────────┬─────────┬─────────┬─────────┬─────────╮
-│ DF(BASE_NIGHT) │ DF(BASE_COLEMAK) │ DF(BASE_GALLIUM) │ KC_NO   │ KC_NO   │   │ KC_NO   │ KC_NO   │ KC_NO   │ KC_NO   │ KC_NO   │
+│ DF(BASE_NIGHT) │ DF(BASE_NIGHT_V2) │ DF(BASE_COLEMAK) │ KC_NO   │ KC_NO   │   │ KC_NO   │ KC_NO   │ KC_NO   │ KC_NO   │ KC_NO   │
 ├─────────┼─────────┼─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┼─────────┼─────────┤
 │ KC_LGUI │ KC_LALT │ KC_LCTL │ KC_LSFT │ KC_NO   │   │ KC_NO   │ KC_MPRV │ KC_VOLD │ KC_VOLU │ KC_MNXT │
 ├─────────┼─────────┼─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┼─────────┼─────────┤
@@ -148,41 +148,41 @@ qmk compile -kb bastardkb/skeletyl/promicro -km dario
 
 ```
 
-## NUM_NIGHT Layer
+## NUM_NIGHT_V2 Layer
 
 ```
 
 ╭─────────┬─────────┬─────────┬─────────┬─────────╮   ╭─────────┬─────────┬─────────┬─────────┬─────────╮
-│ KC_NO   │ KC_NO   │ KC_NO   │ KC_NO   │ KC_NO   │   │ KC_LBRC │ KC_4    │ KC_5    │ KC_6    │ KC_RBRC │
+│ KC_NO   │ KC_LBRC │ KC_RBRC │ KC_NO   │ KC_NO   │   │ KC_CIRC │ KC_7    │ KC_8    │ KC_9    │ KC_PERC │
 ├─────────┼─────────┼─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┼─────────┼─────────┤
-│ KC_LGUI │ KC_LALT │ KC_LCTL │ KC_LSFT │ KC_NO   │   │ KC_SLSH │ KC_1    │ KC_2    │ KC_3    │ KC_EQL  │
+│ KC_LGUI │ KC_LALT │ KC_LCTL │ KC_LSFT │ KC_PIPE │   │ KC_HASH │ KC_4    │ KC_5    │ KC_6    │ KC_GRV  │
 ├─────────┼─────────┼─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┼─────────┼─────────┤
-│ LGUI(KC_Z) │ LGUI(KC_X) │ LGUI(KC_C) │ LGUI(KC_V) │ SGUI(KC_Z) │   │ KC_GRV  │ KC_7    │ KC_8    │ KC_9    │ KC_BSLS │
+│ KC_NO   │ KC_NO   │ KC_NO   │ KC_NO   │ KC_NO   │   │ KC_DLR  │ KC_1    │ KC_2    │ KC_3    │ KC_TILD │
 ╰─────────┴─────────┴─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┴─────────┴─────────╯
-                              │ KC_NO   │ KC_NO   │   │ KC_0    │ KC_MINS │
+                              │ KC_NO   │ KC_NO   │   │ KC_0    │ KC_AT   │
                               │ KC_NO   │         │   │         │         │
                               ╰─────────┴─────────╯   ╰─────────┴─────────╯
 
 ```
 
-## SYM_NIGHT Layer
+## SYM_NIGHT_V2 Layer
 
 ```
 
 ╭─────────┬─────────┬─────────┬─────────┬─────────╮   ╭─────────┬─────────┬─────────┬─────────┬─────────╮
-│ KC_NO   │ KC_NO   │ KC_NO   │ KC_NO   │ KC_NO   │   │ KC_LCBR │ KC_DLR  │ KC_PERC │ KC_CIRC │ KC_RCBR │
+│ KC_ASTR │ KC_PERC │ KC_DLR  │ KC_DQUO │ KC_NO   │   │ KC_PLUS │ KC_LT   │ KC_LCBR │ KC_RCBR │ KC_GT   │
 ├─────────┼─────────┼─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┼─────────┼─────────┤
-│ KC_LGUI │ KC_LALT │ KC_LCTL │ KC_LSFT │ KC_NO   │   │ KC_QUES │ KC_EXLM │ KC_AT   │ KC_HASH │ KC_PLUS │
+│ KC_LGUI │ KC_LALT │ KC_LCTL │ KC_LSFT │ KC_BSLS │   │ KC_EXLM │ KC_EQL  │ KC_LPRN │ KC_RPRN │ KC_SCLN │
 ├─────────┼─────────┼─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┼─────────┼─────────┤
-│ KC_NO   │ KC_NO   │ KC_NO   │ KC_NO   │ QK_BOOT │   │ KC_TILD │ KC_AMPR │ KC_ASTR │ KC_COLN │ KC_PIPE │
+│ KC_NO   │ KC_NO   │ KC_NO   │ KC_AMPR │ KC_NO   │   │ KC_UNDS │ KC_MINS │ KC_LBRC │ KC_RBRC │ KC_COLN │
 ╰─────────┴─────────┴─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┴─────────┴─────────╯
-                              │ KC_NO   │ KC_NO   │   │ KC_RPRN │ KC_UNDS │
+                              │ KC_NO   │ KC_NO   │   │ KC_SPC  │ KC_SLSH │
                               │ KC_NO   │         │   │         │         │
                               ╰─────────┴─────────╯   ╰─────────┴─────────╯
 
 ```
 
-## NAV_NIGHT Layer
+## NAV_NIGHT_V2 Layer
 
 ```
 
@@ -199,12 +199,12 @@ qmk compile -kb bastardkb/skeletyl/promicro -km dario
 
 ```
 
-## MEDIA_NIGHT Layer
+## MEDIA_NIGHT_V2 Layer
 
 ```
 
 ╭─────────┬─────────┬─────────┬─────────┬─────────╮   ╭─────────┬─────────┬─────────┬─────────┬─────────╮
-│ DF(BASE_NIGHT) │ DF(BASE_COLEMAK) │ DF(BASE_GALLIUM) │ KC_NO   │ KC_NO   │   │ KC_NO   │ KC_NO   │ KC_NO   │ KC_NO   │ KC_NO   │
+│ DF(BASE_NIGHT) │ DF(BASE_NIGHT_V2) │ DF(BASE_COLEMAK) │ KC_NO   │ KC_NO   │   │ KC_NO   │ KC_NO   │ KC_NO   │ KC_NO   │ KC_NO   │
 ├─────────┼─────────┼─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┼─────────┼─────────┤
 │ KC_MNXT │ KC_VOLU │ KC_VOLD │ KC_MPRV │ KC_NO   │   │ KC_NO   │ KC_LSFT │ KC_LCTL │ KC_LALT │ KC_LGUI │
 ├─────────┼─────────┼─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┼─────────┼─────────┤

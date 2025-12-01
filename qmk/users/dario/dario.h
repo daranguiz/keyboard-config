@@ -5,18 +5,18 @@
 // Layer definitions
 // NOTE: Order must match config/keymap.yaml layer order
 enum layers {
-    BASE_COLEMAK,
-    BASE_GALLIUM,
     BASE_NIGHT,
+    BASE_NIGHT_V2,
+    BASE_COLEMAK,
     NUM,
     SYM,
     NAV,
     MEDIA,
     FUN,
-    NUM_NIGHT,
-    SYM_NIGHT,
-    NAV_NIGHT,
-    MEDIA_NIGHT
+    NUM_NIGHT_V2,
+    SYM_NIGHT_V2,
+    NAV_NIGHT_V2,
+    MEDIA_NIGHT_V2
 };
 
 // Not available/Not used keycodes

@@ -9,17 +9,17 @@
 #include "dario_behaviors.dtsi"
 
 #define BASE_NIGHT 0
-#define BASE_COLEMAK 1
-#define BASE_GALLIUM 2
+#define BASE_NIGHT_V2 1
+#define BASE_COLEMAK 2
 #define NUM 3
 #define SYM 4
 #define NAV 5
 #define MEDIA 6
 #define FUN 7
-#define NUM_NIGHT 8
-#define SYM_NIGHT 9
-#define NAV_NIGHT 10
-#define MEDIA_NIGHT 11
+#define NUM_NIGHT_V2 8
+#define SYM_NIGHT_V2 9
+#define NAV_NIGHT_V2 10
+#define MEDIA_NIGHT_V2 11
 
 / {
     keymap {
@@ -30,7 +30,16 @@
                 &none &kp B &kp F &kp L &kp K &kp Q &kp P &kp G &kp O &kp U &kp DOT &none
                 &none &hml LGUI N &hml LALT S &hml LCTL H &hml LSFT T &kp M &kp Y &hmr RSFT C &hmr RCTL A &hmr RALT E &hmr RGUI I &kp ENTER
                 &none &kp X &kp V &kp J &kp D &kp Z &kp SQT &kp W &kp FSLH &kp SEMI &kp COMMA &none
-                &lt SYM_NIGHT BSPC &lt NUM_NIGHT R &mt LSFT DEL &mt LSFT TAB &lt NAV_NIGHT SPACE &lt MEDIA_NIGHT ENTER
+                &lt MEDIA ENTER &lt NAV R &mt LSFT TAB &lt SYM DEL &mt RSFT SPACE &lt NUM BSPC
+            >;
+        };
+
+        base_night_v2_layer {
+            bindings = <
+                &none &kp B &kp F &kp L &kp K &kp Q &kp P &kp G &kp O &kp U &kp DOT &none
+                &none &hml LGUI N &hml LALT S &hml LCTL H &hml LSFT T &kp M &kp Y &hmr RSFT C &hmr RCTL A &hmr RALT E &hmr RGUI I &kp ENTER
+                &none &kp X &kp V &kp J &kp D &kp Z &kp SQT &kp W &kp FSLH &kp MINUS &kp COMMA &none
+                &lt NUM_NIGHT_V2 BSPC &lt SYM_NIGHT_V2 R &mt LSFT DEL &mt LSFT TAB &lt NAV_NIGHT_V2 SPACE &lt MEDIA_NIGHT_V2 ENTER
             >;
         };
 
@@ -39,15 +48,6 @@
                 &none &kp Q &kp W &kp F &kp P &kp G &kp J &kp L &kp U &kp Y &kp SQT &none
                 &none &hml LGUI A &hml LALT R &hml LCTL S &hml LSFT T &kp D &kp H &hmr RSFT N &hmr RCTL E &hmr RALT I &hmr RGUI O &kp ENTER
                 &none &kp Z &kp X &kp C &kp V &kp B &kp K &kp M &kp COMMA &kp DOT &kp FSLH &none
-                &kp ENTER &lt NAV SPACE &lt MEDIA TAB &lt SYM DEL &kp LSHFT &lt NUM BSPC
-            >;
-        };
-
-        base_gallium_layer {
-            bindings = <
-                &none &kp B &kp L &kp D &kp C &kp V &kp J &kp Y &kp O &kp U &kp COMMA &none
-                &kp LBKT &hml LGUI N &hml LALT R &hml LCTL T &hml LSFT S &kp G &kp P &hmr RSFT H &hmr RCTL A &hmr RALT E &hmr RGUI I &kp RBKT
-                &none &kp X &kp Q &kp M &kp W &kp Z &kp K &kp F &kp SQT &kp SEMI &kp DOT &none
                 &kp ENTER &lt NAV SPACE &lt MEDIA TAB &lt SYM DEL &kp LSHFT &lt NUM BSPC
             >;
         };
@@ -81,7 +81,7 @@
 
         media_layer {
             bindings = <
-                &none &to BASE_NIGHT &to BASE_COLEMAK &to BASE_GALLIUM &none &none &none &none &none &none &none &none
+                &none &to BASE_NIGHT &to BASE_NIGHT_V2 &to BASE_COLEMAK &none &none &none &none &none &none &none &none
                 &none &kp LGUI &kp LALT &kp LCTRL &kp LSHFT &none &none &kp C_PREV &kp C_VOL_DN &kp C_VOL_UP &kp C_NEXT &none
                 &none &none &none &none &none &bootloader &none &none &none &none &none &none
                 &none &none &none &kp C_STOP &kp C_PLAY_PAUSE &kp C_MUTE
@@ -97,25 +97,25 @@
             >;
         };
 
-        num_night_layer {
+        num_night_v2_layer {
             bindings = <
-                &none &none &none &none &none &none &kp LBKT &kp N4 &kp N5 &kp N6 &kp RBKT &none
-                &none &kp LGUI &kp LALT &kp LCTRL &kp LSHFT &none &kp FSLH &kp N1 &kp N2 &kp N3 &kp EQUAL &kp LBRC
-                &none &kp LG(Z) &kp LG(X) &kp LG(C) &kp LG(V) &kp LG(LS(Z)) &kp GRAVE &kp N7 &kp N8 &kp N9 &kp BSLH &none
-                &none &none &none &kp COLON &kp N0 &kp MINUS
+                &none &none &kp LBKT &kp RBKT &none &none &kp CARET &kp N7 &kp N8 &kp N9 &kp PERCENT &none
+                &none &kp LGUI &kp LALT &kp LCTRL &kp LSHFT &kp PIPE &kp HASH &kp N4 &kp N5 &kp N6 &kp GRAVE &none
+                &none &none &none &none &none &none &kp DOLLAR &kp N1 &kp N2 &kp N3 &kp TILDE &none
+                &none &none &none &kp COLON &kp N0 &kp AT
             >;
         };
 
-        sym_night_layer {
+        sym_night_v2_layer {
             bindings = <
-                &none &none &none &none &none &none &kp LBRC &kp DOLLAR &kp PERCENT &kp CARET &kp RBRC &none
-                &none &kp LGUI &kp LALT &kp LCTRL &kp LSHFT &none &kp QUESTION &kp EXCL &kp AT &kp HASH &kp PLUS &none
-                &none &none &none &none &none &bootloader &kp TILDE &kp AMPERSAND &kp ASTERISK &kp COLON &kp PIPE &none
-                &none &none &none &kp LPAR &kp RPAR &kp UNDERSCORE
+                &none &kp ASTERISK &kp PERCENT &kp DOLLAR &kp DQT &none &kp PLUS &kp LT &kp LBRC &kp RBRC &kp GT &none
+                &none &kp LGUI &kp LALT &kp LCTRL &kp LSHFT &kp BSLH &kp EXCL &kp EQUAL &kp LPAR &kp RPAR &kp SEMI &none
+                &none &none &none &none &kp AMPERSAND &none &kp UNDERSCORE &kp MINUS &kp LBKT &kp RBKT &kp COLON &none
+                &none &none &none &kp QUESTION &kp SPACE &kp FSLH
             >;
         };
 
-        nav_night_layer {
+        nav_night_v2_layer {
             bindings = <
                 &none &none &none &none &none &kp ESC &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_CLR &none
                 &none &kp LEFT &kp DOWN &kp UP &kp RIGHT &kp CAPS &none &kp LSHFT &kp LCTRL &kp LALT &kp LGUI &none
@@ -124,9 +124,9 @@
             >;
         };
 
-        media_night_layer {
+        media_night_v2_layer {
             bindings = <
-                &none &to BASE_NIGHT &to BASE_COLEMAK &to BASE_GALLIUM &none &none &none &none &none &none &none &none
+                &none &to BASE_NIGHT &to BASE_NIGHT_V2 &to BASE_COLEMAK &none &none &none &none &none &none &none &none
                 &none &kp C_NEXT &kp C_VOL_UP &kp C_VOL_DN &kp C_PREV &none &none &kp LSHFT &kp LCTRL &kp LALT &kp LGUI &none
                 &none &none &none &none &none &none &none &none &none &none &bootloader &none
                 &kp C_MUTE &kp C_PLAY_PAUSE &kp C_STOP &none &none &none
