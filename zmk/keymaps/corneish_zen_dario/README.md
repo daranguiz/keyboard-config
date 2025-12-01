@@ -430,7 +430,7 @@
 
 ```
  0: &none
- 1: &none
+ 1: &kp TILDE
  2: &kp LBKT
  3: &kp RBKT
  4: &kp PERCENT
@@ -468,7 +468,7 @@
 31: &kp N1
 32: &kp N2
 33: &kp N3
-34: &kp TILDE
+34: &kp COMMA
 35: &none
 
 36: &none

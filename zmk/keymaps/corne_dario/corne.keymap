@@ -99,9 +99,9 @@
 
         num_night_v2_layer {
             bindings = <
-                &none &none &kp LBKT &kp RBKT &kp PERCENT &none &kp CARET &kp N7 &kp N8 &kp N9 &kp DOT &none
+                &none &kp TILDE &kp LBKT &kp RBKT &kp PERCENT &none &kp CARET &kp N7 &kp N8 &kp N9 &kp DOT &none
                 &none &kp LGUI &kp LALT &kp LCTRL &kp LSHFT &kp PIPE &kp HASH &kp N4 &kp N5 &kp N6 &kp GRAVE &none
-                &none &kp LG(Z) &kp LG(X) &kp LG(C) &kp LG(V) &kp LG(LS(Z)) &kp DOLLAR &kp N1 &kp N2 &kp N3 &kp TILDE &none
+                &none &kp LG(Z) &kp LG(X) &kp LG(C) &kp LG(V) &kp LG(LS(Z)) &kp DOLLAR &kp N1 &kp N2 &kp N3 &kp COMMA &none
                 &none &none &none &kp COLON &kp N0 &kp AT
             >;
         };

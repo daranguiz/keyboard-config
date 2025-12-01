@@ -185,13 +185,13 @@ layers:
   NUM_NIGHT_V2:
     core: # (3x5)
       left:
-        - [NONE           , LBRC           , RBRC           , PERC           , NONE           ]
+        - [TILD           , LBRC           , RBRC           , PERC           , NONE           ]
         - [LGUI           , LALT           , LCTL           , LSFT           , PIPE           ]
         - [UNDO           , CUT            , COPY           , PASTE          , REDO           ]
       right:
         - [CIRC           , 7              , 8              , 9              , DOT            ]
         - [HASH           , 4              , 5              , 6              , GRV            ]
-        - [DLR            , 1              , 2              , 3              , TILD           ]
+        - [DLR            , 1              , 2              , 3              , COMM           ]
       thumbs:
         - [NONE           , NONE           , NONE           ]
         - [COLN           , 0              , AT             ]

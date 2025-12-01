@@ -532,7 +532,7 @@ qmk compile -kb lily58/rev1 -km dario
 10: KC_NO
 11: KC_NO
 12: KC_NO
-13: KC_NO
+13: KC_TILD
 14: KC_LBRC
 15: KC_RBRC
 16: KC_PERC
@@ -567,7 +567,7 @@ qmk compile -kb lily58/rev1 -km dario
 45: KC_1
 46: KC_2
 47: KC_3
-48: KC_TILD
+48: KC_COMM
 49: KC_NO
 50: KC_NO
 51: KC_NO
