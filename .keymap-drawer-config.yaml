@@ -166,6 +166,11 @@ draw_config:
 
   # Custom styling for held keys (layer activators)
   svg_extra_style: |
+    /* Increase font size for all key labels */
+    text.key {
+      font-size: 24px !important;
+    }
+
     /* Remove underline from layer activator text */
     text.layer-activator {
       text-decoration: none !important;

@@ -196,6 +196,12 @@ path.combo {
 /* End Tabler Icons Cleanup */
 
 
+    /* Increase font size for tap keys only (not hold text like modifiers) */
+    text.key.tap {
+      font-size: 20px;
+    }
+
+
     /* Remove underline from layer activator text */
     text.layer-activator {
       text-decoration: none !important;

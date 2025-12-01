@@ -176,6 +176,13 @@ class KeymapVisualizer:
         Returns:
             CSS string with dynamic layer highlighting
         """
+        css = '''
+    /* Increase font size for tap keys only (not hold text like modifiers) */
+    text.key.tap {
+      font-size: 20px;
+    }
+
+'''
         # Build CSS selectors dynamically for each BASE layer's actual layer-tap positions
         base_layer_selectors = []
         base_layer_text_selectors = []
@@ -201,8 +208,8 @@ class KeymapVisualizer:
             for pos in mod_tap_positions:
                 home_row_selectors.append(f"    .layer-{layer} .keypos-{pos} rect")
 
-        # Generate CSS
-        css = '''
+        # Continue building CSS
+        css += '''
     /* Remove underline from layer activator text */
     text.layer-activator {
       text-decoration: none !important;
@@ -762,13 +769,16 @@ class KeymapVisualizer:
         page2_layers = all_layers[3:]
 
         # Generate page SVGs
+        # For page 2, we need to pass all_layers for CSS generation context
+        # so the orange highlighting knows the thumb key positions from the BASE layer
         svg1 = self._generate_svg_for_layers(
             page1_layers, layout_size, suffix="_print1",
             output_name=output_name
         )
         svg2 = self._generate_svg_for_layers(
             page2_layers, layout_size, suffix="_print2",
-            output_name=output_name
+            output_name=output_name,
+            css_context_layers=all_layers
         )
 
         # Combine to PDF
@@ -787,7 +797,8 @@ class KeymapVisualizer:
         return pdf_file
 
     def _generate_svg_for_layers(self, layers: List, layout_size: str,
-                                 suffix: str = "", output_name: str = None) -> Path:
+                                 suffix: str = "", output_name: str = None,
+                                 css_context_layers: List = None) -> Path:
         """
         Generate SVG visualization for specific layers
 
@@ -796,6 +807,7 @@ class KeymapVisualizer:
             layout_size: Layout size identifier
             suffix: Optional suffix for filename (e.g., "_print1")
             output_name: Optional custom output name (defaults to layout_{layout_size})
+            css_context_layers: Full layer list for CSS generation context (defaults to layers)
 
         Returns:
             Path to generated SVG file
@@ -850,8 +862,10 @@ class KeymapVisualizer:
             json_file.write_text(json.dumps(keymap_data, indent=2))
 
             # Get layout-specific config (handles ortho_layout and CSS styling)
-            # Pass the layers being visualized for targeted CSS generation
-            with self._get_layout_specific_config(layout_size, layers) as layout_config:
+            # Pass css_context_layers (for CSS generation) if provided, otherwise use layers
+            # This allows page 2 of PDFs to use the BASE layer from all_layers for thumb positions
+            context_layers = css_context_layers if css_context_layers is not None else layers
+            with self._get_layout_specific_config(layout_size, context_layers) as layout_config:
                 # Parse with keymap-drawer (config must come before subcommand)
                 parse_cmd = ["keymap", "-c", str(layout_config), "parse", "-q", str(json_file)]
 
