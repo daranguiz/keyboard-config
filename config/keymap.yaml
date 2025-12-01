@@ -10,9 +10,9 @@ layers:
       right:
         - [P              , G              , O              , U              , DOT            ]
         - [Y              , hrm:RSFT:C     , hrm:RCTL:A     , hrm:RALT:E     , hrm:RGUI:I     ]
-        - [QUOT           , W              , SLSH           , SCLN           , COMM           ]
+        - [QUOT           , W              , SLSH           , MINS           , COMM           ]
       thumbs:
-        - [lt:SYM_NIGHT:BSPC   , lt:NUM_NIGHT:R              , mt:LSFT:DEL    ]
+        - [lt:NUM_NIGHT:BSPC   , lt:SYM_NIGHT:R              , mt:LSFT:DEL    ]
         - [mt:LSFT:TAB    , lt:NAV_NIGHT:SPC     , lt:MEDIA_NIGHT:ENT    ]
 
         # constraints
@@ -31,8 +31,8 @@ layers:
         outer_pinky_left: [NONE, NONE, NONE]
         outer_pinky_right: [NONE, ENT, NONE]
       3x5_3_pinky:
-        outer_pinky_left: LBRC
-        outer_pinky_right: RBRC 
+        outer_pinky_left: LBRC  # future magic
+        outer_pinky_right: RBRC # future magic
 
   BASE_COLEMAK:
     core: # (3x5)
