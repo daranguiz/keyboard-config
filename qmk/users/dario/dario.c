@@ -4,7 +4,7 @@
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         // Home row mods from all BASE layers: use HRM tapping term (280ms)
-        // BASE_COLEMAK: A/R/S/T (left), N/E/I/O (right)
+        // BASE_COLEMAK: LGUI/LALT/LCTL/LSFT on A/R/S/T (left), RSFT/RCTL/RALT/RGUI on N/E/I/O (right)
         case LGUI_T(KC_A):
         case LALT_T(KC_R):
         case LCTL_T(KC_S):
@@ -13,16 +13,15 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case RCTL_T(KC_E):
         case RALT_T(KC_I):
         case RGUI_T(KC_O):
-        // BASE_GALLIUM: N/R/T/S (left), H/A/E/I (right)
+        // BASE_NIGHT: LGUI/LALT/LCTL/LSFT on N/S/H/T (left), RSFT/RCTL/RALT/RGUI on C/A/E/I (right)
         case LGUI_T(KC_N):
-        case LCTL_T(KC_T):
-        case RSFT_T(KC_H):
-        case RCTL_T(KC_A):
-        // BASE_NIGHT: N/S/H/T (left), C/A/E/I/Y (right)
         case LALT_T(KC_S):
         case LCTL_T(KC_H):
+        // case LSFT_T(KC_T):  // Already listed above (BASE_COLEMAK)
         case RSFT_T(KC_C):
-        case RSFT_T(KC_Y):
+        case RCTL_T(KC_A):
+        case RALT_T(KC_E): 
+        case RGUI_T(KC_I):  
             return TAPPING_TERM_HRM;
 
         // Layer-tap keys: use standard tapping term (200ms)
@@ -41,25 +40,12 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     }
 }
 
-// Permissive hold for layer-tap keys
-bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
-        case LT(NAV, KC_SPC):
-        case LT(NUM, KC_BSPC):
-        case LT(SYM, KC_DEL):
-        case LT(MEDIA, KC_ENT):
-            return true;
-        default:
-            return false;
-    }
-}
-
 // Chordal hold (hold on other key press) configuration
 // Enable for home row mods (hrm:), disable for thumb shift mod-taps (mt:LSFT)
 bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         // Home row mods from all BASE layers: enable chordal hold (opposite hand rule)
-        // BASE_COLEMAK: A/R/S/T (left), H/N/E/I/O (right)
+        // BASE_COLEMAK: LGUI/LALT/LCTL/LSFT on A/R/S/T (left), RSFT/RCTL/RALT/RGUI on N/E/I/O (right)
         case LGUI_T(KC_A):
         case LALT_T(KC_R):
         case LCTL_T(KC_S):
@@ -68,16 +54,15 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
         case RCTL_T(KC_E):
         case RALT_T(KC_I):
         case RGUI_T(KC_O):
-        // BASE_GALLIUM: N/R/T/S (left), P/H/A/E/I (right)
+        // BASE_NIGHT: LGUI/LALT/LCTL/LSFT on N/S/H/T (left), RSFT/RCTL/RALT/RGUI on C/A/E/I (right)
         case LGUI_T(KC_N):
-        case LCTL_T(KC_T):
-        case RSFT_T(KC_H):
-        case RCTL_T(KC_A):
-        // BASE_NIGHT: N/S/H/T (left), Y/C/A/E/I (right)
         case LALT_T(KC_S):
         case LCTL_T(KC_H):
+        // case LSFT_T(KC_T):  // Already listed above (BASE_COLEMAK)
         case RSFT_T(KC_C):
-        case RSFT_T(KC_Y):
+        case RCTL_T(KC_A):
+        case RALT_T(KC_E):  
+        case RGUI_T(KC_I):  
             return true;  // Enable chordal hold for home row mods
 
         // Thumb shift mod-taps: disable chordal hold (use standard behavior)

@@ -1,36 +1,55 @@
 #pragma once
 
-// Global QMK Configuration for all keyboards
-// Migrated from qmk/config/global/config.h for proper QMK userspace integration
+// ============================================================================
+// QMK Configuration for Timeless Home Row Mods
+// Maps to ZMK configuration in zmk/config/dario_behaviors.dtsi
+// ============================================================================
 
-// Bootmagic: Hold upper-left key at power on to enter bootloader
-// Row 0, Column 0 is typically the upper-left key on most keyboards
-#define BOOTMAGIC_ROW 0
-#define BOOTMAGIC_COLUMN 0
+// ----------------------------------------------------------------------------
+// LAYER-TAP KEYS (LT) - Maps to ZMK &lt behavior
+// ----------------------------------------------------------------------------
 
-// Mod-tap and home row mods configuration
+// ZMK: tapping-term-ms = <200>
 #define TAPPING_TERM 200
 #define TAPPING_TERM_PER_KEY
 
-// Custom macro for home row mod tapping term
+// ZMK: quick-tap-ms = <150>
+#define QUICK_TAP_TERM 150
+
+// ZMK: flavor = "balanced"
+#define PERMISSIVE_HOLD
+
+// ----------------------------------------------------------------------------
+// HOME ROW MODS (MT) - Maps to ZMK hml/hmr behaviors
+// ----------------------------------------------------------------------------
+
+// ZMK: tapping-term-ms = <280>
 #define TAPPING_TERM_HRM 280
 
-// Flow Tap: disable holds during fast typing (like ZMK require-prior-idle-ms)
+// ZMK: require-prior-idle-ms = <150>
 #define FLOW_TAP_TERM 150
 
-// Chordal hold: opposite hands rule for tap-hold keys
-// Settles tap-hold as tap when same-hand key is pressed
+// ZMK: quick-tap-ms = <175>
+// Note: QMK uses single QUICK_TAP_TERM (150ms) for both LT and MT keys
+
+// ZMK: flavor = "balanced"
+// Note: Uses PERMISSIVE_HOLD defined above
+
+// ZMK: hold-trigger-key-positions (opposite hand rule)
 #define CHORDAL_HOLD
-#define PERMISSIVE_HOLD  // Required for chordal hold to function
-#define PERMISSIVE_HOLD_PER_KEY
 #define HOLD_ON_OTHER_KEY_PRESS_PER_KEY
 
-// Enable rapid switch from tap to hold
-#define TAPPING_FORCE_HOLD
+// ZMK: hold-trigger-on-release
+// Note: No direct QMK equivalent, approximated by CHORDAL_HOLD + PERMISSIVE_HOLD
 
-// Recommended for heavy chording
+// ----------------------------------------------------------------------------
+// ADDITIONAL QMK-SPECIFIC SETTINGS (No ZMK equivalent)
+// ----------------------------------------------------------------------------
+
+#define BOOTMAGIC_ROW 0
+#define BOOTMAGIC_COLUMN 0
+
 #define QMK_KEYS_PER_SCAN 4
 
-// Firmware size optimization
 #define NO_ACTION_MACRO
 #define NO_ACTION_FUNCTION
