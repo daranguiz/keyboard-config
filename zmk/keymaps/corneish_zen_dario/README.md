@@ -430,8 +430,8 @@
 
 ```
  0: &none
- 1: &kp ASTERISK
- 2: &kp PERCENT
+ 1: &kp PERCENT
+ 2: &kp ASTERISK
  3: &kp DOLLAR
  4: &kp DQT
  5: &none

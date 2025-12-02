@@ -185,7 +185,7 @@ layers:
   SYM_NIGHT:
     core: # (3x5)
       left:
-        - [ASTR           , PERC           , DLR            , DQUO           , NONE           ]
+        - [PERC           , ASTR           , DLR            , DQUO           , NONE           ]
         - [LGUI           , LALT           , LCTL           , LSFT           , BSLS           ]
         - [NONE           , NONE           , NONE           , AMPR           , NONE           ]
       right:

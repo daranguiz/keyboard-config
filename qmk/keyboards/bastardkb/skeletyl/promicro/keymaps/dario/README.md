@@ -153,7 +153,7 @@ qmk compile -kb bastardkb/skeletyl/promicro -km dario
 ```
 
 ╭─────────┬─────────┬─────────┬─────────┬─────────╮   ╭─────────┬─────────┬─────────┬─────────┬─────────╮
-│ KC_ASTR │ KC_PERC │ KC_DLR  │ KC_DQUO │ KC_NO   │   │ KC_PLUS │ KC_LT   │ KC_LCBR │ KC_RCBR │ KC_GT   │
+│ KC_PERC │ KC_ASTR │ KC_DLR  │ KC_DQUO │ KC_NO   │   │ KC_PLUS │ KC_LT   │ KC_LCBR │ KC_RCBR │ KC_GT   │
 ├─────────┼─────────┼─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┼─────────┼─────────┤
 │ KC_LGUI │ KC_LALT │ KC_LCTL │ KC_LSFT │ KC_BSLS │   │ KC_EXLM │ KC_EQL  │ KC_LPRN │ KC_RPRN │ KC_SCLN │
 ├─────────┼─────────┼─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┼─────────┼─────────┤

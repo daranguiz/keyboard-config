@@ -87,7 +87,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                               KC_COLN             , KC_0                , KC_AT               
     ),
     [SYM_NIGHT] = LAYOUT_split_3x5_3(
-        KC_ASTR             , KC_PERC             , KC_DLR              , KC_DQUO             , KC_NO               ,
+        KC_PERC             , KC_ASTR             , KC_DLR              , KC_DQUO             , KC_NO               ,
         KC_LGUI             , KC_LALT             , KC_LCTL             , KC_LSFT             , KC_BSLS             ,
         KC_NO               , KC_NO               , KC_NO               , KC_AMPR             , KC_NO               ,
         KC_PLUS             , KC_LT               , KC_LCBR             , KC_RCBR             , KC_GT               ,

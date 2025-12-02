@@ -69,7 +69,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
     [SYM_NIGHT] = LAYOUT(
         KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               ,
-        KC_NO               , KC_ASTR             , KC_PERC             , KC_DLR              , KC_DQUO             , KC_NO               , KC_PLUS             , KC_LT               , KC_LCBR             , KC_RCBR             , KC_GT               , KC_NO               ,
+        KC_NO               , KC_PERC             , KC_ASTR             , KC_DLR              , KC_DQUO             , KC_NO               , KC_PLUS             , KC_LT               , KC_LCBR             , KC_RCBR             , KC_GT               , KC_NO               ,
         KC_NO               , KC_LGUI             , KC_LALT             , KC_LCTL             , KC_LSFT             , KC_BSLS             , KC_EXLM             , KC_EQL              , KC_LPRN             , KC_RPRN             , KC_SCLN             , KC_NO               ,
         KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_AMPR             , KC_NO               , KC_NO               , KC_NO               , KC_UNDS             , KC_MINS             , KC_LBRC             , KC_RBRC             , KC_COLN             , KC_NO               ,
         KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_QUES             , KC_SPC              , KC_SLSH             , KC_NO               
