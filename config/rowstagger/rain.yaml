@@ -1,0 +1,19 @@
+# Rain keyboard layout
+# Based on: rain (ibrahimab000)
+#   f d l g v  q r u o ,
+#   s t h c y  j n e a i
+#   z k m p w  x b ; ' .
+
+name: "Rain"
+id: "-12406"
+group: "126"
+
+# Base layer - maps to QWERTY physical positions
+# Shift layer is auto-inferred (uppercase letters, shifted symbols)
+# Number row stays as standard QWERTY (1234567890-=)
+# Only customize alpha keys + bracket keys
+
+layout:
+  - [f,    d,    l,    g,    v,       q,    r,    u,    o,    "," ,  "[",  "]"]
+  - [s,    t,    h,    c,    y,       j,    n,    e,    a,    i,     "'"      ]
+  - [z,    k,    m,    p,    w,       x,    b,    ";",  "'",  "."            ]

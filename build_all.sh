@@ -33,6 +33,7 @@ rm -rf "$OUTPUT_DIR"
 mkdir -p "$OUTPUT_DIR/qmk"
 mkdir -p "$OUTPUT_DIR/zmk"
 mkdir -p "$OUTPUT_DIR/visualizations"
+mkdir -p "$OUTPUT_DIR/keylayout"
 echo -e "${GREEN}✓ Output directory ready: $OUTPUT_DIR${NC}"
 echo ""
 
@@ -139,6 +140,10 @@ ls -1 "$OUTPUT_DIR/zmk"/*.uf2 2>/dev/null | xargs -n1 basename || echo "  (no ZM
 echo ""
 echo "Visualizations:"
 ls -1 "$OUTPUT_DIR/visualizations"/*.svg 2>/dev/null | xargs -n1 basename || echo "  (no visualizations found)"
+
+echo ""
+echo "Row-staggered .keylayout files (macOS):"
+ls -1 "$OUTPUT_DIR/keylayout"/*.keylayout 2>/dev/null | xargs -n1 basename || echo "  (no .keylayout files found)"
 
 echo ""
 

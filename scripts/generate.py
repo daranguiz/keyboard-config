@@ -38,6 +38,8 @@ from zmk_generator import ZMKGenerator
 from file_writer import FileSystemWriter
 from validator import ConfigValidator
 from visualizer import KeymapVisualizer
+from keylayout_translator import KeylayoutTranslator
+from keylayout_generator import KeylayoutGenerator
 
 
 class KeymapGenerator:
@@ -211,6 +213,65 @@ class KeymapGenerator:
 
         print(f"  📝 Wrote {len(files)} files to {output_dir}")
 
+    def _generate_rowstagger_keylayouts(self):
+        """Generate macOS .keylayout files for row-staggered keyboards"""
+        rowstagger_dir = self.config_dir / "rowstagger"
+
+        # Check if rowstagger directory exists
+        if not rowstagger_dir.exists():
+            return  # Skip if no row-stagger configs
+
+        # Find all YAML files
+        yaml_files = list(rowstagger_dir.glob("*.yaml"))
+        if not yaml_files:
+            return  # No configs to generate
+
+        self._log(f"\n🔨 Generating row-staggered .keylayout files...")
+        self._log(f"  Found {len(yaml_files)} layout(s)")
+
+        # Initialize translator and generator
+        translator = KeylayoutTranslator()
+        template_path = self.repo_root / "scripts" / "templates" / "rowstagger_base.keylayout"
+
+        if not template_path.exists():
+            print(f"  ⚠️  Template not found: {template_path}")
+            print(f"      Skipping row-stagger generation")
+            return
+
+        generator = KeylayoutGenerator(translator, template_path)
+
+        # Create output directories
+        output_dir = self.repo_root / "out" / "keylayout"
+        output_dir.mkdir(parents=True, exist_ok=True)
+
+        success_count = 0
+        for yaml_file in yaml_files:
+            try:
+                self._verbose(f"  Processing {yaml_file.name}...")
+
+                # Parse config
+                config = YAMLConfigParser.parse_rowstagger(yaml_file)
+
+                # Generate .keylayout XML
+                xml_content = generator.generate_keylayout(config)
+
+                # Write to output
+                layout_name = yaml_file.stem  # e.g., "nightlife" from "nightlife.yaml"
+                output_file = output_dir / f"{layout_name}.keylayout"
+                with open(output_file, 'w') as f:
+                    f.write(xml_content)
+
+                print(f"  ✅ Generated {layout_name}.keylayout")
+                success_count += 1
+
+            except Exception as e:
+                print(f"  ❌ Error generating {yaml_file.name}: {e}")
+                if self.verbose:
+                    import traceback
+                    traceback.print_exc()
+
+        print(f"\n✅ Generated {success_count}/{len(yaml_files)} row-stagger layouts")
+
     def generate_all(self) -> int:
         """
         Generate keymaps for all boards
@@ -253,6 +314,9 @@ class KeymapGenerator:
         if failure_count > 0:
             print(f"❌ Failed: {failure_count} boards")
         print(f"{'='*60}")
+
+        # Generate row-staggered .keylayout files
+        self._generate_rowstagger_keylayouts()
 
         # Generate visualizations (grouped by base layer)
         visualizer = KeymapVisualizer(self.repo_root, self.qmk_translator)

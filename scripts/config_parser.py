@@ -19,6 +19,7 @@ from data_model import (
     BoardInventory,
     KeymapConfiguration,
     BehaviorAlias,
+    RowStaggerConfig,
     ValidationError
 )
 
@@ -232,3 +233,51 @@ class YAMLConfigParser:
             return {}
 
         return data
+
+    @staticmethod
+    def parse_rowstagger(yaml_path: Path) -> RowStaggerConfig:
+        """
+        Parse a row-staggered keyboard layout configuration
+
+        Args:
+            yaml_path: Path to YAML file (e.g., config/rowstagger/nightlife.yaml)
+
+        Returns:
+            RowStaggerConfig with layout definition
+
+        Example YAML structure:
+            name: "Nightlife"
+            id: "-12407"
+            group: "126"
+            layout:
+              - [f, d, l, g, v, q, r, u, o, ",", "[", "]"]  # Row 1 (12 keys)
+              - [s, t, h, c, y, j, n, e, a, i, "'"]         # Row 2 (11 keys)
+              - [z, k, m, p, w, x, b, ";", ".", /]          # Row 3 (10 keys)
+        """
+        with open(yaml_path, 'r') as f:
+            data = yaml.safe_load(f)
+
+        # Validate required fields
+        required_fields = ['name', 'id', 'group', 'layout']
+        for field in required_fields:
+            if field not in data:
+                raise ValidationError(
+                    f"Row-stagger config must contain '{field}' field"
+                )
+
+        # Validate layout is a list
+        if not isinstance(data['layout'], list):
+            raise ValidationError("'layout' must be a list of rows")
+
+        # Create config
+        config = RowStaggerConfig(
+            name=data['name'],
+            id=data['id'],
+            group=data['group'],
+            layout=data['layout']
+        )
+
+        # Validate
+        config.validate()
+
+        return config

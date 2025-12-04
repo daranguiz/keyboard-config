@@ -1,0 +1,17 @@
+# Nightlight keyboard layout
+# Left hand: b f r l x / n s h t m / v j k d z
+# Right hand: p g o u . / y c a e i / ' w q ; ,
+
+name: "Nightlight"
+id: "-12405"
+group: "126"
+
+# Base layer - maps to QWERTY physical positions
+# Shift layer is auto-inferred (uppercase letters, shifted symbols)
+# Number row stays as standard QWERTY (1234567890-=)
+# Only customize alpha keys + bracket keys
+
+layout:
+  - [b,    f,    r,    l,    x,       "'",  g,    o,    u,    "." ,  "[",  "]"]
+  - [n,    s,    h,    t,    m,       y,    c,    a,    e,    i,     /       ]
+  - [v,    j,    k,    d,    z,       p,    w,    q,    ";",  ","            ]

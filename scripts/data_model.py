@@ -311,3 +311,49 @@ class BehaviorAlias:
         if "zmk" not in self.firmware_support:
             return "&none"  # Filter unsupported
         return self.zmk_pattern.format(**kwargs)
+
+
+@dataclass
+class RowStaggerConfig:
+    """
+    Represents a row-staggered keyboard layout configuration for macOS .keylayout generation
+
+    Fields:
+    - name: Layout name (e.g., "Nightlife", "Colemak")
+    - id: macOS keyboard ID (e.g., "-12407")
+    - group: macOS keyboard group (e.g., "126")
+    - layout: Base layer layout - 3 rows mapping to QWERTY positions
+      Row 1: q w e r t y u i o p [ ] (12 keys)
+      Row 2: a s d f g h j k l ; ' (11 keys)
+      Row 3: z x c v b n m , . / (10 keys)
+
+    Shift layer is auto-inferred from base layer:
+    - Letters: uppercase
+    - Symbols: standard shift mappings (, → <, [ → {, etc.)
+
+    Number row stays as standard QWERTY (1234567890-=)
+    All other keys (modifiers, space, enter, etc.) stay standard ANSI
+    """
+    name: str
+    id: str
+    group: str
+    layout: List[List[str]]  # 3 rows of keys
+
+    def __post_init__(self):
+        """Normalize all values to strings (handles YAML integers)"""
+        self.layout = [[str(key) for key in row] for row in self.layout]
+
+    def validate(self):
+        """Validate row-stagger configuration"""
+        if len(self.layout) != 3:
+            raise ValidationError(
+                f"Row-stagger layout must have exactly 3 rows, found {len(self.layout)}"
+            )
+
+        # Validate row lengths
+        expected_lengths = [12, 11, 10]  # q-], a-', z-/
+        for i, (row, expected) in enumerate(zip(self.layout, expected_lengths)):
+            if len(row) != expected:
+                raise ValidationError(
+                    f"Row {i+1} must have {expected} keys, found {len(row)}"
+                )

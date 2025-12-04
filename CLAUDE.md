@@ -37,6 +37,45 @@ The repository uses a code generation approach where all keymaps are defined in 
 2. Run `python3 scripts/generate.py` to generate keymaps
 3. Build with `./build_all.sh` or `qmk userspace-compile`
 
+### Row-Staggered Keyboard Support (macOS .keylayout)
+
+In addition to split ergonomic keyboards, the repository supports **row-staggered** (traditional) keyboard layouts with macOS `.keylayout` file generation:
+
+- **Separate config directory**: `config/rowstagger/` contains YAML files for row-stagger layouts
+- **macOS OS-level remapping**: Generates `.keylayout` XML files that can be installed in macOS
+- **Multiple layout support**: Each YAML file generates one `.keylayout` for easy experimentation
+- **Auto-generated shift layer**: Shift mappings are automatically inferred from base layer
+
+**Workflow**:
+1. Create or edit YAML file in `config/rowstagger/` (e.g., `nightlife.yaml`)
+2. Define 3 rows mapping to QWERTY physical positions
+3. Run `./build_all.sh` or `python3 scripts/generate.py`
+4. Install generated `.keylayout` from `out/keylayout/` to macOS
+
+**Example YAML (config/rowstagger/nightlife.yaml)**:
+```yaml
+name: "Nightlife"
+id: "-12407"
+group: "126"
+
+layout:
+  # QWERTY positions: q w e r t y u i o p [ ]
+  - [f, d, l, g, v, q, r, u, o, ",", "[", "]"]
+
+  # QWERTY positions: a s d f g h j k l ; '
+  - [s, t, h, c, y, j, n, e, a, i, "'"]
+
+  # QWERTY positions: z x c v b n m , . /
+  - [z, k, m, p, w, x, b, ";", ".", /]
+```
+
+**Notes**:
+- Only customize alpha keys (3 rows) + brackets `[]`
+- Number row stays as QWERTY (1234567890-=)
+- All other keys (modifiers, space, enter, etc.) stay standard ANSI
+- Shift layer is auto-inferred: letters → uppercase, symbols → shifted (`,` → `<`, `[` → `{`, etc.)
+- Each `.keylayout` file appears as a separate keyboard layout in macOS System Preferences → Keyboard → Input Sources
+
 ## Build Commands
 
 ### Setup (First Time)
@@ -244,7 +283,10 @@ qmk_userspace/
 ├── config/                           # ✨ Unified configuration (user-editable)
 │   ├── keymap.yaml                   # Single source of truth for all keymaps
 │   ├── boards.yaml                   # Board inventory and configuration
-│   └── aliases.yaml                  # Firmware-agnostic behavior aliases
+│   ├── aliases.yaml                  # Firmware-agnostic behavior aliases
+│   └── rowstagger/                   # Row-staggered keyboard layouts (macOS)
+│       ├── nightlife.yaml            # Example: "nightlife" layout
+│       └── *.yaml                    # Additional custom layouts
 │
 ├── qmk/                              # QMK userspace root (QMK_USERSPACE points here)
 │   ├── config/                       # QMK-specific settings (user-editable)
@@ -294,6 +336,7 @@ qmk_userspace/
 ├── out/                              # Build artifacts (cleaned on each build)
 │   ├── qmk/                          # QMK firmware (.hex, .uf2)
 │   ├── zmk/                          # ZMK firmware (.uf2)
+│   ├── keylayout/                    # macOS .keylayout files (row-stagger)
 │   └── visualizations/               # Keymap diagrams (.svg)
 │
 ├── build_all.sh                      # Build all keyboards (sets QMK_USERSPACE, runs generator)
