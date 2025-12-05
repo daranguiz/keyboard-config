@@ -69,7 +69,7 @@ class KeymapVisualizer:
 
         # Smart defaults for common keys
         if len(key) == 1 and key.isalpha():
-            return key.upper()  # Single letters → uppercase
+            return key.lower()  # Single letters → lowercase
 
         # Map of special keys to friendly names
         special_keys = {
@@ -140,7 +140,9 @@ class KeymapVisualizer:
 
         # Layer-tap mappings
         for layer, key in lt_combinations:
-            qmk_code = f"LT({layer}, KC_{key})"
+            # Lowercase alpha keys in the QMK code to match translation output
+            key_display = key.lower() if len(key) == 1 and key.isalpha() else key
+            qmk_code = f"LT({layer}, KC_{key_display})"
             tap_display = self._get_friendly_key_name(key)
             # Use layer_legend_map to get friendly layer name, fallback to layer name
             hold_display = layer_legend_map.get(layer, layer)
@@ -148,7 +150,9 @@ class KeymapVisualizer:
 
         # Mod-tap mappings
         for mod, key in mt_combinations:
-            qmk_code = f"{mod}_T(KC_{key})"
+            # Lowercase alpha keys in the QMK code to match translation output
+            key_display = key.lower() if len(key) == 1 and key.isalpha() else key
+            qmk_code = f"{mod}_T(KC_{key_display})"
             tap_display = self._get_friendly_key_name(key)
             # Get modifier display from keycodes.yaml, fallback to mod name
             hold_display = self._get_friendly_key_name(mod)
@@ -432,6 +436,12 @@ class KeymapVisualizer:
     .key.ghost rect {
       opacity: 0.3 !important;
     }
+
+    /* Increase font size and make bold for all tap labels (matching row-stagger) */
+    .tap {
+      font-size: 32px;
+      font-weight: 900;
+    }
 '''
         return css
 
@@ -601,7 +611,9 @@ class KeymapVisualizer:
             parts = keycode.split(":")
             if len(parts) == 3:
                 mod, key = parts[1], parts[2]
-                return f"{mod}_T(KC_{key})"
+                # Lowercase single letter keys
+                key_display = key.lower() if len(key) == 1 and key.isalpha() else key
+                return f"{mod}_T(KC_{key_display})"
 
         # Handle mod-tap: mt:MOD:KEY -> MOD_T(KC_KEY)
         # Same display as hrm, but different behavior (no chordal hold)
@@ -609,14 +621,18 @@ class KeymapVisualizer:
             parts = keycode.split(":")
             if len(parts) == 3:
                 mod, key = parts[1], parts[2]
-                return f"{mod}_T(KC_{key})"
+                # Lowercase single letter keys
+                key_display = key.lower() if len(key) == 1 and key.isalpha() else key
+                return f"{mod}_T(KC_{key_display})"
 
         # Handle layer-tap: lt:LAYER:KEY -> LT(LAYER, KC_KEY)
         if keycode.startswith("lt:"):
             parts = keycode.split(":")
             if len(parts) == 3:
                 layer, key = parts[1], parts[2]
-                return f"LT({layer}, KC_{key})"
+                # Lowercase single letter keys
+                key_display = key.lower() if len(key) == 1 and key.isalpha() else key
+                return f"LT({layer}, KC_{key_display})"
 
         # Handle default layer switch: df:LAYER -> DF(LAYER)
         if keycode.startswith("df:"):
@@ -639,6 +655,9 @@ class KeymapVisualizer:
             return "QK_BOOT"
 
         # Regular keycodes - prefix with KC_ for keymap-drawer
+        # Only lowercase single letter alpha keys
+        if len(keycode) == 1 and keycode.isalpha():
+            return f"KC_{keycode.lower()}"
         return f"KC_{keycode}"
 
     def _reorder_keys_for_qmk(self, keycodes: List[str], layout_size: str) -> List[str]:
@@ -957,9 +976,10 @@ class KeymapVisualizer:
         # Combine to PDF
         pdf_file = self._combine_svgs_to_pdf(output_name, [svg1, svg2])
 
-        # Clean up intermediate SVGs
-        svg1.unlink()
-        svg2.unlink()
+        # Clean up intermediate SVGs only if PDF generation succeeded
+        if pdf_file:
+            svg1.unlink()
+            svg2.unlink()
 
         # Clean up JSON files
         for suffix in ["_print1", "_print2"]:
@@ -1100,47 +1120,124 @@ class KeymapVisualizer:
             traceback.print_exc()
             return None
 
-    def _combine_svgs_to_pdf(self, output_name: str, svg_files: List[Path]) -> Path:
+    def _add_inline_styles_for_pdf(self, svg_content: str) -> str:
+        """
+        Add inline style attributes to text elements for PDF rendering
+
+        svglib doesn't support CSS classes well, so we need to add inline styles
+        to ensure proper rendering in PDFs.
+
+        Args:
+            svg_content: SVG markup string
+
+        Returns:
+            Updated SVG markup with inline styles
+        """
+        import re
+
+        # Pattern to match text elements with class="key tap" and capture the content
+        pattern = re.compile(
+            r'(<text\s+[^>]*class="(?:[^"]*\s)?tap(?:\s[^"]*)?"[^>]*)(>)([^<]*)(</text>)',
+            re.IGNORECASE
+        )
+
+        def add_inline_style(match: re.Match) -> str:
+            opening_tag = match.group(1)
+            closing_bracket = match.group(2)
+            content = match.group(3)
+            closing_tag = match.group(4)
+
+            # Determine if this should be bold
+            # Bold for: single alphas, single digits, symbols (not multi-char words like "Space", "Undo", F1-F12)
+            should_be_bold = (
+                (len(content) == 1) or  # Single char (letters, digits, symbols)
+                (len(content) == 2 and not content[0].isalpha())  # Two-char symbols like !=, &&
+            )
+
+            # Exclude function keys (F1-F12) and other multi-char names
+            if content.startswith('F') and len(content) > 1 and content[1:].isdigit():
+                should_be_bold = False
+
+            if should_be_bold:
+                # Bold styling for letters, numbers, symbols
+                if 'style=' in opening_tag:
+                    opening_tag = opening_tag.replace('style="', 'style="font-size: 28px; font-weight: bold; ')
+                else:
+                    opening_tag = f'{opening_tag} style="font-size: 28px; font-weight: bold"'
+                opening_tag = f'{opening_tag} font-weight="bold" font-size="28"'
+            else:
+                # Regular weight and smaller for named keys (Space, Undo, F1-F12, etc.)
+                if 'style=' in opening_tag:
+                    opening_tag = opening_tag.replace('style="', 'style="font-size: 20px; ')
+                else:
+                    opening_tag = f'{opening_tag} style="font-size: 20px"'
+                opening_tag = f'{opening_tag} font-size="20"'
+
+            return f'{opening_tag}{closing_bracket}{content}{closing_tag}'
+
+        return pattern.sub(add_inline_style, svg_content)
+
+    def _combine_svgs_to_pdf(self, output_name: str, svg_files: List[Path]) -> Optional[Path]:
         """Combine multiple SVGs into single multi-page PDF"""
 
         pdf_path = self.output_dir / f"{output_name}_print.pdf"
 
-        # Create PDF canvas
-        c = canvas.Canvas(str(pdf_path), pagesize=letter)
-        page_width, page_height = letter
+        try:
+            # Create PDF canvas
+            c = canvas.Canvas(str(pdf_path), pagesize=letter)
+            page_width, page_height = letter
 
-        for svg_path in svg_files:
-            # Render SVG to ReportLab drawing
-            drawing = svg2rlg(str(svg_path))
+            for svg_path in svg_files:
+                # Read SVG content and add inline styles for PDF rendering
+                svg_content = svg_path.read_text()
+                svg_content = self._add_inline_styles_for_pdf(svg_content)
 
-            if drawing is None:
-                print(f"  ⚠️  Failed to load SVG: {svg_path}")
-                continue
+                # Write modified SVG to temp file
+                import tempfile
+                with tempfile.NamedTemporaryFile(mode='w', suffix='.svg', delete=False) as tmp:
+                    tmp.write(svg_content)
+                    tmp_path = tmp.name
 
-            # Scale to fit page (with margins)
-            margin = 36  # 0.5 inch margins
-            available_width = page_width - (2 * margin)
-            available_height = page_height - (2 * margin)
+                try:
+                    # Render SVG to ReportLab drawing
+                    drawing = svg2rlg(tmp_path)
 
-            # Calculate scaling factor to fit page
-            scale_x = available_width / drawing.width
-            scale_y = available_height / drawing.height
-            scale = min(scale_x, scale_y, 1.0)  # Don't scale up, only down
+                    if drawing is None:
+                        print(f"  ⚠️  Failed to load SVG: {svg_path}")
+                        continue
 
-            # Center the drawing
-            scaled_width = drawing.width * scale
-            scaled_height = drawing.height * scale
-            x = margin + (available_width - scaled_width) / 2
-            y = margin + (available_height - scaled_height) / 2
+                    # Scale to fit page (with margins)
+                    margin = 36  # 0.5 inch margins
+                    available_width = page_width - (2 * margin)
+                    available_height = page_height - (2 * margin)
 
-            # Draw on canvas
-            drawing.scale(scale, scale)
-            renderPDF.draw(drawing, c, x, y)
-            c.showPage()
+                    # Calculate scaling factor to fit page
+                    scale_x = available_width / drawing.width
+                    scale_y = available_height / drawing.height
+                    scale = min(scale_x, scale_y, 1.0)  # Don't scale up, only down
 
-        c.save()
-        print(f"    📄 {pdf_path.name}")
-        return pdf_path
+                    # Center the drawing
+                    scaled_width = drawing.width * scale
+                    scaled_height = drawing.height * scale
+                    x = margin + (available_width - scaled_width) / 2
+                    y = margin + (available_height - scaled_height) / 2
+
+                    # Draw on canvas
+                    drawing.scale(scale, scale)
+                    renderPDF.draw(drawing, c, x, y)
+                    c.showPage()
+                finally:
+                    # Clean up temp file
+                    import os
+                    if os.path.exists(tmp_path):
+                        os.unlink(tmp_path)
+
+            c.save()
+            print(f"    📄 {pdf_path.name}")
+            return pdf_path
+        except Exception as e:
+            print(f"  ⚠️  PDF generation failed (SVG output is still available): {e}")
+            return None
 
     def _old_generate_superset_visualizations(self, board_inventory) -> Dict[str, Optional[Path]]:
         """
@@ -1776,7 +1873,7 @@ class KeymapVisualizer:
                     .keypos-57 rect, .keypos-58 rect, .keypos-59 rect, .keypos-60 rect
                     {{ fill: #999999 !important; }}
                     /* Increase legend size */
-                    .tap {{ font-size: 24px !important; font-weight: 600 !important; }}
+                    .tap {{ font-size: 32px; font-weight: 900; }}
                     /* Fingermap colors (per-key targeting) */
                     {fingermap_css}
                 """

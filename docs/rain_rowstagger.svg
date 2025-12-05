@@ -136,7 +136,7 @@ path.combo {
                     .keypos-57 rect, .keypos-58 rect, .keypos-59 rect, .keypos-60 rect
                     { fill: #999999 !important; }
                     /* Increase legend size */
-                    .tap { font-size: 24px !important; font-weight: 600 !important; }
+                    .tap { font-size: 32px; font-weight: 900; }
                     /* Fingermap colors (per-key targeting) */
                     
                 </style>

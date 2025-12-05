@@ -104,15 +104,16 @@ draw_config:
     thumbs: 3
 
   # Glyph/icon dimensions (increased from defaults for better visibility)
-  glyph_tap_size: 18      # default: 14
-  glyph_hold_size: 15     # default: 12
-  glyph_shifted_size: 13  # default: 10
+  glyph_tap_size: 28      # default: 14, matching row-stagger
+  glyph_hold_size: 20     # default: 12, matching row-stagger
+  glyph_shifted_size: 16  # default: 10, matching row-stagger
 
   # Custom styling for held keys (layer activators)
   svg_extra_style: |
-    /* Increase font size for all key labels */
-    text.key {
+    /* Increase font size and make bold for all tap labels (matching row-stagger) */
+    .tap {
       font-size: 24px !important;
+      font-weight: 600 !important;
     }
 
     /* Remove underline from layer activator text */
