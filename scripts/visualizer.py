@@ -957,17 +957,17 @@ class KeymapVisualizer:
         page1_layers = all_layers[:3]
         page2_layers = all_layers[3:]
 
-        # Generate page SVGs
+        # Generate page SVGs for PDF (no white outline on labels)
         # For page 2, we need to pass all_layers for CSS generation context
         # so the orange highlighting knows the thumb key positions from the BASE layer
         svg1 = self._generate_svg_for_layers(
             page1_layers, layout_size, suffix="_print1",
-            output_name=output_name
+            output_name=output_name, for_display=False
         )
         svg2 = self._generate_svg_for_layers(
             page2_layers, layout_size, suffix="_print2",
             output_name=output_name,
-            css_context_layers=all_layers
+            css_context_layers=all_layers, for_display=False
         )
 
         # Combine to PDF
@@ -988,7 +988,7 @@ class KeymapVisualizer:
 
     def _generate_svg_for_layers(self, layers: List, layout_size: str,
                                  suffix: str = "", output_name: str = None,
-                                 css_context_layers: List = None) -> Path:
+                                 css_context_layers: List = None, for_display: bool = True) -> Path:
         """
         Generate SVG visualization for specific layers
 
@@ -998,6 +998,7 @@ class KeymapVisualizer:
             suffix: Optional suffix for filename (e.g., "_print1")
             output_name: Optional custom output name (defaults to layout_{layout_size})
             css_context_layers: Full layer list for CSS generation context (defaults to layers)
+            for_display: If True, apply SVG styling (white outline). If False, apply PDF styling (no outline).
 
         Returns:
             Path to generated SVG file
@@ -1100,8 +1101,9 @@ class KeymapVisualizer:
                 svg_output = svg_output.replace('NAV_NIGHT', 'NAV')
                 svg_output = svg_output.replace('MEDIA_NIGHT', 'MEDIA')
 
-                # Apply inline styles for better rendering (with white outline for SVG)
-                svg_output = self._add_inline_styles_for_pdf(svg_output, for_pdf=False)
+                # Apply inline styles for better rendering
+                # for_display controls white outline: True=white outline (SVG), False=no outline (PDF)
+                svg_output = self._add_inline_styles_for_pdf(svg_output, for_pdf=not for_display)
 
                 # Write SVG file
                 svg_file.write_text(svg_output)
@@ -1243,12 +1245,8 @@ class KeymapVisualizer:
             temp_pdfs = []
 
             for svg_path in svg_files:
-                # Read SVG content and add inline styles
+                # Read SVG content (styles already applied with for_display=False)
                 svg_content = svg_path.read_text()
-                svg_content = self._add_inline_styles_for_pdf(svg_content)
-
-                # Note: Font-family is already added in _add_inline_styles_for_pdf
-                # No need for additional font replacement here
 
                 # Create temp PDF for this page
                 with tempfile.NamedTemporaryFile(mode='w', suffix='.pdf', delete=False) as tmp_pdf:
@@ -1316,17 +1314,17 @@ class KeymapVisualizer:
         try:
             import cairosvg
 
-            # Generate SVG for just the base layer
+            # Generate SVG for just the base layer (for PDF, no white outline)
             svg_file = self._generate_svg_for_layers(
                 [base_layer],
                 layout_size,
                 suffix="_base",
-                output_name=output_name
+                output_name=output_name,
+                for_display=False
             )
 
-            # Read SVG content and add inline styles
+            # Read SVG content (styles already applied with for_display=False)
             svg_content = svg_file.read_text()
-            svg_content = self._add_inline_styles_for_pdf(svg_content)
 
             # Convert SVG to PDF using cairosvg
             cairosvg.svg2pdf(bytestring=svg_content.encode('utf-8'), write_to=str(pdf_path))
