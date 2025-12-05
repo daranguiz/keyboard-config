@@ -1701,12 +1701,48 @@ class KeymapVisualizer:
 
     def _rowstagger_to_keymap_yaml(self, config, translator, info_json_path: Path) -> Dict:
         """Convert row-stagger config to keymap-drawer YAML format"""
+        # Build CSS for fingermap coloring if provided
+        fingermap_css = ""
+        if config.fingermap:
+            finger_colors = {
+                0: "#ff9999",  # L-pinky - pink
+                1: "#ffbb88",  # L-ring - orange
+                2: "#ffee88",  # L-middle - yellow
+                3: "#99dd99",  # L-index - green
+                4: "#88ccff",  # R-index - blue
+                5: "#bb99ff",  # R-middle - purple
+                6: "#ffaa88",  # R-ring - coral
+                7: "#ff99cc",  # R-pinky - rose
+            }
+
+            # Build CSS that targets keys by their index in the layer
+            # Layer structure: 14 (number row) + [Tab + 12 alphas + \] + [Caps + 11 alphas + Enter] + [Shift + 10 alphas + Shift] + 8 (space row)
+            # Alpha keys start at index 15 (after number row + Tab)
+            css_rules = []
+
+            # Top row alphas (keypos 15-26: b through ])
+            for i, finger in enumerate(config.fingermap[0]):
+                key_idx = 15 + i
+                css_rules.append(f".keypos-{key_idx} rect {{ fill: {finger_colors[finger]} !important; }}")
+
+            # Home row alphas (keypos 29-39: n through /)
+            for i, finger in enumerate(config.fingermap[1]):
+                key_idx = 29 + i
+                css_rules.append(f".keypos-{key_idx} rect {{ fill: {finger_colors[finger]} !important; }}")
+
+            # Bottom row alphas (keypos 42-51: v through ,)
+            for i, finger in enumerate(config.fingermap[2]):
+                key_idx = 42 + i
+                css_rules.append(f".keypos-{key_idx} rect {{ fill: {finger_colors[finger]} !important; }}")
+
+            fingermap_css = "\n".join(css_rules)
+
         return {
             "layout": {
                 "qmk_info_json": str(info_json_path)
             },
             "layers": {
-                "Base": self._build_flat_layer(config.layout)
+                "Base": self._build_flat_layer(config.layout, config.fingermap)
             },
             "draw_config": {
                 "key_h": 60,
@@ -1728,11 +1764,21 @@ class KeymapVisualizer:
                 "glyph_tap_size": 28,
                 "glyph_hold_size": 20,
                 "glyph_shifted_size": 16,
-                "svg_extra_style": """
-                    /* Grey out empty keys (number row, modifiers) */
-                    .key:has(text:empty) .key-base { fill: #d0d0d0 !important; }
+                "svg_extra_style": f"""
+                    /* Grey out number row, modifiers, and spacebar by keypos */
+                    .keypos-0 rect, .keypos-1 rect, .keypos-2 rect, .keypos-3 rect,
+                    .keypos-4 rect, .keypos-5 rect, .keypos-6 rect, .keypos-7 rect,
+                    .keypos-8 rect, .keypos-9 rect, .keypos-10 rect, .keypos-11 rect,
+                    .keypos-12 rect, .keypos-13 rect,
+                    .keypos-14 rect, .keypos-27 rect, .keypos-28 rect, .keypos-40 rect,
+                    .keypos-41 rect, .keypos-52 rect,
+                    .keypos-53 rect, .keypos-54 rect, .keypos-55 rect, .keypos-56 rect,
+                    .keypos-57 rect, .keypos-58 rect, .keypos-59 rect, .keypos-60 rect
+                    {{ fill: #999999 !important; }}
                     /* Increase legend size */
-                    .tap { font-size: 24px !important; font-weight: 600 !important; }
+                    .tap {{ font-size: 24px !important; font-weight: 600 !important; }}
+                    /* Fingermap colors (per-key targeting) */
+                    {fingermap_css}
                 """
             }
         }
@@ -1782,30 +1828,19 @@ class KeymapVisualizer:
             }
         }
 
-    def _build_flat_layer(self, layout: List[List[str]]) -> List:
+    def _build_flat_layer(self, layout: List[List[str]], fingermap: Optional[List[List[int]]] = None) -> List:
         """Build a flat list of keys for the layer"""
-        # Default key (empty string will be styled grey)
-        dk = ""
-
-        # Mark homing keys (f and j positions in QWERTY = indices 3 and 6 on home row)
-        # Add a marker (·) that will be styled to look like a homing bump
-        home_row_keys = []
-        for i, key in enumerate(layout[1]):  # Home row
-            if i == 3 or i == 6:  # f and j positions
-                home_row_keys.append(f"{key}\n·")  # Add dot below for homing indicator
-            else:
-                home_row_keys.append(key)
-
-        # Flatten the layout to match the physical layout spec
+        # Build a simple list of keys
+        # Fingermap styling will be handled by generating CSS that targets specific key indices
         return (
-            # Number row (14 keys) - all empty/grey
-            [dk] * 14 +
+            # Number row (14 keys) - all empty (will be grey)
+            [""] * 14 +
             # Top row (1.5u Tab + 12 alphas + 1.5u backslash)
-            [dk] + layout[0] + [dk] +
+            [""] + layout[0] + [""] +
             # Home row (1.75u Caps + 11 alphas + 2.25u Enter)
-            [dk] + home_row_keys + [dk] +
+            [""] + layout[1] + [""] +
             # Bottom row (2.25u Shift + 10 alphas + 2.75u Shift)
-            [dk] + layout[2] + [dk] +
-            # Space row (8 keys) - all empty/grey
-            [dk] * 8
+            [""] + layout[2] + [""] +
+            # Space row (8 keys) - all empty (will be grey)
+            [""] * 8
         )

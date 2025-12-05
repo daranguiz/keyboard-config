@@ -125,10 +125,20 @@ path.combo {
 /* End Tabler Icons Cleanup */
 
 
-                    /* Grey out empty keys (number row, modifiers) */
-                    .key:has(text:empty) .key-base { fill: #d0d0d0 !important; }
+                    /* Grey out number row, modifiers, and spacebar by keypos */
+                    .keypos-0 rect, .keypos-1 rect, .keypos-2 rect, .keypos-3 rect,
+                    .keypos-4 rect, .keypos-5 rect, .keypos-6 rect, .keypos-7 rect,
+                    .keypos-8 rect, .keypos-9 rect, .keypos-10 rect, .keypos-11 rect,
+                    .keypos-12 rect, .keypos-13 rect,
+                    .keypos-14 rect, .keypos-27 rect, .keypos-28 rect, .keypos-40 rect,
+                    .keypos-41 rect, .keypos-52 rect,
+                    .keypos-53 rect, .keypos-54 rect, .keypos-55 rect, .keypos-56 rect,
+                    .keypos-57 rect, .keypos-58 rect, .keypos-59 rect, .keypos-60 rect
+                    { fill: #999999 !important; }
                     /* Increase legend size */
                     .tap { font-size: 24px !important; font-weight: 600 !important; }
+                    /* Fingermap colors (per-key targeting) */
+                    
                 </style>
 <g transform="translate(30, 0)" class="layer-Base">
 <text x="0" y="28" class="label" id="Base">Base:</text>
@@ -246,9 +256,7 @@ path.combo {
 </g>
 <g transform="translate(315, 150)" class="key keypos-32">
 <rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key"/>
-<text x="0" y="0" class="key tap">
-<tspan x="0" dy="-0.6em">c</tspan><tspan x="0" dy="1.2em">·</tspan>
-</text>
+<text x="0" y="0" class="key tap">c</text>
 </g>
 <g transform="translate(375, 150)" class="key keypos-33">
 <rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key"/>
@@ -260,9 +268,7 @@ path.combo {
 </g>
 <g transform="translate(495, 150)" class="key keypos-35">
 <rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key"/>
-<text x="0" y="0" class="key tap">
-<tspan x="0" dy="-0.6em">n</tspan><tspan x="0" dy="1.2em">·</tspan>
-</text>
+<text x="0" y="0" class="key tap">n</text>
 </g>
 <g transform="translate(555, 150)" class="key keypos-36">
 <rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key"/>

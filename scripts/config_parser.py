@@ -274,7 +274,8 @@ class YAMLConfigParser:
             name=data['name'],
             id=data['id'],
             group=data['group'],
-            layout=data['layout']
+            layout=data['layout'],
+            fingermap=data.get('fingermap')  # Optional field
         )
 
         # Validate

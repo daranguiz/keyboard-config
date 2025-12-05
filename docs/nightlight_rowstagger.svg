@@ -125,10 +125,52 @@ path.combo {
 /* End Tabler Icons Cleanup */
 
 
-                    /* Grey out empty keys (number row, modifiers) */
-                    .key:has(text:empty) .key-base { fill: #d0d0d0 !important; }
+                    /* Grey out number row, modifiers, and spacebar by keypos */
+                    .keypos-0 rect, .keypos-1 rect, .keypos-2 rect, .keypos-3 rect,
+                    .keypos-4 rect, .keypos-5 rect, .keypos-6 rect, .keypos-7 rect,
+                    .keypos-8 rect, .keypos-9 rect, .keypos-10 rect, .keypos-11 rect,
+                    .keypos-12 rect, .keypos-13 rect,
+                    .keypos-14 rect, .keypos-27 rect, .keypos-28 rect, .keypos-40 rect,
+                    .keypos-41 rect, .keypos-52 rect,
+                    .keypos-53 rect, .keypos-54 rect, .keypos-55 rect, .keypos-56 rect,
+                    .keypos-57 rect, .keypos-58 rect, .keypos-59 rect, .keypos-60 rect
+                    { fill: #999999 !important; }
                     /* Increase legend size */
                     .tap { font-size: 24px !important; font-weight: 600 !important; }
+                    /* Fingermap colors (per-key targeting) */
+                    .keypos-15 rect { fill: #ff9999 !important; }
+.keypos-16 rect { fill: #ffbb88 !important; }
+.keypos-17 rect { fill: #ffee88 !important; }
+.keypos-18 rect { fill: #ffee88 !important; }
+.keypos-19 rect { fill: #99dd99 !important; }
+.keypos-20 rect { fill: #88ccff !important; }
+.keypos-21 rect { fill: #88ccff !important; }
+.keypos-22 rect { fill: #bb99ff !important; }
+.keypos-23 rect { fill: #ffaa88 !important; }
+.keypos-24 rect { fill: #ff99cc !important; }
+.keypos-25 rect { fill: #ff99cc !important; }
+.keypos-26 rect { fill: #ff99cc !important; }
+.keypos-29 rect { fill: #ff9999 !important; }
+.keypos-30 rect { fill: #ffbb88 !important; }
+.keypos-31 rect { fill: #ffee88 !important; }
+.keypos-32 rect { fill: #99dd99 !important; }
+.keypos-33 rect { fill: #99dd99 !important; }
+.keypos-34 rect { fill: #88ccff !important; }
+.keypos-35 rect { fill: #88ccff !important; }
+.keypos-36 rect { fill: #bb99ff !important; }
+.keypos-37 rect { fill: #ffaa88 !important; }
+.keypos-38 rect { fill: #ff99cc !important; }
+.keypos-39 rect { fill: #ff99cc !important; }
+.keypos-42 rect { fill: #ffbb88 !important; }
+.keypos-43 rect { fill: #ffee88 !important; }
+.keypos-44 rect { fill: #99dd99 !important; }
+.keypos-45 rect { fill: #99dd99 !important; }
+.keypos-46 rect { fill: #99dd99 !important; }
+.keypos-47 rect { fill: #88ccff !important; }
+.keypos-48 rect { fill: #88ccff !important; }
+.keypos-49 rect { fill: #bb99ff !important; }
+.keypos-50 rect { fill: #ffaa88 !important; }
+.keypos-51 rect { fill: #ff99cc !important; }
                 </style>
 <g transform="translate(30, 0)" class="layer-Base">
 <text x="0" y="28" class="label" id="Base">Base:</text>
@@ -246,9 +288,7 @@ path.combo {
 </g>
 <g transform="translate(315, 150)" class="key keypos-32">
 <rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key"/>
-<text x="0" y="0" class="key tap">
-<tspan x="0" dy="-0.6em">t</tspan><tspan x="0" dy="1.2em">·</tspan>
-</text>
+<text x="0" y="0" class="key tap">t</text>
 </g>
 <g transform="translate(375, 150)" class="key keypos-33">
 <rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key"/>
@@ -260,9 +300,7 @@ path.combo {
 </g>
 <g transform="translate(495, 150)" class="key keypos-35">
 <rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key"/>
-<text x="0" y="0" class="key tap">
-<tspan x="0" dy="-0.6em">c</tspan><tspan x="0" dy="1.2em">·</tspan>
-</text>
+<text x="0" y="0" class="key tap">c</text>
 </g>
 <g transform="translate(555, 150)" class="key keypos-36">
 <rect rx="6" ry="6" x="-28" y="-28" width="56" height="56" class="key"/>

@@ -326,6 +326,9 @@ class RowStaggerConfig:
       Row 1: q w e r t y u i o p [ ] (12 keys)
       Row 2: a s d f g h j k l ; ' (11 keys)
       Row 3: z x c v b n m , . / (10 keys)
+    - fingermap: Optional finger assignment for each key (0-7)
+      0=L-pinky, 1=L-ring, 2=L-middle, 3=L-index
+      4=R-index, 5=R-middle, 6=R-ring, 7=R-pinky
 
     Shift layer is auto-inferred from base layer:
     - Letters: uppercase
@@ -338,10 +341,13 @@ class RowStaggerConfig:
     id: str
     group: str
     layout: List[List[str]]  # 3 rows of keys
+    fingermap: Optional[List[List[int]]] = None  # 3 rows of finger assignments (0-7)
 
     def __post_init__(self):
         """Normalize all values to strings (handles YAML integers)"""
         self.layout = [[str(key) for key in row] for row in self.layout]
+        if self.fingermap is not None:
+            self.fingermap = [[int(f) for f in row] for row in self.fingermap]
 
     def validate(self):
         """Validate row-stagger configuration"""
