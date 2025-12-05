@@ -138,7 +138,39 @@ path.combo {
                     /* Increase legend size */
                     .tap { font-size: 32px; font-weight: 900; }
                     /* Fingermap colors (per-key targeting) */
-                    
+                    .keypos-15 rect { fill: #ff9999 !important; }
+.keypos-16 rect { fill: #ffbb88 !important; }
+.keypos-17 rect { fill: #ffee88 !important; }
+.keypos-18 rect { fill: #99dd99 !important; }
+.keypos-19 rect { fill: #99dd99 !important; }
+.keypos-20 rect { fill: #88ccff !important; }
+.keypos-21 rect { fill: #88ccff !important; }
+.keypos-22 rect { fill: #bb99ff !important; }
+.keypos-23 rect { fill: #ffaa88 !important; }
+.keypos-24 rect { fill: #ff99cc !important; }
+.keypos-25 rect { fill: #ff99cc !important; }
+.keypos-26 rect { fill: #ff99cc !important; }
+.keypos-29 rect { fill: #ff9999 !important; }
+.keypos-30 rect { fill: #ffbb88 !important; }
+.keypos-31 rect { fill: #ffee88 !important; }
+.keypos-32 rect { fill: #99dd99 !important; }
+.keypos-33 rect { fill: #99dd99 !important; }
+.keypos-34 rect { fill: #88ccff !important; }
+.keypos-35 rect { fill: #88ccff !important; }
+.keypos-36 rect { fill: #bb99ff !important; }
+.keypos-37 rect { fill: #ffaa88 !important; }
+.keypos-38 rect { fill: #ff99cc !important; }
+.keypos-39 rect { fill: #ff99cc !important; }
+.keypos-42 rect { fill: #ffbb88 !important; }
+.keypos-43 rect { fill: #ffee88 !important; }
+.keypos-44 rect { fill: #99dd99 !important; }
+.keypos-45 rect { fill: #99dd99 !important; }
+.keypos-46 rect { fill: #99dd99 !important; }
+.keypos-47 rect { fill: #88ccff !important; }
+.keypos-48 rect { fill: #88ccff !important; }
+.keypos-49 rect { fill: #bb99ff !important; }
+.keypos-50 rect { fill: #ffaa88 !important; }
+.keypos-51 rect { fill: #ff99cc !important; }
                 </style>
 <g transform="translate(30, 0)" class="layer-Base">
 <text x="0" y="28" class="label" id="Base">Base:</text>

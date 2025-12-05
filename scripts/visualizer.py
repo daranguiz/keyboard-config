@@ -436,12 +436,6 @@ class KeymapVisualizer:
     .key.ghost rect {
       opacity: 0.3 !important;
     }
-
-    /* Increase font size and make bold for all tap labels (matching row-stagger) */
-    .tap {
-      font-size: 32px;
-      font-weight: 900;
-    }
 '''
         return css
 
@@ -1103,6 +1097,9 @@ class KeymapVisualizer:
                 svg_output = svg_output.replace('NAV_NIGHT', 'NAV')
                 svg_output = svg_output.replace('MEDIA_NIGHT', 'MEDIA')
 
+                # Apply inline styles for better rendering
+                svg_output = self._add_inline_styles_for_pdf(svg_output)
+
                 # Write SVG file
                 svg_file.write_text(svg_output)
 
@@ -1136,12 +1133,12 @@ class KeymapVisualizer:
         import re
 
         # Pattern to match text elements with class="key tap" and capture the content
-        pattern = re.compile(
+        tap_pattern = re.compile(
             r'(<text\s+[^>]*class="(?:[^"]*\s)?tap(?:\s[^"]*)?"[^>]*)(>)([^<]*)(</text>)',
             re.IGNORECASE
         )
 
-        def add_inline_style(match: re.Match) -> str:
+        def add_tap_inline_style(match: re.Match) -> str:
             opening_tag = match.group(1)
             closing_bracket = match.group(2)
             content = match.group(3)
@@ -1149,9 +1146,14 @@ class KeymapVisualizer:
 
             # Determine if this should be bold
             # Bold for: single alphas, single digits, symbols (not multi-char words like "Space", "Undo", F1-F12)
+
+            # Check for HTML entities that represent single characters
+            single_char_entities = ['&lt;', '&gt;', '&quot;', '&amp;', '&apos;']
+
             should_be_bold = (
                 (len(content) == 1) or  # Single char (letters, digits, symbols)
-                (len(content) == 2 and not content[0].isalpha())  # Two-char symbols like !=, &&
+                (len(content) == 2 and not content[0].isalpha()) or  # Two-char symbols like !=, &&
+                content in single_char_entities  # HTML entities for single chars
             )
 
             # Exclude function keys (F1-F12) and other multi-char names
@@ -1159,84 +1161,109 @@ class KeymapVisualizer:
                 should_be_bold = False
 
             if should_be_bold:
-                # Bold styling for letters, numbers, symbols
+                # Bold styling for letters, numbers, symbols (use numeric weight and explicit font for PDF compatibility)
                 if 'style=' in opening_tag:
-                    opening_tag = opening_tag.replace('style="', 'style="font-size: 28px; font-weight: bold; ')
+                    opening_tag = opening_tag.replace('style="', 'style="font-size: 28px; font-weight: 700; font-family: Helvetica, Arial, sans-serif; ')
                 else:
-                    opening_tag = f'{opening_tag} style="font-size: 28px; font-weight: bold"'
-                opening_tag = f'{opening_tag} font-weight="bold" font-size="28"'
+                    opening_tag = f'{opening_tag} style="font-size: 28px; font-weight: 700; font-family: Helvetica, Arial, sans-serif"'
             else:
                 # Regular weight and smaller for named keys (Space, Undo, F1-F12, etc.)
                 if 'style=' in opening_tag:
-                    opening_tag = opening_tag.replace('style="', 'style="font-size: 20px; ')
+                    opening_tag = opening_tag.replace('style="', 'style="font-size: 20px; font-weight: 400; font-family: Helvetica, Arial, sans-serif; ')
                 else:
-                    opening_tag = f'{opening_tag} style="font-size: 20px"'
-                opening_tag = f'{opening_tag} font-size="20"'
+                    opening_tag = f'{opening_tag} style="font-size: 20px; font-weight: 400; font-family: Helvetica, Arial, sans-serif"'
 
             return f'{opening_tag}{closing_bracket}{content}{closing_tag}'
 
-        return pattern.sub(add_inline_style, svg_content)
+        # Pattern to match layer label text elements
+        label_pattern = re.compile(
+            r'(<text\s+[^>]*class="label"[^>]*)(>)([^<]*)(</text>)',
+            re.IGNORECASE
+        )
+
+        def add_label_inline_style(match: re.Match) -> str:
+            opening_tag = match.group(1)
+            closing_bracket = match.group(2)
+            content = match.group(3)
+            closing_tag = match.group(4)
+
+            # Layer labels should be bold with explicit font and NO stroke (solid black)
+            # Build the complete style string at once to avoid multiple replacements
+            new_styles = []
+            new_styles.append('font-weight: 700')
+            new_styles.append('font-family: Helvetica, Arial, sans-serif')
+            new_styles.append('stroke: none')  # Remove white outline for PDF
+
+            if 'style=' in opening_tag:
+                # Extract existing style content
+                style_match = re.search(r'style="([^"]*)"', opening_tag)
+                if style_match:
+                    existing_styles = style_match.group(1)
+                    # Prepend new styles to existing
+                    combined_styles = '; '.join(new_styles) + '; ' + existing_styles
+                    opening_tag = re.sub(r'style="[^"]*"', f'style="{combined_styles}"', opening_tag)
+            else:
+                # No existing style attribute, add new one
+                opening_tag = f'{opening_tag} style="{"; ".join(new_styles)}"'
+
+            return f'{opening_tag}{closing_bracket}{content}{closing_tag}'
+
+        # Apply both transformations
+        svg_content = tap_pattern.sub(add_tap_inline_style, svg_content)
+        svg_content = label_pattern.sub(add_label_inline_style, svg_content)
+
+        return svg_content
 
     def _combine_svgs_to_pdf(self, output_name: str, svg_files: List[Path]) -> Optional[Path]:
-        """Combine multiple SVGs into single multi-page PDF"""
+        """Combine multiple SVGs into single multi-page PDF using cairosvg"""
 
         pdf_path = self.output_dir / f"{output_name}_print.pdf"
 
         try:
-            # Create PDF canvas
-            c = canvas.Canvas(str(pdf_path), pagesize=letter)
-            page_width, page_height = letter
+            import cairosvg
+            from PyPDF2 import PdfMerger
+            import tempfile
+            import os
+            import re
+
+            # Convert each SVG to a separate PDF page
+            temp_pdfs = []
 
             for svg_path in svg_files:
-                # Read SVG content and add inline styles for PDF rendering
+                # Read SVG content and add inline styles
                 svg_content = svg_path.read_text()
                 svg_content = self._add_inline_styles_for_pdf(svg_content)
 
-                # Write modified SVG to temp file
-                import tempfile
-                with tempfile.NamedTemporaryFile(mode='w', suffix='.svg', delete=False) as tmp:
-                    tmp.write(svg_content)
-                    tmp_path = tmp.name
+                # Note: Font-family is already added in _add_inline_styles_for_pdf
+                # No need for additional font replacement here
 
-                try:
-                    # Render SVG to ReportLab drawing
-                    drawing = svg2rlg(tmp_path)
+                # Create temp PDF for this page
+                with tempfile.NamedTemporaryFile(mode='w', suffix='.pdf', delete=False) as tmp_pdf:
+                    temp_pdf_path = tmp_pdf.name
 
-                    if drawing is None:
-                        print(f"  ⚠️  Failed to load SVG: {svg_path}")
-                        continue
+                # Convert SVG to PDF using cairosvg (handles entities properly!)
+                cairosvg.svg2pdf(bytestring=svg_content.encode('utf-8'), write_to=temp_pdf_path)
+                temp_pdfs.append(temp_pdf_path)
 
-                    # Scale to fit page (with margins)
-                    margin = 36  # 0.5 inch margins
-                    available_width = page_width - (2 * margin)
-                    available_height = page_height - (2 * margin)
+            # Merge all PDFs into one
+            merger = PdfMerger()
+            for temp_pdf in temp_pdfs:
+                merger.append(temp_pdf)
 
-                    # Calculate scaling factor to fit page
-                    scale_x = available_width / drawing.width
-                    scale_y = available_height / drawing.height
-                    scale = min(scale_x, scale_y, 1.0)  # Don't scale up, only down
+            merger.write(str(pdf_path))
+            merger.close()
 
-                    # Center the drawing
-                    scaled_width = drawing.width * scale
-                    scaled_height = drawing.height * scale
-                    x = margin + (available_width - scaled_width) / 2
-                    y = margin + (available_height - scaled_height) / 2
+            # Clean up temp PDFs
+            for temp_pdf in temp_pdfs:
+                if os.path.exists(temp_pdf):
+                    os.unlink(temp_pdf)
 
-                    # Draw on canvas
-                    drawing.scale(scale, scale)
-                    renderPDF.draw(drawing, c, x, y)
-                    c.showPage()
-                finally:
-                    # Clean up temp file
-                    import os
-                    if os.path.exists(tmp_path):
-                        os.unlink(tmp_path)
-
-            c.save()
             print(f"    📄 {pdf_path.name}")
             return pdf_path
         except Exception as e:
             print(f"  ⚠️  PDF generation failed (SVG output is still available): {e}")
+            import traceback
+            traceback.print_exc()
             return None
 
     def _old_generate_superset_visualizations(self, board_inventory) -> Dict[str, Optional[Path]]:
@@ -1788,6 +1815,12 @@ class KeymapVisualizer:
 
                 if result.returncode == 0 and svg_path.exists():
                     print(f"  ✅ {layout_name}_rowstagger.svg")
+
+                    # Clean up intermediate files
+                    if info_json_path.exists():
+                        info_json_path.unlink()
+                    if yaml_path.exists():
+                        yaml_path.unlink()
                 else:
                     print(f"  ⚠️  Failed to generate {layout_name}_rowstagger.svg")
                     if result.stderr:
