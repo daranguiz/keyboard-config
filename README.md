@@ -6,14 +6,21 @@ Custom keyboard firmware for split ergonomic keyboards using a unified keymap co
 
 ## Keymap Visualizations
 
-### NIGHT Layout
+### Split Ergonomic Keyboards
+
+#### NIGHT Layout
 ![NIGHT Layout](docs/night.svg)
 
-### NIGHT V2 Layout
-![NIGHT V2 Layout](docs/night_v2.svg)
-
-### Colemak Layout
+#### Colemak Layout
 ![Colemak Layout](docs/colemak.svg)
+
+### Row-Staggered Keyboards (macOS .keylayout)
+
+#### Nightlight
+![Nightlight Layout](docs/nightlight_rowstagger.svg)
+
+#### Rain
+![Rain Layout](docs/rain_rowstagger.svg)
 
 ## About
 

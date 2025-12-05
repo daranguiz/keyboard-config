@@ -936,6 +936,9 @@ class KeymapVisualizer:
         # Generate 2-page print PDF
         self._generate_print_pdf_for_base(base_name, layers, layout_size)
 
+        # Generate single-layer base PDF for large printing
+        self._generate_single_layer_pdf(base_name, layers[0], layout_size)
+
         # Clean up main JSON file
         json_file = self.output_dir / f"{output_name}.json"
         if json_file.exists():
@@ -1217,7 +1220,7 @@ class KeymapVisualizer:
     def _combine_svgs_to_pdf(self, output_name: str, svg_files: List[Path]) -> Optional[Path]:
         """Combine multiple SVGs into single multi-page PDF using cairosvg"""
 
-        pdf_path = self.output_dir / f"{output_name}_print.pdf"
+        pdf_path = self.output_dir / f"{output_name}.pdf"
 
         try:
             import cairosvg
@@ -1268,13 +1271,19 @@ class KeymapVisualizer:
 
     def _generate_rowstagger_pdf(self, svg_path: Path, layout_name: str) -> Optional[Path]:
         """Generate landscape PDF for row-stagger keyboard layout"""
-        pdf_path = self.output_dir / f"{layout_name}_print.pdf"
+        pdf_path = self.output_dir / f"{layout_name}.pdf"
 
         try:
             import cairosvg
 
             # Read SVG content and add inline styles for better PDF rendering
             svg_content = svg_path.read_text()
+
+            # Replace "Base:" with the layout name (capitalized, no colon)
+            display_name = layout_name.capitalize()
+            svg_content = svg_content.replace('>Base:</text>', f'>{display_name}</text>')
+            svg_content = svg_content.replace('id="Base"', f'id="{display_name}"')
+
             svg_content = self._add_inline_styles_for_pdf(svg_content)
 
             # Convert SVG to PDF using cairosvg
@@ -1284,6 +1293,47 @@ class KeymapVisualizer:
             return pdf_path
         except Exception as e:
             print(f"  ⚠️  PDF generation failed for {layout_name}: {e}")
+            import traceback
+            traceback.print_exc()
+            return None
+
+    def _generate_single_layer_pdf(self, base_name: str, base_layer, layout_size: str) -> Optional[Path]:
+        """Generate single-layer landscape PDF showing only the base layer for large printing"""
+        # Remove BASE_ prefix and convert to lowercase for output filename
+        output_name = base_name.replace('BASE_', '').lower()
+        pdf_path = self.output_dir / f"{output_name}_base.pdf"
+
+        try:
+            import cairosvg
+
+            # Generate SVG for just the base layer
+            svg_file = self._generate_svg_for_layers(
+                [base_layer],
+                layout_size,
+                suffix="_base",
+                output_name=output_name
+            )
+
+            # Read SVG content and add inline styles
+            svg_content = svg_file.read_text()
+            svg_content = self._add_inline_styles_for_pdf(svg_content)
+
+            # Convert SVG to PDF using cairosvg
+            cairosvg.svg2pdf(bytestring=svg_content.encode('utf-8'), write_to=str(pdf_path))
+
+            # Clean up intermediate SVG
+            if svg_file.exists():
+                svg_file.unlink()
+
+            # Clean up JSON file
+            json_file = self.output_dir / f"{output_name}_base.json"
+            if json_file.exists():
+                json_file.unlink()
+
+            print(f"    📄 {pdf_path.name}")
+            return pdf_path
+        except Exception as e:
+            print(f"  ⚠️  Single-layer PDF generation failed for {output_name}: {e}")
             import traceback
             traceback.print_exc()
             return None
