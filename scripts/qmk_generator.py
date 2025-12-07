@@ -415,7 +415,10 @@ extern combo_t key_combos[];
             enum_name = f"COMBO_{combo.name.upper()}"
 
             # Translate action to QMK keycode
-            if combo.action == "DFU":
+            if combo.macro_text is not None:
+                # This is a text expansion macro
+                qmk_keycode = f"MACRO_{combo.name.upper()}"
+            elif combo.action == "DFU":
                 qmk_keycode = "QK_BOOT"  # Modern QMK bootloader keycode
             else:
                 # Use the keycode translator for other actions
@@ -513,7 +516,10 @@ combo_t key_combos[] = {{
             enum_name = f"COMBO_{combo.name.upper()}"
 
             # Translate action to QMK keycode
-            if combo.action == "DFU":
+            if combo.macro_text is not None:
+                # This is a text expansion macro
+                qmk_keycode = f"MACRO_{combo.name.upper()}"
+            elif combo.action == "DFU":
                 qmk_keycode = "QK_BOOT"
             else:
                 qmk_keycode = f"KC_{combo.action}"

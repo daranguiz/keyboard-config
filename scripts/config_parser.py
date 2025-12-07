@@ -352,6 +352,7 @@ class YAMLConfigParser:
                 description=combo_data['description'],
                 key_positions=combo_data['key_positions'],
                 action=combo_data['action'],
+                macro_text=combo_data.get('macro_text'),
                 timeout_ms=combo_data.get('timeout_ms', 50),
                 require_prior_idle_ms=combo_data.get('require_prior_idle_ms'),
                 layers=combo_data.get('layers'),

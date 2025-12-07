@@ -50,7 +50,7 @@
 
 #define QMK_KEYS_PER_SCAN 4
 
-#define NO_ACTION_MACRO
+// #define NO_ACTION_MACRO  // REMOVED to enable text expansion macros
 #define NO_ACTION_FUNCTION
 
 // ----------------------------------------------------------------------------

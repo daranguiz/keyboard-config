@@ -398,7 +398,8 @@ class Combo:
     - description: Human-readable description
     - key_positions: List of key positions using canonical 36-key numbering (0-35)
                      Row-wise: [0-9] = row 0, [10-19] = row 1, [20-29] = row 2, [30-35] = thumbs
-    - action: Action keycode or behavior (e.g., "DFU", "ESC")
+    - action: Action keycode or behavior (e.g., "DFU", "ESC", "MACRO_NAME")
+    - macro_text: Optional text to expand (enables text expansion macro)
     - timeout_ms: Time window to press all keys simultaneously (default: 50ms)
     - require_prior_idle_ms: ZMK-only: prevent combo if keys pressed within this window (e.g., 150ms)
     - layers: List of layer names where combo is active (None = all layers)
@@ -409,6 +410,7 @@ class Combo:
     description: str
     key_positions: List[int]  # Canonical 36-key positions (0-35)
     action: str  # Keycode or behavior name
+    macro_text: Optional[str] = None  # Text to expand for macros
     timeout_ms: int = 50  # Standard combo timeout
     require_prior_idle_ms: Optional[int] = None  # ZMK: prevent combo during fast typing
     layers: Optional[List[str]] = None  # None = active on all layers
@@ -434,6 +436,12 @@ class Combo:
         if self.timeout_ms < 1:
             raise ValidationError(
                 f"Combo {self.name}: timeout_ms must be positive"
+            )
+
+        # Validate macro_text if specified
+        if self.macro_text is not None and len(self.macro_text) == 0:
+            raise ValidationError(
+                f"Combo {self.name}: macro_text cannot be empty"
             )
 
         # Validate hold_ms if specified

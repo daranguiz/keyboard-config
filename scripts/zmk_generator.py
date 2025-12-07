@@ -317,7 +317,10 @@ class ZMKGenerator:
             layers_str = " ".join(layer_indices) if layer_indices else ""
 
             # Generate binding - always use direct binding (no hold-tap)
-            if combo.action == "DFU":
+            if combo.macro_text is not None:
+                # This is a text expansion macro
+                binding = f"&{combo.name.lower()}"
+            elif combo.action == "DFU":
                 binding = "&bootloader"
             else:
                 binding = f"&kp {combo.action}"
@@ -368,3 +371,72 @@ class ZMKGenerator:
         # No longer generating hold-tap behaviors for combos
         # Combos now use direct bindings (instant trigger)
         return ""
+
+    def generate_macro_behaviors(self, combos: ComboConfiguration) -> str:
+        """
+        Generate ZMK macro behaviors for text expansion
+
+        Returns:
+            Devicetree macros section
+        """
+        if not combos or not combos.combos:
+            return ""
+
+        macro_combos = [c for c in combos.combos if c.macro_text is not None]
+        if not macro_combos:
+            return ""
+
+        macro_defs = []
+        for combo in macro_combos:
+            macro_name = combo.name.lower()
+
+            # Convert text to sequence of &kp keypresses
+            key_sequence = []
+            for char in combo.macro_text:
+                zmk_key = self.char_to_zmk_keycode(char)
+                key_sequence.append(f"&kp {zmk_key}")
+
+            # Group into lines for readability (10 keys per line)
+            lines = []
+            for i in range(0, len(key_sequence), 10):
+                chunk = key_sequence[i:i+10]
+                lines.append("                , <&macro_tap " + " ".join(chunk) + ">")
+
+            bindings_code = "\n".join(lines)
+
+            macro_def = f"""        {macro_name}: {macro_name}_macro {{
+            compatible = "zmk,behavior-macro";
+            label = "{macro_name.upper()}";
+            #binding-cells = <0>;
+            bindings
+{bindings_code}
+                ;
+        }};"""
+
+            macro_defs.append(macro_def)
+
+        return f"""
+/ {{
+    macros {{
+{chr(10).join(macro_defs)}
+    }};
+}};
+"""
+
+    def char_to_zmk_keycode(self, char: str) -> str:
+        """Convert character to ZMK keycode"""
+        # Mapping of characters to ZMK keycodes
+        char_map = {
+            'a': 'A', 'b': 'B', 'c': 'C', 'd': 'D', 'e': 'E',
+            'f': 'F', 'g': 'G', 'h': 'H', 'i': 'I', 'j': 'J',
+            'k': 'K', 'l': 'L', 'm': 'M', 'n': 'N', 'o': 'O',
+            'p': 'P', 'q': 'Q', 'r': 'R', 's': 'S', 't': 'T',
+            'u': 'U', 'v': 'V', 'w': 'W', 'x': 'X', 'y': 'Y', 'z': 'Z',
+            '0': 'N0', '1': 'N1', '2': 'N2', '3': 'N3', '4': 'N4',
+            '5': 'N5', '6': 'N6', '7': 'N7', '8': 'N8', '9': 'N9',
+            '/': 'FSLH', '-': 'MINUS', '.': 'DOT', ':': 'COLON',
+            '?': 'QMARK', '=': 'EQUAL', '#': 'HASH', '_': 'UNDER',
+            ' ': 'SPACE'
+        }
+
+        return char_map.get(char, char.upper())

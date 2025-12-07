@@ -23,6 +23,11 @@ enum layers {
 #define U_NU KC_NO  // key available but not used
 #define U_NP KC_NO  // key is not present
 
+// Text expansion macros
+enum custom_macros {
+    MACRO_GITHUB_URL = SAFE_RANGE
+};
+
 // RGB aliases (conditional on RGB support)
 // Note: RGB_MATRIX already defines RM_* keycodes, so we only need to handle RGBLIGHT and disabled cases
 #if defined(RGBLIGHT_ENABLE)

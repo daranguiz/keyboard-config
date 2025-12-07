@@ -4,24 +4,24 @@
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         // Home row mods from all BASE layers: use HRM tapping term (280ms)
-        // BASE_COLEMAK: LGUI/LALT/LCTL/LSFT on A/R/S/T (left), RSFT/RCTL/RALT/RGUI on N/E/I/O (right)
+        // BASE_COLEMAK: LGUI/LALT/LCTL/LSFT on A/R/S/T (left), LSFT/LCTL/LALT/LGUI on N/E/I/O (right)
         case LGUI_T(KC_A):
         case LALT_T(KC_R):
         case LCTL_T(KC_S):
         case LSFT_T(KC_T):
-        case RSFT_T(KC_N):
-        case RCTL_T(KC_E):
-        case RALT_T(KC_I):
-        case RGUI_T(KC_O):
-        // BASE_NIGHT: LGUI/LALT/LCTL/LSFT on N/S/H/T (left), RSFT/RCTL/RALT/RGUI on C/A/E/I (right)
+        case LSFT_T(KC_N):
+        case LCTL_T(KC_E):
+        case LALT_T(KC_I):
+        case LGUI_T(KC_O):
+        // BASE_NIGHT: LGUI/LALT/LCTL/LSFT on N/S/H/T (left), LSFT/LCTL/LALT/LGUI on C/A/E/I (right)
         case LGUI_T(KC_N):
         case LALT_T(KC_S):
         case LCTL_T(KC_H):
         // case LSFT_T(KC_T):  // Already listed above (BASE_COLEMAK)
-        case RSFT_T(KC_C):
-        case RCTL_T(KC_A):
-        case RALT_T(KC_E): 
-        case RGUI_T(KC_I):  
+        case LSFT_T(KC_C):
+        case LCTL_T(KC_A):
+        case LALT_T(KC_E):
+        case LGUI_T(KC_I):
             return TAPPING_TERM_HRM;
 
         // Layer-tap keys: use standard tapping term (200ms)
@@ -84,6 +84,12 @@ bool get_chordal_hold(uint16_t tap_hold_keycode, keyrecord_t *tap_hold_record, u
 // Custom keycode handler
 // Clipboard keys are handled by macros in dario.h
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    // Add custom keycode handling here as needed
+    switch (keycode) {
+        case MACRO_GITHUB_URL:
+            if (record->event.pressed) {
+                SEND_STRING("https://github.com/daranguiz/keyboard-config?tab=readme-ov-file#readme");
+            }
+            return false;
+    }
     return true;
 }

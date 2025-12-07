@@ -354,22 +354,22 @@ path.combo {
 <g transform="translate(588, 91)" class="key keypos-19">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
 <text x="0" y="0" class="key tap" style="font-size: 28px; font-weight: 700; font-family: Helvetica, Arial, sans-serif">c</text>
-<text x="0" y="24" class="key hold">RSFT</text>
+<text x="0" y="24" class="key hold">LSFT</text>
 </g>
 <g transform="translate(644, 84)" class="key keypos-20">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
 <text x="0" y="0" class="key tap" style="font-size: 28px; font-weight: 700; font-family: Helvetica, Arial, sans-serif">a</text>
-<text x="0" y="24" class="key hold">RCTL</text>
+<text x="0" y="24" class="key hold">LCTL</text>
 </g>
 <g transform="translate(700, 91)" class="key keypos-21">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
 <text x="0" y="0" class="key tap" style="font-size: 28px; font-weight: 700; font-family: Helvetica, Arial, sans-serif">e</text>
-<text x="0" y="24" class="key hold">RALT</text>
+<text x="0" y="24" class="key hold">LALT</text>
 </g>
 <g transform="translate(756, 105)" class="key keypos-22">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
 <text x="0" y="0" class="key tap" style="font-size: 28px; font-weight: 700; font-family: Helvetica, Arial, sans-serif">i</text>
-<text x="0" y="24" class="key hold">RGUI</text>
+<text x="0" y="24" class="key hold">LGUI</text>
 </g>
 <g transform="translate(812, 105)" class="key keypos-23">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
@@ -688,15 +688,15 @@ path.combo {
 </g>
 <g transform="translate(588, 91)" class="key keypos-19">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
-<text x="0" y="0" class="key tap" style="font-size: 28px; font-weight: 700; font-family: Helvetica, Arial, sans-serif">4</text>
+<text x="0" y="0" class="key tap" style="font-size: 28px; font-weight: 700; font-family: Helvetica, Arial, sans-serif">1</text>
 </g>
 <g transform="translate(644, 84)" class="key keypos-20">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
-<text x="0" y="0" class="key tap" style="font-size: 28px; font-weight: 700; font-family: Helvetica, Arial, sans-serif">5</text>
+<text x="0" y="0" class="key tap" style="font-size: 28px; font-weight: 700; font-family: Helvetica, Arial, sans-serif">2</text>
 </g>
 <g transform="translate(700, 91)" class="key keypos-21">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
-<text x="0" y="0" class="key tap" style="font-size: 28px; font-weight: 700; font-family: Helvetica, Arial, sans-serif">6</text>
+<text x="0" y="0" class="key tap" style="font-size: 28px; font-weight: 700; font-family: Helvetica, Arial, sans-serif">3</text>
 </g>
 <g transform="translate(756, 105)" class="key keypos-22">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
@@ -734,15 +734,15 @@ path.combo {
 </g>
 <g transform="translate(588, 147)" class="key keypos-31">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
-<text x="0" y="0" class="key tap" style="font-size: 28px; font-weight: 700; font-family: Helvetica, Arial, sans-serif">1</text>
+<text x="0" y="0" class="key tap" style="font-size: 28px; font-weight: 700; font-family: Helvetica, Arial, sans-serif">4</text>
 </g>
 <g transform="translate(644, 140)" class="key keypos-32">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
-<text x="0" y="0" class="key tap" style="font-size: 28px; font-weight: 700; font-family: Helvetica, Arial, sans-serif">2</text>
+<text x="0" y="0" class="key tap" style="font-size: 28px; font-weight: 700; font-family: Helvetica, Arial, sans-serif">5</text>
 </g>
 <g transform="translate(700, 147)" class="key keypos-33">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
-<text x="0" y="0" class="key tap" style="font-size: 28px; font-weight: 700; font-family: Helvetica, Arial, sans-serif">3</text>
+<text x="0" y="0" class="key tap" style="font-size: 28px; font-weight: 700; font-family: Helvetica, Arial, sans-serif">6</text>
 </g>
 <g transform="translate(756, 161)" class="key keypos-34">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>

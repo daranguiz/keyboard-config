@@ -9,7 +9,7 @@ layers:
         - [X              , V              , J              , D              , Z              ]
       right:
         - [P              , G              , O              , U              , DOT            ]
-        - [Y              , hrm:RSFT:C     , hrm:RCTL:A     , hrm:RALT:E     , hrm:RGUI:I     ]
+        - [Y              , hrm:LSFT:C     , hrm:LCTL:A     , hrm:LALT:E     , hrm:LGUI:I     ]
         - [QUOT           , W              , MINS           , SCLN           , COMM           ]
       thumbs:
         - [lt:NUM_NIGHT:BSPC   , lt:SYM_NIGHT:R              , mt:LSFT:DEL    ]
@@ -30,7 +30,7 @@ layers:
         - [Z              , X              , C              , V              , B              ]
       right:
         - [J              , L              , U              , Y              , QUOT           ]
-        - [H              , hrm:RSFT:N     , hrm:RCTL:E     , hrm:RALT:I     , hrm:RGUI:O     ]
+        - [H              , hrm:LSFT:N     , hrm:LCTL:E     , hrm:LALT:I     , hrm:LGUI:O     ]
         - [K              , M              , COMM           , DOT            , SLSH           ]
       thumbs:
         - [ENT            , lt:NAV:SPC     , lt:MEDIA:TAB   ]
@@ -157,8 +157,8 @@ layers:
         - [UNDO           , CUT            , COPY           , PASTE          , REDO           ]
       right:
         - [CIRC           , 7              , 8              , 9              , DOT            ]
-        - [HASH           , 4              , 5              , 6              , GRV            ]
-        - [DLR            , 1              , 2              , 3              , COMM           ]
+        - [HASH           , 1              , 2              , 3              , GRV            ]
+        - [DLR            , 4              , 5              , 6              , COMM           ]
       thumbs:
         - [NONE           , NONE           , NONE           ]
         - [SLSH           , 0              , AT             ]
@@ -251,5 +251,13 @@ combos:
     action: DFU
     timeout_ms: 50  # Standard combo timeout
     require_prior_idle_ms: 150  # Prevent during fast typing (ZMK only)
+    layers: [BASE_NIGHT, BASE_COLEMAK]
+
+  - name: github_url
+    description: "Expand to GitHub repo URL"
+    key_positions: [6, 7, 8, 9]  # G O U DOT (canonical 36-key positions)
+    action: MACRO_GITHUB_URL
+    macro_text: "https://github.com/daranguiz/keyboard-config?tab=readme-ov-file#readme"
+    timeout_ms: 100  # Slightly longer for 4-key combo
     layers: [BASE_NIGHT, BASE_COLEMAK]
 

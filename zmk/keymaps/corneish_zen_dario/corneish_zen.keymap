@@ -40,6 +40,13 @@
             layers = <0 1>;
             require-prior-idle-ms = <150>;
         };
+
+        combo_github_url {
+            timeout-ms = <100>;
+            key-positions = <7 8 9 10>;
+            bindings = <&github_url>;
+            layers = <0 1>;
+        };
     };
 
 
@@ -49,7 +56,7 @@
         base_night_layer {
             bindings = <
                 &none &kp B &kp F &kp L &kp K &kp Q &kp P &kp G &kp O &kp U &kp DOT &none
-                &none &hml LGUI N &hml LALT S &hml LCTL H &hml LSFT T &kp M &kp Y &hmr RSFT C &hmr RCTL A &hmr RALT E &hmr RGUI I &kp ENTER
+                &none &hml LGUI N &hml LALT S &hml LCTL H &hml LSFT T &kp M &kp Y &hmr LSFT C &hmr LCTL A &hmr LALT E &hmr LGUI I &kp ENTER
                 &none &kp X &kp V &kp J &kp D &kp Z &kp SQT &kp W &kp MINUS &kp SEMI &kp COMMA &none
                 &lt NUM_NIGHT BSPC &lt SYM_NIGHT R &mt LSFT DEL &mt LSFT TAB &lt NAV_NIGHT SPACE &lt MEDIA_NIGHT ENTER
             >;
@@ -58,7 +65,7 @@
         base_colemak_layer {
             bindings = <
                 &none &kp Q &kp W &kp F &kp P &kp G &kp J &kp L &kp U &kp Y &kp SQT &none
-                &none &hml LGUI A &hml LALT R &hml LCTL S &hml LSFT T &kp D &kp H &hmr RSFT N &hmr RCTL E &hmr RALT I &hmr RGUI O &kp ENTER
+                &none &hml LGUI A &hml LALT R &hml LCTL S &hml LSFT T &kp D &kp H &hmr LSFT N &hmr LCTL E &hmr LALT I &hmr LGUI O &kp ENTER
                 &none &kp Z &kp X &kp C &kp V &kp B &kp K &kp M &kp COMMA &kp DOT &kp FSLH &none
                 &kp ENTER &lt NAV SPACE &lt MEDIA TAB &lt SYM DEL &kp LSHFT &lt NUM BSPC
             >;
@@ -112,8 +119,8 @@
         num_night_layer {
             bindings = <
                 &none &none &kp TILDE &kp PERCENT &kp COLON &none &kp CARET &kp N7 &kp N8 &kp N9 &kp DOT &none
-                &none &kp LGUI &kp LALT &kp LCTRL &kp LSHFT &kp PIPE &kp HASH &kp N4 &kp N5 &kp N6 &kp GRAVE &none
-                &none &kp LG(Z) &kp LG(X) &kp LG(C) &kp LG(V) &kp LG(LS(Z)) &kp DOLLAR &kp N1 &kp N2 &kp N3 &kp COMMA &none
+                &none &kp LGUI &kp LALT &kp LCTRL &kp LSHFT &kp PIPE &kp HASH &kp N1 &kp N2 &kp N3 &kp GRAVE &none
+                &none &kp LG(Z) &kp LG(X) &kp LG(C) &kp LG(V) &kp LG(LS(Z)) &kp DOLLAR &kp N4 &kp N5 &kp N6 &kp COMMA &none
                 &none &none &none &kp FSLH &kp N0 &kp AT
             >;
         };

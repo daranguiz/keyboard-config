@@ -34,10 +34,10 @@
 23: &none
 
 24: &kp Y
-25: &hmr RSFT C
-26: &hmr RCTL A
-27: &hmr RALT E
-28: &hmr RGUI I
+25: &hmr LSFT C
+26: &hmr LCTL A
+27: &hmr LALT E
+28: &hmr LGUI I
 29: &kp ENTER
 
 30: &kp SQT
@@ -87,10 +87,10 @@
 23: &none
 
 24: &kp H
-25: &hmr RSFT N
-26: &hmr RCTL E
-27: &hmr RALT I
-28: &hmr RGUI O
+25: &hmr LSFT N
+26: &hmr LCTL E
+27: &hmr LALT I
+28: &hmr LGUI O
 29: &kp ENTER
 
 30: &kp K
@@ -405,16 +405,16 @@
 23: &none
 
 24: &kp HASH
-25: &kp N4
-26: &kp N5
-27: &kp N6
+25: &kp N1
+26: &kp N2
+27: &kp N3
 28: &kp GRAVE
 29: &none
 
 30: &kp DOLLAR
-31: &kp N1
-32: &kp N2
-33: &kp N3
+31: &kp N4
+32: &kp N5
+33: &kp N6
 34: &kp COMMA
 35: &none
 
