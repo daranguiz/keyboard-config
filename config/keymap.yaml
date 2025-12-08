@@ -25,8 +25,8 @@ layers:
         - [mt:LSFT:TAB    , lt:NAV_NIGHT:SPC     , lt:MEDIA_NIGHT:ENT    ]
     extensions:
       3x6_3:
-        outer_pinky_left: [NONE, LBRC, NONE]
-        outer_pinky_right: [NONE, RBRC, NONE]   
+        outer_pinky_left: [NONE, Y, NONE]
+        outer_pinky_right: [NONE, NONE, NONE]   
 
   BASE_GALLIUM:
     core: # (3x5)

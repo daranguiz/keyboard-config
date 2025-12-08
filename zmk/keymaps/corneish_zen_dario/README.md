@@ -12,7 +12,7 @@
  4: &kp K
  5: &kp Q
 
- 6: &kp LBKT
+ 6: &kp Y
  7: &hml LGUI N
  8: &hml LALT S
  9: &hml LCTL H
@@ -38,7 +38,7 @@
 26: &hmr LCTL A
 27: &hmr LALT E
 28: &hmr LGUI I
-29: &kp RBKT
+29: &none
 
 30: &kp SQT
 31: &kp W

@@ -52,7 +52,7 @@
         base_night_layer {
             bindings = <
                 &none &kp B &kp F &kp L &kp K &kp Q &kp P &kp G &kp O &kp U &kp DOT &none
-                &kp LBKT &hml LGUI N &hml LALT S &hml LCTL H &hml LSFT T &kp M &kp Y &hmr LSFT C &hmr LCTL A &hmr LALT E &hmr LGUI I &kp RBKT
+                &kp Y &hml LGUI N &hml LALT S &hml LCTL H &hml LSFT T &kp M &kp Y &hmr LSFT C &hmr LCTL A &hmr LALT E &hmr LGUI I &none
                 &none &kp X &kp V &kp J &kp D &kp Z &kp SQT &kp W &kp MINUS &kp SEMI &kp COMMA &none
                 &lt NUM_NIGHT BSPC &lt SYM_NIGHT R &mt LSFT DEL &mt LSFT TAB &lt NAV_NIGHT SPACE &lt MEDIA_NIGHT ENTER
             >;
