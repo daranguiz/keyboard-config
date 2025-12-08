@@ -72,6 +72,9 @@ class KeymapGenerator:
         self.combos = YAMLConfigParser.parse_combos(
             self.config_dir / "keymap.yaml"
         )
+        self.magic_config = YAMLConfigParser.parse_magic_keys(
+            self.config_dir / "keymap.yaml"
+        )
         # Keycode map (firmware translations)
         keycodes = YAMLConfigParser.parse_keycodes(
             self.config_dir / "keycodes.yaml"
@@ -82,15 +85,18 @@ class KeymapGenerator:
         # Merge aliases.yaml special section over the general keycode map
         self.special_keycodes = {**keycodes, **self.special_keycodes}
 
+        magic_count = len(self.magic_config.mappings) if self.magic_config else 0
         self._log(f"✅ Loaded {len(self.keymap_config.layers)} layers, "
                   f"{len(self.board_inventory.boards)} boards, "
-                  f"{len(self.combos.combos)} combos")
+                  f"{len(self.combos.combos)} combos, "
+                  f"{magic_count} magic key configs")
 
         if self.verbose:
             print(f"  Layers: {', '.join(self.keymap_config.layers.keys())}")
             print(f"  Boards: {', '.join(self.board_inventory.boards.keys())}")
             print(f"  Aliases: {len(self.aliases)} behavior aliases")
             print(f"  Combos: {len(self.combos.combos)} combo definitions")
+            print(f"  Magic keys: {magic_count} base layer configurations")
 
         # Validate configuration
         self._log("🔍 Validating configuration...")
@@ -101,7 +107,7 @@ class KeymapGenerator:
 
         # Initialize translators
         self.qmk_translator = QMKTranslator(self.aliases, self.special_keycodes)
-        self.zmk_translator = ZMKTranslator(self.aliases, self.special_keycodes)
+        self.zmk_translator = ZMKTranslator(self.aliases, self.special_keycodes, magic_config=self.magic_config)
 
         # Set layer indices for ZMK translator
         layer_names = list(self.keymap_config.layers.keys())
@@ -206,8 +212,8 @@ class KeymapGenerator:
         generator = QMKGenerator()
         output_dir = self.repo_root / board.get_output_directory()
 
-        # Generate all files (combos are now inline in keymap.c)
-        files = generator.generate_keymap(board, compiled_layers, output_dir, self.combos)
+        # Generate all files (combos and magic keys are now inline in keymap.c)
+        files = generator.generate_keymap(board, compiled_layers, output_dir, self.combos, self.magic_config)
 
         # Write keymap files
         FileSystemWriter.write_all(output_dir, files)
@@ -218,8 +224,8 @@ class KeymapGenerator:
         generator = ZMKGenerator()
         output_dir = self.repo_root / board.get_output_directory()
 
-        # Generate keymap file with combos
-        keymap_content = generator.generate_keymap(board, compiled_layers, self.combos)
+        # Generate keymap file with combos and magic keys
+        keymap_content = generator.generate_keymap(board, compiled_layers, self.combos, self.magic_config)
         visualization = generator.generate_visualization(board, compiled_layers)
 
         # Prepare files to write

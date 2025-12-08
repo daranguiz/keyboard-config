@@ -46,6 +46,132 @@
     };
 
 
+    // Magic key behaviors (adaptive key)
+    // Each base layer has its own adaptive key with layer-specific mappings
+    behaviors {
+        // Adaptive key for BASE_GALLIUM family
+        ak_gallium: ak_gallium {
+            compatible = "zmk,behavior-adaptive-key";
+            #binding-cells = <0>;
+            bindings = <&key_repeat>;
+
+            b_trigger {
+                trigger-keys = <B>;
+                bindings = <&kp R>;
+                max-prior-idle-ms = <150>;
+            };
+            a_trigger {
+                trigger-keys = <A>;
+                bindings = <&kp Y>;
+                max-prior-idle-ms = <150>;
+            };
+            e_trigger {
+                trigger-keys = <E>;
+                bindings = <&kp Y>;
+                max-prior-idle-ms = <150>;
+            };
+            r_trigger {
+                trigger-keys = <R>;
+                bindings = <&kp L>;
+                max-prior-idle-ms = <150>;
+            };
+            u_trigger {
+                trigger-keys = <U>;
+                bindings = <&kp E>;
+                max-prior-idle-ms = <150>;
+            };
+            o_trigger {
+                trigger-keys = <O>;
+                bindings = <&kp K>;
+                max-prior-idle-ms = <150>;
+            };
+            dot_trigger {
+                trigger-keys = <DOT>;
+                bindings = <&kp SLASH>;
+                max-prior-idle-ms = <150>;
+            };
+            s_trigger {
+                trigger-keys = <S>;
+                bindings = <&kp C>;
+                max-prior-idle-ms = <150>;
+            };
+            c_trigger {
+                trigger-keys = <C>;
+                bindings = <&kp S>;
+                max-prior-idle-ms = <150>;
+            };
+            m_trigger {
+                trigger-keys = <M>;
+                bindings = <&kp B>;
+                max-prior-idle-ms = <150>;
+            };
+            g_trigger {
+                trigger-keys = <G>;
+                bindings = <&kp S>;
+                max-prior-idle-ms = <150>;
+            };
+            p_trigger {
+                trigger-keys = <P>;
+                bindings = <&kp H>;
+                max-prior-idle-ms = <150>;
+            };
+            y_trigger {
+                trigger-keys = <Y>;
+                bindings = <&kp E>;
+                max-prior-idle-ms = <150>;
+            };
+        };
+
+        // Adaptive key for BASE_NIGHT family
+        ak_night: ak_night {
+            compatible = "zmk,behavior-adaptive-key";
+            #binding-cells = <0>;
+            bindings = <&key_repeat>;
+
+            u_trigger {
+                trigger-keys = <U>;
+                bindings = <&kp E>;
+                max-prior-idle-ms = <150>;
+            };
+            p_trigger {
+                trigger-keys = <P>;
+                bindings = <&kp Y>;
+                max-prior-idle-ms = <150>;
+            };
+            c_trigger {
+                trigger-keys = <C>;
+                bindings = <&kp Y>;
+                max-prior-idle-ms = <150>;
+            };
+            y_trigger {
+                trigger-keys = <Y>;
+                bindings = <&kp SQT>;
+                max-prior-idle-ms = <150>;
+            };
+            g_trigger {
+                trigger-keys = <G>;
+                bindings = <&kp Y>;
+                max-prior-idle-ms = <150>;
+            };
+            h_trigger {
+                trigger-keys = <H>;
+                bindings = <&kp L>;
+                max-prior-idle-ms = <150>;
+            };
+            v_trigger {
+                trigger-keys = <V>;
+                bindings = <&kp S>;
+                max-prior-idle-ms = <150>;
+            };
+            a_trigger {
+                trigger-keys = <A>;
+                bindings = <&kp O>;
+                max-prior-idle-ms = <150>;
+            };
+        };
+
+    };
+
     keymap {
         compatible = "zmk,keymap";
 
@@ -63,7 +189,7 @@
                 &none &kp B &kp L &kp D &kp C &kp V &kp J &kp Y &kp O &kp U &kp DOT &none
                 &none &hml LGUI N &hml LALT R &hml LCTL T &hml LSFT S &kp G &kp P &hmr LSFT H &hmr LCTL A &hmr LALT E &hmr LGUI I &kp ENTER
                 &none &kp X &kp Q &kp M &kp W &kp Z &kp K &kp F &kp SQT &kp MINUS &kp COMMA &none
-                &lt NUM_NIGHT BSPC &lt SYM_NIGHT R &mt LSFT DEL &mt LSFT TAB &lt NAV_NIGHT SPACE &lt MEDIA_NIGHT ENTER
+                &lt NUM_NIGHT BSPC &lt SYM_NIGHT &ak_gallium &mt LSFT DEL &mt LSFT TAB &lt NAV_NIGHT SPACE &lt MEDIA_NIGHT ENTER
             >;
         };
 

@@ -17,7 +17,8 @@ class ZMKTranslator:
         aliases: Optional[Dict[str, BehaviorAlias]] = None,
         special_keycodes: Optional[Dict[str, Dict[str, str]]] = None,
         layer_indices: Optional[Dict[str, int]] = None,
-        layout_size: Optional[str] = None
+        layout_size: Optional[str] = None,
+        magic_config: Optional['MagicKeyConfiguration'] = None
     ):
         """
         Initialize translator with behavior aliases and special keycodes
@@ -27,12 +28,15 @@ class ZMKTranslator:
             special_keycodes: Dictionary of special keycode mappings
             layer_indices: Dictionary mapping layer names to indices (for &lt)
             layout_size: Board layout size (e.g., "3x5_3", "3x6_3") for position-aware translation
+            magic_config: Optional MagicKeyConfiguration for layer-aware MAGIC translation
         """
         self.aliases = aliases or {}
         self.special_keycodes = special_keycodes or {}
         self.layer_indices = layer_indices or {}
         self.layout_size = layout_size
+        self.magic_config = magic_config
         self.current_key_index = 0  # Track current key position for context-aware translation
+        self.current_layer = None  # Track current layer for layer-aware translation
 
     def translate(self, unified) -> str:
         """
@@ -56,6 +60,21 @@ class ZMKTranslator:
         """
         # Convert to string if needed
         unified = str(unified)
+
+        # Special handling for MAGIC key (layer-aware)
+        if unified == "MAGIC":
+            if not self.magic_config:
+                return "&none"  # No magic config, return none
+
+            # Determine base layer from current layer name
+            base_layer = self._get_base_layer_for_layer(self.current_layer)
+
+            if base_layer and base_layer in self.magic_config.mappings:
+                # Return base-layer-specific adaptive key behavior
+                return f"&ak_{base_layer.lower().replace('base_', '')}"
+            else:
+                # No mapping for this base layer
+                return "&none"
 
         # Handle special keycodes
         if unified in self.special_keycodes:
@@ -89,6 +108,13 @@ class ZMKTranslator:
         Returns:
             ZMK key name (e.g., "A", "SPACE", "FSLH")
         """
+        # Special handling for MAGIC key - use layer-aware translation
+        if key == "MAGIC":
+            full_translation = self.translate(key)
+            # Return full behavior reference (including &) since lt/mt need it
+            # e.g., "&ak_gallium" stays as "&ak_gallium"
+            return full_translation
+
         # keycodes.yaml uses common names (e.g., "SLSH", not "KC_SLSH")
         if key in self.special_keycodes:
             zmk_value = self.special_keycodes[key].get('zmk', '')
@@ -255,3 +281,37 @@ class ZMKTranslator:
         else:
             # Default: assume first half is left hand
             return key_index < 21  # Default to 42-key layout
+
+    def _get_base_layer_for_layer(self, layer_name: str) -> Optional[str]:
+        """
+        Determine which base layer a given layer belongs to.
+
+        Examples:
+        - BASE_NIGHT → BASE_NIGHT
+        - NUM_NIGHT → BASE_NIGHT
+        - BASE_GALLIUM → BASE_GALLIUM
+        - NAV_NIGHT → BASE_NIGHT
+
+        Args:
+            layer_name: Name of the layer to check
+
+        Returns:
+            Base layer name (e.g., "BASE_NIGHT") or None if not found
+        """
+        if not layer_name:
+            return None
+
+        # Direct base layer
+        if layer_name.startswith("BASE_"):
+            return layer_name
+
+        # Derived layer - extract suffix and find matching base
+        if "_" in layer_name:
+            suffix = layer_name.split("_", 1)[1]  # NUM_NIGHT → NIGHT
+            base_candidate = f"BASE_{suffix}"
+
+            # Check if this base layer exists in magic config
+            if self.magic_config and base_candidate in self.magic_config.mappings:
+                return base_candidate
+
+        return None

@@ -23,7 +23,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_J                , KC_Y                , KC_O                , KC_U                , KC_DOT              ,
         KC_P                , LSFT_T(KC_H)        , LCTL_T(KC_A)        , LALT_T(KC_E)        , LGUI_T(KC_I)        ,
         KC_K                , KC_F                , KC_QUOT             , KC_MINS             , KC_COMM             ,
-                              LT(NUM_NIGHT, KC_BSPC), LT(SYM_NIGHT, KC_R) , LSFT_T(KC_DEL)      ,
+                              LT(NUM_NIGHT, KC_BSPC), LT(SYM_NIGHT, QK_AREP), LSFT_T(KC_DEL)      ,
                               LSFT_T(KC_TAB)      , LT(NAV_NIGHT, KC_SPC), LT(MEDIA_NIGHT, KC_ENT)
     ),
     [FUN] = LAYOUT_split_3x5_3(
@@ -125,3 +125,46 @@ bool combo_should_trigger(uint16_t combo_index, combo_t *combo, uint16_t keycode
 }
 
 #endif  // COMBO_ENABLE
+
+
+// Magic key configuration (alternate repeat key)
+uint16_t get_alt_repeat_key_keycode_user(uint16_t keycode, uint8_t mods) {
+    // Get current layer
+    uint8_t layer = get_highest_layer(layer_state);
+    
+    // BASE_GALLIUM family
+    if (layer == BASE_GALLIUM) {
+        switch (keycode) {
+            case KC_B: return KC_R;
+            case KC_A: return KC_Y;
+            case KC_E: return KC_Y;
+            case KC_R: return KC_L;
+            case KC_U: return KC_E;
+            case KC_O: return KC_K;
+            case KC_DOT: return KC_SLSH;
+            case KC_S: return KC_C;
+            case KC_C: return KC_S;
+            case KC_M: return KC_B;
+            case KC_G: return KC_S;
+            case KC_P: return KC_H;
+            case KC_Y: return KC_E;
+        }
+    }
+
+    // BASE_NIGHT family
+    if (layer == BASE_NIGHT || layer == NUM_NIGHT || layer == SYM_NIGHT || layer == NAV_NIGHT || layer == MEDIA_NIGHT) {
+        switch (keycode) {
+            case KC_U: return KC_E;
+            case KC_P: return KC_Y;
+            case KC_C: return KC_Y;
+            case KC_Y: return KC_QUOT;
+            case KC_G: return KC_Y;
+            case KC_H: return KC_L;
+            case KC_V: return KC_S;
+            case KC_A: return KC_O;
+        }
+    }
+
+    // Default: repeat previous key
+    return QK_REP;
+}

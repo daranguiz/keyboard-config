@@ -101,7 +101,7 @@
 35: &none
 
 36: &lt NUM_NIGHT BSPC
-37: &lt SYM_NIGHT R
+37: &lt SYM_NIGHT &ak_gallium
 38: &mt LSFT DEL
 39: &mt LSFT TAB
 40: &lt NAV_NIGHT SPACE

@@ -81,6 +81,10 @@ class LayerCompiler:
         # 3. Select translator based on firmware
         translator = self.qmk_translator if firmware == "qmk" else self.zmk_translator
 
+        # Set current layer for ZMK translator (for layer-aware MAGIC translation)
+        if firmware == "zmk" and hasattr(translator, 'current_layer'):
+            translator.current_layer = layer.name
+
         # 4. Validate complex keybindings before translation
         for keycode in keycodes:
             translator.validate_keybinding(keycode, layer.name)

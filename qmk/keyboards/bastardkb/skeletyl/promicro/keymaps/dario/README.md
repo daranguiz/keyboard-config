@@ -40,7 +40,7 @@ qmk compile -kb bastardkb/skeletyl/promicro -km dario
 ├─────────┼─────────┼─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┼─────────┼─────────┤
 │ KC_X    │ KC_Q    │ KC_M    │ KC_W    │ KC_Z    │   │ KC_K    │ KC_F    │ KC_QUOT │ KC_MINS │ KC_COMM │
 ╰─────────┴─────────┴─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┴─────────┴─────────╯
-                              │ LT(NUM_NIGHT, KC_BSPC) │ LT(SYM_NIGHT, KC_R) │   │ LT(NAV_NIGHT, KC_SPC) │ LT(MEDIA_NIGHT, KC_ENT) │
+                              │ LT(NUM_NIGHT, KC_BSPC) │ LT(SYM_NIGHT, QK_AREP) │   │ LT(NAV_NIGHT, KC_SPC) │ LT(MEDIA_NIGHT, KC_ENT) │
                               │ LSFT_T(KC_DEL) │         │   │         │         │
                               ╰─────────┴─────────╯   ╰─────────┴─────────╯
 

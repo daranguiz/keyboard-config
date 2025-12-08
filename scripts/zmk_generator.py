@@ -19,7 +19,8 @@ class ZMKGenerator:
         self,
         board: Board,
         compiled_layers: List[CompiledLayer],
-        combos: ComboConfiguration = None
+        combos: ComboConfiguration = None,
+        magic_config: 'MagicKeyConfiguration' = None
     ) -> str:
         """
         Generate .keymap devicetree file for ZMK
@@ -28,6 +29,7 @@ class ZMKGenerator:
             board: Board configuration
             compiled_layers: List of compiled layers (already translated to ZMK syntax)
             combos: Optional combo configuration
+            magic_config: Optional magic key configuration
 
         Returns:
             Complete .keymap file content as string
@@ -54,6 +56,11 @@ class ZMKGenerator:
             combos_section = "\n" + self.generate_combos_section(combos, layer_names, board)
             macros_section = "\n" + self.generate_macros_section(combos)
 
+        # Generate magic key behaviors section
+        behaviors_section = ""
+        if magic_config and magic_config.mappings:
+            behaviors_section = "\n" + self.generate_magic_keys_section(magic_config, compiled_layers)
+
         # Generate complete keymap file
         shield_or_board = board.zmk_shield if board.zmk_shield else board.zmk_board
         return f"""// AUTO-GENERATED - DO NOT EDIT
@@ -69,7 +76,7 @@ class ZMKGenerator:
 {layer_defines}
 / {{
 {combos_section}
-{macros_section}
+{macros_section}{behaviors_section}
     keymap {{
         compatible = "zmk,keymap";
 
@@ -422,6 +429,119 @@ class ZMKGenerator:
     }};
 }};
 """
+
+    def generate_magic_keys_section(
+        self,
+        magic_config: 'MagicKeyConfiguration',
+        compiled_layers: List[CompiledLayer]
+    ) -> str:
+        """
+        Generate ZMK adaptive key behaviors for magic keys
+
+        Uses zmk-adaptive-key module (urob/zmk-adaptive-key).
+        Generates separate adaptive key behaviors for each base layer:
+        - ak_night (for BASE_NIGHT family)
+        - ak_gallium (for BASE_GALLIUM family)
+
+        Args:
+            magic_config: MagicKeyConfiguration with base-layer mappings
+            compiled_layers: List of CompiledLayer for validation
+
+        Returns:
+            ZMK devicetree behaviors section
+        """
+        if not magic_config or not magic_config.mappings:
+            return ""
+
+        code_lines = [
+            "    // Magic key behaviors (adaptive key)",
+            "    // Each base layer has its own adaptive key with layer-specific mappings",
+            "    behaviors {",
+        ]
+
+        # Generate adaptive key behavior for each base layer
+        for base_layer, mapping in magic_config.mappings.items():
+            # Behavior name: BASE_NIGHT → ak_night, BASE_GALLIUM → ak_gallium
+            behavior_suffix = base_layer.lower().replace("base_", "")
+            behavior_name = f"ak_{behavior_suffix}"
+
+            code_lines.append(f"        // Adaptive key for {base_layer} family")
+            code_lines.append(f"        {behavior_name}: {behavior_name} {{")
+            code_lines.append(f"            compatible = \"zmk,behavior-adaptive-key\";")
+            code_lines.append(f"            #binding-cells = <0>;")
+
+            # Default behavior
+            if mapping.default == "REPEAT":
+                code_lines.append(f"            bindings = <&key_repeat>;")
+            elif mapping.default == "NONE":
+                code_lines.append(f"            bindings = <&none>;")
+            else:
+                default_zmk = self._translate_simple_keycode(mapping.default)
+                code_lines.append(f"            bindings = <{default_zmk}>;")
+
+            code_lines.append("")
+
+            # Generate trigger for each mapping
+            for prev_key, alt_key in mapping.mappings.items():
+                prev_zmk_raw = self._translate_simple_keycode(prev_key)
+                alt_zmk = self._translate_simple_keycode(alt_key)
+
+                # Extract keycode from &kp syntax for trigger-keys
+                # "&kp U" → "U", "&kp DOT" → "DOT"
+                prev_keycode = prev_zmk_raw.replace("&kp ", "")
+
+                # Generate safe trigger name
+                trigger_name = prev_key.replace('.', 'dot').replace('/', 'slash').replace("'", 'quot').lower() + "_trigger"
+
+                code_lines.append(f"            {trigger_name} {{")
+                code_lines.append(f"                trigger-keys = <{prev_keycode}>;")
+                code_lines.append(f"                bindings = <{alt_zmk}>;")
+                code_lines.append(f"                max-prior-idle-ms = <{mapping.timeout_ms}>;")
+                code_lines.append(f"            }};")
+
+            code_lines.append(f"        }};")
+            code_lines.append("")
+
+        code_lines.append("    };")
+        code_lines.append("")
+
+        return "\n".join(code_lines)
+
+    def _translate_simple_keycode(self, keycode: str) -> str:
+        """
+        Translate simple keycode to ZMK format (for magic key mappings)
+
+        Args:
+            keycode: Simple keycode (e.g., "A", ".", "/")
+
+        Returns:
+            ZMK keycode (e.g., "&kp A", "&kp DOT", "&kp SLASH")
+        """
+        # Handle special characters
+        special_chars = {
+            ".": "DOT",
+            ",": "COMMA",
+            "/": "SLASH",
+            "'": "SQT",
+            "-": "MINUS",
+            ";": "SEMI",
+            "[": "LBKT",
+            "]": "RBKT",
+        }
+
+        if keycode in special_chars:
+            return f"&kp {special_chars[keycode]}"
+
+        # Single letter
+        if len(keycode) == 1 and keycode.isalpha():
+            return f"&kp {keycode.upper()}"
+
+        # Already prefixed
+        if keycode.startswith("&kp "):
+            return keycode
+
+        # Default: add &kp prefix
+        return f"&kp {keycode}"
 
     def char_to_zmk_keycode(self, char: str) -> str:
         """Convert character to ZMK keycode"""
