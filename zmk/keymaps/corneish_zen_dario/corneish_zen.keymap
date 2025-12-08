@@ -10,15 +10,16 @@
 
 #define BASE_NIGHT 0
 #define BASE_COLEMAK 1
-#define NUM 2
-#define SYM 3
-#define NAV 4
-#define MEDIA 5
-#define FUN 6
-#define NUM_NIGHT 7
-#define SYM_NIGHT 8
-#define NAV_NIGHT 9
-#define MEDIA_NIGHT 10
+#define BASE_DUSK 2
+#define NUM 3
+#define SYM 4
+#define NAV 5
+#define MEDIA 6
+#define FUN 7
+#define NUM_NIGHT 8
+#define SYM_NIGHT 9
+#define NAV_NIGHT 10
+#define MEDIA_NIGHT 11
 
 / {
 
@@ -29,7 +30,7 @@
             timeout-ms = <100>;
             key-positions = <1 5 29>;
             bindings = <&bootloader>;
-            layers = <0 1>;
+            layers = <0 2 1>;
             require-prior-idle-ms = <150>;
         };
 
@@ -37,7 +38,7 @@
             timeout-ms = <100>;
             key-positions = <6 10 30>;
             bindings = <&bootloader>;
-            layers = <0 1>;
+            layers = <0 2 1>;
             require-prior-idle-ms = <150>;
         };
 
@@ -45,7 +46,7 @@
             timeout-ms = <100>;
             key-positions = <7 8 9 10>;
             bindings = <&github_url>;
-            layers = <0 1>;
+            layers = <0 2 1>;
         };
     };
 
@@ -68,6 +69,15 @@
                 &none &hml LGUI A &hml LALT R &hml LCTL S &hml LSFT T &kp D &kp H &hmr LSFT N &hmr LCTL E &hmr LALT I &hmr LGUI O &kp ENTER
                 &none &kp Z &kp X &kp C &kp V &kp B &kp K &kp M &kp COMMA &kp DOT &kp FSLH &none
                 &kp ENTER &lt NAV SPACE &lt MEDIA TAB &lt SYM DEL &kp LSHFT &lt NUM BSPC
+            >;
+        };
+
+        base_dusk_layer {
+            bindings = <
+                &none &kp B &kp F &kp D &kp W &kp P &kp J &kp SQT &kp O &kp U &kp DOT &none
+                &none &hml LGUI N &hml LALT S &hml LCTL T &hml LSFT C &kp Y &kp M &hmr LSFT H &hmr LCTL A &hmr LALT E &hmr LGUI I &kp ENTER
+                &none &kp X &kp V &kp K &kp G &kp Q &kp Z &kp L &kp MINUS &kp SEMI &kp COMMA &none
+                &lt NUM_NIGHT BSPC &lt SYM_NIGHT R &mt LSFT DEL &mt LSFT TAB &lt NAV_NIGHT SPACE &lt MEDIA_NIGHT ENTER
             >;
         };
 
@@ -100,7 +110,7 @@
 
         media_layer {
             bindings = <
-                &none &to BASE_NIGHT &to BASE_COLEMAK &none &none &none &none &none &none &none &none &none
+                &none &to BASE_NIGHT &to BASE_DUSK &to BASE_COLEMAK &none &none &none &none &none &none &none &none
                 &none &kp LGUI &kp LALT &kp LCTRL &kp LSHFT &none &none &kp C_PREV &kp C_VOL_DN &kp C_VOL_UP &kp C_NEXT &none
                 &none &none &none &none &none &bootloader &none &none &none &none &none &none
                 &none &none &none &kp C_STOP &kp C_PLAY_PAUSE &kp C_MUTE
@@ -145,7 +155,7 @@
 
         media_night_layer {
             bindings = <
-                &none &to BASE_NIGHT &to BASE_COLEMAK &none &none &none &none &none &none &none &none &none
+                &none &to BASE_NIGHT &to BASE_DUSK &to BASE_COLEMAK &none &none &none &none &none &none &none &none
                 &none &kp C_NEXT &kp C_VOL_UP &kp C_VOL_DN &kp C_PREV &none &none &kp LSHFT &kp LCTRL &kp LALT &kp LGUI &none
                 &none &kp LG(Z) &kp LG(X) &kp LG(C) &kp LG(V) &kp LG(LS(Z)) &none &none &none &none &bootloader &none
                 &kp C_MUTE &kp C_PLAY_PAUSE &kp C_STOP &none &none &none

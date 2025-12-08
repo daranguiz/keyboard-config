@@ -22,6 +22,8 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case LCTL_T(KC_A):
         case LALT_T(KC_E):
         case LGUI_T(KC_I):
+        // BASE_DUSK: LGUI/LALT/LCTL/LSFT on N/S/T/C (left), LSFT/LCTL/LALT/LGUI on H/A/E/I (right)
+        // Most keys already covered above, no additional unique combinations needed
             return TAPPING_TERM_HRM;
 
         // Layer-tap keys: use standard tapping term (200ms)
@@ -37,6 +39,19 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 
         default:
             return TAPPING_TERM;
+    }
+}
+
+// Per-key hold-on-other-key-press (hold-preferred behavior)
+// Enables immediate hold activation for TAB and DEL mod-taps
+bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        // Hold-preferred mod-taps: TAB and DEL with LSFT
+        case LSFT_T(KC_TAB):
+        case LSFT_T(KC_DEL):
+            return true;  // Immediately select hold action when another key is pressed
+        default:
+            return false;  // Use default behavior for all other keys
     }
 }
 

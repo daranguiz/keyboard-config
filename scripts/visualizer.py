@@ -814,6 +814,7 @@ class KeymapVisualizer:
                 svg_output = svg_output.replace('BASE_COLEMAK', 'COLEMAK')
                 svg_output = svg_output.replace('BASE_GALLIUM', 'GALLIUM')
                 svg_output = svg_output.replace('BASE_NIGHT', 'NIGHT')
+                svg_output = svg_output.replace('BASE_DUSK', 'DUSK')
 
                 # Write SVG file
                 svg_file.write_text(svg_output)
@@ -893,6 +894,8 @@ class KeymapVisualizer:
         """Map each base layer to its associated layers"""
         return {
             'BASE_NIGHT': ['BASE_NIGHT', 'SYM_NIGHT', 'NUM_NIGHT',
+                          'NAV_NIGHT', 'MEDIA_NIGHT', 'FUN'],
+            'BASE_DUSK': ['BASE_DUSK', 'SYM_NIGHT', 'NUM_NIGHT',
                           'NAV_NIGHT', 'MEDIA_NIGHT', 'FUN'],
             'BASE_COLEMAK': ['BASE_COLEMAK', 'SYM', 'NUM', 'NAV', 'MEDIA', 'FUN']
         }
@@ -1094,6 +1097,7 @@ class KeymapVisualizer:
                 svg_output = svg_output.replace('BASE_COLEMAK', 'COLEMAK')
                 svg_output = svg_output.replace('BASE_GALLIUM', 'GALLIUM')
                 svg_output = svg_output.replace('BASE_NIGHT', 'NIGHT')
+                svg_output = svg_output.replace('BASE_DUSK', 'DUSK')
 
                 # Replace NIGHT variant layer names with clean names (NUM, SYM, etc.)
                 svg_output = svg_output.replace('NUM_NIGHT', 'NUM')
@@ -1637,6 +1641,7 @@ class KeymapVisualizer:
                 svg_output = svg_output.replace('BASE_COLEMAK', 'COLEMAK')
                 svg_output = svg_output.replace('BASE_GALLIUM', 'GALLIUM')
                 svg_output = svg_output.replace('BASE_NIGHT', 'NIGHT')
+                svg_output = svg_output.replace('BASE_DUSK', 'DUSK')
 
                 # Write SVG file
                 svg_file.write_text(svg_output)

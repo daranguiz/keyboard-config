@@ -46,6 +46,23 @@ qmk compile -kb bastardkb/skeletyl/promicro -km dario
 
 ```
 
+## BASE_DUSK Layer
+
+```
+
+╭─────────┬─────────┬─────────┬─────────┬─────────╮   ╭─────────┬─────────┬─────────┬─────────┬─────────╮
+│ KC_B    │ KC_F    │ KC_D    │ KC_W    │ KC_P    │   │ KC_J    │ KC_QUOT │ KC_O    │ KC_U    │ KC_DOT  │
+├─────────┼─────────┼─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┼─────────┼─────────┤
+│ LGUI_T(KC_N) │ LALT_T(KC_S) │ LCTL_T(KC_T) │ LSFT_T(KC_C) │ KC_Y    │   │ KC_M    │ LSFT_T(KC_H) │ LCTL_T(KC_A) │ LALT_T(KC_E) │ LGUI_T(KC_I) │
+├─────────┼─────────┼─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┼─────────┼─────────┤
+│ KC_X    │ KC_V    │ KC_K    │ KC_G    │ KC_Q    │   │ KC_Z    │ KC_L    │ KC_MINS │ KC_SCLN │ KC_COMM │
+╰─────────┴─────────┴─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┴─────────┴─────────╯
+                              │ LT(NUM_NIGHT, KC_BSPC) │ LT(SYM_NIGHT, KC_R) │   │ LT(NAV_NIGHT, KC_SPC) │ LT(MEDIA_NIGHT, KC_ENT) │
+                              │ LSFT_T(KC_DEL) │         │   │         │         │
+                              ╰─────────┴─────────╯   ╰─────────┴─────────╯
+
+```
+
 ## NUM Layer
 
 ```
@@ -102,7 +119,7 @@ qmk compile -kb bastardkb/skeletyl/promicro -km dario
 ```
 
 ╭─────────┬─────────┬─────────┬─────────┬─────────╮   ╭─────────┬─────────┬─────────┬─────────┬─────────╮
-│ DF(BASE_NIGHT) │ DF(BASE_COLEMAK) │ KC_NO   │ KC_NO   │ KC_NO   │   │ KC_NO   │ KC_NO   │ KC_NO   │ KC_NO   │ KC_NO   │
+│ DF(BASE_NIGHT) │ DF(BASE_DUSK) │ DF(BASE_COLEMAK) │ KC_NO   │ KC_NO   │   │ KC_NO   │ KC_NO   │ KC_NO   │ KC_NO   │ KC_NO   │
 ├─────────┼─────────┼─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┼─────────┼─────────┤
 │ KC_LGUI │ KC_LALT │ KC_LCTL │ KC_LSFT │ KC_NO   │   │ KC_NO   │ KC_MPRV │ KC_VOLD │ KC_VOLU │ KC_MNXT │
 ├─────────┼─────────┼─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┼─────────┼─────────┤
@@ -187,7 +204,7 @@ qmk compile -kb bastardkb/skeletyl/promicro -km dario
 ```
 
 ╭─────────┬─────────┬─────────┬─────────┬─────────╮   ╭─────────┬─────────┬─────────┬─────────┬─────────╮
-│ DF(BASE_NIGHT) │ DF(BASE_COLEMAK) │ KC_NO   │ KC_NO   │ KC_NO   │   │ KC_NO   │ KC_NO   │ KC_NO   │ KC_NO   │ KC_NO   │
+│ DF(BASE_NIGHT) │ DF(BASE_DUSK) │ DF(BASE_COLEMAK) │ KC_NO   │ KC_NO   │   │ KC_NO   │ KC_NO   │ KC_NO   │ KC_NO   │ KC_NO   │
 ├─────────┼─────────┼─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┼─────────┼─────────┤
 │ KC_MNXT │ KC_VOLU │ KC_VOLD │ KC_MPRV │ KC_NO   │   │ KC_NO   │ KC_LSFT │ KC_LCTL │ KC_LALT │ KC_LGUI │
 ├─────────┼─────────┼─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┼─────────┼─────────┤

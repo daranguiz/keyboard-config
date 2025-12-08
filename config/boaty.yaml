@@ -102,6 +102,21 @@ layers:
                                      L36_30, L36_31, L36_32, L36_33, L36_34, L36_35
     ]
 
+  BASE_DUSK:
+    full_layout: [
+                                              PMNS,
+                                              PSLS,  PAST,
+                                              P7,    P8,    P9,
+                                              P4,    P5,    P6,    PPLS,
+                                              P1,    P2,    P3,    PENT, NLCK,
+                                              P0,    P0,    PDOT,  PENT, PEQL,  BSPC,
+
+      ESC,   TAB,    L36_0,  L36_1,  L36_2,  L36_3,  L36_4,  L36_5,  L36_6,  L36_7,  L36_8,  L36_9,  BSPC,  DEL,
+             CAPS,   L36_10, L36_11, L36_12, L36_13, L36_14, L36_15, L36_16, L36_17, L36_18, L36_19, ENT,
+                     L36_20, L36_21, L36_22, L36_23, L36_24, L36_25, L36_26, L36_27, L36_28, L36_29,
+                                     L36_30, L36_31, L36_32, L36_33, L36_34, L36_35
+    ]
+
   NUM:
     full_layout: [
                                               TRNS,

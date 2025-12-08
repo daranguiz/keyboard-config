@@ -43,6 +43,27 @@ layers:
         outer_pinky_left: LBRC
         outer_pinky_right: RBRC
 
+  BASE_DUSK:
+    core: # (3x5)
+      left:
+        - [B              , F              , D              , W              , P              ]
+        - [hrm:LGUI:N     , hrm:LALT:S     , hrm:LCTL:T     , hrm:LSFT:C     , Y              ]
+        - [X              , V              , K              , G              , Q              ]
+      right:
+        - [J              , QUOT           , O              , U              , DOT            ]
+        - [M              , hrm:LSFT:H     , hrm:LCTL:A     , hrm:LALT:E     , hrm:LGUI:I     ]
+        - [Z              , L              , MINS           , SCLN           , COMM           ]
+      thumbs:
+        - [lt:NUM_NIGHT:BSPC   , lt:SYM_NIGHT:R              , mt:LSFT:DEL    ]
+        - [mt:LSFT:TAB    , lt:NAV_NIGHT:SPC     , lt:MEDIA_NIGHT:ENT    ]
+    extensions:
+      3x6_3:
+        outer_pinky_left: [NONE, NONE, NONE]
+        outer_pinky_right: [NONE, ENT, NONE]
+      3x5_3_pinky:
+        outer_pinky_left: LBRC  # future magic
+        outer_pinky_right: RBRC # future magic
+
   NUM:
     core: # (3x5)
       left:
@@ -109,7 +130,7 @@ layers:
   MEDIA:
     core: # (3x5)
       left:
-        - [df:BASE_NIGHT  , df:BASE_COLEMAK, NONE           , NONE           , NONE           ]
+        - [df:BASE_NIGHT  , df:BASE_DUSK   , df:BASE_COLEMAK, NONE           , NONE           ]
         - [LGUI           , LALT           , LCTL           , LSFT           , NONE           ]
         - [NONE           , NONE           , NONE           , NONE           , DFU           ]
       right:
@@ -215,7 +236,7 @@ layers:
   MEDIA_NIGHT:
     core: # (3x5)
       left:
-        - [df:BASE_NIGHT  , df:BASE_COLEMAK, NONE           , NONE           , NONE           ]
+        - [df:BASE_NIGHT  , df:BASE_DUSK   , df:BASE_COLEMAK, NONE           , NONE           ]
         - [MNXT           , VOLU           , VOLD           , MPRV           , NONE           ]
         - [UNDO           , CUT            , COPY           , PASTE          , REDO           ]
       right:
@@ -243,7 +264,7 @@ combos:
     action: DFU
     timeout_ms: 100  # Slightly longer for easier chord
     require_prior_idle_ms: 150  # Prevent during fast typing (ZMK only)
-    layers: [BASE_NIGHT, BASE_COLEMAK]
+    layers: [BASE_NIGHT, BASE_DUSK, BASE_COLEMAK]
 
   - name: dfu_right
     description: "Enter bootloader (right hand)"
@@ -251,7 +272,7 @@ combos:
     action: DFU
     timeout_ms: 100  # Slightly longer for easier chord
     require_prior_idle_ms: 150  # Prevent during fast typing (ZMK only)
-    layers: [BASE_NIGHT, BASE_COLEMAK]
+    layers: [BASE_NIGHT, BASE_DUSK, BASE_COLEMAK]
 
   - name: github_url
     description: "Expand to GitHub repo URL"
@@ -259,4 +280,4 @@ combos:
     action: MACRO_GITHUB_URL
     macro_text: "https://github.com/daranguiz/keyboard-config?tab=readme-ov-file#readme"
     timeout_ms: 100  # Slightly longer for 4-key combo
-    layers: [BASE_NIGHT, BASE_COLEMAK]
+    layers: [BASE_NIGHT, BASE_DUSK, BASE_COLEMAK]

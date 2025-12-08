@@ -20,6 +20,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         LALT_T(KC_R)        , LCTL_T(KC_S)        , LSFT_T(KC_T)        , KC_D                , KC_H                , LSFT_T(KC_N)        , LCTL_T(KC_E)        , LALT_T(KC_I)        , LGUI_T(KC_O)        , KC_ENT              , KC_LSFT             , KC_Z                , KC_X                , KC_C                ,
         KC_V                , KC_B                , KC_K                , KC_M                , KC_COMM             , KC_DOT              , KC_SLSH             , KC_ENT              , LT(NAV, KC_SPC)     , LT(MEDIA, KC_TAB)   , LT(SYM, KC_DEL)     , KC_LSFT             , LT(NUM, KC_BSPC)    
     ),
+    [BASE_DUSK] = LAYOUT(
+        KC_PMNS             , KC_PSLS             , KC_PAST             , KC_P7               , KC_P8               , KC_P9               , KC_P4               , KC_P5               , KC_P6               , KC_PPLS             , KC_P1               , KC_P2               ,
+        KC_P3               , KC_PENT             , KC_NUM_LOCK         , KC_P0               , KC_P0               , KC_PDOT             , KC_PENT             , KC_PEQL             , KC_BSPC             , KC_ESC              , KC_TAB              , KC_B                ,
+        KC_F                , KC_D                , KC_W                , KC_P                , KC_J                , KC_QUOT             , KC_O                , KC_U                , KC_DOT              , KC_BSPC             , KC_DEL              , KC_CAPS             ,
+        LGUI_T(KC_N)        , LALT_T(KC_S)        , LCTL_T(KC_T)        , LSFT_T(KC_C)        , KC_Y                , KC_M                , LSFT_T(KC_H)        , LCTL_T(KC_A)        , LALT_T(KC_E)        , LGUI_T(KC_I)        , KC_ENT              , KC_X                , KC_V                , KC_K                ,
+        KC_G                , KC_Q                , KC_Z                , KC_L                , KC_MINS             , KC_SCLN             , KC_COMM             , LT(NUM_NIGHT, KC_BSPC), LT(SYM_NIGHT, KC_R) , LSFT_T(KC_DEL)      , LSFT_T(KC_TAB)      , LT(NAV_NIGHT, KC_SPC), LT(MEDIA_NIGHT, KC_ENT)
+    ),
     [NUM] = LAYOUT(
         KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             ,
         KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_LBRC             ,
@@ -44,7 +51,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [MEDIA] = LAYOUT(
         KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             ,
         KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , DF(BASE_NIGHT)      ,
-        DF(BASE_COLEMAK)    , KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_TRNS             , KC_TRNS             , KC_TRNS             ,
+        DF(BASE_DUSK)       , DF(BASE_COLEMAK)    , KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_TRNS             , KC_TRNS             , KC_TRNS             ,
         KC_LGUI             , KC_LALT             , KC_LCTL             , KC_LSFT             , KC_NO               , KC_NO               , KC_MPRV             , KC_VOLD             , KC_VOLU             , KC_MNXT             , KC_TRNS             , KC_NO               , KC_NO               , KC_NO               ,
         KC_NO               , QK_BOOT             , KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_MSTP             , KC_MPLY             , KC_MUTE             
     ),
@@ -79,7 +86,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [MEDIA_NIGHT] = LAYOUT(
         KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             ,
         KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , DF(BASE_NIGHT)      ,
-        DF(BASE_COLEMAK)    , KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_TRNS             , KC_TRNS             , KC_TRNS             ,
+        DF(BASE_DUSK)       , DF(BASE_COLEMAK)    , KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_TRNS             , KC_TRNS             , KC_TRNS             ,
         KC_MNXT             , KC_VOLU             , KC_VOLD             , KC_MPRV             , KC_NO               , KC_NO               , KC_LSFT             , KC_LCTL             , KC_LALT             , KC_LGUI             , KC_TRNS             , LGUI(KC_Z)          , LGUI(KC_X)          , LGUI(KC_C)          ,
         LGUI(KC_V)          , SGUI(KC_Z)          , KC_NO               , KC_NO               , KC_NO               , KC_NO               , QK_BOOT             , KC_MUTE             , KC_MPLY             , KC_MSTP             , KC_NO               , KC_NO               , KC_NO               
     ),
@@ -118,14 +125,14 @@ bool combo_should_trigger(uint16_t combo_index, combo_t *combo, uint16_t keycode
 
     switch (combo_index) {
         case COMBO_DFU_LEFT:
-            // Only active on BASE_NIGHT, BASE_COLEMAK
-            return (layer == BASE_NIGHT || layer == BASE_COLEMAK);
+            // Only active on BASE_NIGHT, BASE_DUSK, BASE_COLEMAK
+            return (layer == BASE_NIGHT || layer == BASE_DUSK || layer == BASE_COLEMAK);
         case COMBO_DFU_RIGHT:
-            // Only active on BASE_NIGHT, BASE_COLEMAK
-            return (layer == BASE_NIGHT || layer == BASE_COLEMAK);
+            // Only active on BASE_NIGHT, BASE_DUSK, BASE_COLEMAK
+            return (layer == BASE_NIGHT || layer == BASE_DUSK || layer == BASE_COLEMAK);
         case COMBO_GITHUB_URL:
-            // Only active on BASE_NIGHT, BASE_COLEMAK
-            return (layer == BASE_NIGHT || layer == BASE_COLEMAK);
+            // Only active on BASE_NIGHT, BASE_DUSK, BASE_COLEMAK
+            return (layer == BASE_NIGHT || layer == BASE_DUSK || layer == BASE_COLEMAK);
         default:
             return true;  // Other combos active on all layers
     }

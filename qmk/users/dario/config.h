@@ -42,6 +42,15 @@
 // Note: No direct QMK equivalent, approximated by CHORDAL_HOLD + PERMISSIVE_HOLD
 
 // ----------------------------------------------------------------------------
+// HOLD-PREFERRED MOD-TAPS (mt:LSFT:TAB and mt:LSFT:DEL)
+// ----------------------------------------------------------------------------
+
+// Enable per-key configuration for hold-on-other-key-press
+// This allows TAB and DEL mod-taps to use hold-preferred behavior
+// (immediately activate hold when another key is pressed)
+#define HOLD_ON_OTHER_KEY_PRESS_PER_KEY
+
+// ----------------------------------------------------------------------------
 // ADDITIONAL QMK-SPECIFIC SETTINGS (No ZMK equivalent)
 // ----------------------------------------------------------------------------
 

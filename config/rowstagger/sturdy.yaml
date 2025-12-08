@@ -1,0 +1,25 @@
+# Sturdy keyboard layout
+# Left hand: v m l c p / s t r d y / k q g w z
+# Right hand: x f o u j / . n a e i - / b h ' ; ,
+
+name: "Sturdy"
+id: "-12408"
+group: "126"
+
+# Base layer - maps to QWERTY physical positions
+# Shift layer is auto-inferred (uppercase letters, shifted symbols)
+# Number row stays as standard QWERTY (1234567890-=)
+# Only customize alpha keys + bracket keys
+
+layout:
+  - [v,    m,    l,    c,    p,       x,    f,    o,    u,    j,     "[",  "]"]
+  - [s,    t,    r,    d,    y,       ".",  n,    a,    e,    i,     "-"     ]
+  - [k,    q,    g,    w,    z,       b,    h,    "'",  ";",  ","            ]
+
+# Fingermap (which finger presses each key)
+# 0=L-pinky, 1=L-ring, 2=L-middle, 3=L-index
+# 4=R-index, 5=R-middle, 6=R-ring, 7=R-pinky
+fingermap:
+  - [0,    1,    2,    3,    3,       4,    4,    5,    6,    7,     7,    7   ]
+  - [0,    1,    2,    3,    3,       4,    4,    5,    6,    7,     7         ]
+  - [1,    2,    3,    3,    3,       4,    4,    5,    6,    7               ]

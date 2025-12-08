@@ -26,6 +26,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                               KC_ENT              , LT(NAV, KC_SPC)     , LT(MEDIA, KC_TAB)   ,
                               LT(SYM, KC_DEL)     , KC_LSFT             , LT(NUM, KC_BSPC)    
     ),
+    [BASE_DUSK] = LAYOUT_split_3x5_3(
+        KC_B                , KC_F                , KC_D                , KC_W                , KC_P                ,
+        LGUI_T(KC_N)        , LALT_T(KC_S)        , LCTL_T(KC_T)        , LSFT_T(KC_C)        , KC_Y                ,
+        KC_X                , KC_V                , KC_K                , KC_G                , KC_Q                ,
+        KC_J                , KC_QUOT             , KC_O                , KC_U                , KC_DOT              ,
+        KC_M                , LSFT_T(KC_H)        , LCTL_T(KC_A)        , LALT_T(KC_E)        , LGUI_T(KC_I)        ,
+        KC_Z                , KC_L                , KC_MINS             , KC_SCLN             , KC_COMM             ,
+                              LT(NUM_NIGHT, KC_BSPC), LT(SYM_NIGHT, KC_R) , LSFT_T(KC_DEL)      ,
+                              LSFT_T(KC_TAB)      , LT(NAV_NIGHT, KC_SPC), LT(MEDIA_NIGHT, KC_ENT)
+    ),
     [NUM] = LAYOUT_split_3x5_3(
         KC_LBRC             , KC_4                , KC_5                , KC_6                , KC_RBRC             ,
         KC_SLSH             , KC_1                , KC_2                , KC_3                , KC_EQL              ,
@@ -57,7 +67,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                               KC_DEL              , KC_ENT              , KC_BSPC             
     ),
     [MEDIA] = LAYOUT_split_3x5_3(
-        DF(BASE_NIGHT)      , DF(BASE_COLEMAK)    , KC_NO               , KC_NO               , KC_NO               ,
+        DF(BASE_NIGHT)      , DF(BASE_DUSK)       , DF(BASE_COLEMAK)    , KC_NO               , KC_NO               ,
         KC_LGUI             , KC_LALT             , KC_LCTL             , KC_LSFT             , KC_NO               ,
         KC_NO               , KC_NO               , KC_NO               , KC_NO               , QK_BOOT             ,
         KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               ,
@@ -107,7 +117,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                               KC_NO               , KC_NO               , KC_NO               
     ),
     [MEDIA_NIGHT] = LAYOUT_split_3x5_3(
-        DF(BASE_NIGHT)      , DF(BASE_COLEMAK)    , KC_NO               , KC_NO               , KC_NO               ,
+        DF(BASE_NIGHT)      , DF(BASE_DUSK)       , DF(BASE_COLEMAK)    , KC_NO               , KC_NO               ,
         KC_MNXT             , KC_VOLU             , KC_VOLD             , KC_MPRV             , KC_NO               ,
         LGUI(KC_Z)          , LGUI(KC_X)          , LGUI(KC_C)          , LGUI(KC_V)          , SGUI(KC_Z)          ,
         KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               ,
@@ -151,14 +161,14 @@ bool combo_should_trigger(uint16_t combo_index, combo_t *combo, uint16_t keycode
 
     switch (combo_index) {
         case COMBO_DFU_LEFT:
-            // Only active on BASE_NIGHT, BASE_COLEMAK
-            return (layer == BASE_NIGHT || layer == BASE_COLEMAK);
+            // Only active on BASE_NIGHT, BASE_DUSK, BASE_COLEMAK
+            return (layer == BASE_NIGHT || layer == BASE_DUSK || layer == BASE_COLEMAK);
         case COMBO_DFU_RIGHT:
-            // Only active on BASE_NIGHT, BASE_COLEMAK
-            return (layer == BASE_NIGHT || layer == BASE_COLEMAK);
+            // Only active on BASE_NIGHT, BASE_DUSK, BASE_COLEMAK
+            return (layer == BASE_NIGHT || layer == BASE_DUSK || layer == BASE_COLEMAK);
         case COMBO_GITHUB_URL:
-            // Only active on BASE_NIGHT, BASE_COLEMAK
-            return (layer == BASE_NIGHT || layer == BASE_COLEMAK);
+            // Only active on BASE_NIGHT, BASE_DUSK, BASE_COLEMAK
+            return (layer == BASE_NIGHT || layer == BASE_DUSK || layer == BASE_COLEMAK);
         default:
             return true;  // Other combos active on all layers
     }

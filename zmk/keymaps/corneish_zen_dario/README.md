@@ -108,6 +108,59 @@
 41: &lt NUM BSPC
 ```
 
+## BASE_DUSK Layer
+
+```
+ 0: &none
+ 1: &kp B
+ 2: &kp F
+ 3: &kp D
+ 4: &kp W
+ 5: &kp P
+
+ 6: &none
+ 7: &hml LGUI N
+ 8: &hml LALT S
+ 9: &hml LCTL T
+10: &hml LSFT C
+11: &kp Y
+
+12: &none
+13: &kp X
+14: &kp V
+15: &kp K
+16: &kp G
+17: &kp Q
+
+18: &kp J
+19: &kp SQT
+20: &kp O
+21: &kp U
+22: &kp DOT
+23: &none
+
+24: &kp M
+25: &hmr LSFT H
+26: &hmr LCTL A
+27: &hmr LALT E
+28: &hmr LGUI I
+29: &kp ENTER
+
+30: &kp Z
+31: &kp L
+32: &kp MINUS
+33: &kp SEMI
+34: &kp COMMA
+35: &none
+
+36: &lt NUM_NIGHT BSPC
+37: &lt SYM_NIGHT R
+38: &mt LSFT DEL
+39: &mt LSFT TAB
+40: &lt NAV_NIGHT SPACE
+41: &lt MEDIA_NIGHT ENTER
+```
+
 ## NUM Layer
 
 ```
@@ -272,8 +325,8 @@
 ```
  0: &none
  1: &to BASE_NIGHT
- 2: &to BASE_COLEMAK
- 3: &none
+ 2: &to BASE_DUSK
+ 3: &to BASE_COLEMAK
  4: &none
  5: &none
 
@@ -537,8 +590,8 @@
 ```
  0: &none
  1: &to BASE_NIGHT
- 2: &to BASE_COLEMAK
- 3: &none
+ 2: &to BASE_DUSK
+ 3: &to BASE_COLEMAK
  4: &none
  5: &none
 

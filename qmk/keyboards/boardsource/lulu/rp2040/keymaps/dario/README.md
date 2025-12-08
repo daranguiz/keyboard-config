@@ -138,6 +138,69 @@ qmk compile -kb boardsource/lulu/rp2040 -km dario
 57: KC_NO
 ```
 
+## BASE_DUSK Layer
+
+```
+ 0: KC_NO
+ 1: KC_NO
+ 2: KC_NO
+ 3: KC_NO
+ 4: KC_NO
+ 5: KC_NO
+ 6: KC_NO
+ 7: KC_NO
+ 8: KC_NO
+ 9: KC_NO
+10: KC_NO
+11: KC_NO
+12: KC_NO
+13: KC_B
+14: KC_F
+15: KC_D
+16: KC_W
+17: KC_P
+18: KC_J
+19: KC_QUOT
+20: KC_O
+21: KC_U
+22: KC_DOT
+23: KC_NO
+24: KC_NO
+25: LGUI_T(KC_N)
+26: LALT_T(KC_S)
+27: LCTL_T(KC_T)
+28: LSFT_T(KC_C)
+29: KC_Y
+30: KC_M
+31: LSFT_T(KC_H)
+32: LCTL_T(KC_A)
+33: LALT_T(KC_E)
+34: LGUI_T(KC_I)
+35: KC_ENT
+36: KC_NO
+37: KC_X
+38: KC_V
+39: KC_K
+40: KC_G
+41: KC_Q
+42: KC_NO
+43: KC_NO
+44: KC_Z
+45: KC_L
+46: KC_MINS
+47: KC_SCLN
+48: KC_COMM
+49: KC_NO
+50: KC_NO
+51: LT(NUM_NIGHT, KC_BSPC)
+52: LT(SYM_NIGHT, KC_R)
+53: LSFT_T(KC_DEL)
+54: LSFT_T(KC_TAB)
+55: LT(NAV_NIGHT, KC_SPC)
+56: LT(MEDIA_NIGHT, KC_ENT)
+57: KC_NO
+```
+
 ## NUM Layer
 
 ```
@@ -344,8 +407,8 @@ qmk compile -kb boardsource/lulu/rp2040 -km dario
 11: KC_NO
 12: KC_NO
 13: DF(BASE_NIGHT)
-14: DF(BASE_COLEMAK)
-15: KC_NO
+14: DF(BASE_DUSK)
+15: DF(BASE_COLEMAK)
 16: KC_NO
 17: KC_NO
 18: KC_NO
@@ -659,8 +722,8 @@ qmk compile -kb boardsource/lulu/rp2040 -km dario
 11: KC_NO
 12: KC_NO
 13: DF(BASE_NIGHT)
-14: DF(BASE_COLEMAK)
-15: KC_NO
+14: DF(BASE_DUSK)
+15: DF(BASE_COLEMAK)
 16: KC_NO
 17: KC_NO
 18: KC_NO

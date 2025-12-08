@@ -21,6 +21,9 @@ Custom keyboard firmware for split ergonomic keyboards using a unified keymap co
 #### NIGHT Layout
 ![NIGHT Layout](docs/night.svg)
 
+#### DUSK Layout
+![DUSK Layout](docs/dusk.svg)
+
 #### Colemak Layout
 ![Colemak Layout](docs/colemak.svg)
 
@@ -31,6 +34,9 @@ Custom keyboard firmware for split ergonomic keyboards using a unified keymap co
 
 #### Rain
 ![Rain Layout](docs/rain_rowstagger.svg)
+
+#### Sturdy
+![Sturdy Layout](docs/sturdy_rowstagger.svg)
 
 ## About
 

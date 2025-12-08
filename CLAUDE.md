@@ -17,6 +17,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **Follow official tooling**: Use the official dev container approach for each firmware (e.g., ZMK's devcontainer setup)
 - **Never suggest "just use GitHub Actions"**: This is never an acceptable answer for local development
 
+**CRITICAL - Documentation Standards**:
+- **ALWAYS update README.md**: When adding new keymaps, layouts, boards, or features, you MUST update the README.md to include them
+- **Keep documentation in sync**: The README is the user-facing entry point - if a feature exists but isn't documented there, it effectively doesn't exist for users
+- **Include visualizations**: When adding new row-stagger layouts or split keyboard keymaps, add the corresponding visualization images to the README
+
 ## About This Project
 
 This is a QMK External Userspace repository for custom keyboard firmware. It contains keymaps for multiple split ergonomic keyboards using a **unified keymap code generation system** based on Miryoku principles with Mac-specific clipboard shortcuts.
