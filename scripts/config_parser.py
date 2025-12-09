@@ -368,3 +368,55 @@ class YAMLConfigParser:
         config.validate()
 
         return config
+
+    @staticmethod
+    def parse_magic_keys(yaml_path: Path) -> 'MagicKeyConfiguration':
+        """
+        Parse magic key definitions from config/keymap.yaml
+
+        Args:
+            yaml_path: Path to keymap.yaml
+
+        Returns:
+            MagicKeyConfiguration with base-layer-specific magic key mappings
+
+        The magic_keys section is optional. If not present, returns empty MagicKeyConfiguration.
+        """
+        with open(yaml_path, 'r') as f:
+            data = yaml.safe_load(f)
+
+        # Magic keys section is optional
+        if not data or 'magic_keys' not in data:
+            from data_model import MagicKeyConfiguration
+            return MagicKeyConfiguration(mappings={})
+
+        magic_keys_data = data['magic_keys']
+        if not isinstance(magic_keys_data, dict):
+            raise ValidationError("'magic_keys' must be a dictionary mapping base layers to configurations")
+
+        from data_model import MagicKeyMapping, MagicKeyConfiguration
+
+        mappings = {}
+        for base_layer, config in magic_keys_data.items():
+            # Validate required fields
+            if 'mappings' not in config:
+                raise ValidationError(
+                    f"Magic key configuration for {base_layer} missing required field: 'mappings'"
+                )
+
+            # Create magic key mapping
+            mapping = MagicKeyMapping(
+                base_layer=base_layer,
+                timeout_ms=config.get('timeout_ms', 150),
+                mappings=config.get('mappings', {}),
+                default=config.get('default', 'REPEAT')
+            )
+
+            mapping.validate()
+            mappings[base_layer] = mapping
+
+        # Create configuration
+        magic_config = MagicKeyConfiguration(mappings=mappings)
+        magic_config.validate()
+
+        return magic_config

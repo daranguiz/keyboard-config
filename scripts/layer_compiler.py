@@ -55,12 +55,9 @@ class LayerCompiler:
         if layer.full_layout is not None:
             # Use full_layout directly (for special layers like GAME, or boards with L36 refs)
             keycodes = layer.full_layout.flatten()
-            print(f"DEBUG: Layer {layer.name} has full_layout, flattened to {len(keycodes)} keys")
-            print(f"DEBUG: First 5 keycodes after flatten: {keycodes[:5]}")
 
             # 2. Check if this layout contains position references
             has_refs = self._contains_position_references(keycodes)
-            print(f"DEBUG: Contains position references? {has_refs}")
             if has_refs:
                 # Need core to resolve references
                 if layer.core is None:
@@ -69,10 +66,7 @@ class LayerCompiler:
                     )
                 # Flatten core and resolve all L36(n) references
                 core_flat = self._flatten_core_for_references(layer.core)
-                print(f"DEBUG: Core flattened, first 5 items: {core_flat[:5]}")
                 keycodes = self._resolve_position_references(keycodes, core_flat)
-                print(f"DEBUG: After resolution, first 5 items: {keycodes[:5]}")
-                print(f"DEBUG: Keycodes contain dicts? {any(isinstance(kc, dict) for kc in keycodes)}")
         else:
             # Use core layout and pad to board size
             keycodes = layer.core.flatten()
@@ -80,6 +74,10 @@ class LayerCompiler:
 
         # 3. Select translator based on firmware
         translator = self.qmk_translator if firmware == "qmk" else self.zmk_translator
+
+        # Set current layer for ZMK translator (for layer-aware MAGIC translation)
+        if firmware == "zmk" and hasattr(translator, 'current_layer'):
+            translator.current_layer = layer.name
 
         # 4. Validate complex keybindings before translation
         for keycode in keycodes:
@@ -92,8 +90,6 @@ class LayerCompiler:
             if hasattr(translator, 'set_key_index'):
                 translator.set_key_index(idx)
             translated.append(translator.translate(kc))
-
-        print(f"DEBUG: Compiled layer {layer.name} with {len(translated)} keycodes")
 
         return CompiledLayer(
             name=layer.name,

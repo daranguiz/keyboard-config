@@ -50,6 +50,10 @@ class QMKTranslator:
         # Convert to string if needed (for numeric keys from YAML)
         unified = str(unified)
 
+        # Special handling for MAGIC key (QMK alternate repeat key)
+        if unified == "MAGIC":
+            return "QK_AREP"
+
         # Handle special keycodes
         if unified in self.special_keycodes:
             value = self.special_keycodes[unified].get('qmk', 'KC_NO')

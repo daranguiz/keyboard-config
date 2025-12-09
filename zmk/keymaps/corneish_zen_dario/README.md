@@ -101,7 +101,7 @@
 35: &none
 
 36: &lt NUM_NIGHT BSPC
-37: &lt SYM_NIGHT R
+37: &lt_ak_gallium SYM_NIGHT 0
 38: &mt LSFT DEL
 39: &mt LSFT TAB
 40: &lt NAV_NIGHT SPACE
@@ -372,3 +372,35 @@
 40: &none
 41: &none
 ```
+
+## Magic Key Mappings
+### BASE_GALLIUM
+- default: REPEAT
+- timeout_ms: 0
+- mappings:
+  - B → R
+  - A → Y
+  - E → Y
+  - R → L
+  - U → E
+  - O → K
+  - . → /
+  - S → C
+  - C → S
+  - M → B
+  - G → S
+  - P → H
+  - Y → E
+
+### BASE_NIGHT
+- default: REPEAT
+- timeout_ms: 0
+- mappings:
+  - U → E
+  - P → Y
+  - C → Y
+  - Y → '
+  - G → Y
+  - H → L
+  - V → S
+  - A → O

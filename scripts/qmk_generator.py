@@ -17,7 +17,8 @@ class QMKGenerator:
         board: Board,
         compiled_layers: List[CompiledLayer],
         output_dir: Path,
-        combos: ComboConfiguration = None
+        combos: ComboConfiguration = None,
+        magic_config: 'MagicKeyConfiguration' = None
     ) -> Dict[str, str]:
         """
         Generate all QMK files for a board
@@ -27,6 +28,7 @@ class QMKGenerator:
             compiled_layers: List of compiled layers
             output_dir: Output directory path
             combos: Optional combo configuration
+            magic_config: Optional magic key configuration
 
         Returns:
             Dictionary of {filename: content} for all generated files
@@ -34,7 +36,7 @@ class QMKGenerator:
         files = {}
 
         # Generate keymap.c
-        files['keymap.c'] = self.generate_keymap_c(board, compiled_layers, combos)
+        files['keymap.c'] = self.generate_keymap_c(board, compiled_layers, combos, magic_config)
 
         # Generate config.h
         files['config.h'] = self.generate_config_h(board, compiled_layers)
@@ -51,7 +53,8 @@ class QMKGenerator:
         self,
         board: Board,
         compiled_layers: List[CompiledLayer],
-        combos: ComboConfiguration = None
+        combos: ComboConfiguration = None,
+        magic_config: 'MagicKeyConfiguration' = None
     ) -> str:
         """
         Generate keymap.c file
@@ -60,6 +63,7 @@ class QMKGenerator:
             board: Target board
             compiled_layers: List of compiled layers
             combos: Optional combo configuration
+            magic_config: Optional magic key configuration
 
         Returns:
             Complete keymap.c file content
@@ -92,6 +96,11 @@ enum {{
         if combos and combos.combos:
             combo_code = "\n" + self.generate_combos_inline(combos, layer_names, compiled_layers, board)
 
+        # Generate magic key code if magic_config is provided
+        magic_code = ""
+        if magic_config and magic_config.mappings:
+            magic_code = "\n" + self.generate_magic_keys_inline(magic_config, compiled_layers)
+
         return f"""// AUTO-GENERATED - DO NOT EDIT
 // Generated from config/keymap.yaml by scripts/generate.py
 // Board: {board.name}
@@ -102,7 +111,7 @@ enum {{
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {{
 {layers_code}
 }};
-{combo_code}"""
+{combo_code}{magic_code}"""
 
     def format_layer_definition(
         self,
@@ -674,3 +683,117 @@ combo_t key_combos[] = {{
 
         # Fallback (custom layouts): return canonical
         return canonical_positions
+
+    def generate_magic_keys_inline(
+        self,
+        magic_config: 'MagicKeyConfiguration',
+        compiled_layers: List[CompiledLayer]
+    ) -> str:
+        """
+        Generate QMK alternate repeat key configuration inline in keymap.c
+
+        Uses get_alt_repeat_key_keycode_user() callback to provide
+        base-layer-specific alternate key mappings.
+
+        Args:
+            magic_config: MagicKeyConfiguration with base-layer mappings
+            compiled_layers: List of CompiledLayer for layer name lookups
+
+        Returns:
+            C code string for magic key implementation
+        """
+        if not magic_config or not magic_config.mappings:
+            return ""
+
+        # Build layer name set for validation
+        layer_map = {layer.name: layer.name for layer in compiled_layers}
+
+        code_lines = [
+            "",
+            "// Magic key configuration (alternate repeat key)",
+            "uint16_t get_alt_repeat_key_keycode_user(uint16_t keycode, uint8_t mods) {",
+            "    // Get current layer",
+            "    uint8_t layer = get_highest_layer(layer_state);",
+            "    ",
+        ]
+
+        # Generate switch statement for each base layer
+        for base_layer, mapping in magic_config.mappings.items():
+            if base_layer not in layer_map:
+                continue  # Skip if layer not compiled for this board
+
+            # Get all derived layers (BASE_NIGHT → [BASE_NIGHT, NUM_NIGHT, NAV_NIGHT, ...])
+            derived_layers = [
+                l.name for l in compiled_layers
+                if l.name == base_layer or l.name.endswith(base_layer.replace("BASE_", ""))
+            ]
+
+            # Generate layer checks
+            layer_checks = " || ".join([f"layer == {ln}" for ln in derived_layers])
+
+            code_lines.append(f"    // {base_layer} family")
+            code_lines.append(f"    if ({layer_checks}) {{")
+            code_lines.append("        switch (keycode) {")
+
+            # Generate mappings
+            for prev_key, alt_key in mapping.mappings.items():
+                prev_qmk = self._translate_simple_keycode(prev_key)
+                alt_qmk = self._translate_simple_keycode(alt_key)
+                code_lines.append(f"            case {prev_qmk}: return {alt_qmk};")
+
+            code_lines.append("        }")
+            code_lines.append("    }")
+            code_lines.append("")
+
+        # Handle default behavior
+        default_behavior = list(magic_config.mappings.values())[0].default
+        if default_behavior == "REPEAT":
+            code_lines.append("    // Default: repeat previous key")
+            code_lines.append("    return QK_REP;")
+        elif default_behavior == "NONE":
+            code_lines.append("    // Default: do nothing")
+            code_lines.append("    return KC_NO;")
+        else:
+            code_lines.append(f"    // Default: {default_behavior}")
+            code_lines.append(f"    return {self._translate_simple_keycode(default_behavior)};")
+
+        code_lines.append("}")
+        code_lines.append("")
+
+        return "\n".join(code_lines)
+
+    def _translate_simple_keycode(self, keycode: str) -> str:
+        """
+        Translate simple keycode to QMK format (for magic key mappings)
+
+        Args:
+            keycode: Simple keycode (e.g., "A", ".", "/")
+
+        Returns:
+            QMK keycode (e.g., "KC_A", "KC_DOT", "KC_SLSH")
+        """
+        # Handle special characters
+        special_chars = {
+            ".": "KC_DOT",
+            ",": "KC_COMM",
+            "/": "KC_SLSH",
+            "'": "KC_QUOT",
+            "-": "KC_MINS",
+            ";": "KC_SCLN",
+            "[": "KC_LBRC",
+            "]": "KC_RBRC",
+        }
+
+        if keycode in special_chars:
+            return special_chars[keycode]
+
+        # Single letter: KC_X
+        if len(keycode) == 1 and keycode.isalpha():
+            return f"KC_{keycode.upper()}"
+
+        # Already prefixed
+        if keycode.startswith("KC_"):
+            return keycode
+
+        # Default: add KC_ prefix
+        return f"KC_{keycode}"

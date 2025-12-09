@@ -130,7 +130,7 @@ qmk compile -kb boardsource/lulu/rp2040 -km dario
 49: KC_NO
 50: KC_NO
 51: LT(NUM_NIGHT, KC_BSPC)
-52: LT(SYM_NIGHT, KC_R)
+52: LT(SYM_NIGHT, QK_AREP)
 53: LSFT_T(KC_DEL)
 54: LSFT_T(KC_TAB)
 55: LT(NAV_NIGHT, KC_SPC)

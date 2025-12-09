@@ -5,6 +5,32 @@
 
 set -e  # Exit on error
 
+# CLI args
+VERBOSE=0
+
+usage() {
+    echo "Usage: $(basename "$0") [-v|--verbose]"
+    echo "  -v, --verbose   Show full west/cmake output (default: quiet, logs to file)"
+}
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        -v|--verbose)
+            VERBOSE=1
+            shift
+            ;;
+        -h|--help)
+            usage
+            exit 0
+            ;;
+        *)
+            echo "Unknown option: $1"
+            usage
+            exit 1
+            ;;
+    esac
+done
+
 # Colors for output
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -109,13 +135,14 @@ echo ""
 
 # Initialize workspace (only needed first time, but safe to run)
 echo -e "${YELLOW}Initializing Zephyr workspace...${NC}"
-docker exec -w /workspaces/zmk "$CONTAINER_ID" /bin/bash -c "west init -l app/ 2>/dev/null || true"
-docker exec -w /workspaces/zmk "$CONTAINER_ID" /bin/bash -c "west update"
+docker exec -w /workspaces/zmk "$CONTAINER_ID" /bin/bash -c \
+    "west init -l app/ 2>/dev/null || true; west config manifest.path app; west config manifest.file west.yml; west update"
 echo ""
 
 # Build each target
 BUILD_COUNT=0
 FAILED_BUILDS=()
+MANIFEST_CONFIGURED=0
 
 for i in "${!BOARDS[@]}"; do
     BOARD="${BOARDS[$i]}"
@@ -166,6 +193,10 @@ for i in "${!BOARDS[@]}"; do
     docker exec "$CONTAINER_ID" mkdir -p /tmp/zmk-config >/dev/null 2>&1
     docker cp "$ZMK_CONFIG/." "$CONTAINER_ID:/tmp/zmk-config/" >/dev/null 2>&1
     docker cp "$SCRIPT_DIR/config/dario_behaviors.dtsi" "$CONTAINER_ID:/tmp/zmk-config/" >/dev/null 2>&1
+    # Always copy west manifest so manifest.path remains valid after cleanup
+    if [ -f "$SCRIPT_DIR/config/west.yml" ]; then
+        docker cp "$SCRIPT_DIR/config/west.yml" "$CONTAINER_ID:/tmp/zmk-config/west.yml" >/dev/null 2>&1
+    fi
     # Optional global/project config
     if [ -f "$SCRIPT_DIR/config/prj.conf" ]; then
         docker cp "$SCRIPT_DIR/config/prj.conf" "$CONTAINER_ID:/tmp/zmk-config/" >/dev/null 2>&1
@@ -174,18 +205,42 @@ for i in "${!BOARDS[@]}"; do
     if [ -d "$SCRIPT_DIR/config/boards" ]; then
         docker cp "$SCRIPT_DIR/config/boards/." "$CONTAINER_ID:/tmp/zmk-config/boards/" >/dev/null 2>&1
     fi
+    # Optional west manifest (adds custom modules like adaptive-key)
+    if [ $MANIFEST_CONFIGURED -eq 0 ] && [ -f "$SCRIPT_DIR/config/west.yml" ]; then
+        docker exec -w /workspaces/zmk "$CONTAINER_ID" /bin/bash -c \
+            "west config manifest.path /tmp/zmk-config && west config manifest.file west.yml && west update" >/dev/null 2>&1
+        MANIFEST_CONFIGURED=1
+    fi
+
+    LOG_FILE="$OUTPUT_DIR/${BUILD_NAME}_build.log"
 
     # Build inside container
-    if docker exec -w /workspaces/zmk "$CONTAINER_ID" /bin/bash -c \
-        "west build -p -s app -b $BOARD -- $SHIELD_ARG -DZMK_CONFIG=/tmp/zmk-config -DOVERLAY_CONFIG=/tmp/zmk-config/prj.conf" 2>&1 | tee /tmp/zmk_build.log | grep -E "CMake|Building|ERROR|error"; then
+    if [[ $VERBOSE -eq 1 ]]; then
+        echo -e "${YELLOW}Verbose build output enabled${NC}"
+        docker exec -w /workspaces/zmk "$CONTAINER_ID" /bin/bash -c \
+            "west build -p -s app -b $BOARD -- $SHIELD_ARG -DZMK_CONFIG=/tmp/zmk-config -DOVERLAY_CONFIG=/tmp/zmk-config/prj.conf" \
+            2>&1 | tee "$LOG_FILE"
+        BUILD_EXIT=${PIPESTATUS[0]}
+    else
+        docker exec -w /workspaces/zmk "$CONTAINER_ID" /bin/bash -c \
+            "west build -p -s app -b $BOARD -- $SHIELD_ARG -DZMK_CONFIG=/tmp/zmk-config -DOVERLAY_CONFIG=/tmp/zmk-config/prj.conf" \
+            >"$LOG_FILE" 2>&1
+        BUILD_EXIT=$?
+    fi
+
+    if [[ $BUILD_EXIT -eq 0 ]]; then
 
         # Copy firmware out of container
         docker cp "$CONTAINER_ID:/workspaces/zmk/build/zephyr/zmk.uf2" "$OUTPUT_DIR/$OUTPUT_NAME" 2>/dev/null && \
             echo -e "${GREEN}✓ Build successful: $OUTPUT_NAME${NC}" && \
             BUILD_COUNT=$((BUILD_COUNT + 1)) || \
             (echo -e "${RED}✗ Build failed: firmware file not found${NC}" && FAILED_BUILDS+=("$BUILD_NAME"))
+        # Drop build log on success to keep workspace clean
+        rm -f "$LOG_FILE"
     else
         echo -e "${RED}✗ Build failed: $BUILD_NAME${NC}"
+        echo -e "${YELLOW}Last 40 lines of build log (${LOG_FILE}):${NC}"
+        tail -n 40 "$LOG_FILE" 2>/dev/null || true
         FAILED_BUILDS+=("$BUILD_NAME")
     fi
 

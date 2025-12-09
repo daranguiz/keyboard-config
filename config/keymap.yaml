@@ -35,11 +35,11 @@ layers:
         - [hrm:LGUI:N     , hrm:LALT:R     , hrm:LCTL:T     , hrm:LSFT:S     , G              ]
         - [X              , Q              , M              , W              , Z              ]
       right:
-        - [J              , Y              , O              , U              , DOT           ]
+        - [J              , Y              , O              , U              , DOT            ]
         - [P              , hrm:LSFT:H     , hrm:LCTL:A     , hrm:LALT:E     , hrm:LGUI:I     ]
         - [K              , F              , QUOT           , MINS           , COMM            ]
       thumbs:
-        - [lt:NUM_NIGHT:BSPC   , lt:SYM_NIGHT:R    , mt:LSFT:DEL    ]
+        - [lt:NUM_NIGHT:BSPC   , lt:SYM_NIGHT:MAGIC    , mt:LSFT:DEL    ]
         - [mt:LSFT:TAB    , lt:NAV_NIGHT:SPC     , lt:MEDIA_NIGHT:ENT    ]
     extensions:
       3x6_3:
@@ -164,3 +164,38 @@ combos:
     macro_text: "https://github.com/daranguiz/keyboard-config?tab=readme-ov-file#readme"
     timeout_ms: 100  # Slightly longer for 4-key combo
     layers: [BASE_NIGHT, BASE_GALLIUM]
+
+# Magic key definitions
+# Context-aware keys that produce different outputs based on previous keypress
+# Used to provide alternate bigrams for uncomfortable key combinations
+magic_keys:
+  BASE_GALLIUM:
+    timeout_ms: 0  # 0 = no max idle constraint for adaptive key triggers
+    mappings:
+      B: R
+      A: Y
+      E: Y
+      R: L
+      U: E
+      O: K
+      ".": "/"
+      S: C
+      C: S
+      M: B
+      G: S
+      P: H
+      Y: E
+    default: REPEAT  # Default to repeat if no trigger matches
+
+  BASE_NIGHT:
+    timeout_ms: 0
+    mappings:
+      U: E
+      P: Y
+      C: Y
+      Y: "'"
+      G: Y
+      H: L
+      V: S
+      A: O
+    default: REPEAT

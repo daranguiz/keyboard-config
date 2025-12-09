@@ -579,3 +579,9 @@ BT_PRV:
   qmk: ""
   zmk: "&bt BT_PRV"
   display_name: "BT Prev"
+
+# Magic key (context-aware alternate repeat key)
+MAGIC:
+  qmk: "QK_AREP"
+  zmk: "&none"  # Will be translated layer-aware by translator
+  display_name: "Magic"

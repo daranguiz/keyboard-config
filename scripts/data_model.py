@@ -310,10 +310,15 @@ class BehaviorAlias:
         """
         Translate to QMK syntax
         Example: translate_qmk(mod="LGUI", key="A") -> "LGUI_T(KC_A)"
+
+        Special handling for MAGIC key: KC_MAGIC → QK_AREP
         """
         if "qmk" not in self.firmware_support:
             return "KC_NO"  # Filter unsupported
-        return self.qmk_pattern.format(**kwargs)
+        result = self.qmk_pattern.format(**kwargs)
+        # Special case: replace KC_MAGIC with QK_AREP for alternate repeat key
+        result = result.replace("KC_MAGIC", "QK_AREP")
+        return result
 
     def translate_zmk(self, **kwargs) -> str:
         """
@@ -469,4 +474,74 @@ class ComboConfiguration:
         for combo in self.combos:
             if combo.name == name:
                 return combo
+        return None
+
+
+@dataclass
+class MagicKeyMapping:
+    """
+    Magic key configuration for a specific base layer
+
+    Fields:
+    - base_layer: Base layer name (e.g., "BASE_NIGHT", "BASE_GALLIUM")
+    - timeout_ms: Maximum time between previous key and magic key press
+    - mappings: Dict mapping previous key → alternate key
+    - default: Default behavior (REPEAT, NONE, or specific keycode)
+    """
+    base_layer: str
+    timeout_ms: int
+    mappings: Dict[str, str]  # previous_key → alternate_key
+    default: str = "REPEAT"  # Default action
+
+    def validate(self):
+        """Validate magic key mapping"""
+        # Validate timeout (0 = no limit)
+        if self.timeout_ms < 0:
+            raise ValidationError(
+                f"Magic key {self.base_layer}: timeout_ms must be zero or positive"
+            )
+
+        # Validate mappings is non-empty
+        if not self.mappings:
+            raise ValidationError(
+                f"Magic key {self.base_layer}: mappings cannot be empty"
+            )
+
+        # Validate default action
+        valid_defaults = ["REPEAT", "NONE"]
+        if self.default not in valid_defaults and not self.default.startswith("KC_"):
+            raise ValidationError(
+                f"Magic key {self.base_layer}: invalid default '{self.default}'"
+            )
+
+
+@dataclass
+class MagicKeyConfiguration:
+    """
+    Collection of all magic key mappings from config/keymap.yaml
+
+    Fields:
+    - mappings: Dict of base_layer → MagicKeyMapping
+    """
+    mappings: Dict[str, MagicKeyMapping] = field(default_factory=dict)
+
+    def validate(self):
+        """Validate all magic key mappings"""
+        for base_layer, mapping in self.mappings.items():
+            mapping.validate()
+
+    def get_mapping_for_layer(self, layer_name: str) -> Optional[MagicKeyMapping]:
+        """
+        Get magic key mapping for a given layer name.
+        Supports derived layers (e.g., NUM_NIGHT uses BASE_NIGHT mapping)
+        """
+        # Direct match
+        if layer_name in self.mappings:
+            return self.mappings[layer_name]
+
+        # Check for base layer prefix (NUM_NIGHT → BASE_NIGHT)
+        for base_layer in self.mappings:
+            if layer_name.endswith(base_layer.replace("BASE_", "")):
+                return self.mappings[base_layer]
+
         return None

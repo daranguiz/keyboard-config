@@ -46,6 +46,131 @@
     };
 
 
+    // Magic key behaviors (adaptive key)
+    // Each base layer has its own adaptive key with layer-specific mappings
+    behaviors {
+        // Adaptive key for BASE_GALLIUM family
+        ak_gallium: ak_gallium {
+            compatible = "zmk,behavior-adaptive-key";
+            #binding-cells = <0>;
+            bindings = <&key_repeat>;
+
+            b_trigger {
+                trigger-keys = <B>;
+                bindings = <&kp R>;
+            };
+            a_trigger {
+                trigger-keys = <A>;
+                bindings = <&kp Y>;
+            };
+            e_trigger {
+                trigger-keys = <E>;
+                bindings = <&kp Y>;
+            };
+            r_trigger {
+                trigger-keys = <R>;
+                bindings = <&kp L>;
+            };
+            u_trigger {
+                trigger-keys = <U>;
+                bindings = <&kp E>;
+            };
+            o_trigger {
+                trigger-keys = <O>;
+                bindings = <&kp K>;
+            };
+            dot_trigger {
+                trigger-keys = <DOT>;
+                bindings = <&kp SLASH>;
+            };
+            s_trigger {
+                trigger-keys = <S>;
+                bindings = <&kp C>;
+            };
+            c_trigger {
+                trigger-keys = <C>;
+                bindings = <&kp S>;
+            };
+            m_trigger {
+                trigger-keys = <M>;
+                bindings = <&kp B>;
+            };
+            g_trigger {
+                trigger-keys = <G>;
+                bindings = <&kp S>;
+            };
+            p_trigger {
+                trigger-keys = <P>;
+                bindings = <&kp H>;
+            };
+            y_trigger {
+                trigger-keys = <Y>;
+                bindings = <&kp E>;
+            };
+        };
+
+        lt_ak_gallium: lt_ak_gallium {
+            compatible = "zmk,behavior-hold-tap";
+            label = "LT_AK_GALLIUM";
+            #binding-cells = <2>;
+            flavor = "balanced";
+            tapping-term-ms = <200>;
+            quick-tap-ms = <200>;
+            bindings = <&mo>, <&ak_gallium>;
+        };
+
+        // Adaptive key for BASE_NIGHT family
+        ak_night: ak_night {
+            compatible = "zmk,behavior-adaptive-key";
+            #binding-cells = <0>;
+            bindings = <&key_repeat>;
+
+            u_trigger {
+                trigger-keys = <U>;
+                bindings = <&kp E>;
+            };
+            p_trigger {
+                trigger-keys = <P>;
+                bindings = <&kp Y>;
+            };
+            c_trigger {
+                trigger-keys = <C>;
+                bindings = <&kp Y>;
+            };
+            y_trigger {
+                trigger-keys = <Y>;
+                bindings = <&kp SQT>;
+            };
+            g_trigger {
+                trigger-keys = <G>;
+                bindings = <&kp Y>;
+            };
+            h_trigger {
+                trigger-keys = <H>;
+                bindings = <&kp L>;
+            };
+            v_trigger {
+                trigger-keys = <V>;
+                bindings = <&kp S>;
+            };
+            a_trigger {
+                trigger-keys = <A>;
+                bindings = <&kp O>;
+            };
+        };
+
+        lt_ak_night: lt_ak_night {
+            compatible = "zmk,behavior-hold-tap";
+            label = "LT_AK_NIGHT";
+            #binding-cells = <2>;
+            flavor = "balanced";
+            tapping-term-ms = <200>;
+            quick-tap-ms = <200>;
+            bindings = <&mo>, <&ak_night>;
+        };
+
+    };
+
     keymap {
         compatible = "zmk,keymap";
 
@@ -63,7 +188,7 @@
                 &none &kp B &kp L &kp D &kp C &kp V &kp J &kp Y &kp O &kp U &kp DOT &none
                 &none &hml LGUI N &hml LALT R &hml LCTL T &hml LSFT S &kp G &kp P &hmr LSFT H &hmr LCTL A &hmr LALT E &hmr LGUI I &kp ENTER
                 &none &kp X &kp Q &kp M &kp W &kp Z &kp K &kp F &kp SQT &kp MINUS &kp COMMA &none
-                &lt NUM_NIGHT BSPC &lt SYM_NIGHT R &mt LSFT DEL &mt LSFT TAB &lt NAV_NIGHT SPACE &lt MEDIA_NIGHT ENTER
+                &lt NUM_NIGHT BSPC &lt_ak_gallium SYM_NIGHT 0 &mt LSFT DEL &mt LSFT TAB &lt NAV_NIGHT SPACE &lt MEDIA_NIGHT ENTER
             >;
         };
 

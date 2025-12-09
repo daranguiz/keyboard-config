@@ -1,6 +1,31 @@
 #!/bin/bash
 set -e
 
+VERBOSE=0
+
+usage() {
+    echo "Usage: $(basename "$0") [-v|--verbose]"
+    echo "  -v, --verbose   Pass verbose flag to ZMK build script"
+}
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        -v|--verbose)
+            VERBOSE=1
+            shift
+            ;;
+        -h|--help)
+            usage
+            exit 0
+            ;;
+        *)
+            echo "Unknown option: $1"
+            usage
+            exit 1
+            ;;
+    esac
+done
+
 echo "================================================"
 echo "Building All Keyboard Firmware"
 echo "================================================"
@@ -88,7 +113,11 @@ else
 fi
 
 if [ -f "$ZMK_BUILD_SCRIPT" ]; then
-    if bash "$ZMK_BUILD_SCRIPT"; then
+    ZMK_ARGS=()
+    if [ "$VERBOSE" -eq 1 ]; then
+        ZMK_ARGS+=("-v")
+    fi
+    if bash "$ZMK_BUILD_SCRIPT" "${ZMK_ARGS[@]}"; then
         ZMK_SUCCESS=true
     else
         echo -e "${YELLOW}⚠ ZMK builds failed${NC}"
