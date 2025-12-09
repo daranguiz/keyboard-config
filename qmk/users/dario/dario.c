@@ -66,9 +66,13 @@ static bool is_thumb_keycode(uint16_t keycode) {
 }
 
 static char handedness_for_keypos(keypos_t key) {
-    // Simple column-based split: lower columns are left, upper are right.
-    // Works across all current boards; thumbs are filtered separately above.
+#ifdef SPLIT_KEYBOARD
+    // On split boards the row index encodes the hand (left rows first, right rows second).
+    return (key.row < (MATRIX_ROWS / 2)) ? 'L' : 'R';
+#else
+    // For monoblock boards, fall back to a column split.
     return (key.col < (MATRIX_COLS / 2)) ? 'L' : 'R';
+#endif
 }
 
 bool get_chordal_hold(uint16_t tap_hold_keycode, keyrecord_t *tap_hold_record, uint16_t other_keycode, keyrecord_t *other_record) {
