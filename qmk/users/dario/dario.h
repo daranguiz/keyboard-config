@@ -24,6 +24,8 @@ enum custom_macros {
     MACRO_GITHUB_URL = SAFE_RANGE
 };
 
+bool magic_process_record(uint16_t keycode, keyrecord_t *record);
+
 // RGB aliases (conditional on RGB support)
 // Note: RGB_MATRIX already defines RM_* keycodes, so we only need to handle RGBLIGHT and disabled cases
 #if defined(RGBLIGHT_ENABLE)

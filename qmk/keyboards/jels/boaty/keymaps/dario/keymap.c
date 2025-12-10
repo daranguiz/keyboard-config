@@ -5,6 +5,24 @@
 
 #include "dario.h"
 
+#ifndef MACRO_GITHUB_URL
+#define MACRO_GITHUB_URL SAFE_RANGE
+#endif
+
+enum magic_macros {
+    MAGIC_NIGHT_B = MACRO_GITHUB_URL + 1,
+    MAGIC_NIGHT_CHR_32,
+    MAGIC_NIGHT_CHR_44,
+    MAGIC_NIGHT_I,
+    MAGIC_NIGHT_J,
+    MAGIC_NIGHT_M,
+    MAGIC_NIGHT_N,
+    MAGIC_NIGHT_Q,
+    MAGIC_NIGHT_T,
+    MAGIC_NIGHT_W,
+};
+
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [BASE_NIGHT] = LAYOUT(
         KC_PMNS             , KC_PSLS             , KC_PAST             , KC_P7               , KC_P8               , KC_P9               , KC_P4               , KC_P5               , KC_P6               , KC_PPLS             , KC_P1               , KC_P2               ,
@@ -105,7 +123,6 @@ bool combo_should_trigger(uint16_t combo_index, combo_t *combo, uint16_t keycode
 
 #endif  // COMBO_ENABLE
 
-
 // Magic key configuration (alternate repeat key)
 uint16_t get_alt_repeat_key_keycode_user(uint16_t keycode, uint8_t mods) {
     // Get current layer
@@ -114,18 +131,18 @@ uint16_t get_alt_repeat_key_keycode_user(uint16_t keycode, uint8_t mods) {
     // BASE_GALLIUM family
     if (layer == BASE_GALLIUM) {
         switch (keycode) {
-            case KC_B: return KC_R;
-            case KC_A: return KC_Y;
-            case KC_E: return KC_Y;
-            case KC_R: return KC_L;
-            case KC_U: return KC_E;
-            case KC_O: return KC_K;
             case KC_DOT: return KC_SLSH;
-            case KC_S: return KC_C;
+            case KC_A: return KC_Y;
+            case KC_B: return KC_R;
             case KC_C: return KC_S;
-            case KC_M: return KC_B;
+            case KC_E: return KC_Y;
             case KC_G: return KC_S;
+            case KC_M: return KC_B;
+            case KC_O: return KC_K;
             case KC_P: return KC_H;
+            case KC_R: return KC_L;
+            case KC_S: return KC_C;
+            case KC_U: return KC_E;
             case KC_Y: return KC_E;
         }
     }
@@ -133,28 +150,70 @@ uint16_t get_alt_repeat_key_keycode_user(uint16_t keycode, uint8_t mods) {
     // BASE_NIGHT family
     if (layer == BASE_NIGHT || layer == NUM_NIGHT || layer == SYM_NIGHT || layer == NAV_NIGHT || layer == MEDIA_NIGHT) {
         switch (keycode) {
-            case KC_U: return KC_E;
-            case KC_P: return KC_Y;
+            case KC_SPC: return MAGIC_NIGHT_CHR_32;
+            case KC_COMM: return MAGIC_NIGHT_CHR_44;
+            case KC_MINS: return KC_GT;
+            case KC_DOT: return KC_SLSH;
+            case KC_A: return KC_O;
+            case KC_B: return MAGIC_NIGHT_B;
             case KC_C: return KC_Y;
-            case KC_Y: return KC_QUOT;
             case KC_G: return KC_Y;
             case KC_H: return KC_L;
-            case KC_V: return KC_S;
-            case KC_A: return KC_O;
-            case KC_M: return KC_ENT;
-            case KC_DOT: return KC_SLSH;
-            case KC_MINS: return KC_>;
-            case KC_I: return KC_ON;
-            case KC_T: return KC_ION;
-            case KC_Q: return KC_UE;
-            case KC_SPC: return KC_THE;
-            case KC_W: return KC_HAT;
-            case KC_COMM: return KC_ BUT;
-            case KC_J: return KC_UST;
+            case KC_I: return MAGIC_NIGHT_I;
+            case KC_J: return MAGIC_NIGHT_J;
+            case KC_M: return MAGIC_NIGHT_M;
+            case KC_N: return MAGIC_NIGHT_N;
             case KC_O: return KC_A;
+            case KC_P: return KC_Y;
+            case KC_Q: return MAGIC_NIGHT_Q;
+            case KC_T: return MAGIC_NIGHT_T;
+            case KC_U: return KC_E;
+            case KC_V: return KC_S;
+            case KC_W: return MAGIC_NIGHT_W;
+            case KC_Y: return KC_QUOT;
         }
     }
 
     // Default: repeat previous key
     return QK_REP;
+}
+
+
+bool process_magic_record(uint16_t keycode, keyrecord_t *record) {
+    if (!record->event.pressed) {
+        return true;
+    }
+    switch (keycode) {
+        case MAGIC_NIGHT_B:
+            SEND_STRING("efore");
+            return false;
+        case MAGIC_NIGHT_CHR_32:
+            SEND_STRING("the");
+            return false;
+        case MAGIC_NIGHT_CHR_44:
+            SEND_STRING(" but");
+            return false;
+        case MAGIC_NIGHT_I:
+            SEND_STRING("on");
+            return false;
+        case MAGIC_NIGHT_J:
+            SEND_STRING("ust");
+            return false;
+        case MAGIC_NIGHT_M:
+            SEND_STRING("ent");
+            return false;
+        case MAGIC_NIGHT_N:
+            SEND_STRING("ion");
+            return false;
+        case MAGIC_NIGHT_Q:
+            SEND_STRING("ue");
+            return false;
+        case MAGIC_NIGHT_T:
+            SEND_STRING("ion");
+            return false;
+        case MAGIC_NIGHT_W:
+            SEND_STRING("hich");
+            return false;
+    }
+    return true;
 }

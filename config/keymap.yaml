@@ -209,7 +209,7 @@ magic_keys:
       "-": ">"
       ".": "/"
       A: O
-      # B: (repeat)
+      B: EFORE
       C: Y
       # D: (repeat)
       # E: (repeat)
@@ -221,7 +221,7 @@ magic_keys:
       # K: (repeat)
       # L: (repeat)
       M: ENT
-      # N: (repeat)
+      N: ION
       O: A
       P: Y
       Q: UE
@@ -230,7 +230,8 @@ magic_keys:
       T: ION
       U: E
       V: S
-      W: HAT
+      W: HICH
+      # X: (repeat)
       Y: "'"
       # Z: (repeat)
     default_repeat: true

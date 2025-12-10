@@ -5,12 +5,17 @@ Generates QMK C code files from compiled layers
 """
 
 from pathlib import Path
-from typing import List, Dict
+from typing import List, Dict, Tuple
+import re
 from data_model import Board, CompiledLayer, ComboConfiguration, Combo
 
 
 class QMKGenerator:
     """Generate QMK C keymap files"""
+
+    def __init__(self):
+        # Track magic macro strings for QMK (text expansions)
+        self.magic_macros: Dict[str, str] = {}
 
     def generate_keymap(
         self,
@@ -98,8 +103,14 @@ enum {{
 
         # Generate magic key code if magic_config is provided
         magic_code = ""
+        magic_enum = ""
+        magic_handlers = ""
+        self.magic_macros = {}
         if magic_config and magic_config.mappings:
-            magic_code = "\n" + self.generate_magic_keys_inline(magic_config, compiled_layers)
+            magic_code, self.magic_macros = self.generate_magic_keys_inline(magic_config, compiled_layers)
+            if self.magic_macros:
+                magic_enum = "\n" + self.generate_magic_macro_enum(self.magic_macros)
+                magic_handlers = "\n" + self.generate_magic_macro_handlers(self.magic_macros)
 
         return f"""// AUTO-GENERATED - DO NOT EDIT
 // Generated from config/keymap.yaml by scripts/generate.py
@@ -107,11 +118,12 @@ enum {{
 // Firmware: QMK
 
 #include "dario.h"
+{magic_enum}
 {extra_layers_code}
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {{
 {layers_code}
 }};
-{combo_code}{magic_code}"""
+{combo_code}{magic_code}{magic_handlers}"""
 
     def format_layer_definition(
         self,
@@ -688,7 +700,7 @@ combo_t key_combos[] = {{
         self,
         magic_config: 'MagicKeyConfiguration',
         compiled_layers: List[CompiledLayer]
-    ) -> str:
+    ) -> Tuple[str, Dict[str, str]]:
         """
         Generate QMK alternate repeat key configuration inline in keymap.c
 
@@ -700,13 +712,14 @@ combo_t key_combos[] = {{
             compiled_layers: List of CompiledLayer for layer name lookups
 
         Returns:
-            C code string for magic key implementation
+            (C code string, macro_map) where macro_map is {macro_name: text}
         """
         if not magic_config or not magic_config.mappings:
-            return ""
+            return "", {}
 
         # Build layer name set for validation
         layer_map = {layer.name: layer.name for layer in compiled_layers}
+        macro_map: Dict[str, str] = {}
 
         code_lines = [
             "",
@@ -738,7 +751,17 @@ combo_t key_combos[] = {{
             # Generate mappings
             for prev_key, alt_key in mapping.mappings.items():
                 prev_qmk = self._translate_simple_keycode(prev_key)
-                alt_qmk = self._translate_simple_keycode(alt_key)
+                macro_name = None
+
+                sequence = self._extract_magic_macro_sequence(alt_key)
+                if sequence:
+                    macro_name = self._build_magic_macro_name(base_layer, prev_key)
+                    macro_map[macro_name] = "".join(sequence)
+
+                if macro_name:
+                    alt_qmk = macro_name
+                else:
+                    alt_qmk = self._translate_simple_keycode(alt_key)
                 code_lines.append(f"            case {prev_qmk}: return {alt_qmk};")
 
             code_lines.append("        }")
@@ -760,7 +783,7 @@ combo_t key_combos[] = {{
         code_lines.append("}")
         code_lines.append("")
 
-        return "\n".join(code_lines)
+        return "\n".join(code_lines), macro_map
 
     def _translate_simple_keycode(self, keycode) -> str:
         """
@@ -789,6 +812,13 @@ combo_t key_combos[] = {{
             "[": "KC_LBRC",
             "]": "KC_RBRC",
             " ": "KC_SPC",
+            ">": "KC_GT",
+            "<": "KC_LT",
+            ":": "KC_COLN",
+            "?": "KC_QUES",
+            "=": "KC_EQL",
+            "#": "KC_HASH",
+            "_": "KC_UNDS",
         }
 
         if keycode in special_chars:
@@ -804,3 +834,98 @@ combo_t key_combos[] = {{
 
         # Default: add KC_ prefix
         return f"KC_{keycode}"
+
+    def _extract_magic_macro_sequence(self, alt_key) -> List[str]:
+        """
+        Return list of characters if alt_key represents a text expansion.
+        """
+        if isinstance(alt_key, dict) and 'text' in alt_key and isinstance(alt_key['text'], str):
+            return list(alt_key['text'])
+        if isinstance(alt_key, list):
+            return [str(k) for k in alt_key]
+        if isinstance(alt_key, str) and len(alt_key) > 1:
+            return list(alt_key)
+        return []
+
+    def _build_magic_macro_name(self, base_layer: str, prev_key) -> str:
+        """
+        Construct a stable macro name for a magic text expansion.
+        """
+        behavior_suffix = base_layer.lower().replace("base_", "")
+        safe_prev = self._sanitize_token(prev_key) or "key"
+        safe_prev = safe_prev.replace(" ", "_")
+
+        if safe_prev == "key":
+            # Disambiguate punctuation/non-alnum keys by ASCII code
+            chars = str(prev_key)
+            if len(chars) == 1:
+                safe_prev = f"CHR_{ord(chars)}"
+        return f"MAGIC_{behavior_suffix}_{safe_prev}".upper()
+
+    def generate_magic_macro_enum(self, macro_map: Dict[str, str]) -> str:
+        """
+        Emit enum definitions for magic text expansion keycodes.
+        """
+        if not macro_map:
+            return ""
+
+        names = sorted(macro_map.keys())
+        lines = [
+            "#ifndef MACRO_GITHUB_URL",
+            "#define MACRO_GITHUB_URL SAFE_RANGE",
+            "#endif",
+            "",
+            "enum magic_macros {",
+        ]
+
+        lines.append(f"    {names[0]} = MACRO_GITHUB_URL + 1,")
+        for name in names[1:]:
+            lines.append(f"    {name},")
+        lines.append("};")
+        lines.append("")
+        return "\n".join(lines)
+
+    def generate_magic_macro_handlers(self, macro_map: Dict[str, str]) -> str:
+        """
+        Emit process_magic_record() helper that SEND_STRINGs magic expansions.
+        """
+        if not macro_map:
+            return ""
+
+        lines = [
+            "",
+            "bool process_magic_record(uint16_t keycode, keyrecord_t *record) {",
+            "    if (!record->event.pressed) {",
+            "        return true;",
+            "    }",
+            "    switch (keycode) {",
+        ]
+
+        for name in sorted(macro_map.keys()):
+            text = macro_map[name]
+            # Default to lowercase output for magic text expansions
+            text = text.lower()
+            escaped = text.replace("\\", "\\\\").replace("\"", "\\\"")
+            lines.append(f"        case {name}:")
+            lines.append(f"            SEND_STRING(\"{escaped}\");")
+            lines.append(f"            return false;")
+
+        lines.append("    }")
+        lines.append("    return true;")
+        lines.append("}")
+        lines.append("")
+
+        return "\n".join(lines)
+
+    def _sanitize_token(self, token: str) -> str:
+        """
+        Sanitize token into an identifier-friendly fragment.
+        """
+        token = str(token)
+        token = token.replace("&kp ", "")
+        token = token.replace("&", "")
+        token = token.replace("KC_", "")
+        token = token.replace(" ", "_")
+        token = re.sub(r'[^A-Za-z0-9_]+', "_", token)
+        token = token.strip("_")
+        return token or "key"

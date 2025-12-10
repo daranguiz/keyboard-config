@@ -46,14 +46,34 @@
     };
 
     macros {
-        magic_night_m: magic_night_m_macro {
+        magic_night_chr_32: magic_night_chr_32_macro {
             compatible = "zmk,behavior-macro";
-            label = "MAGIC_NIGHT_M";
+            label = "MAGIC_NIGHT_CHR_32";
             #binding-cells = <0>;
             bindings
                 = <&macro_wait_time 10>
                 , <&macro_tap_time 10>
-                , <&macro_tap &kp E &kp N &kp T>
+                , <&macro_tap &kp T &kp H &kp E>
+                ;
+        };
+        magic_night_chr_44: magic_night_chr_44_macro {
+            compatible = "zmk,behavior-macro";
+            label = "MAGIC_NIGHT_CHR_44";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_wait_time 10>
+                , <&macro_tap_time 10>
+                , <&macro_tap &kp SPACE &kp B &kp U &kp T>
+                ;
+        };
+        magic_night_b: magic_night_b_macro {
+            compatible = "zmk,behavior-macro";
+            label = "MAGIC_NIGHT_B";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_wait_time 10>
+                , <&macro_tap_time 10>
+                , <&macro_tap &kp E &kp F &kp O &kp R &kp E>
                 ;
         };
         magic_night_i: magic_night_i_macro {
@@ -66,9 +86,29 @@
                 , <&macro_tap &kp O &kp N>
                 ;
         };
-        magic_night_t: magic_night_t_macro {
+        magic_night_j: magic_night_j_macro {
             compatible = "zmk,behavior-macro";
-            label = "MAGIC_NIGHT_T";
+            label = "MAGIC_NIGHT_J";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_wait_time 10>
+                , <&macro_tap_time 10>
+                , <&macro_tap &kp U &kp S &kp T>
+                ;
+        };
+        magic_night_m: magic_night_m_macro {
+            compatible = "zmk,behavior-macro";
+            label = "MAGIC_NIGHT_M";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_wait_time 10>
+                , <&macro_tap_time 10>
+                , <&macro_tap &kp E &kp N &kp T>
+                ;
+        };
+        magic_night_n: magic_night_n_macro {
+            compatible = "zmk,behavior-macro";
+            label = "MAGIC_NIGHT_N";
             #binding-cells = <0>;
             bindings
                 = <&macro_wait_time 10>
@@ -86,14 +126,14 @@
                 , <&macro_tap &kp U &kp E>
                 ;
         };
-        magic_night_chr_32: magic_night_chr_32_macro {
+        magic_night_t: magic_night_t_macro {
             compatible = "zmk,behavior-macro";
-            label = "MAGIC_NIGHT_CHR_32";
+            label = "MAGIC_NIGHT_T";
             #binding-cells = <0>;
             bindings
                 = <&macro_wait_time 10>
                 , <&macro_tap_time 10>
-                , <&macro_tap &kp T &kp H &kp E>
+                , <&macro_tap &kp I &kp O &kp N>
                 ;
         };
         magic_night_w: magic_night_w_macro {
@@ -103,27 +143,7 @@
             bindings
                 = <&macro_wait_time 10>
                 , <&macro_tap_time 10>
-                , <&macro_tap &kp H &kp A &kp T>
-                ;
-        };
-        magic_night_chr_44: magic_night_chr_44_macro {
-            compatible = "zmk,behavior-macro";
-            label = "MAGIC_NIGHT_CHR_44";
-            #binding-cells = <0>;
-            bindings
-                = <&macro_wait_time 10>
-                , <&macro_tap_time 10>
-                , <&macro_tap &kp SPACE &kp B &kp U &kp T>
-                ;
-        };
-        magic_night_j: magic_night_j_macro {
-            compatible = "zmk,behavior-macro";
-            label = "MAGIC_NIGHT_J";
-            #binding-cells = <0>;
-            bindings
-                = <&macro_wait_time 10>
-                , <&macro_tap_time 10>
-                , <&macro_tap &kp U &kp S &kp T>
+                , <&macro_tap &kp H &kp I &kp C &kp H>
                 ;
         };
     };
@@ -137,53 +157,53 @@
             #binding-cells = <0>;
             bindings = <&key_repeat>;
 
-            b_trigger {
-                trigger-keys = <B>;
-                bindings = <&kp R>;
+            dot_trigger {
+                trigger-keys = <DOT>;
+                bindings = <&kp FSLH>;
             };
             a_trigger {
                 trigger-keys = <A>;
                 bindings = <&kp Y>;
             };
+            b_trigger {
+                trigger-keys = <B>;
+                bindings = <&kp R>;
+            };
+            c_trigger {
+                trigger-keys = <C>;
+                bindings = <&kp S>;
+            };
             e_trigger {
                 trigger-keys = <E>;
                 bindings = <&kp Y>;
             };
-            r_trigger {
-                trigger-keys = <R>;
-                bindings = <&kp L>;
-            };
-            u_trigger {
-                trigger-keys = <U>;
-                bindings = <&kp E>;
-            };
-            o_trigger {
-                trigger-keys = <O>;
-                bindings = <&kp K>;
-            };
-            dot_trigger {
-                trigger-keys = <DOT>;
-                bindings = <&kp FSLH>;
-            };
-            s_trigger {
-                trigger-keys = <S>;
-                bindings = <&kp C>;
-            };
-            c_trigger {
-                trigger-keys = <C>;
+            g_trigger {
+                trigger-keys = <G>;
                 bindings = <&kp S>;
             };
             m_trigger {
                 trigger-keys = <M>;
                 bindings = <&kp B>;
             };
-            g_trigger {
-                trigger-keys = <G>;
-                bindings = <&kp S>;
+            o_trigger {
+                trigger-keys = <O>;
+                bindings = <&kp K>;
             };
             p_trigger {
                 trigger-keys = <P>;
                 bindings = <&kp H>;
+            };
+            r_trigger {
+                trigger-keys = <R>;
+                bindings = <&kp L>;
+            };
+            s_trigger {
+                trigger-keys = <S>;
+                bindings = <&kp C>;
+            };
+            u_trigger {
+                trigger-keys = <U>;
+                bindings = <&kp E>;
             };
             y_trigger {
                 trigger-keys = <Y>;
@@ -217,21 +237,33 @@
             #binding-cells = <0>;
             bindings = <&key_repeat>;
 
-            u_trigger {
-                trigger-keys = <U>;
-                bindings = <&kp E>;
+            space_trigger {
+                trigger-keys = <SPACE>;
+                bindings = <&magic_night_chr_32>;
             };
-            p_trigger {
-                trigger-keys = <P>;
-                bindings = <&kp Y>;
+            comma_trigger {
+                trigger-keys = <COMMA>;
+                bindings = <&magic_night_chr_44>;
+            };
+            minus_trigger {
+                trigger-keys = <MINUS>;
+                bindings = <&kp GT>;
+            };
+            dot_trigger {
+                trigger-keys = <DOT>;
+                bindings = <&kp FSLH>;
+            };
+            a_trigger {
+                trigger-keys = <A>;
+                bindings = <&kp O>;
+            };
+            b_trigger {
+                trigger-keys = <B>;
+                bindings = <&magic_night_b>;
             };
             c_trigger {
                 trigger-keys = <C>;
                 bindings = <&kp Y>;
-            };
-            y_trigger {
-                trigger-keys = <Y>;
-                bindings = <&kp SQT>;
             };
             g_trigger {
                 trigger-keys = <G>;
@@ -241,57 +273,53 @@
                 trigger-keys = <H>;
                 bindings = <&kp L>;
             };
-            v_trigger {
-                trigger-keys = <V>;
-                bindings = <&kp S>;
-            };
-            a_trigger {
-                trigger-keys = <A>;
-                bindings = <&kp O>;
-            };
-            m_trigger {
-                trigger-keys = <M>;
-                bindings = <&magic_night_m>;
-            };
-            dot_trigger {
-                trigger-keys = <DOT>;
-                bindings = <&kp FSLH>;
-            };
-            minus_trigger {
-                trigger-keys = <MINUS>;
-                bindings = <&kp GT>;
-            };
             i_trigger {
                 trigger-keys = <I>;
                 bindings = <&magic_night_i>;
-            };
-            t_trigger {
-                trigger-keys = <T>;
-                bindings = <&magic_night_t>;
-            };
-            q_trigger {
-                trigger-keys = <Q>;
-                bindings = <&magic_night_q>;
-            };
-            space_trigger {
-                trigger-keys = <SPACE>;
-                bindings = <&magic_night_chr_32>;
-            };
-            w_trigger {
-                trigger-keys = <W>;
-                bindings = <&magic_night_w>;
-            };
-            comma_trigger {
-                trigger-keys = <COMMA>;
-                bindings = <&magic_night_chr_44>;
             };
             j_trigger {
                 trigger-keys = <J>;
                 bindings = <&magic_night_j>;
             };
+            m_trigger {
+                trigger-keys = <M>;
+                bindings = <&magic_night_m>;
+            };
+            n_trigger {
+                trigger-keys = <N>;
+                bindings = <&magic_night_n>;
+            };
             o_trigger {
                 trigger-keys = <O>;
                 bindings = <&kp A>;
+            };
+            p_trigger {
+                trigger-keys = <P>;
+                bindings = <&kp Y>;
+            };
+            q_trigger {
+                trigger-keys = <Q>;
+                bindings = <&magic_night_q>;
+            };
+            t_trigger {
+                trigger-keys = <T>;
+                bindings = <&magic_night_t>;
+            };
+            u_trigger {
+                trigger-keys = <U>;
+                bindings = <&kp E>;
+            };
+            v_trigger {
+                trigger-keys = <V>;
+                bindings = <&kp S>;
+            };
+            w_trigger {
+                trigger-keys = <W>;
+                bindings = <&magic_night_w>;
+            };
+            y_trigger {
+                trigger-keys = <Y>;
+                bindings = <&kp SQT>;
             };
         };
 
@@ -319,12 +347,12 @@
 
     // Magic training behaviors: punish direct bigrams with '#'
     behaviors {
-        ak_train_gallium_r: ak_train_gallium_r {
+        ak_train_gallium_fslh: ak_train_gallium_fslh {
             compatible = "zmk,behavior-adaptive-key";
             #binding-cells = <0>;
-            bindings = <&kp R>;
+            bindings = <&kp FSLH>;
             guard_trigger {
-                trigger-keys = <B>;
+                trigger-keys = <DOT>;
                 bindings = <&kp HASH>;
             };
         };
@@ -339,52 +367,12 @@
             };
         };
 
-        ak_train_gallium_l: ak_train_gallium_l {
+        ak_train_gallium_r: ak_train_gallium_r {
             compatible = "zmk,behavior-adaptive-key";
             #binding-cells = <0>;
-            bindings = <&kp L>;
+            bindings = <&kp R>;
             guard_trigger {
-                trigger-keys = <R>;
-                bindings = <&kp HASH>;
-            };
-        };
-
-        ak_train_gallium_e: ak_train_gallium_e {
-            compatible = "zmk,behavior-adaptive-key";
-            #binding-cells = <0>;
-            bindings = <&kp E>;
-            guard_trigger {
-                trigger-keys = <U Y>;
-                bindings = <&kp HASH>;
-            };
-        };
-
-        ak_train_gallium_k: ak_train_gallium_k {
-            compatible = "zmk,behavior-adaptive-key";
-            #binding-cells = <0>;
-            bindings = <&kp K>;
-            guard_trigger {
-                trigger-keys = <O>;
-                bindings = <&kp HASH>;
-            };
-        };
-
-        ak_train_gallium_fslh: ak_train_gallium_fslh {
-            compatible = "zmk,behavior-adaptive-key";
-            #binding-cells = <0>;
-            bindings = <&kp FSLH>;
-            guard_trigger {
-                trigger-keys = <DOT>;
-                bindings = <&kp HASH>;
-            };
-        };
-
-        ak_train_gallium_c: ak_train_gallium_c {
-            compatible = "zmk,behavior-adaptive-key";
-            #binding-cells = <0>;
-            bindings = <&kp C>;
-            guard_trigger {
-                trigger-keys = <S>;
+                trigger-keys = <B>;
                 bindings = <&kp HASH>;
             };
         };
@@ -409,6 +397,16 @@
             };
         };
 
+        ak_train_gallium_k: ak_train_gallium_k {
+            compatible = "zmk,behavior-adaptive-key";
+            #binding-cells = <0>;
+            bindings = <&kp K>;
+            guard_trigger {
+                trigger-keys = <O>;
+                bindings = <&kp HASH>;
+            };
+        };
+
         ak_train_gallium_h: ak_train_gallium_h {
             compatible = "zmk,behavior-adaptive-key";
             #binding-cells = <0>;
@@ -419,122 +417,32 @@
             };
         };
 
-        ak_train_night_e: ak_train_night_e {
-            compatible = "zmk,behavior-adaptive-key";
-            #binding-cells = <0>;
-            bindings = <&kp E>;
-            guard_trigger {
-                trigger-keys = <U>;
-                bindings = <&kp HASH>;
-            };
-        };
-
-        ak_train_night_y: ak_train_night_y {
-            compatible = "zmk,behavior-adaptive-key";
-            #binding-cells = <0>;
-            bindings = <&kp Y>;
-            guard_trigger {
-                trigger-keys = <P C G>;
-                bindings = <&kp HASH>;
-            };
-        };
-
-        ak_train_night_sqt: ak_train_night_sqt {
-            compatible = "zmk,behavior-adaptive-key";
-            #binding-cells = <0>;
-            bindings = <&kp SQT>;
-            guard_trigger {
-                trigger-keys = <Y>;
-                bindings = <&kp HASH>;
-            };
-        };
-
-        ak_train_night_l: ak_train_night_l {
+        ak_train_gallium_l: ak_train_gallium_l {
             compatible = "zmk,behavior-adaptive-key";
             #binding-cells = <0>;
             bindings = <&kp L>;
             guard_trigger {
-                trigger-keys = <H>;
+                trigger-keys = <R>;
                 bindings = <&kp HASH>;
             };
         };
 
-        ak_train_night_s: ak_train_night_s {
+        ak_train_gallium_c: ak_train_gallium_c {
             compatible = "zmk,behavior-adaptive-key";
             #binding-cells = <0>;
-            bindings = <&kp S>;
+            bindings = <&kp C>;
             guard_trigger {
-                trigger-keys = <V>;
+                trigger-keys = <S>;
                 bindings = <&kp HASH>;
             };
         };
 
-        ak_train_night_o: ak_train_night_o {
+        ak_train_gallium_e: ak_train_gallium_e {
             compatible = "zmk,behavior-adaptive-key";
             #binding-cells = <0>;
-            bindings = <&kp O>;
+            bindings = <&kp E>;
             guard_trigger {
-                trigger-keys = <A>;
-                bindings = <&kp HASH>;
-            };
-        };
-
-        ak_train_night_magic_night_m: ak_train_night_magic_night_m {
-            compatible = "zmk,behavior-adaptive-key";
-            #binding-cells = <0>;
-            bindings = <&magic_night_m>;
-            guard_trigger {
-                trigger-keys = <M>;
-                bindings = <&kp HASH>;
-            };
-        };
-
-        ak_train_night_fslh: ak_train_night_fslh {
-            compatible = "zmk,behavior-adaptive-key";
-            #binding-cells = <0>;
-            bindings = <&kp FSLH>;
-            guard_trigger {
-                trigger-keys = <DOT>;
-                bindings = <&kp HASH>;
-            };
-        };
-
-        ak_train_night_gt: ak_train_night_gt {
-            compatible = "zmk,behavior-adaptive-key";
-            #binding-cells = <0>;
-            bindings = <&kp GT>;
-            guard_trigger {
-                trigger-keys = <MINUS>;
-                bindings = <&kp HASH>;
-            };
-        };
-
-        ak_train_night_magic_night_i: ak_train_night_magic_night_i {
-            compatible = "zmk,behavior-adaptive-key";
-            #binding-cells = <0>;
-            bindings = <&magic_night_i>;
-            guard_trigger {
-                trigger-keys = <I>;
-                bindings = <&kp HASH>;
-            };
-        };
-
-        ak_train_night_magic_night_t: ak_train_night_magic_night_t {
-            compatible = "zmk,behavior-adaptive-key";
-            #binding-cells = <0>;
-            bindings = <&magic_night_t>;
-            guard_trigger {
-                trigger-keys = <T>;
-                bindings = <&kp HASH>;
-            };
-        };
-
-        ak_train_night_magic_night_q: ak_train_night_magic_night_q {
-            compatible = "zmk,behavior-adaptive-key";
-            #binding-cells = <0>;
-            bindings = <&magic_night_q>;
-            guard_trigger {
-                trigger-keys = <Q>;
+                trigger-keys = <U Y>;
                 bindings = <&kp HASH>;
             };
         };
@@ -549,22 +457,82 @@
             };
         };
 
-        ak_train_night_magic_night_w: ak_train_night_magic_night_w {
-            compatible = "zmk,behavior-adaptive-key";
-            #binding-cells = <0>;
-            bindings = <&magic_night_w>;
-            guard_trigger {
-                trigger-keys = <W>;
-                bindings = <&kp HASH>;
-            };
-        };
-
         ak_train_night_magic_night_chr_44: ak_train_night_magic_night_chr_44 {
             compatible = "zmk,behavior-adaptive-key";
             #binding-cells = <0>;
             bindings = <&magic_night_chr_44>;
             guard_trigger {
                 trigger-keys = <COMMA>;
+                bindings = <&kp HASH>;
+            };
+        };
+
+        ak_train_night_gt: ak_train_night_gt {
+            compatible = "zmk,behavior-adaptive-key";
+            #binding-cells = <0>;
+            bindings = <&kp GT>;
+            guard_trigger {
+                trigger-keys = <MINUS>;
+                bindings = <&kp HASH>;
+            };
+        };
+
+        ak_train_night_fslh: ak_train_night_fslh {
+            compatible = "zmk,behavior-adaptive-key";
+            #binding-cells = <0>;
+            bindings = <&kp FSLH>;
+            guard_trigger {
+                trigger-keys = <DOT>;
+                bindings = <&kp HASH>;
+            };
+        };
+
+        ak_train_night_o: ak_train_night_o {
+            compatible = "zmk,behavior-adaptive-key";
+            #binding-cells = <0>;
+            bindings = <&kp O>;
+            guard_trigger {
+                trigger-keys = <A>;
+                bindings = <&kp HASH>;
+            };
+        };
+
+        ak_train_night_magic_night_b: ak_train_night_magic_night_b {
+            compatible = "zmk,behavior-adaptive-key";
+            #binding-cells = <0>;
+            bindings = <&magic_night_b>;
+            guard_trigger {
+                trigger-keys = <B>;
+                bindings = <&kp HASH>;
+            };
+        };
+
+        ak_train_night_y: ak_train_night_y {
+            compatible = "zmk,behavior-adaptive-key";
+            #binding-cells = <0>;
+            bindings = <&kp Y>;
+            guard_trigger {
+                trigger-keys = <C G P>;
+                bindings = <&kp HASH>;
+            };
+        };
+
+        ak_train_night_l: ak_train_night_l {
+            compatible = "zmk,behavior-adaptive-key";
+            #binding-cells = <0>;
+            bindings = <&kp L>;
+            guard_trigger {
+                trigger-keys = <H>;
+                bindings = <&kp HASH>;
+            };
+        };
+
+        ak_train_night_magic_night_i: ak_train_night_magic_night_i {
+            compatible = "zmk,behavior-adaptive-key";
+            #binding-cells = <0>;
+            bindings = <&magic_night_i>;
+            guard_trigger {
+                trigger-keys = <I>;
                 bindings = <&kp HASH>;
             };
         };
@@ -579,12 +547,92 @@
             };
         };
 
+        ak_train_night_magic_night_m: ak_train_night_magic_night_m {
+            compatible = "zmk,behavior-adaptive-key";
+            #binding-cells = <0>;
+            bindings = <&magic_night_m>;
+            guard_trigger {
+                trigger-keys = <M>;
+                bindings = <&kp HASH>;
+            };
+        };
+
+        ak_train_night_magic_night_n: ak_train_night_magic_night_n {
+            compatible = "zmk,behavior-adaptive-key";
+            #binding-cells = <0>;
+            bindings = <&magic_night_n>;
+            guard_trigger {
+                trigger-keys = <N>;
+                bindings = <&kp HASH>;
+            };
+        };
+
         ak_train_night_a: ak_train_night_a {
             compatible = "zmk,behavior-adaptive-key";
             #binding-cells = <0>;
             bindings = <&kp A>;
             guard_trigger {
                 trigger-keys = <O>;
+                bindings = <&kp HASH>;
+            };
+        };
+
+        ak_train_night_magic_night_q: ak_train_night_magic_night_q {
+            compatible = "zmk,behavior-adaptive-key";
+            #binding-cells = <0>;
+            bindings = <&magic_night_q>;
+            guard_trigger {
+                trigger-keys = <Q>;
+                bindings = <&kp HASH>;
+            };
+        };
+
+        ak_train_night_magic_night_t: ak_train_night_magic_night_t {
+            compatible = "zmk,behavior-adaptive-key";
+            #binding-cells = <0>;
+            bindings = <&magic_night_t>;
+            guard_trigger {
+                trigger-keys = <T>;
+                bindings = <&kp HASH>;
+            };
+        };
+
+        ak_train_night_e: ak_train_night_e {
+            compatible = "zmk,behavior-adaptive-key";
+            #binding-cells = <0>;
+            bindings = <&kp E>;
+            guard_trigger {
+                trigger-keys = <U>;
+                bindings = <&kp HASH>;
+            };
+        };
+
+        ak_train_night_s: ak_train_night_s {
+            compatible = "zmk,behavior-adaptive-key";
+            #binding-cells = <0>;
+            bindings = <&kp S>;
+            guard_trigger {
+                trigger-keys = <V>;
+                bindings = <&kp HASH>;
+            };
+        };
+
+        ak_train_night_magic_night_w: ak_train_night_magic_night_w {
+            compatible = "zmk,behavior-adaptive-key";
+            #binding-cells = <0>;
+            bindings = <&magic_night_w>;
+            guard_trigger {
+                trigger-keys = <W>;
+                bindings = <&kp HASH>;
+            };
+        };
+
+        ak_train_night_sqt: ak_train_night_sqt {
+            compatible = "zmk,behavior-adaptive-key";
+            #binding-cells = <0>;
+            bindings = <&kp SQT>;
+            guard_trigger {
+                trigger-keys = <Y>;
                 bindings = <&kp HASH>;
             };
         };

@@ -22,67 +22,67 @@ Gallium (default: repeat):
 
 | First key | Magic output |
 | --------- | ------------ |
-| .         | /            |
-| A         | Y            |
-| B         | R            |
-| C         | S            |
+| .         | ./           |
+| A         | AY           |
+| B         | BR           |
+| C         | CS           |
 | D         | --           |
-| E         | Y            |
+| E         | EY           |
 | F         | --           |
-| G         | S            |
+| G         | GS           |
 | H         | --           |
 | I         | --           |
 | J         | --           |
 | K         | --           |
 | L         | --           |
-| M         | B            |
+| M         | MB           |
 | N         | --           |
-| O         | K            |
-| P         | H            |
+| O         | OK           |
+| P         | PH           |
 | Q         | --           |
-| R         | L            |
-| S         | C            |
+| R         | RL           |
+| S         | SC           |
 | T         | --           |
-| U         | E            |
+| U         | UE           |
 | V         | --           |
 | W         | --           |
 | X         | --           |
-| Y         | E            |
+| Y         | YE           |
 | Z         | --           |
 
 Night (default: repeat):
 
 | First key | Magic output |
 | --------- | ------------ |
-| (space)   | THE          |
-| ,         |  BUT         |
-| -         | >            |
-| .         | /            |
-| A         | O            |
-| B         | --           |
-| C         | Y            |
+| (space)   |  THE         |
+| ,         | , BUT        |
+| -         | ->           |
+| .         | ./           |
+| A         | AO           |
+| B         | BEFORE       |
+| C         | CY           |
 | D         | --           |
 | E         | --           |
 | F         | --           |
-| G         | Y            |
-| H         | L            |
-| I         | ON           |
-| J         | UST          |
+| G         | GY           |
+| H         | HL           |
+| I         | ION          |
+| J         | JUST         |
 | K         | --           |
 | L         | --           |
-| M         | ENT          |
-| N         | --           |
-| O         | A            |
-| P         | Y            |
-| Q         | UE           |
+| M         | MENT         |
+| N         | NION         |
+| O         | OA           |
+| P         | PY           |
+| Q         | QUE          |
 | R         | --           |
 | S         | --           |
-| T         | ION          |
-| U         | E            |
-| V         | S            |
-| W         | HAT          |
+| T         | TION         |
+| U         | UE           |
+| V         | VS           |
+| W         | WHICH        |
 | X         | --           |
-| Y         | '            |
+| Y         | Y'           |
 | Z         | --           |
 
 ## Keymap Visualizations

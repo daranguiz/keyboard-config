@@ -1,4 +1,9 @@
 #include "dario.h"
+#include "quantum/repeat_key.h"
+
+// Forward declaration: generated per-keymap for magic text expansions
+bool process_magic_record(uint16_t keycode, keyrecord_t *record);
+__attribute__((weak)) bool process_magic_record(uint16_t keycode, keyrecord_t *record) { return true; }
 
 // Per-key tapping term configuration
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
@@ -103,6 +108,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                         get_highest_layer(layer_state));
                 break;
         }
+    }
+
+    // Delegate magic/alternate repeat handling
+    if (!magic_process_record(keycode, record)) {
+        return false;
+    }
+
+    if (!process_magic_record(keycode, record)) {
+        return false;
     }
 
     switch (keycode) {

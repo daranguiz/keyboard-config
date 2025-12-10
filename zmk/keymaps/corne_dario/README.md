@@ -378,40 +378,42 @@
 - default: REPEAT
 - timeout_ms: 0
 - mappings:
-  - B → R
-  - A → Y
-  - E → Y
-  - R → L
-  - U → E
-  - O → K
   - . → /
-  - S → C
+  - A → Y
+  - B → R
   - C → S
-  - M → B
+  - E → Y
   - G → S
+  - M → B
+  - O → K
   - P → H
+  - R → L
+  - S → C
+  - U → E
   - Y → E
 
 ### BASE_NIGHT
 - default: REPEAT
 - timeout_ms: 0
 - mappings:
-  - U → E
-  - P → Y
+  -   → THE
+  - , →  BUT
+  - - → >
+  - . → /
+  - A → O
+  - B → EFORE
   - C → Y
-  - Y → '
   - G → Y
   - H → L
-  - V → S
-  - A → O
-  - M → ENT
-  - . → /
-  - - → >
   - I → ON
-  - T → ION
-  - Q → UE
-  -   → THE
-  - W → HAT
-  - , →  BUT
   - J → UST
+  - M → ENT
+  - N → ION
   - O → A
+  - P → Y
+  - Q → UE
+  - T → ION
+  - U → E
+  - V → S
+  - W → HICH
+  - Y → '
