@@ -153,18 +153,6 @@ uint16_t get_alt_repeat_key_keycode_user(uint16_t keycode, uint8_t mods) {
     if (layer == BASE_GALLIUM) {
         switch (keycode) {
             case KC_DOT: return KC_SLSH;
-            case KC_A: return KC_Y;
-            case KC_B: return KC_R;
-            case KC_C: return KC_S;
-            case KC_E: return KC_Y;
-            case KC_G: return KC_S;
-            case KC_M: return KC_B;
-            case KC_O: return KC_K;
-            case KC_P: return KC_H;
-            case KC_R: return KC_L;
-            case KC_S: return KC_C;
-            case KC_U: return KC_E;
-            case KC_Y: return KC_E;
         }
     }
 
@@ -184,7 +172,6 @@ uint16_t get_alt_repeat_key_keycode_user(uint16_t keycode, uint8_t mods) {
             case KC_J: return MAGIC_NIGHT_J;
             case KC_M: return MAGIC_NIGHT_M;
             case KC_N: return MAGIC_NIGHT_N;
-            case KC_O: return KC_A;
             case KC_P: return KC_Y;
             case KC_Q: return MAGIC_NIGHT_Q;
             case KC_T: return MAGIC_NIGHT_T;

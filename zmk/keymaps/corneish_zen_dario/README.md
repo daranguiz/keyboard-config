@@ -379,18 +379,6 @@
 - timeout_ms: 0
 - mappings:
   - . → /
-  - A → Y
-  - B → R
-  - C → S
-  - E → Y
-  - G → S
-  - M → B
-  - O → K
-  - P → H
-  - R → L
-  - S → C
-  - U → E
-  - Y → E
 
 ### BASE_NIGHT
 - default: REPEAT
@@ -409,7 +397,6 @@
   - J → UST
   - M → ENT
   - N → ION
-  - O → A
   - P → Y
   - Q → UE
   - T → ION

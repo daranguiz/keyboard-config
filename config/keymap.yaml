@@ -222,7 +222,7 @@ magic_keys:
       # L: (repeat)
       M: ENT
       N: ION
-      O: A
+      # O: (repeat)
       P: Y
       Q: UE
       # R: (repeat)
