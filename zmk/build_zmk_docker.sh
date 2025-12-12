@@ -142,6 +142,11 @@ for i in "${!BOARDS[@]}"; do
     cp -r "$ZMK_CONFIG"/* "$BUILD_CONFIG/"
     cp "$SCRIPT_DIR/config/dario_behaviors.dtsi" "$BUILD_CONFIG/"
 
+    # Copy west manifest if it exists (for custom modules like adaptive-key)
+    if [ -f "$SCRIPT_DIR/config/west.yml" ]; then
+        cp "$SCRIPT_DIR/config/west.yml" "$BUILD_CONFIG/west.yml"
+    fi
+
     # Run West build in Docker
     if docker run --rm \
         -v "$ZMK_REPO:/zmk" \
@@ -152,6 +157,11 @@ for i in "${!BOARDS[@]}"; do
             set -e
             git config --global --add safe.directory /zmk
             west init -l app/ 2>/dev/null || true
+            # Configure west to use custom manifest if present
+            if [ -f /config/west.yml ]; then
+                west config manifest.path /config
+                west config manifest.file west.yml
+            fi
             west update
             west build -p -s app -b $BOARD -- $SHIELD_ARG -DZMK_CONFIG=/config
         " 2>&1 | grep -v "cmake" | grep -E "Building|-- |ERROR|error|✓|✗|$"; then
