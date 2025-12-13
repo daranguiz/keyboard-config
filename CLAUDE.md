@@ -180,6 +180,62 @@ The codebase uses a **single source of truth** approach for keymap definitions t
 4. **Mac-Optimized**: Clipboard shortcuts use Cmd key (LCMD/SCMD)
 5. **Colemak Base Layer**: Default alphas layout
 
+### Key Position Numbering (Row-Wise)
+
+The codebase uses a **consistent row-wise numbering scheme** for all key positions. This applies to combo definitions, L36 references, and internal data structures.
+
+**36-Key Base Layout (3x5_3):**
+```
+┌────┬────┬────┬────┬────┐   ┌────┬────┬────┬────┬────┐
+│  0 │  1 │  2 │  3 │  4 │   │  5 │  6 │  7 │  8 │  9 │  
+├────┼────┼────┼────┼────┤   ├────┼────┼────┼────┼────┤
+│ 10 │ 11 │ 12 │ 13 │ 14 │   │ 15 │ 16 │ 17 │ 18 │ 19 │  
+├────┼────┼────┼────┼────┤   ├────┼────┼────┼────┼────┤
+│ 20 │ 21 │ 22 │ 23 │ 24 │   │ 25 │ 26 │ 27 │ 28 │ 29 │  
+└────┴────┼────┼────┼────┤   ├────┼────┼────┼────┴────┘
+          │ 30 │ 31 │ 32 │   │ 33 │ 34 │ 35 │            
+          └────┴────┴────┘   └────┴────┴────┘
+```
+
+**Position Ranges:**
+- `0-9`: Top row (0-4 left, 5-9 right)
+- `10-19`: Home row (10-14 left, 15-19 right)
+- `20-29`: Bottom row (20-24 left, 25-29 right)
+- `30-35`: Thumbs (30-32 left, 33-35 right)
+
+**42-Key Extended Layout (3x6_3)** - adds outer pinky columns:
+```
+┌────┬────┬────┬────┬────┬────┐   ┌────┬────┬────┬────┬────┬────┐
+│  0 │  1 │  2 │  3 │  4 │  5 │   │  6 │  7 │  8 │  9 │ 10 │ 11 │
+├────┼────┼────┼────┼────┼────┤   ├────┼────┼────┼────┼────┼────┤
+│ 12 │ 13 │ 14 │ 15 │ 16 │ 17 │   │ 18 │ 19 │ 20 │ 21 │ 22 │ 23 │
+├────┼────┼────┼────┼────┼────┤   ├────┼────┼────┼────┼────┼────┤
+│ 24 │ 25 │ 26 │ 27 │ 28 │ 29 │   │ 30 │ 31 │ 32 │ 33 │ 34 │ 35 │
+└────┴────┴────┼────┼────┼────┤   ├────┼────┼────┼────┴────┴────┘
+               │ 36 │ 37 │ 38 │   │ 39 │ 40 │ 41 │            
+               └────┴────┴────┘   └────┴────┴────┘
+```
+
+**Architecture:**
+```
+config/keymap.yaml (row-wise positions)
+         │
+         ▼
+   Python scripts (row-wise internally)
+         │
+         ▼
+   ┌─────┴─────┐
+   ▼           ▼
+QMK Generator  ZMK Generator
+   │           │
+   ▼           ▼
+Physical       Physical
+positions      positions
+(LAYOUT_*)     (devicetree)
+```
+
+Combo positions in `config/keymap.yaml` use the canonical 36-key row-wise scheme. The generators translate these to each board's physical layout positions at code generation time.
+
 ### Layer System
 
 - **BASE**: Colemak with home row mods

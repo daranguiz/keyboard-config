@@ -167,22 +167,21 @@ class LayerCompiler:
                 left_pinky = ["NONE"] * 3
                 right_pinky = ["NONE"] * 3
 
-            # Interleave extension keys into the matrix
-            # Core layout: left 3x5 (0-14), right 3x5 (15-29), thumbs 3+3 (30-35)
-            # Target layout: left 3x6 (rows with pinky), right 3x6 (rows with pinky), thumbs 3+3
+            # Input is row-wise: 0-9 top, 10-19 home, 20-29 bottom, 30-35 thumbs
+            # Output is also row-wise but with pinky columns added:
+            #   0-11 top (pinky + 5 left + 5 right + pinky)
+            #   12-23 home, 24-35 bottom, 36-41 thumbs
             result = []
 
-            # Left hand: 3 rows of 6 (add pinky column to each row)
+            # Each row: left pinky + left 5 keys + right 5 keys + right pinky
             for row in range(3):
-                result.append(left_pinky[row])  # Left outer pinky
-                result.extend(keycodes[row*5:(row+1)*5])  # Main 5 keys
+                row_start = row * 10  # 0, 10, 20 for row-wise input
+                result.append(left_pinky[row])           # Left outer pinky
+                result.extend(keycodes[row_start:row_start + 5])    # Left 5 keys
+                result.extend(keycodes[row_start + 5:row_start + 10])  # Right 5 keys
+                result.append(right_pinky[row])          # Right outer pinky
 
-            # Right hand: 3 rows of 6 (add pinky column to each row)
-            for row in range(3):
-                result.extend(keycodes[15 + row*5:15 + (row+1)*5])  # Main 5 keys
-                result.append(right_pinky[row])  # Right outer pinky
-
-            # Thumbs (unchanged from core)
+            # Thumbs (unchanged from core positions 30-35)
             result.extend(keycodes[30:36])
 
             return result
@@ -219,6 +218,8 @@ class LayerCompiler:
         """
         Pad 36-key core to 58-key layout (Lulu/Lily58).
 
+        Input (row-wise): 0-9 top, 10-19 home, 20-29 bottom, 30-35 thumbs
+
         Lulu/Lily58 physical layout (from info.json):
         - 6x4 matrix per side = 24 keys per side
         - Left side: rows 0-4, columns 0-5 (matrix positions)
@@ -227,26 +228,15 @@ class LayerCompiler:
 
         Row breakdown:
         - Row 0 (number row): 6 keys left + 6 keys right = 12 keys (NONE)
-        - Rows 1-3 (main 3x5): 15 keys left + 15 keys right = 30 keys (from core 0-29)
+        - Rows 1-3 (main 3x5): interleaved from core rows 0-2
         - Row 4 (thumb row): 5 keys left + 5 keys right = 10 keys
           - Left: outer 2 NONE + inner 3 from core[30:33]
           - Right: inner 3 from core[33:36] + outer 2 NONE
 
-        We also need 6 outer pinky column keys (3 per side) for rows 1-3
-
-        Total mapping:
-        - Number row (12): NONE
-        - Left pinky col (3): NONE (rows 1-3, col 0)
-        - Left main 3x5 (15): from core 0-14
-        - Right main 3x5 (15): from core 15-29
-        - Right pinky col (3): NONE (rows 1-3, col 5)
-        - Left thumb row (5): NONE, NONE, core[30], core[31], core[32]
-        - Right thumb row (5): core[33], core[34], core[35], NONE, NONE
-
-        Total: 12 + 3 + 15 + 15 + 3 + 5 + 5 = 58 ✓
+        Total: 12 + 36 + 10 = 58 ✓
 
         Args:
-            keycodes: 36-key core layout
+            keycodes: 36-key core layout (row-wise)
             layer: Current layer
             board: Board configuration
 
@@ -260,21 +250,15 @@ class LayerCompiler:
         result.extend(["NONE"] * 6)  # Right number row
 
         # Rows 1-3: Main finger keys with outer pinky columns
-        # Our core is organized as: left hand (0-14), right hand (15-29)
-        # But we need to interleave pinky columns
-
-        # Split core into left and right hands
-        left_core = keycodes[0:15]   # Left 3x5
-        right_core = keycodes[15:30]  # Right 3x5
-
-        # Process rows 1-3 (3 rows of 6 keys each per side)
+        # Input is row-wise: each row has left 5 + right 5 keys
         for row in range(3):
+            row_start = row * 10  # 0, 10, 20 for input rows
             # Left side: outer pinky (NONE) + main 5 keys
             result.append("NONE")
-            result.extend(left_core[row*5:(row+1)*5])
+            result.extend(keycodes[row_start:row_start + 5])
 
             # Right side: main 5 keys + outer pinky (NONE)
-            result.extend(right_core[row*5:(row+1)*5])
+            result.extend(keycodes[row_start + 5:row_start + 10])
             result.append("NONE")
 
         # Row 4: Thumb row (5 keys per side)
@@ -293,7 +277,12 @@ class LayerCompiler:
         keycodes: List[str],
         layer: Layer
     ) -> List[str]:
-        """Helper: convert 36-key core to 42-key 3x6_3 with extensions if present."""
+        """
+        Helper: convert 36-key core to 42-key 3x6_3 with extensions if present.
+
+        Input (row-wise): 0-9 top, 10-19 home, 20-29 bottom, 30-35 thumbs
+        Output (row-wise): 0-11 top, 12-23 home, 24-35 bottom, 36-41 thumbs
+        """
         if "3x6_3" in layer.extensions:
             ext = layer.extensions["3x6_3"]
             left_pinky = ext.keys.get("outer_pinky_left", ["NONE"] * 3)
@@ -303,13 +292,14 @@ class LayerCompiler:
             right_pinky = ["NONE"] * 3
 
         result = []
+        # Each row: left pinky + left 5 keys + right 5 keys + right pinky
         for row in range(3):
+            row_start = row * 10  # 0, 10, 20 for row-wise input
             result.append(left_pinky[row])
-            result.extend(keycodes[row*5:(row+1)*5])
-        for row in range(3):
-            result.extend(keycodes[15 + row*5:15 + (row+1)*5])
+            result.extend(keycodes[row_start:row_start + 5])      # Left 5 keys
+            result.extend(keycodes[row_start + 5:row_start + 10])  # Right 5 keys
             result.append(right_pinky[row])
-        result.extend(keycodes[30:36])
+        result.extend(keycodes[30:36])  # Thumbs
         return result
 
     def _pad_to_58_keys_from_3x6(

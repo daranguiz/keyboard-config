@@ -621,77 +621,72 @@ combo_t key_combos[] = {{
 
     def translate_combo_positions(self, canonical_positions: List[int], board: Board) -> List[int]:
         """
-        Translate combo positions from canonical 36-key ordering to the board's
-        LAYOUT_* ordering used in QMK keymaps by mirroring the LayerCompiler
-        padding logic. This keeps combos aligned with the generated keymaps for
-        every supported layout.
+        Translate combo positions from canonical row-wise 36-key ordering to the board's
+        LAYOUT_* ordering used in QMK keymaps.
+
+        Canonical row-wise positions (36-key):
+          0-9:   top row (0-4 left, 5-9 right)
+          10-19: home row (10-14 left, 15-19 right)
+          20-29: bottom row (20-24 left, 25-29 right)
+          30-35: thumbs (30-32 left, 33-35 right)
+
+        Since LayerCompiler now outputs row-wise, the physical LAYOUT positions
+        match the row-wise scheme for each board size.
         """
         layout = board.layout_size
 
-        # Build a base 36-key list in the same ordering used by LayerCompiler
-        # (left rows, right rows, thumbs)
-        base_core = [None] * 36
-        for row in range(3):
-            for col in range(5):  # left columns
-                canonical = row * 10 + col
-                base_core[row * 5 + col] = canonical
-            for col in range(5, 10):  # right columns
-                canonical = row * 10 + col
-                idx = 15 + row * 5 + (col - 5)
-                base_core[idx] = canonical
-        # Thumbs
-        for i in range(3):
-            base_core[30 + i] = 30 + i  # left thumbs
-            base_core[33 + i] = 33 + i  # right thumbs
-
-        def pad_to_3x6(core: List[int]) -> List[int]:
-            """Mirror LayerCompiler._pad_to_3x6 ordering."""
-            result: List[int] = []
-            left_pinky = [None] * 3
-            right_pinky = [None] * 3
-            for row in range(3):
-                result.append(left_pinky[row])
-                result.extend(core[row * 5:(row + 1) * 5])
-            for row in range(3):
-                result.extend(core[15 + row * 5:15 + (row + 1) * 5])
-                result.append(right_pinky[row])
-            result.extend(core[30:36])
-            return result
-
-        def pad_to_58_from_42(core42: List[int]) -> List[int]:
-            """Mirror LayerCompiler._pad_to_58_keys_from_3x6 ordering."""
-            left_top = core42[0:6]
-            left_home = core42[6:12]
-            left_bottom = core42[12:18]
-            right_top = core42[18:24]
-            right_home = core42[24:30]
-            right_bottom = core42[30:36]
-            thumbs = core42[36:42]
-
-            row0 = [None] * 12
-            row1 = left_top + right_top
-            row2 = left_home + right_home
-            row3 = left_bottom + [None, None] + right_bottom
-            row4 = [None, thumbs[0], thumbs[1], thumbs[2], thumbs[3], thumbs[4], thumbs[5], None]
-            return row0 + row1 + row2 + row3 + row4
-
-        # 36-key split (3x5_3)
+        # 36-key split (3x5_3): direct 1:1 mapping (row-wise in = row-wise out)
         if layout == "3x5_3":
-            mapping = {val: idx for idx, val in enumerate(base_core)}
-            return [mapping[pos] for pos in canonical_positions]
+            return canonical_positions
 
-        # 42-key split (3x6_3)
+        # 42-key split (3x6_3): map 36-key row-wise → 42-key row-wise
+        # Output layout: 0-11 top, 12-23 home, 24-35 bottom, 36-41 thumbs
+        # Each row has: pinky + 5 left + 5 right + pinky
         if layout == "3x6_3":
-            padded42 = pad_to_3x6(base_core)
-            mapping = {val: idx for idx, val in enumerate(padded42) if val is not None}
-            return [mapping[pos] for pos in canonical_positions]
+            translated = []
+            for pos in canonical_positions:
+                if pos >= 30:  # Thumbs (30-35 → 36-41)
+                    translated.append(pos + 6)
+                else:  # Alpha keys
+                    row = pos // 10      # Which row (0, 1, 2)
+                    col = pos % 10       # Which column in that row (0-9)
+                    # Output row has 12 keys: [pinky, left0-4, right0-4, pinky]
+                    # Left cols 0-4 → output cols 1-5
+                    # Right cols 5-9 → output cols 6-10
+                    if col < 5:
+                        new_col = col + 1  # Left hand (skip pinky)
+                    else:
+                        new_col = col + 1  # Right hand (col 5→6, 6→7, etc.)
+                    translated.append(row * 12 + new_col)
+            return translated
 
-        # Lulu/Lily58 style (58 keys padded from 3x6_3)
+        # 58-key (custom_58_from_3x6): map 36-key row-wise → 58-key layout
+        # Output: 12 number row + 36 main (3 rows of pinky+5+5+pinky) + 10 thumb row
         if layout == "custom_58_from_3x6":
-            padded42 = pad_to_3x6(base_core)
-            padded58 = pad_to_58_from_42(padded42)
-            mapping = {val: idx for idx, val in enumerate(padded58) if val is not None}
-            return [mapping[pos] for pos in canonical_positions]
+            translated = []
+            for pos in canonical_positions:
+                if pos >= 30:  # Thumbs
+                    # Thumb row is at positions 48-57
+                    # Left thumbs (30-32) → positions 49, 50, 51
+                    # Right thumbs (33-35) → positions 52, 53, 54
+                    thumb_idx = pos - 30
+                    if thumb_idx < 3:
+                        translated.append(49 + thumb_idx)  # Left thumbs
+                    else:
+                        translated.append(49 + thumb_idx)  # Right thumbs (52, 53, 54)
+                else:  # Alpha keys
+                    row = pos // 10
+                    col = pos % 10
+                    # Skip number row (12 keys), then each row has 12 keys
+                    # Row offset: 12 + row * 12
+                    # Left cols 0-4 → output cols 1-5
+                    # Right cols 5-9 → output cols 6-10
+                    if col < 5:
+                        new_col = col + 1
+                    else:
+                        new_col = col + 1
+                    translated.append(12 + row * 12 + new_col)
+            return translated
 
         # Fallback (custom layouts): return canonical
         return canonical_positions

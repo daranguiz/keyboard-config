@@ -12,33 +12,33 @@
  4: &kp K
  5: &kp Q
 
- 6: &kp Y
- 7: &hml LGUI N
- 8: &hml LALT S
- 9: &hml LCTL H
-10: &hml LSFT T
-11: &kp M
+ 6: &kp P
+ 7: &kp G
+ 8: &kp O
+ 9: &kp U
+10: &kp DOT
+11: &none
 
-12: &none
-13: &kp X
-14: &kp V
-15: &kp J
-16: &kp D
-17: &kp Z
+12: &kp Y
+13: &hml LGUI N
+14: &hml LALT S
+15: &hml LCTL H
+16: &hml LSFT T
+17: &kp M
 
-18: &kp P
-19: &kp G
-20: &kp O
-21: &kp U
-22: &kp DOT
+18: &kp Y
+19: &hmr LSFT C
+20: &hmr LCTL A
+21: &hmr LALT E
+22: &hmr LGUI I
 23: &none
 
-24: &kp Y
-25: &hmr LSFT C
-26: &hmr LCTL A
-27: &hmr LALT E
-28: &hmr LGUI I
-29: &none
+24: &none
+25: &kp X
+26: &kp V
+27: &kp J
+28: &kp D
+29: &kp Z
 
 30: &kp SQT
 31: &kp W
@@ -65,33 +65,33 @@
  4: &kp C
  5: &kp V
 
- 6: &none
- 7: &hml LGUI N
- 8: &hml LALT R
- 9: &hml LCTL T
-10: &hml LSFT S
-11: &kp G
+ 6: &kp J
+ 7: &kp Y
+ 8: &kp O
+ 9: &kp U
+10: &kp DOT
+11: &none
 
 12: &none
-13: &kp X
-14: &kp Q
-15: &kp M
-16: &kp W
-17: &kp Z
+13: &hml LGUI N
+14: &hml LALT R
+15: &hml LCTL T
+16: &hml LSFT S
+17: &kp G
 
-18: &kp J
-19: &kp Y
-20: &kp O
-21: &kp U
-22: &kp DOT
-23: &none
+18: &kp P
+19: &hmr LSFT H
+20: &hmr LCTL A
+21: &hmr LALT E
+22: &hmr LGUI I
+23: &kp ENTER
 
-24: &kp P
-25: &hmr LSFT H
-26: &hmr LCTL A
-27: &hmr LALT E
-28: &hmr LGUI I
-29: &kp ENTER
+24: &none
+25: &kp X
+26: &kp Q
+27: &kp M
+28: &kp W
+29: &kp Z
 
 30: &kp K
 31: &kp F
@@ -118,33 +118,33 @@
  4: &kp C
  5: &kp Z
 
- 6: &none
- 7: &hml LGUI N
- 8: &hml LALT R
- 9: &hml LCTL T
-10: &hml LSFT D
-11: &kp P
+ 6: &kp J
+ 7: &kp F
+ 8: &kp O
+ 9: &kp U
+10: &kp COMMA
+11: &none
 
 12: &none
-13: &kp X
-14: &kp Q
-15: &kp V
-16: &kp G
-17: &kp W
+13: &hml LGUI N
+14: &hml LALT R
+15: &hml LCTL T
+16: &hml LSFT D
+17: &kp P
 
-18: &kp J
-19: &kp F
-20: &kp O
-21: &kp U
-22: &kp COMMA
+18: &kp Y
+19: &hmr LSFT H
+20: &hmr LCTL A
+21: &hmr LALT E
+22: &hmr LGUI I
 23: &none
 
-24: &kp Y
-25: &hmr LSFT H
-26: &hmr LCTL A
-27: &hmr LALT E
-28: &hmr LGUI I
-29: &none
+24: &none
+25: &kp X
+26: &kp Q
+27: &kp V
+28: &kp G
+29: &kp W
 
 30: &kp SEMI
 31: &kp K
@@ -171,33 +171,33 @@
  4: &kp W
  5: &kp J
 
- 6: &none
- 7: &hml LGUI S
- 8: &hml LALT T
- 9: &hml LCTL H
-10: &hml LSFT C
-11: &kp Y
+ 6: &kp MINUS
+ 7: &kp B
+ 8: &kp O
+ 9: &kp U
+10: &kp COMMA
+11: &none
 
 12: &none
-13: &kp X
-14: &kp K
-15: &kp M
-16: &kp G
-17: &kp V
+13: &hml LGUI S
+14: &hml LALT T
+15: &hml LCTL H
+16: &hml LSFT C
+17: &kp Y
 
-18: &kp MINUS
-19: &kp B
-20: &kp O
-21: &kp U
-22: &kp COMMA
+18: &kp Q
+19: &hmr LSFT N
+20: &hmr LCTL A
+21: &hmr LALT E
+22: &hmr LGUI I
 23: &none
 
-24: &kp Q
-25: &hmr LSFT N
-26: &hmr LCTL A
-27: &hmr LALT E
-28: &hmr LGUI I
-29: &none
+24: &none
+25: &kp X
+26: &kp K
+27: &kp M
+28: &kp G
+29: &kp V
 
 30: &kp Z
 31: &kp P
@@ -225,32 +225,32 @@
  5: &kp PRINTSCREEN
 
  6: &none
- 7: &kp F11
- 8: &kp F4
- 9: &kp F5
-10: &kp F6
-11: &kp SCROLLLOCK
+ 7: &none
+ 8: &none
+ 9: &none
+10: &none
+11: &none
 
 12: &none
-13: &kp F10
-14: &kp F1
-15: &kp F2
-16: &kp F3
-17: &kp PAUSE_BREAK
+13: &kp F11
+14: &kp F4
+15: &kp F5
+16: &kp F6
+17: &kp SCROLLLOCK
 
 18: &none
-19: &none
-20: &none
-21: &none
-22: &none
+19: &kp LSHFT
+20: &kp LCTRL
+21: &kp LALT
+22: &kp LGUI
 23: &none
 
 24: &none
-25: &kp LSHFT
-26: &kp LCTRL
-27: &kp LALT
-28: &kp LGUI
-29: &none
+25: &kp F10
+26: &kp F1
+27: &kp F2
+28: &kp F3
+29: &kp PAUSE_BREAK
 
 30: &none
 31: &none
@@ -277,33 +277,33 @@
  4: &kp COLON
  5: &none
 
- 6: &none
- 7: &kp LGUI
- 8: &kp LALT
- 9: &kp LCTRL
-10: &kp LSHFT
-11: &kp PIPE
+ 6: &kp CARET
+ 7: &kp N7
+ 8: &kp N8
+ 9: &kp N9
+10: &kp DOT
+11: &none
 
 12: &none
-13: &kp LG(Z)
-14: &kp LG(X)
-15: &kp LG(C)
-16: &kp LG(V)
-17: &kp LG(LS(Z))
+13: &kp LGUI
+14: &kp LALT
+15: &kp LCTRL
+16: &kp LSHFT
+17: &kp PIPE
 
-18: &kp CARET
-19: &kp N7
-20: &kp N8
-21: &kp N9
-22: &kp DOT
+18: &kp HASH
+19: &kp N1
+20: &kp N2
+21: &kp N3
+22: &kp GRAVE
 23: &none
 
-24: &kp HASH
-25: &kp N1
-26: &kp N2
-27: &kp N3
-28: &kp GRAVE
-29: &none
+24: &none
+25: &kp LG(Z)
+26: &kp LG(X)
+27: &kp LG(C)
+28: &kp LG(V)
+29: &kp LG(LS(Z))
 
 30: &kp DOLLAR
 31: &kp N4
@@ -330,32 +330,32 @@
  4: &kp COLON
  5: &none
 
- 6: &none
- 7: &kp LGUI
- 8: &kp LALT
- 9: &kp LCTRL
-10: &kp LSHFT
-11: &kp EQUAL
+ 6: &kp PLUS
+ 7: &kp LT
+ 8: &kp LBRC
+ 9: &kp RBRC
+10: &kp GT
+11: &none
 
 12: &none
-13: &none
-14: &none
-15: &none
-16: &kp AMPERSAND
-17: &none
+13: &kp LGUI
+14: &kp LALT
+15: &kp LCTRL
+16: &kp LSHFT
+17: &kp EQUAL
 
-18: &kp PLUS
-19: &kp LT
-20: &kp LBRC
-21: &kp RBRC
-22: &kp GT
+18: &kp EXCL
+19: &kp QUESTION
+20: &kp LPAR
+21: &kp RPAR
+22: &kp SEMI
 23: &none
 
-24: &kp EXCL
-25: &kp QUESTION
-26: &kp LPAR
-27: &kp RPAR
-28: &kp SEMI
+24: &none
+25: &none
+26: &none
+27: &none
+28: &kp AMPERSAND
 29: &none
 
 30: &kp BSLH
@@ -383,33 +383,33 @@
  4: &none
  5: &kp ESC
 
- 6: &none
- 7: &none
- 8: &kp LEFT
- 9: &kp UP
-10: &kp RIGHT
-11: &kp CAPS
+ 6: &bt BT_SEL 0
+ 7: &bt BT_SEL 1
+ 8: &bt BT_SEL 2
+ 9: &bt BT_SEL 3
+10: &bt BT_CLR
+11: &none
 
 12: &none
-13: &kp END
-14: &kp PG_DN
-15: &kp DOWN
-16: &kp HOME
-17: &kp INS
+13: &none
+14: &kp LEFT
+15: &kp UP
+16: &kp RIGHT
+17: &kp CAPS
 
-18: &bt BT_SEL 0
-19: &bt BT_SEL 1
-20: &bt BT_SEL 2
-21: &bt BT_SEL 3
-22: &bt BT_CLR
+18: &none
+19: &kp LSHFT
+20: &kp LCTRL
+21: &kp LALT
+22: &kp LGUI
 23: &none
 
 24: &none
-25: &kp LSHFT
-26: &kp LCTRL
-27: &kp LALT
-28: &kp LGUI
-29: &none
+25: &kp END
+26: &kp PG_DN
+27: &kp DOWN
+28: &kp HOME
+29: &kp INS
 
 30: &none
 31: &none
@@ -437,32 +437,32 @@
  5: &none
 
  6: &none
- 7: &kp C_NEXT
- 8: &kp C_VOL_UP
- 9: &kp C_VOL_DN
-10: &kp C_PREV
+ 7: &none
+ 8: &none
+ 9: &none
+10: &none
 11: &none
 
 12: &none
-13: &kp LG(Z)
-14: &kp LG(X)
-15: &kp LG(C)
-16: &kp LG(V)
-17: &kp LG(LS(Z))
+13: &kp C_NEXT
+14: &kp C_VOL_UP
+15: &kp C_VOL_DN
+16: &kp C_PREV
+17: &none
 
 18: &none
-19: &none
-20: &none
-21: &none
-22: &none
+19: &kp LSHFT
+20: &kp LCTRL
+21: &kp LALT
+22: &kp LGUI
 23: &none
 
 24: &none
-25: &kp LSHFT
-26: &kp LCTRL
-27: &kp LALT
-28: &kp LGUI
-29: &none
+25: &kp LG(Z)
+26: &kp LG(X)
+27: &kp LG(C)
+28: &kp LG(V)
+29: &kp LG(LS(Z))
 
 30: &none
 31: &none

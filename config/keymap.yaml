@@ -180,12 +180,13 @@ layers:
         outer_pinky_right: [NONE, NONE, NONE]
 
 # Combo definitions
-# NOTE: Positions use canonical 36-key (3x5_3) numbering
+# NOTE: Positions use row-wise 36-key numbering (see CLAUDE.md for diagram)
+# Combos trigger at physical positions regardless of active layer's key assignments
 # Positions are automatically translated for larger boards (3x6_3, etc.)
 combos:
   - name: dfu_left
     description: "Enter bootloader (left hand)"
-    key_positions: [0, 4, 24]  # B + Q + Z (canonical 36-key positions)
+    key_positions: [0, 4, 24]  # Top-left corner + top-right + bottom-right of left hand
     action: DFU
     timeout_ms: 100  # Slightly longer for easier chord
     require_prior_idle_ms: 150  # Prevent during fast typing (ZMK only)
@@ -193,7 +194,7 @@ combos:
 
   - name: dfu_right
     description: "Enter bootloader (right hand)"
-    key_positions: [5, 9, 25]  # P + DOT + ' (canonical 36-key positions)
+    key_positions: [5, 9, 25]  # Top-left + top-right corner + bottom-left of right hand
     action: DFU
     timeout_ms: 100  # Slightly longer for easier chord
     require_prior_idle_ms: 150  # Prevent during fast typing (ZMK only)
@@ -201,7 +202,7 @@ combos:
 
   - name: github_url
     description: "Expand to GitHub repo URL"
-    key_positions: [6, 7, 8, 9]  # G O U DOT (canonical 36-key positions)
+    key_positions: [6, 7, 8, 9]  # Right hand top row (positions 2-5)
     action: MACRO_GITHUB_URL
     macro_text: "https://github.com/daranguiz/keyboard-config?tab=readme-ov-file#readme"
     timeout_ms: 100  # Slightly longer for 4-key combo

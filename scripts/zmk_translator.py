@@ -292,23 +292,34 @@ class ZMKTranslator:
 
     def _is_left_hand_key(self, key_index: int) -> bool:
         """
-        Determine if a key position is on the left hand
+        Determine if a key position is on the left hand (row-wise numbering)
 
         Args:
-            key_index: Key position (0-based)
+            key_index: Key position (0-based, row-wise)
 
         Returns:
             True if key is on left hand, False if on right hand
         """
         if self.layout_size == "3x5_3":
-            # 36 keys: 0-14 left hand (3x5), 15-29 right hand (3x5), 30-32 left thumbs, 33-35 right thumbs
-            return key_index < 15 or (30 <= key_index < 33)
+            # 36 keys row-wise: 0-9 top, 10-19 home, 20-29 bottom, 30-35 thumbs
+            # Left: cols 0-4 on each row, right: cols 5-9
+            if key_index >= 30:
+                return key_index < 33  # 30-32 left thumbs, 33-35 right thumbs
+            col = key_index % 10
+            return col < 5
         elif self.layout_size == "3x6_3":
-            # 42 keys: 0-17 left hand (3x6), 18-35 right hand (3x6), 36-38 left thumbs, 39-41 right thumbs
-            return key_index < 18 or (36 <= key_index < 39)
+            # 42 keys row-wise: 0-11 top, 12-23 home, 24-35 bottom, 36-41 thumbs
+            # Left: cols 0-5 on each row, right: cols 6-11
+            if key_index >= 36:
+                return key_index < 39  # 36-38 left thumbs, 39-41 right thumbs
+            col = key_index % 12
+            return col < 6
         else:
-            # Default: assume first half is left hand
-            return key_index < 21  # Default to 42-key layout
+            # Default: assume row-wise 42-key layout
+            if key_index >= 36:
+                return key_index < 39
+            col = key_index % 12
+            return col < 6
 
     def _get_base_layer_for_layer(self, layer_name: str) -> Optional[str]:
         """

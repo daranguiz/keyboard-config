@@ -25,6 +25,12 @@ class KeyGrid:
       - rows[7]: right thumb keys (3 keys)
 
     Supports position references like L36_0 which are preserved as dicts.
+
+    Position numbering (row-wise):
+      - 0-9:   top row (0-4 left, 5-9 right)
+      - 10-19: home row (10-14 left, 15-19 right)
+      - 20-29: bottom row (20-24 left, 25-29 right)
+      - 30-35: thumbs (30-32 left, 33-35 right)
     """
     rows: List[List[Union[str, Dict[str, Any]]]]  # Nested list of keycodes or position references
 
@@ -55,7 +61,36 @@ class KeyGrid:
             return str(value)
 
     def flatten(self) -> List[Union[str, Dict[str, Any]]]:
-        """Flatten to single list of keycodes (may include position references)"""
+        """
+        Flatten to single list of keycodes in row-wise order.
+
+        For 8-row core layouts (3x5_3 with left/right/thumbs structure):
+          - 0-9:   top row (left[0] + right[0])
+          - 10-19: home row (left[1] + right[1])
+          - 20-29: bottom row (left[2] + right[2])
+          - 30-35: thumbs (left_thumbs + right_thumbs)
+
+        For single-row full_layout (already flat): returns as-is.
+
+        May include position reference dicts for L36_N syntax.
+        """
+        # Handle full_layout case (single row containing flat list)
+        if len(self.rows) == 1:
+            return list(self.rows[0])
+
+        # Handle 8-row core layout structure
+        if len(self.rows) == 8:
+            result = []
+            # Interleave left and right hands row by row
+            for row in range(3):
+                result.extend(self.rows[row])      # Left hand row
+                result.extend(self.rows[3 + row])  # Right hand row
+            # Thumbs
+            result.extend(self.rows[6])  # Left thumbs
+            result.extend(self.rows[7])  # Right thumbs
+            return result
+
+        # Fallback: concatenate all rows
         return [key for row in self.rows for key in row]
 
     @property

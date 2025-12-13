@@ -295,37 +295,42 @@ class ZMKGenerator:
 
     def translate_combo_positions(self, canonical_positions: List[int], board: Board) -> List[int]:
         """
-        Translate combo positions from canonical 36-key layout to board's physical layout
+        Translate combo positions from canonical row-wise 36-key layout to board's physical layout.
+
+        Canonical row-wise positions (36-key):
+          0-9:   top row (0-4 left, 5-9 right)
+          10-19: home row (10-14 left, 15-19 right)
+          20-29: bottom row (20-24 left, 25-29 right)
+          30-35: thumbs (30-32 left, 33-35 right)
 
         Args:
-            canonical_positions: Positions in canonical 3x5_3 (36-key) layout
+            canonical_positions: Positions in canonical row-wise 36-key layout
             board: Board configuration with layout_size
 
         Returns:
-            Translated positions for the board's physical layout
+            Translated positions for the board's physical ZMK layout
         """
-        # For 3x5_3 boards, no translation needed
+        # For 3x5_3 boards, direct 1:1 mapping (row-wise in = row-wise out)
         if board.layout_size == "3x5_3":
             return canonical_positions
 
-        # For 3x6_3 boards with outer columns, add offset for each row
-        # Canonical 3x5_3: rows of 10 keys (0-9, 10-19, 20-29) + 6 thumbs (30-35)
-        # Physical 3x6_3: rows of 12 keys (0-11, 12-23, 24-35) + 6 thumbs (36-41)
+        # For 3x6_3 boards: map row-wise 36-key → row-wise 42-key with pinky columns
+        # Output: rows of 12 keys (0-11, 12-23, 24-35) + 6 thumbs (36-41)
+        # Each row: [pinky, left0-4, right0-4, pinky]
         if board.layout_size == "3x6_3":
             translated = []
             for pos in canonical_positions:
                 if pos < 30:  # Alpha keys (rows 0-2)
                     row = pos // 10
                     col = pos % 10
-                    # Add 1 for outer column, plus row offset
+                    # Add 1 for left pinky column offset
                     new_pos = row * 12 + col + 1
-                else:  # Thumb keys (row 3)
-                    # Thumbs start at position 36 on 3x6_3
+                else:  # Thumb keys (30-35 → 36-41)
                     new_pos = pos - 30 + 36
                 translated.append(new_pos)
             return translated
 
-        # For other layouts, return as-is (TODO: add support for more layouts)
+        # For other layouts, return as-is
         return canonical_positions
 
     def generate_combos_section(self, combos: ComboConfiguration, layer_names: List[str], board: Board) -> str:

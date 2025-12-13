@@ -856,81 +856,81 @@
 
         base_night_layer {
             bindings = <
-                &none &kp B &kp F &ak_train_night_l &kp K &kp Q &kp P &kp G &ak_train_night_o &kp U &kp DOT &none
-                &ak_train_night_y &hml LGUI N &hml_train_night_s LALT 0 &hml LCTL H &hml LSFT T &kp M &ak_train_night_y &hmr LSFT C &hmr LCTL A &hmr_train_night_e LALT 0 &hmr LGUI I &none
-                &none &kp X &kp V &kp J &kp D &kp Z &ak_train_night_sqt &kp W &kp MINUS &kp SEMI &kp COMMA &none
+                &none &kp B &kp F &ak_train_night_l &kp K &kp Q &ak_train_night_y &hmr LSFT C &hmr LCTL A &hmr_train_night_e LALT 0 &hmr LGUI I &none
+                &kp P &kp G &ak_train_night_o &kp U &kp DOT &none &none &kp X &kp V &kp J &kp D &kp Z
+                &ak_train_night_y &hml LGUI N &hml_train_night_s LALT 0 &hml LCTL H &hml LSFT T &kp M &ak_train_night_sqt &kp W &kp MINUS &kp SEMI &kp COMMA &none
                 &lt NUM_NIGHT BSPC &lt SYM_NIGHT R &mt_ak_night LSFT 0 &mt LSFT TAB &lt NAV_NIGHT SPACE &lt MEDIA_NIGHT ENTER
             >;
         };
 
         base_gallium_layer {
             bindings = <
-                &none &ak_train_gallium_b &ak_train_gallium_l &kp D &ak_train_gallium_c &kp V &kp J &ak_train_gallium_y &kp O &kp U &kp DOT &none
-                &none &hml LGUI N &hml_train_gallium_r LALT 0 &hml LCTL T &hml_train_gallium_s LSFT 0 &kp G &kp P &hmr_train_gallium_h LSFT 0 &hmr LCTL A &hmr_train_gallium_e LALT 0 &hmr LGUI I &kp ENTER
-                &none &kp X &kp Q &kp M &kp W &kp Z &ak_train_gallium_k &kp F &kp SQT &kp MINUS &kp COMMA &none
+                &none &ak_train_gallium_b &ak_train_gallium_l &kp D &ak_train_gallium_c &kp V &kp P &hmr_train_gallium_h LSFT 0 &hmr LCTL A &hmr_train_gallium_e LALT 0 &hmr LGUI I &kp ENTER
+                &kp J &ak_train_gallium_y &kp O &kp U &kp DOT &none &none &kp X &kp Q &kp M &kp W &kp Z
+                &none &hml LGUI N &hml_train_gallium_r LALT 0 &hml LCTL T &hml_train_gallium_s LSFT 0 &kp G &ak_train_gallium_k &kp F &kp SQT &kp MINUS &kp COMMA &none
                 &lt NUM_NIGHT BSPC &lt_ak_gallium SYM_NIGHT 0 &mt LSFT DEL &mt LSFT TAB &lt NAV_NIGHT SPACE &lt MEDIA_NIGHT ENTER
             >;
         };
 
         base_bunya_layer {
             bindings = <
-                &none &kp B &kp L &kp M &kp C &kp Z &kp J &kp F &kp O &kp U &kp COMMA &none
-                &none &hml LGUI N &hml LALT R &hml LCTL T &hml LSFT D &kp P &kp Y &hmr LSFT H &hmr LCTL A &hmr LALT E &hmr LGUI I &none
-                &none &kp X &kp Q &kp V &kp G &kp W &kp SEMI &kp K &kp SQT &kp MINUS &kp DOT &none
+                &none &kp B &kp L &kp M &kp C &kp Z &kp Y &hmr LSFT H &hmr LCTL A &hmr LALT E &hmr LGUI I &none
+                &kp J &kp F &kp O &kp U &kp COMMA &none &none &kp X &kp Q &kp V &kp G &kp W
+                &none &hml LGUI N &hml LALT R &hml LCTL T &hml LSFT D &kp P &kp SEMI &kp K &kp SQT &kp MINUS &kp DOT &none
                 &lt NUM_NIGHT BSPC &lt SYM_NIGHT S &mt_ak_bunya LSFT 0 &mt LSFT TAB &lt NAV_NIGHT SPACE &lt MEDIA_NIGHT ENTER
             >;
         };
 
         base_racket_layer {
             bindings = <
-                &none &kp F &kp D &kp L &kp W &kp J &kp MINUS &kp B &kp O &kp U &kp COMMA &none
-                &none &hml LGUI S &hml LALT T &hml LCTL H &hml LSFT C &kp Y &kp Q &hmr LSFT N &hmr LCTL A &hmr LALT E &hmr LGUI I &none
-                &none &kp X &kp K &kp M &kp G &kp V &kp Z &kp P &kp SQT &ak_train_racket_fslh &kp DOT &none
+                &none &kp F &kp D &kp L &kp W &kp J &kp Q &hmr LSFT N &hmr LCTL A &hmr LALT E &hmr LGUI I &none
+                &kp MINUS &kp B &kp O &kp U &kp COMMA &none &none &kp X &kp K &kp M &kp G &kp V
+                &none &hml LGUI S &hml LALT T &hml LCTL H &hml LSFT C &kp Y &kp Z &kp P &kp SQT &ak_train_racket_fslh &kp DOT &none
                 &lt NUM_NIGHT BSPC &lt SYM_NIGHT R &mt_ak_racket LSFT 0 &mt LSFT TAB &lt NAV_NIGHT SPACE &lt MEDIA_NIGHT ENTER
             >;
         };
 
         fun_layer {
             bindings = <
-                &none &kp F12 &kp F7 &kp F8 &kp F9 &kp PRINTSCREEN &none &none &none &none &none &none
-                &none &kp F11 &kp F4 &kp F5 &kp F6 &kp SCROLLLOCK &none &kp LSHFT &kp LCTRL &kp LALT &kp LGUI &none
-                &none &kp F10 &kp F1 &kp F2 &kp F3 &kp PAUSE_BREAK &none &none &none &none &none &none
+                &none &kp F12 &kp F7 &kp F8 &kp F9 &kp PRINTSCREEN &none &kp LSHFT &kp LCTRL &kp LALT &kp LGUI &none
+                &none &none &none &none &none &none &none &kp F10 &kp F1 &kp F2 &kp F3 &kp PAUSE_BREAK
+                &none &kp F11 &kp F4 &kp F5 &kp F6 &kp SCROLLLOCK &none &none &none &none &none &none
                 &kp K_APP &kp SPACE &kp TAB &none &none &none
             >;
         };
 
         num_night_layer {
             bindings = <
-                &none &none &kp TILDE &kp PERCENT &kp COLON &none &kp CARET &kp N7 &kp N8 &kp N9 &kp DOT &none
-                &none &kp LGUI &kp LALT &kp LCTRL &kp LSHFT &kp PIPE &kp HASH &kp N1 &kp N2 &kp N3 &kp GRAVE &none
-                &none &kp LG(Z) &kp LG(X) &kp LG(C) &kp LG(V) &kp LG(LS(Z)) &kp DOLLAR &kp N4 &kp N5 &kp N6 &kp COMMA &none
+                &none &none &kp TILDE &kp PERCENT &kp COLON &none &kp HASH &kp N1 &kp N2 &kp N3 &kp GRAVE &none
+                &kp CARET &kp N7 &kp N8 &kp N9 &kp DOT &none &none &kp LG(Z) &kp LG(X) &kp LG(C) &kp LG(V) &kp LG(LS(Z))
+                &none &kp LGUI &kp LALT &kp LCTRL &kp LSHFT &kp PIPE &kp DOLLAR &kp N4 &kp N5 &kp N6 &kp COMMA &none
                 &none &none &none &ak_train_night_fslh &kp N0 &kp AT
             >;
         };
 
         sym_night_layer {
             bindings = <
-                &none &kp DOLLAR &kp ASTERISK &kp PERCENT &kp COLON &none &kp PLUS &kp LT &kp LBRC &kp RBRC &ak_train_night_gt &none
-                &none &kp LGUI &kp LALT &kp LCTRL &kp LSHFT &kp EQUAL &kp EXCL &kp QUESTION &kp LPAR &kp RPAR &kp SEMI &none
-                &none &none &none &none &kp AMPERSAND &none &kp BSLH &kp MINUS &kp LBKT &kp RBKT &kp COMMA &none
+                &none &kp DOLLAR &kp ASTERISK &kp PERCENT &kp COLON &none &kp EXCL &kp QUESTION &kp LPAR &kp RPAR &kp SEMI &none
+                &kp PLUS &kp LT &kp LBRC &kp RBRC &ak_train_night_gt &none &none &none &none &none &kp AMPERSAND &none
+                &none &kp LGUI &kp LALT &kp LCTRL &kp LSHFT &kp EQUAL &kp BSLH &kp MINUS &kp LBKT &kp RBKT &kp COMMA &none
                 &none &none &none &ak_train_night_fslh &kp SPACE &kp ENTER
             >;
         };
 
         nav_night_layer {
             bindings = <
-                &none &none &kp PG_UP &none &none &kp ESC &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_CLR &none
-                &none &none &kp LEFT &kp UP &kp RIGHT &kp CAPS &none &kp LSHFT &kp LCTRL &kp LALT &kp LGUI &none
-                &none &kp END &kp PG_DN &kp DOWN &kp HOME &kp INS &none &none &none &none &none &none
+                &none &none &kp PG_UP &none &none &kp ESC &none &kp LSHFT &kp LCTRL &kp LALT &kp LGUI &none
+                &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_CLR &none &none &kp END &kp PG_DN &kp DOWN &kp HOME &kp INS
+                &none &none &kp LEFT &kp UP &kp RIGHT &kp CAPS &none &none &none &none &none &none
                 &kp BSPC &kp ENTER &kp DEL &none &none &none
             >;
         };
 
         media_night_layer {
             bindings = <
-                &none &to BASE_NIGHT &to BASE_GALLIUM &to BASE_BUNYA &to BASE_RACKET &none &none &none &none &none &none &none
-                &none &kp C_NEXT &kp C_VOL_UP &kp C_VOL_DN &kp C_PREV &none &none &kp LSHFT &kp LCTRL &kp LALT &kp LGUI &none
-                &none &kp LG(Z) &kp LG(X) &kp LG(C) &kp LG(V) &kp LG(LS(Z)) &none &none &none &none &bootloader &none
+                &none &to BASE_NIGHT &to BASE_GALLIUM &to BASE_BUNYA &to BASE_RACKET &none &none &kp LSHFT &kp LCTRL &kp LALT &kp LGUI &none
+                &none &none &none &none &none &none &none &kp LG(Z) &kp LG(X) &kp LG(C) &kp LG(V) &kp LG(LS(Z))
+                &none &kp C_NEXT &kp C_VOL_UP &kp C_VOL_DN &kp C_PREV &none &none &none &none &none &bootloader &none
                 &kp C_MUTE &kp C_PLAY_PAUSE &kp C_STOP &none &none &none
             >;
         };

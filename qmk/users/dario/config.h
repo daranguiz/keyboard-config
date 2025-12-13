@@ -69,5 +69,10 @@
 // Standard combo timeout (maps to timeout-ms in ZMK)
 #define COMBO_TERM 50
 
+// Make combos position-based by always checking keycodes from layer 0 (BASE_NIGHT)
+// This ensures combos trigger at the same physical positions regardless of active layer
+// (e.g., dfu_left works on Racket layer even though the keys are different)
+#define COMBO_ONLY_FROM_LAYER 0
+
 // Note: QMK does not have built-in require-prior-idle support for combos
 // This is a ZMK-only feature (require-prior-idle-ms)
