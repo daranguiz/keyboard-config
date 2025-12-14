@@ -149,29 +149,34 @@ class ZMKGenerator:
         Format keycodes as ZMK bindings with proper indentation
 
         Args:
-            keycodes: List of ZMK keycodes (e.g., "&kp A", "&hml LGUI A")
+            keycodes: List of ZMK keycodes in row-wise order:
+                      - 3x5_3: [0-9]=row1, [10-19]=row2, [20-29]=row3, [30-35]=thumbs
+                      - 3x6_3: [0-11]=row1, [12-23]=row2, [24-35]=row3, [36-41]=thumbs
             layout_size: Board layout size (e.g., "3x5_3", "3x6_3")
 
         Returns:
             Formatted bindings string
         """
-        # Format for Corne's physical layout (6 columns per row, 3 rows + 3 thumb keys)
+        # Input is row-wise from layer compiler:
+        # 3x5_3: [left5 right5] per row, then [left3 right3] thumbs
+        # 3x6_3: [pinky left5 right5 pinky] per row, then [left3 right3] thumbs
         if layout_size == "3x6_3" and len(keycodes) == 42:
-            # 3x6_3 layout: 6 columns, 3 rows per hand + 3 thumbs per hand
-            # Format as: left6 right6 | left6 right6 | left6 right6 | left3 right3
+            # 3x6_3 layout: 12 keys per row (pinky + 5 left + 5 right + pinky)
+            # Input is already row-wise: [0-11]=row1, [12-23]=row2, [24-35]=row3, [36-41]=thumbs
             rows = [
-                keycodes[0:6] + keycodes[18:24],    # Row 1: left 6 + right 6
-                keycodes[6:12] + keycodes[24:30],   # Row 2: left 6 + right 6
-                keycodes[12:18] + keycodes[30:36],  # Row 3: left 6 + right 6
-                keycodes[36:39] + keycodes[39:42],  # Thumbs: left 3 + right 3
+                keycodes[0:12],     # Row 1: all 12 keys
+                keycodes[12:24],    # Row 2: all 12 keys
+                keycodes[24:36],    # Row 3: all 12 keys
+                keycodes[36:42],    # Thumbs: all 6 keys
             ]
         elif layout_size == "3x5_3" and len(keycodes) == 36:
-            # 3x5_3 layout: 5 columns, 3 rows per hand + 3 thumbs per hand
+            # 3x5_3 layout: 10 keys per row (5 left + 5 right)
+            # Input is row-wise: [0-9]=row1, [10-19]=row2, [20-29]=row3, [30-35]=thumbs
             rows = [
-                keycodes[0:5] + keycodes[15:20],    # Row 1: left 5 + right 5
-                keycodes[5:10] + keycodes[20:25],   # Row 2: left 5 + right 5
-                keycodes[10:15] + keycodes[25:30],  # Row 3: left 5 + right 5
-                keycodes[30:33] + keycodes[33:36],  # Thumbs: left 3 + right 3
+                keycodes[0:10],     # Row 1: left 5 + right 5
+                keycodes[10:20],    # Row 2: left 5 + right 5
+                keycodes[20:30],    # Row 3: left 5 + right 5
+                keycodes[30:36],    # Thumbs: left 3 + right 3
             ]
         else:
             # Generic fallback: chunk into rows of 12 (or 10 for 3x5_3)
@@ -207,24 +212,25 @@ class ZMKGenerator:
             lines.append(f"## {layer.name} Layer")
             lines.append("")
 
-            # For 36-key layout
+            # For 36-key layout (row-wise ordering)
+            # [0-9]=row1, [10-19]=row2, [20-29]=row3, [30-35]=thumbs
             if len(layer.keycodes) == 36:
                 lines.append("```")
                 lines.append("Left Hand              Right Hand")
                 lines.append("╭─────────────────╮    ╭─────────────────╮")
 
-                # Row 1
+                # Row 1: positions 0-4 (left) and 5-9 (right)
                 left_r1 = layer.keycodes[0:5]
-                right_r1 = layer.keycodes[15:20]
+                right_r1 = layer.keycodes[5:10]
                 lines.append(f"│ {' '.join(f'{self._simplify_keycode(k):4}' for k in left_r1)} │    │ {' '.join(f'{self._simplify_keycode(k):4}' for k in right_r1)} │")
 
-                # Row 2
-                left_r2 = layer.keycodes[5:10]
-                right_r2 = layer.keycodes[20:25]
+                # Row 2: positions 10-14 (left) and 15-19 (right)
+                left_r2 = layer.keycodes[10:15]
+                right_r2 = layer.keycodes[15:20]
                 lines.append(f"│ {' '.join(f'{self._simplify_keycode(k):4}' for k in left_r2)} │    │ {' '.join(f'{self._simplify_keycode(k):4}' for k in right_r2)} │")
 
-                # Row 3
-                left_r3 = layer.keycodes[10:15]
+                # Row 3: positions 20-24 (left) and 25-29 (right)
+                left_r3 = layer.keycodes[20:25]
                 right_r3 = layer.keycodes[25:30]
                 lines.append(f"│ {' '.join(f'{self._simplify_keycode(k):4}' for k in left_r3)} │    │ {' '.join(f'{self._simplify_keycode(k):4}' for k in right_r3)} │")
 
