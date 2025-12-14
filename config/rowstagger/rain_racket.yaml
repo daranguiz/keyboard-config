@@ -4,7 +4,7 @@
 #   s t h c y  j n e a i
 #   z k m p w  x b ; ' .
 
-name: "Rain"
+name: "Rainy Racket"
 id: "-12406"
 group: "126"
 
@@ -14,9 +14,9 @@ group: "126"
 # Only customize alpha keys + bracket keys
 
 layout:
-  - [f,    d,    l,    g,    v,       q,    r,    u,    o,    "," ,  "[",  "]"]
-  - [s,    t,    h,    c,    y,       j,    n,    e,    a,    i,     "'"      ]
-  - [   k,    m,    p,    w,    z,       x,    b,    ";",  "'",  "."            ]
+  - [f,    d,    l,    w,    j,       x,    b,    o,    u,    "," ,  "[",  "]"]
+  - [s,    t,    h,    c,    y,       q,    n,    e,    a,    i,     "'"      ]
+  - [   k,    m,    g,    v,    z,       r,    p,    "'",  ";",  "."            ]
 
 # Fingermap (which finger presses each key)
 # 0=L-pinky, 1=L-ring, 2=L-middle, 3=L-index

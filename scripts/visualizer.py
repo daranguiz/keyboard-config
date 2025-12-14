@@ -1636,29 +1636,31 @@ class KeymapVisualizer:
             if not entries:
                 return y
 
-            # Section title with underline
+            # Calculate grid positioning - center the grid on the page
+            CELL_CONTENT_WIDTH = 180  # badge (75) + gap (12) + text (~93)
+            total_grid_width = NUM_COLUMNS * CELL_CONTENT_WIDTH + (NUM_COLUMNS - 1) * COLUMN_GAP
+            grid_left_margin = (svg_width - total_grid_width) / 2  # Center the grid
+            grid_right_edge = grid_left_margin + total_grid_width
+
+            # Section title with underline - aligned with grid edges
             table_svg.append(
-                f'<text x="{MARGIN}" y="{y}" '
-                f'style="font-family: -apple-system, BlinkMacSystemFont, \'Segoe UI\', Arial, sans-serif; '
+                f'<text x="{grid_left_margin}" y="{y}" '
+                f'style="text-anchor: start; font-family: -apple-system, BlinkMacSystemFont, \'Segoe UI\', Arial, sans-serif; '
                 f'font-size: {SECTION_TITLE_SIZE}px; font-weight: 700; fill: #555;">'
                 f'{self._escape_svg_text(title.upper())}</text>'
             )
             table_svg.append(
-                f'<line x1="{MARGIN}" y1="{y + 5}" x2="{svg_width - MARGIN}" y2="{y + 5}" '
+                f'<line x1="{grid_left_margin}" y1="{y + 5}" x2="{grid_right_edge}" y2="{y + 5}" '
                 f'stroke="#ddd" stroke-width="1"/>'
             )
             y += SECTION_SPACING
-
-            # Calculate grid positioning
-            available_width = svg_width - (2 * MARGIN)
-            entry_width = (available_width - (NUM_COLUMNS - 1) * COLUMN_GAP) / NUM_COLUMNS
 
             # Render entries in grid
             for idx, entry in enumerate(entries):
                 col = idx % NUM_COLUMNS
                 row = idx // NUM_COLUMNS
 
-                cell_x = MARGIN + col * (entry_width + COLUMN_GAP)
+                cell_x = grid_left_margin + col * (CELL_CONTENT_WIDTH + COLUMN_GAP)
                 cell_y = y + row * ROW_HEIGHT
 
                 # Layout with badge for trigger, then output text
@@ -1666,16 +1668,14 @@ class KeymapVisualizer:
                 trigger_char = entry["trigger"]
                 raw_text = entry["output"]
 
-                # Strip trigger prefix from output since it's shown in the badge
-                # Space triggers: strip "[ ]" prefix
+                # Show full output text (includes trigger + expansion for context)
+                # Space triggers: replace "[ ]" marker with visible space indicator
                 if raw_text.startswith("[ ]"):
-                    output_text = raw_text[3:].lstrip()
-                # Other triggers: strip the trigger character itself (e.g., "," from ", but")
-                elif raw_text.startswith(trigger_char):
-                    output_text = raw_text[len(trigger_char):].lstrip()
+                    # Use underscore to visually indicate the space, e.g., "[ ]THE" -> "_the"
+                    output_text = "_" + raw_text[3:]
                 else:
-                    output_text = raw_text.lstrip()
-                output_text = self._escape_svg_text(output_text)
+                    output_text = raw_text  # Keep full text like ", but"
+                # Don't escape yet - we'll escape each part separately when building tspans
 
                 # Cell padding
                 cell_padding = 10
@@ -1706,16 +1706,45 @@ class KeymapVisualizer:
 
                 # Output text - fixed position within cell for left-justified alignment
                 # Position at a fixed offset from cell start (badge + gap)
-                output_x = cell_x + cell_padding + badge_width + 25  # Fixed offset from cell
+                output_x = cell_x + cell_padding + badge_width + 12  # Reduced gap from 25 to 12
                 output_y = badge_y + badge_height * 0.5
-                # Use inline style for text-anchor to override global CSS rule
-                table_svg.append(
-                    f'<text x="{output_x}" y="{output_y}" '
-                    f'style="text-anchor: start; dominant-baseline: central; '
-                    f'font-family: -apple-system, BlinkMacSystemFont, \'Segoe UI\', Arial, sans-serif; '
-                    f'font-size: {OUTPUT_SIZE}px; font-weight: 600; fill: #000;">'
-                    f'{output_text}</text>'
-                )
+
+                # Bold the first LETTER of the expansion (skip punctuation/spaces)
+                # Find index of first alphabetic character
+                first_letter_idx = -1
+                for i, c in enumerate(output_text):
+                    if c.isalpha():
+                        first_letter_idx = i
+                        break
+
+                if first_letter_idx >= 0:
+                    prefix = output_text[:first_letter_idx]  # e.g., ", " or "_"
+                    first_letter = output_text[first_letter_idx]  # e.g., "b" or "t"
+                    rest_text = output_text[first_letter_idx + 1:]  # e.g., "ut" or "he"
+                    # Escape each part separately
+                    prefix_escaped = self._escape_svg_text(prefix)
+                    first_letter_escaped = self._escape_svg_text(first_letter)
+                    rest_escaped = self._escape_svg_text(rest_text)
+                    # Use tspan: prefix (normal) + first letter (bold) + rest (normal)
+                    table_svg.append(
+                        f'<text x="{output_x}" y="{output_y}" '
+                        f'style="text-anchor: start; dominant-baseline: central; '
+                        f'font-family: -apple-system, BlinkMacSystemFont, \'Segoe UI\', Arial, sans-serif; '
+                        f'font-size: {OUTPUT_SIZE}px; fill: #000;">'
+                        f'<tspan style="font-weight: 400;">{prefix_escaped}</tspan>'
+                        f'<tspan style="font-weight: 700;">{first_letter_escaped}</tspan>'
+                        f'<tspan style="font-weight: 400;">{rest_escaped}</tspan>'
+                        f'</text>'
+                    )
+                else:
+                    # No letter found, just render as-is (escape the whole thing)
+                    table_svg.append(
+                        f'<text x="{output_x}" y="{output_y}" '
+                        f'style="text-anchor: start; dominant-baseline: central; '
+                        f'font-family: -apple-system, BlinkMacSystemFont, \'Segoe UI\', Arial, sans-serif; '
+                        f'font-size: {OUTPUT_SIZE}px; font-weight: 400; fill: #000;">'
+                        f'{self._escape_svg_text(output_text)}</text>'
+                    )
 
             # Calculate total height used
             rows_needed = (len(entries) + NUM_COLUMNS - 1) // NUM_COLUMNS
@@ -1730,11 +1759,19 @@ class KeymapVisualizer:
             letter_bigrams.sort(key=lambda e: e["trigger"].lower())
             current_y = render_section("Letter Alternatives", letter_bigrams, current_y)
 
-        # Update SVG dimensions
+        # Update SVG dimensions - both viewBox and height attribute
         new_height = current_y + MARGIN
         svg_content = svg_content.replace(
             f'viewBox="{viewbox_match.group(1)}"',
             f'viewBox="0 0 {svg_width} {new_height}"'
+        )
+        # Also update the height attribute to match
+        import re
+        svg_content = re.sub(
+            r'(<svg[^>]*)\sheight="[^"]*"',
+            f'\\1 height="{new_height}"',
+            svg_content,
+            count=1
         )
 
         # Insert content before the FINAL closing </svg> tag (not nested ones)
