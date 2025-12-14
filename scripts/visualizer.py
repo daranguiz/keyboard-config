@@ -1524,8 +1524,14 @@ class KeymapVisualizer:
             traceback.print_exc()
             return None
 
-    def _generate_rowstagger_pdf(self, svg_path: Path, layout_name: str) -> Optional[Path]:
-        """Generate landscape PDF for row-stagger keyboard layout"""
+    def _generate_rowstagger_pdf(self, svg_path: Path, layout_name: str, display_name: str = None) -> Optional[Path]:
+        """Generate landscape PDF for row-stagger keyboard layout
+
+        Args:
+            svg_path: Path to source SVG
+            layout_name: Name for output file (e.g., "nightlight_print")
+            display_name: Name to show in PDF header (e.g., "Nightlight"). Defaults to layout_name.
+        """
         pdf_path = self.output_rowstagger_dir / f"{layout_name}.pdf"
 
         try:
@@ -1534,19 +1540,19 @@ class KeymapVisualizer:
             # Read SVG content and add inline styles for better PDF rendering
             svg_content = svg_path.read_text()
 
-            # Replace "Base:" with the layout name (capitalized, no colon)
-            display_name = layout_name.capitalize()
-            svg_content = svg_content.replace('>Base:</text>', f'>{display_name}</text>')
-            svg_content = svg_content.replace('id="Base"', f'id="{display_name}"')
+            # Replace "Base:" with the display name (title case, underscores to spaces)
+            label = (display_name or layout_name).replace('_', ' ').title()
+            svg_content = svg_content.replace('>Base:</text>', f'>{label}</text>')
+            svg_content = svg_content.replace('id="Base"', f'id="{label}"')
 
             svg_content = self._add_inline_styles_for_pdf(svg_content)
 
-            # Convert SVG to PDF using cairosvg (US Letter)
+            # Convert SVG to PDF using cairosvg (US Letter Landscape)
             cairosvg.svg2pdf(
                 bytestring=svg_content.encode('utf-8'),
                 write_to=str(pdf_path),
-                output_width=LETTER_WIDTH_PT,
-                output_height=LETTER_HEIGHT_PT
+                output_width=LETTER_HEIGHT_PT,   # Landscape: swap width/height
+                output_height=LETTER_WIDTH_PT
             )
 
             print(f"    📄 {pdf_path.name}")
@@ -2377,8 +2383,29 @@ class KeymapVisualizer:
                 if result.returncode == 0 and svg_path.exists():
                     print(f"  ✅ {layout_name}.svg (rowstagger)")
 
-                    # Generate landscape PDF for printing
-                    self._generate_rowstagger_pdf(svg_path, layout_name)
+                    # Generate color PDF for printing (use config.name for display)
+                    self._generate_rowstagger_pdf(svg_path, layout_name, display_name=config.name)
+
+                    # Generate grayscale print version
+                    grayscale_yaml = self._rowstagger_to_keymap_yaml(config, translator, info_json_path, grayscale=True)
+                    grayscale_yaml_path = self.output_dir / f"{layout_name}_print.yaml"
+                    with open(grayscale_yaml_path, 'w') as f:
+                        yaml.dump(grayscale_yaml, f, default_flow_style=False, sort_keys=False)
+
+                    grayscale_svg_path = self.output_dir / f"{layout_name}_print.svg"
+                    with open(grayscale_svg_path, 'w') as svg_file:
+                        grayscale_result = subprocess.run(
+                            ['keymap', 'draw', str(grayscale_yaml_path)],
+                            stdout=svg_file,
+                            stderr=subprocess.PIPE,
+                            text=True
+                        )
+
+                    if grayscale_result.returncode == 0 and grayscale_svg_path.exists():
+                        self._generate_rowstagger_pdf(grayscale_svg_path, f"{layout_name}_print", display_name=config.name)
+                        # Clean up intermediate grayscale SVG and YAML
+                        grayscale_svg_path.unlink()
+                        grayscale_yaml_path.unlink()
 
                     # Clean up intermediate files
                     if info_json_path.exists():
@@ -2393,21 +2420,42 @@ class KeymapVisualizer:
             except Exception as e:
                 print(f"  ⚠️  Error generating visualization for {yaml_file.name}: {e}")
 
-    def _rowstagger_to_keymap_yaml(self, config, translator, info_json_path: Path) -> Dict:
-        """Convert row-stagger config to keymap-drawer YAML format"""
+    def _rowstagger_to_keymap_yaml(self, config, translator, info_json_path: Path, grayscale: bool = False) -> Dict:
+        """Convert row-stagger config to keymap-drawer YAML format
+
+        Args:
+            config: Parsed rowstagger config
+            translator: KeylayoutTranslator instance
+            info_json_path: Path to QMK info.json
+            grayscale: If True, use alternating grayscale for print-friendly output
+        """
         # Build CSS for fingermap coloring if provided
         fingermap_css = ""
         if config.fingermap:
-            finger_colors = {
-                0: "#ff9999",  # L-pinky - pink
-                1: "#ffbb88",  # L-ring - orange
-                2: "#ffee88",  # L-middle - yellow
-                3: "#99dd99",  # L-index - green
-                4: "#88ccff",  # R-index - blue
-                5: "#bb99ff",  # R-middle - purple
-                6: "#ffaa88",  # R-ring - coral
-                7: "#ff99cc",  # R-pinky - rose
-            }
+            if grayscale:
+                # Alternating grayscale for laser printing
+                # Pattern alternates within each hand, with clear boundary at center
+                finger_colors = {
+                    0: "#eeeeee",  # L-pinky - light
+                    1: "#cccccc",  # L-ring - medium gray
+                    2: "#eeeeee",  # L-middle - light
+                    3: "#cccccc",  # L-index - medium gray
+                    4: "#eeeeee",  # R-index - light (opposite of L-index for clear boundary)
+                    5: "#cccccc",  # R-middle - medium gray
+                    6: "#eeeeee",  # R-ring - light
+                    7: "#cccccc",  # R-pinky - medium gray
+                }
+            else:
+                finger_colors = {
+                    0: "#ff9999",  # L-pinky - pink
+                    1: "#ffbb88",  # L-ring - orange
+                    2: "#ffee88",  # L-middle - yellow
+                    3: "#99dd99",  # L-index - green
+                    4: "#88ccff",  # R-index - blue
+                    5: "#bb99ff",  # R-middle - purple
+                    6: "#ffaa88",  # R-ring - coral
+                    7: "#ff99cc",  # R-pinky - rose
+                }
 
             # Build CSS that targets keys by their index in the layer
             # Layer structure: 14 (number row) + [Tab + 12 alphas + \] + [Caps + 11 alphas + Enter] + [Shift + 10 alphas + Shift] + 8 (space row)
