@@ -30,10 +30,15 @@ class KeymapVisualizer:
 
     def __init__(self, repo_root: Path, qmk_translator: Optional[QMKTranslator] = None):
         self.repo_root = repo_root
-        # Final SVGs go to docs/ root (for README embedding)
+        # Base docs directory
         self.docs_dir = repo_root / "docs"
+        # Final SVGs organized by type (for README embedding)
+        self.docs_split_dir = repo_root / "docs" / "split"
+        self.docs_rowstagger_dir = repo_root / "docs" / "rowstagger"
         # Intermediate files (JSON, print splits, PDFs) go to out/visualizations/
         self.output_dir = repo_root / "out" / "visualizations"
+        self.output_split_dir = repo_root / "out" / "visualizations" / "split"
+        self.output_rowstagger_dir = repo_root / "out" / "visualizations" / "rowstagger"
         self.config_file = repo_root / ".keymap-drawer-config.yaml"
         self.config_dir = repo_root / "config"
         self.qmk_translator = qmk_translator
@@ -48,7 +53,11 @@ class KeymapVisualizer:
 
         # Ensure output directories exist
         self.docs_dir.mkdir(parents=True, exist_ok=True)
+        self.docs_split_dir.mkdir(parents=True, exist_ok=True)
+        self.docs_rowstagger_dir.mkdir(parents=True, exist_ok=True)
         self.output_dir.mkdir(parents=True, exist_ok=True)
+        self.output_split_dir.mkdir(parents=True, exist_ok=True)
+        self.output_rowstagger_dir.mkdir(parents=True, exist_ok=True)
 
     def _load_keycodes(self) -> Dict:
         """Load keycodes.yaml for display name/glyph lookups"""
@@ -1253,12 +1262,12 @@ class KeymapVisualizer:
         # JSON files always go to out/visualizations/
         json_file = self.output_dir / f"{output_name}.json"
 
-        # Final SVGs (without suffix like _print1) go to docs/ for README embedding
+        # Final SVGs (without suffix like _print1) go to docs/split/ for README embedding
         # Intermediate files go to out/visualizations/
         if suffix:
             svg_file = self.output_dir / f"{output_name}.svg"
         else:
-            svg_file = self.docs_dir / f"{output_name}.svg"
+            svg_file = self.docs_split_dir / f"{output_name}.svg"
 
         try:
             # Determine QMK keyboard metadata for keymap-drawer
@@ -1465,7 +1474,7 @@ class KeymapVisualizer:
     def _combine_svgs_to_pdf(self, output_name: str, svg_files: List[Path]) -> Optional[Path]:
         """Combine multiple SVGs into single multi-page PDF using cairosvg"""
 
-        pdf_path = self.output_dir / f"{output_name}.pdf"
+        pdf_path = self.output_split_dir / f"{output_name}.pdf"
 
         try:
             import cairosvg
@@ -1517,7 +1526,7 @@ class KeymapVisualizer:
 
     def _generate_rowstagger_pdf(self, svg_path: Path, layout_name: str) -> Optional[Path]:
         """Generate landscape PDF for row-stagger keyboard layout"""
-        pdf_path = self.output_dir / f"{layout_name}.pdf"
+        pdf_path = self.output_rowstagger_dir / f"{layout_name}.pdf"
 
         try:
             import cairosvg
@@ -1775,7 +1784,7 @@ class KeymapVisualizer:
         """Generate single-layer landscape PDF showing only the base layer for large printing"""
         # Remove BASE_ prefix and convert to lowercase for output filename
         output_name = base_name.replace('BASE_', '').lower()
-        pdf_path = self.output_dir / f"{output_name}_base.pdf"
+        pdf_path = self.output_split_dir / f"{output_name}_base.pdf"
 
         try:
             import cairosvg
@@ -1920,9 +1929,9 @@ class KeymapVisualizer:
         # Generate full visualization (goes to docs/)
         svg_file = self._generate_svg_for_layers(layout_size, representative_board, superset_layers, suffix="", is_final=True)
 
-        # Copy final SVG to out/visualizations/ for build artifacts
+        # Copy final SVG to out/visualizations/split/ for build artifacts
         if svg_file:
-            out_svg = self.output_dir / svg_file.name
+            out_svg = self.output_split_dir / svg_file.name
             shutil.copy2(svg_file, out_svg)
 
         # Generate split versions for printing (3 layers each) - temporary, for PDF generation
@@ -1969,7 +1978,7 @@ class KeymapVisualizer:
         Returns:
             Path to generated PDF file, or None if generation failed
         """
-        pdf_file = self.output_dir / f"layout_{layout_size}_print.pdf"
+        pdf_file = self.output_split_dir / f"layout_{layout_size}_print.pdf"
 
         # Create PDF canvas
         c = canvas.Canvas(str(pdf_file), pagesize=letter)
@@ -2243,13 +2252,13 @@ class KeymapVisualizer:
                 svg_output
             )
 
-            # Write SVG to docs/ for embedding
-            svg_file = self.docs_dir / f"primary_{layout_size}.svg"
+            # Write SVG to docs/split/ for embedding
+            svg_file = self.docs_split_dir / f"primary_{layout_size}.svg"
             svg_file.write_text(svg_output)
 
-            # Also copy to out/visualizations/
+            # Also copy to out/visualizations/split/
             import shutil
-            out_svg = self.output_dir / svg_file.name
+            out_svg = self.output_split_dir / svg_file.name
             shutil.copy2(svg_file, out_svg)
 
             # Generate landscape PDF for printing
@@ -2276,7 +2285,7 @@ class KeymapVisualizer:
             from reportlab.lib.pagesizes import letter, landscape
             from reportlab.graphics import renderPDF
 
-            pdf_file = self.output_dir / f"primary_{layout_size}_landscape.pdf"
+            pdf_file = self.output_split_dir / f"primary_{layout_size}_landscape.pdf"
 
             drawing = svg2rlg(str(svg_file))
             if not drawing:
@@ -2355,8 +2364,8 @@ class KeymapVisualizer:
                 with open(yaml_path, 'w') as f:
                     yaml.dump(keymap_yaml, f, default_flow_style=False, sort_keys=False)
 
-                # Generate SVG using keymap-drawer
-                svg_path = self.docs_dir / f"{layout_name}_rowstagger.svg"
+                # Generate SVG using keymap-drawer (now in docs/rowstagger/ without suffix)
+                svg_path = self.docs_rowstagger_dir / f"{layout_name}.svg"
                 with open(svg_path, 'w') as svg_file:
                     result = subprocess.run(
                         ['keymap', 'draw', str(yaml_path)],
@@ -2366,7 +2375,7 @@ class KeymapVisualizer:
                     )
 
                 if result.returncode == 0 and svg_path.exists():
-                    print(f"  ✅ {layout_name}_rowstagger.svg")
+                    print(f"  ✅ {layout_name}.svg (rowstagger)")
 
                     # Generate landscape PDF for printing
                     self._generate_rowstagger_pdf(svg_path, layout_name)
@@ -2377,7 +2386,7 @@ class KeymapVisualizer:
                     if yaml_path.exists():
                         yaml_path.unlink()
                 else:
-                    print(f"  ⚠️  Failed to generate {layout_name}_rowstagger.svg")
+                    print(f"  ⚠️  Failed to generate {layout_name}.svg (rowstagger)")
                     if result.stderr:
                         print(f"      {result.stderr.strip()}")
 

@@ -90,21 +90,30 @@ Night (default: repeat):
 ### Split Ergonomic Keyboards
 
 #### NIGHT Layout
-![NIGHT Layout](docs/night.svg)
+![NIGHT Layout](docs/split/night.svg)
 
 #### Gallium Layout
-![Gallium Layout](docs/gallium.svg)
+![Gallium Layout](docs/split/gallium.svg)
+
+#### Dusk Layout
+![Dusk Layout](docs/split/dusk.svg)
+
+#### Racket Layout
+![Racket Layout](docs/split/racket.svg)
 
 ### Row-Staggered Keyboards (macOS .keylayout)
 
 #### Nightlight
-![Nightlight Layout](docs/nightlight_rowstagger.svg)
+![Nightlight Layout](docs/rowstagger/nightlight.svg)
 
 #### Rain
-![Rain Layout](docs/rain_rowstagger.svg)
+![Rain Layout](docs/rowstagger/rain.svg)
+
+#### Rainy Racket
+![Rainy Racket Layout](docs/rowstagger/rainy_racket.svg)
 
 #### Sturdy
-![Sturdy Layout](docs/sturdy_rowstagger.svg)
+![Sturdy Layout](docs/rowstagger/sturdy.svg)
 
 ## About
 
