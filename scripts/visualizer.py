@@ -2519,6 +2519,11 @@ class KeymapVisualizer:
                     {{ fill: #999999 !important; }}
                     /* Increase legend size */
                     .tap {{ font-size: 32px; font-weight: 900; }}
+                    /* Homing key borders (F and J positions on home row) */
+                    .keypos-32 rect, .keypos-35 rect {{
+                        stroke: #333333 !important;
+                        stroke-width: 3 !important;
+                    }}
                     /* Fingermap colors (per-key targeting) */
                     {fingermap_css}
                 """
