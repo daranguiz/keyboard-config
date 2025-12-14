@@ -1181,17 +1181,12 @@ class KeymapVisualizer:
         def _get_layer(name):
             return layer_map.get(name)
 
-        # Derive family suffix from base layer name (e.g., _NIGHT)
-        suffix = ""
-        for known_suffix in ["_NIGHT", "_V2"]:
-            if base_name.endswith(known_suffix):
-                suffix = known_suffix
-                break
-
-        sym_name = f"SYM{suffix}"
-        num_name = f"NUM{suffix}"
-        nav_name = f"NAV{suffix}"
-        media_name = f"MEDIA{suffix}"
+        # All base layers share the same _NIGHT family for other layers
+        # (SYM_NIGHT, NUM_NIGHT, NAV_NIGHT, MEDIA_NIGHT)
+        sym_name = "SYM_NIGHT"
+        num_name = "NUM_NIGHT"
+        nav_name = "NAV_NIGHT"
+        media_name = "MEDIA_NIGHT"
 
         page1_layers = [layer for layer in [_get_layer(base_name), _get_layer(sym_name), _get_layer(num_name)] if layer]
         page2_layers = [layer for layer in [_get_layer(nav_name), _get_layer(media_name), _get_layer("FUN")] if layer]
