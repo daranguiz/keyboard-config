@@ -1209,15 +1209,19 @@ class KeymapVisualizer:
             css_context_layers=all_layers, for_display=False
         )
 
-        # Combine to PDF
-        magic_svg = self._generate_magic_cheatsheet_svg(base_name, output_name)
+        # Add compact magic key reference to page 2 (same style as base-only PDF)
+        if svg2 and svg2.exists():
+            svg2_content = svg2.read_text()
+            svg2_content = self._add_compact_magic_to_svg(svg2_content, base_name, output_name)
+            svg2.write_text(svg2_content)
 
-        svg_pages = [svg for svg in [svg1, svg2, magic_svg] if svg]
+        # Combine to PDF (no separate magic page - it's now inline on page 2)
+        svg_pages = [svg for svg in [svg1, svg2] if svg]
         pdf_file = self._combine_svgs_to_pdf(output_name, svg_pages)
 
         # Clean up intermediate SVGs only if PDF generation succeeded
         if pdf_file:
-            for svg in [svg1, svg2, magic_svg]:
+            for svg in [svg1, svg2]:
                 if svg and svg.exists():
                     svg.unlink()
 
@@ -1618,9 +1622,8 @@ class KeymapVisualizer:
         current_y = svg_height + 30
         table_svg = []
 
-        # Main title
-        base_display = self.base_layer_manager.get_display_name(base_name)
-        title_text = f'Magic Keys — {self._escape_svg_text(base_display)}'
+        # Main title (no need to show base layer name - it's already clear from context)
+        title_text = 'Magic Keys'
         table_svg.append(
             f'<text x="{svg_width / 2}" y="{current_y}" text-anchor="middle" '
             f'style="font-family: -apple-system, BlinkMacSystemFont, \'Segoe UI\', Arial, sans-serif; '

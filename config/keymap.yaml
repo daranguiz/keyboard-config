@@ -88,24 +88,6 @@ layers:
         outer_pinky_left: [NONE, NONE, NONE]
         outer_pinky_right: [NONE, NONE, NONE]
 
-  FUN:
-    core: # (3x5)
-      left:
-        - [F12            , F7             , F8             , F9             , PSCR           ]
-        - [F11            , F4             , F5             , F6             , SCRL           ]
-        - [F10            , F1             , F2             , F3             , PAUS           ]
-      right:
-        - [NONE           , NONE           , NONE           , NONE           , NONE           ]
-        - [NONE           , LSFT           , LCTL           , LALT           , LGUI           ]
-        - [NONE           , NONE           , NONE           , NONE           , NONE           ]
-      thumbs:
-        - [APP            , SPC            , TAB            ]
-        - [NONE           , NONE           , NONE           ]
-    extensions:
-      3x6_3:
-        outer_pinky_left: [NONE, NONE, NONE]
-        outer_pinky_right: [NONE, NONE, NONE]
-
   # Night-specific layers (hands flipped compared to original)
   NUM_NIGHT:
     core: # (3x5)

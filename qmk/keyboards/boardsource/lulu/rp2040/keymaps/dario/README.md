@@ -264,69 +264,6 @@ qmk compile -kb boardsource/lulu/rp2040 -km dario
 57: KC_NO
 ```
 
-## FUN Layer
-
-```
- 0: KC_NO
- 1: KC_NO
- 2: KC_NO
- 3: KC_NO
- 4: KC_NO
- 5: KC_NO
- 6: KC_NO
- 7: KC_NO
- 8: KC_NO
- 9: KC_NO
-10: KC_NO
-11: KC_NO
-12: KC_NO
-13: KC_F12
-14: KC_F7
-15: KC_F8
-16: KC_F9
-17: KC_PSCR
-18: KC_NO
-19: KC_LSFT
-20: KC_LCTL
-21: KC_LALT
-22: KC_LGUI
-23: KC_NO
-24: KC_NO
-25: KC_NO
-26: KC_NO
-27: KC_NO
-28: KC_NO
-29: KC_NO
-30: KC_NO
-31: KC_F10
-32: KC_F1
-33: KC_F2
-34: KC_F3
-35: KC_PAUS
-36: KC_NO
-37: KC_F11
-38: KC_F4
-39: KC_F5
-40: KC_F6
-41: KC_SCRL
-42: KC_NO
-43: KC_NO
-44: KC_NO
-45: KC_NO
-46: KC_NO
-47: KC_NO
-48: KC_NO
-49: KC_NO
-50: KC_NO
-51: KC_APP
-52: KC_SPC
-53: KC_TAB
-54: KC_NO
-55: KC_NO
-56: KC_NO
-57: KC_NO
-```
-
 ## NUM_NIGHT Layer
 
 ```

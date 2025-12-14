@@ -214,59 +214,6 @@
 41: &lt MEDIA_NIGHT ENTER
 ```
 
-## FUN Layer
-
-```
- 0: &none
- 1: &kp F12
- 2: &kp F7
- 3: &kp F8
- 4: &kp F9
- 5: &kp PRINTSCREEN
-
- 6: &none
- 7: &none
- 8: &none
- 9: &none
-10: &none
-11: &none
-
-12: &none
-13: &kp F11
-14: &kp F4
-15: &kp F5
-16: &kp F6
-17: &kp SCROLLLOCK
-
-18: &none
-19: &kp LSHFT
-20: &kp LCTRL
-21: &kp LALT
-22: &kp LGUI
-23: &none
-
-24: &none
-25: &kp F10
-26: &kp F1
-27: &kp F2
-28: &kp F3
-29: &kp PAUSE_BREAK
-
-30: &none
-31: &none
-32: &none
-33: &none
-34: &none
-35: &none
-
-36: &kp K_APP
-37: &kp SPACE
-38: &kp TAB
-39: &none
-40: &none
-41: &none
-```
-
 ## NUM_NIGHT Layer
 
 ```
