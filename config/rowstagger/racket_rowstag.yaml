@@ -1,0 +1,29 @@
+# Racket rowstagger keyboard layout
+# Left hand: f d l w j / s t h c y / x k m g v
+# Right hand: - b o u , / q n a e i / z p ' / .
+
+name: "Racket Rowstag"
+id: "-12405"
+group: "126"
+
+# Base layer - maps to QWERTY physical positions
+# Shift layer is auto-inferred (uppercase letters, shifted symbols)
+# Number row stays as standard QWERTY (1234567890-=)
+# Only customize alpha keys + bracket keys
+
+layout:
+  - [f,    d,    r,    l,    x,       z,    b,    o,    u,    "," ,  "[",  "]"]
+  - [s,    t,    h,    c,    y,       q,    n,    a,    e,    i,     ";"      ]
+  - [   k,    m,    w,    g,    v,       j,    p,    "'",  "/",  "."            ]
+
+# Fingermap (which finger presses each key)
+# 0=L-pinky, 1=L-ring, 2=L-middle, 3=L-index
+# 4=R-index, 5=R-middle, 6=R-ring, 7=R-pinky
+fingermap:
+  - [0,    1,    2,    2,    3,       4,    4,    5,    6,    7,     7,    7   ]
+  - [0,    1,    2,    3,    3,       4,    4,    5,    6,    7,     7         ]
+  - [   1,    2,    3,    3,    3,       4,    4,    5,    6,    7               ]
+
+# f d r l x    z b o u ,
+# s t h c y    q n a e i    
+#  k m w g v    j p ' / .         
