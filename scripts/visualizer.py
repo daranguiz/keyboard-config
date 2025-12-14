@@ -1709,31 +1709,21 @@ class KeymapVisualizer:
                 output_x = cell_x + cell_padding + badge_width + 12  # Reduced gap from 25 to 12
                 output_y = badge_y + badge_height * 0.5
 
-                # Bold the first LETTER of the expansion (skip punctuation/spaces)
-                # Find index of first alphabetic character
-                first_letter_idx = -1
-                for i, c in enumerate(output_text):
-                    if c.isalpha():
-                        first_letter_idx = i
-                        break
-
-                if first_letter_idx >= 0:
-                    prefix = output_text[:first_letter_idx]  # e.g., ", " or "_"
-                    first_letter = output_text[first_letter_idx]  # e.g., "b" or "t"
-                    rest_text = output_text[first_letter_idx + 1:]  # e.g., "ut" or "he"
+                # Bold the first character of the expansion (including punctuation like comma)
+                if len(output_text) > 0:
+                    first_char = output_text[0]
+                    rest_text = output_text[1:] if len(output_text) > 1 else ""
                     # Escape each part separately
-                    prefix_escaped = self._escape_svg_text(prefix)
-                    first_letter_escaped = self._escape_svg_text(first_letter)
+                    first_char_escaped = self._escape_svg_text(first_char)
                     rest_escaped = self._escape_svg_text(rest_text)
-                    # Use tspan: prefix (normal) + first letter (bold) + rest (normal)
+                    # Use tspan with explicit bold font-family for better compatibility
                     table_svg.append(
                         f'<text x="{output_x}" y="{output_y}" '
                         f'style="text-anchor: start; dominant-baseline: central; '
-                        f'font-family: -apple-system, BlinkMacSystemFont, \'Segoe UI\', Arial, sans-serif; '
+                        f'font-family: Arial, sans-serif; '
                         f'font-size: {OUTPUT_SIZE}px; fill: #000;">'
-                        f'<tspan style="font-weight: 400;">{prefix_escaped}</tspan>'
-                        f'<tspan style="font-weight: 700;">{first_letter_escaped}</tspan>'
-                        f'<tspan style="font-weight: 400;">{rest_escaped}</tspan>'
+                        f'<tspan style="font-family: Arial Bold, Arial-Bold, Arial; font-weight: bold;">{first_char_escaped}</tspan>'
+                        f'<tspan>{rest_escaped}</tspan>'
                         f'</text>'
                     )
                 else:
