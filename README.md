@@ -18,39 +18,7 @@ Custom keyboard firmware for split ergonomic keyboards using a unified keymap co
 
 Training is on: typing a mapped bigram directly emits `#`; disable with `python3.11 scripts/generate.py --no-magic-training`.
 
-Gallium (default: repeat):
-
-| First key | Magic output |
-| --------- | ------------ |
-| .         | ./           |
-| A         | AY           |
-| B         | BR           |
-| C         | CS           |
-| D         | --           |
-| E         | EY           |
-| F         | --           |
-| G         | GS           |
-| H         | --           |
-| I         | --           |
-| J         | --           |
-| K         | --           |
-| L         | --           |
-| M         | MB           |
-| N         | --           |
-| O         | OK           |
-| P         | PH           |
-| Q         | --           |
-| R         | RL           |
-| S         | SC           |
-| T         | --           |
-| U         | UE           |
-| V         | --           |
-| W         | --           |
-| X         | --           |
-| Y         | YE           |
-| Z         | --           |
-
-Night (default: repeat):
+PRIMARY (default: repeat):
 
 | First key | Magic output |
 | --------- | ------------ |
@@ -85,21 +53,47 @@ Night (default: repeat):
 | Y         | Y'           |
 | Z         | --           |
 
+ALT (default: repeat):
+
+| First key | Magic output |
+| --------- | ------------ |
+| .         | ./           |
+| A         | AY           |
+| B         | BR           |
+| C         | CS           |
+| D         | --           |
+| E         | EY           |
+| F         | --           |
+| G         | GS           |
+| H         | --           |
+| I         | --           |
+| J         | --           |
+| K         | --           |
+| L         | --           |
+| M         | MB           |
+| N         | --           |
+| O         | OK           |
+| P         | PH           |
+| Q         | --           |
+| R         | RL           |
+| S         | SC           |
+| T         | --           |
+| U         | UE           |
+| V         | --           |
+| W         | --           |
+| X         | --           |
+| Y         | YE           |
+| Z         | --           |
+
 ## Keymap Visualizations
 
 ### Split Ergonomic Keyboards
 
-#### NIGHT Layout
-![NIGHT Layout](docs/split/night.svg)
+#### PRIMARY Layout
+![PRIMARY Layout](docs/split/primary.svg)
 
-#### Gallium Layout
-![Gallium Layout](docs/split/gallium.svg)
-
-#### Dusk Layout
-![Dusk Layout](docs/split/dusk.svg)
-
-#### Racket Layout
-![Racket Layout](docs/split/racket.svg)
+#### ALT Layout
+![ALT Layout](docs/split/alt.svg)
 
 ### Row-Staggered Keyboards (macOS .keylayout)
 

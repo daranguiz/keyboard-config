@@ -10,7 +10,7 @@ parse_config:
   - NAV
   - MEDIA
   layer_legend_map:
-    BASE_PRIMARY: Night
+    BASE_PRIMARY: NIGHT
     BASE_ALT: ALT
   raw_binding_map:
     KC_NO: ''

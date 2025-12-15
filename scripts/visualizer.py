@@ -1190,15 +1190,19 @@ class KeymapVisualizer:
         def _get_layer(name):
             return layer_map.get(name)
 
-        # All base layers share the same _NIGHT family for other layers
-        # (SYM_NIGHT, NUM_NIGHT, NAV_NIGHT, MEDIA_NIGHT)
-        sym_name = "SYM_NIGHT"
-        num_name = "NUM_NIGHT"
-        nav_name = "NAV_NIGHT"
-        media_name = "MEDIA_NIGHT"
+        # Get the layer family for this base layer
+        # This returns all layers in the family (e.g., [BASE_PRIMARY, SYM, NUM, NAV, MEDIA, FUN])
+        family_layers = self.base_layer_manager.get_layer_family(base_name)
 
-        page1_layers = [layer for layer in [_get_layer(base_name), _get_layer(sym_name), _get_layer(num_name)] if layer]
-        page2_layers = [layer for layer in [_get_layer(nav_name), _get_layer(media_name), _get_layer("FUN")] if layer]
+        # Find the correct layer names from the family
+        sym_name = next((name for name in family_layers if name.startswith('SYM')), None)
+        num_name = next((name for name in family_layers if name.startswith('NUM')), None)
+        nav_name = next((name for name in family_layers if name.startswith('NAV')), None)
+        media_name = next((name for name in family_layers if name.startswith('MEDIA')), None)
+        fun_name = next((name for name in family_layers if name.startswith('FUN')), None)
+
+        page1_layers = [layer for layer in [_get_layer(base_name), _get_layer(sym_name) if sym_name else None, _get_layer(num_name) if num_name else None] if layer]
+        page2_layers = [layer for layer in [_get_layer(nav_name) if nav_name else None, _get_layer(media_name) if media_name else None, _get_layer(fun_name) if fun_name else None] if layer]
 
         # Generate page SVGs for PDF (no white outline on labels)
         # For page 2, we need to pass all_layers for CSS generation context

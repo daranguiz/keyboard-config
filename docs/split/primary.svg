@@ -211,38 +211,38 @@ path.combo {
     }
 
     /* Highlight layer-tap keys with bright green on all BASE layers */
-    .layer-Night .keypos-36 rect,
-    .layer-Night .keypos-37 rect,
-    .layer-Night .keypos-40 rect,
-    .layer-Night .keypos-41 rect {
+    .layer-NIGHT .keypos-36 rect,
+    .layer-NIGHT .keypos-37 rect,
+    .layer-NIGHT .keypos-40 rect,
+    .layer-NIGHT .keypos-41 rect {
       fill: #4CAF50 !important;
       stroke: none !important;
       opacity: 1 !important;
     }
-    .layer-Night .keypos-36 text,
-    .layer-Night .keypos-37 text,
-    .layer-Night .keypos-40 text,
-    .layer-Night .keypos-41 text {
+    .layer-NIGHT .keypos-36 text,
+    .layer-NIGHT .keypos-37 text,
+    .layer-NIGHT .keypos-40 text,
+    .layer-NIGHT .keypos-41 text {
       fill: white !important;
     }
-    .layer-Night .keypos-36 use,
-    .layer-Night .keypos-37 use,
-    .layer-Night .keypos-40 use,
-    .layer-Night .keypos-41 use {
+    .layer-NIGHT .keypos-36 use,
+    .layer-NIGHT .keypos-37 use,
+    .layer-NIGHT .keypos-40 use,
+    .layer-NIGHT .keypos-41 use {
       fill: white !important;
     }
 
     /* Highlight home row mods and mod-tap keys with lighter green stroke on all BASE layers */
-    .layer-Night .keypos-13 rect,
-    .layer-Night .keypos-14 rect,
-    .layer-Night .keypos-15 rect,
-    .layer-Night .keypos-16 rect,
-    .layer-Night .keypos-19 rect,
-    .layer-Night .keypos-20 rect,
-    .layer-Night .keypos-21 rect,
-    .layer-Night .keypos-22 rect,
-    .layer-Night .keypos-38 rect,
-    .layer-Night .keypos-39 rect {
+    .layer-NIGHT .keypos-13 rect,
+    .layer-NIGHT .keypos-14 rect,
+    .layer-NIGHT .keypos-15 rect,
+    .layer-NIGHT .keypos-16 rect,
+    .layer-NIGHT .keypos-19 rect,
+    .layer-NIGHT .keypos-20 rect,
+    .layer-NIGHT .keypos-21 rect,
+    .layer-NIGHT .keypos-22 rect,
+    .layer-NIGHT .keypos-38 rect,
+    .layer-NIGHT .keypos-39 rect {
       stroke: #66BB6A !important;
       stroke-width: 2 !important;
     }
@@ -274,8 +274,8 @@ path.combo {
       opacity: 0.3 !important;
     }
 </style>
-<g transform="translate(30, 0)" class="layer-Night">
-<text x="420" y="133" class="label" id="Night" text-anchor="middle" dominant-baseline="middle" font-size="28" style="font-weight: 700; font-family: Helvetica, Arial, sans-serif; stroke: white; stroke-width: 4; paint-order: stroke; text-anchor: middle; dominant-baseline: middle;">Night</text>
+<g transform="translate(30, 0)" class="layer-NIGHT">
+<text x="420" y="133" class="label" id="NIGHT" text-anchor="middle" dominant-baseline="middle" font-size="28" style="font-weight: 700; font-family: Helvetica, Arial, sans-serif; stroke: white; stroke-width: 4; paint-order: stroke; text-anchor: middle; dominant-baseline: middle;">NIGHT</text>
 <g transform="translate(0, 56)">
 <g transform="translate(28, 49)" class="key keypos-0">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
@@ -479,7 +479,6 @@ path.combo {
 </g>
 <g transform="translate(252, 35)" class="key keypos-4">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
-<text x="0" y="0" class="key tap" style="font-size: 28px; font-weight: 700; font-family: Helvetica, Arial, sans-serif">:</text>
 </g>
 <g transform="translate(308, 42)" class="key keypos-5">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
