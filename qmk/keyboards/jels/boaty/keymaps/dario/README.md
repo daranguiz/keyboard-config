@@ -177,7 +177,7 @@ qmk compile -kb jels/boaty -km dario
 23: KC_DLR
 24: KC_TILD
 25: KC_PERC
-26: KC_COLN
+26: KC_NO
 27: KC_NO
 28: KC_CIRC
 29: KC_7

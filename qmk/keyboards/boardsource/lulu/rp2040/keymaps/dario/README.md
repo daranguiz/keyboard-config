@@ -157,7 +157,7 @@ qmk compile -kb boardsource/lulu/rp2040 -km dario
 13: KC_DLR
 14: KC_TILD
 15: KC_PERC
-16: KC_COLN
+16: KC_NO
 17: KC_NO
 18: KC_HASH
 19: KC_1

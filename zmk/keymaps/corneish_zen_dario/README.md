@@ -115,7 +115,7 @@
  1: &kp DOLLAR
  2: &kp TILDE
  3: &kp PERCENT
- 4: &kp COLON
+ 4: &none
  5: &none
 
  6: &kp CARET

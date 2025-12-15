@@ -337,7 +337,7 @@
 
         num_layer {
             bindings = <
-                &none &kp DOLLAR &kp TILDE &kp PERCENT &kp COLON &none &kp CARET &kp N7 &kp N8 &kp N9 &kp DOT &none
+                &none &kp DOLLAR &kp TILDE &kp PERCENT &none &none &kp CARET &kp N7 &kp N8 &kp N9 &kp DOT &none
                 &none &kp LGUI &kp LALT &kp LCTRL &kp LSHFT &kp PIPE &kp HASH &kp N1 &kp N2 &kp N3 &kp GRAVE &none
                 &none &kp LG(Z) &kp LG(X) &kp LG(C) &kp LG(V) &kp LG(LS(Z)) &kp COLON &kp N4 &kp N5 &kp N6 &kp COMMA &none
                 &none &none &none &kp FSLH &kp N0 &kp AT

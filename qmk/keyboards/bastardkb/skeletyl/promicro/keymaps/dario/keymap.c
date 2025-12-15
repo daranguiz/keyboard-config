@@ -39,7 +39,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                               LSFT_T(KC_TAB)      , LT(NAV, KC_SPC)     , LT(MEDIA, KC_ENT)   
     ),
     [NUM] = LAYOUT_split_3x5_3(
-        KC_DLR              , KC_TILD             , KC_PERC             , KC_COLN             , KC_NO               ,
+        KC_DLR              , KC_TILD             , KC_PERC             , KC_NO               , KC_NO               ,
         KC_CIRC             , KC_7                , KC_8                , KC_9                , KC_DOT              ,
         KC_LGUI             , KC_LALT             , KC_LCTL             , KC_LSFT             , KC_PIPE             ,
         KC_HASH             , KC_1                , KC_2                , KC_3                , KC_GRV              ,

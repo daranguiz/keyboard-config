@@ -50,7 +50,7 @@ layers:
   NUM:
     core: # (3x5)
       left:
-        - [DLR            , TILD           , PERC           , COLN           , NONE           ]
+        - [DLR            , TILD           , PERC           , NONE           , NONE           ]
         - [LGUI           , LALT           , LCTL           , LSFT           , PIPE           ]
         - [UNDO           , CUT            , COPY           , PASTE          , REDO           ]
       right:
