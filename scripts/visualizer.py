@@ -1035,7 +1035,13 @@ class KeymapVisualizer:
         output_name = base_name.replace('BASE_', '').lower()
 
         # Generate full SVG
-        self._generate_svg_for_layers(layers, layout_size, output_name=output_name)
+        main_svg_path = self._generate_svg_for_layers(layers, layout_size, output_name=output_name)
+
+        # Add magic key reference to main SVG
+        if main_svg_path and main_svg_path.exists():
+            svg_content = main_svg_path.read_text()
+            svg_content = self._add_compact_magic_to_svg(svg_content, base_name, output_name)
+            main_svg_path.write_text(svg_content)
 
         # Generate 2-page print PDF
         self._generate_print_pdf_for_base(base_name, layers, layout_size)
@@ -1047,136 +1053,6 @@ class KeymapVisualizer:
         json_file = self.output_dir / f"{output_name}.json"
         if json_file.exists():
             json_file.unlink()
-
-    def _generate_magic_cheatsheet_svg(self, base_name: str, output_name: str) -> Optional[Path]:
-        """
-        Create a one-page SVG cheat sheet for magic keys with the first
-        character highlighted to show the typed letter.
-        """
-        if not self.magic_config or not self.magic_config.mappings:
-            return None
-
-        mapping = self.magic_config.mappings.get(base_name)
-        if not mapping or not mapping.mappings:
-            return None
-
-        entries = []
-        for prev_key, alt_value in mapping.mappings.items():
-            display_text, first_idx = self._build_magic_display(prev_key, alt_value)
-            if not display_text:
-                continue
-            entries.append({
-                "key_label": self._format_magic_trigger_label(prev_key),
-                "display": display_text,
-                "first_idx": first_idx,
-                "is_basic_bigram": self._is_basic_bigram(prev_key, alt_value)
-            })
-
-        if not entries:
-            return None
-
-        priority_entries = [e for e in entries if not e["is_basic_bigram"]]
-        bigram_entries = [e for e in entries if e["is_basic_bigram"]]
-
-        width = LETTER_WIDTH_PT
-        height = LETTER_HEIGHT_PT
-        margin = 16
-        column_count = 4
-        column_width = (width - 2 * margin) / column_count
-        row_height = 24
-        section_gap = 14
-
-        def _section_height(count: int) -> int:
-            if count == 0:
-                return 0
-            rows = math.ceil(count / column_count)
-            return 18 + rows * row_height
-
-        total_height = (
-            96
-            + _section_height(len(priority_entries))
-            + (_section_height(len(bigram_entries)) + section_gap if bigram_entries else 0)
-            + (section_gap if priority_entries and bigram_entries else 0)
-        )
-        height = max(total_height, 320)
-
-        base_display = self.base_layer_manager.get_display_name(base_name)
-
-        svg_parts = [
-            f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}">',
-            '<style>',
-            '  .title { font-family: "Helvetica, Arial, sans-serif"; font-size: 20px; font-weight: 700; fill: #0f172a; }',
-            '  .subtitle { font-family: "Helvetica, Arial, sans-serif"; font-size: 11px; fill: #334155; }',
-            '  .section { font-family: "Helvetica, Arial, sans-serif"; font-size: 12px; font-weight: 700; fill: #0f172a; letter-spacing: 0.5px; }',
-            '  .row { fill: #f8fafc; stroke: #e5e7eb; stroke-width: 0.75; }',
-            '  .label { font-family: "Helvetica, Arial, sans-serif"; font-size: 10px; fill: #6b7280; }',
-            '  .value { font-family: "Helvetica, Arial, sans-serif"; font-size: 13px; font-weight: 700; fill: #0f172a; }',
-            '  .first-letter { fill: #2563eb; font-weight: 800; }',
-            '</style>',
-            f'<rect width="{width}" height="{height}" fill="#ffffff" />',
-            f'<text class="title" x="{margin}" y="28">Magic Keys — {self._escape_svg_text(base_display)}</text>',
-        ]
-
-        current_y = 54
-
-        def _render_section(items: List[Dict], heading: str, start_y: int) -> int:
-            if not items:
-                return start_y
-            svg_parts.append(f'<text class="section" x="{margin}" y="{start_y}">{self._escape_svg_text(heading)}</text>')
-            start_y += 12
-
-            for idx, item in enumerate(items):
-                col = idx % column_count
-                row = idx // column_count
-                x = margin + col * column_width
-                y = start_y + row * row_height
-
-                svg_parts.append(
-                    f'<rect class="row" x="{x:.2f}" y="{y:.2f}" width="{column_width - 4:.2f}" height="{row_height:.2f}" />'
-                )
-
-                text_y = y + 16
-                value_x = x + 10
-
-                raw_text = item["display"]
-                if raw_text.startswith("[ ]"):
-                    # Color both brackets when the trigger was space
-                    rest = self._escape_svg_text(raw_text[3:])
-                    svg_parts.append(
-                        f'<text class="value" x="{value_x:.2f}" y="{text_y:.2f}">'
-                        f'<tspan class="first-letter">[ ]</tspan>{rest}'
-                        f'</text>'
-                    )
-                else:
-                    text = self._escape_svg_text(raw_text)
-                    first_idx = item.get("first_idx", 0)
-                    if first_idx >= len(text):
-                        first_idx = 0
-
-                    prefix = text[:first_idx]
-                    first_char = text[first_idx:first_idx+1]
-                    rest = text[first_idx+1:] if first_char else text[first_idx:]
-
-                    svg_parts.append(
-                        f'<text class="value" x="{value_x:.2f}" y="{text_y:.2f}">'
-                        f'{prefix}<tspan class="first-letter">{first_char}</tspan>{rest}'
-                        f'</text>'
-                    )
-
-            rows = math.ceil(len(items) / column_count)
-            return start_y + rows * row_height + section_gap
-
-        current_y = _render_section(priority_entries, "Symbols & words", current_y)
-        if bigram_entries:
-            current_y += 18  # extra breathing room before bigrams
-        current_y = _render_section(bigram_entries, "Letter bigrams (a-z)", current_y)
-
-        svg_parts.append("</svg>")
-
-        svg_path = self.output_dir / f"{output_name}_magic.svg"
-        svg_path.write_text("\n".join(svg_parts))
-        print(f"    ✅ {svg_path.name}")
-        return svg_path
 
     def _generate_print_pdf_for_base(self, base_name: str, all_layers: List,
                                      layout_size: str) -> Path:
