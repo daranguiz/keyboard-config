@@ -1084,6 +1084,7 @@ path.combo {
 </g>
 </g>
 </g>
+<rect x="0" y="1719.0" width="900.0" height="347.0" fill="white"/>
 <text x="450.0" y="1739.0" text-anchor="middle" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; font-size: 22px; font-weight: 700; fill: #1a1a1a;">Magic Keys</text>
 <text x="130.0" y="1774.0" style="text-anchor: start; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; font-size: 15px; font-weight: 700; fill: #555;">WORDS &amp; SYMBOLS</text>
 <line x1="130.0" y1="1779.0" x2="770.0" y2="1779.0" stroke="#ddd" stroke-width="1"/>

@@ -1657,8 +1657,13 @@ class KeymapVisualizer:
             count=1
         )
 
-        # Insert content before the FINAL closing </svg> tag (not nested ones)
-        table_content = '\n'.join(table_svg)
+        # Add white background rect for the magic keys section (for dark mode viewers)
+        magic_section_start = svg_height + 10  # Small padding before the section
+        magic_section_height = new_height - magic_section_start
+        background_rect = f'<rect x="0" y="{magic_section_start}" width="{svg_width}" height="{magic_section_height}" fill="white"/>'
+
+        # Insert background rect before the magic content, then the content
+        table_content = background_rect + '\n' + '\n'.join(table_svg)
         # Use rfind to find the last </svg> and insert before it
         last_svg_close = svg_content.rfind('</svg>')
         if last_svg_close != -1:
