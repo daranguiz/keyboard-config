@@ -276,9 +276,11 @@ magic_keys:
       " ": THE
       ",": " BUT"
       "-": ">"
-      # S: K
-      # K: S
-      # L: K
-      # M: Y
-      # C: K
+      S: K
+      K: S
+      L: K
+      M: Y
+      C: K
+      D: S
+      F: T
     default_repeat: true

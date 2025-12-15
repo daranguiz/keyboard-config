@@ -200,6 +200,13 @@ uint16_t get_alt_repeat_key_keycode_user(uint16_t keycode, uint8_t mods) {
             case KC_SPC: return MAGIC_RACKET_CHR_32;
             case KC_COMM: return MAGIC_RACKET_CHR_44;
             case KC_MINS: return KC_GT;
+            case KC_S: return KC_K;
+            case KC_K: return KC_S;
+            case KC_L: return KC_K;
+            case KC_M: return KC_Y;
+            case KC_C: return KC_K;
+            case KC_D: return KC_S;
+            case KC_F: return KC_T;
         }
     }
 

@@ -76,3 +76,20 @@
 
 // Note: QMK does not have built-in require-prior-idle support for combos
 // This is a ZMK-only feature (require-prior-idle-ms)
+
+// ----------------------------------------------------------------------------
+// BOARD-SPECIFIC OVERRIDES
+// ----------------------------------------------------------------------------
+// Older Skeletyl PCBs (v1/Elite-C) use a different matrix/serial/LED pinout
+// than the current upstream promicro definition. Override pins here so
+// keymaps remain correct without editing generated files.
+#ifdef KEYBOARD_bastardkb_skeletyl_promicro
+#    undef MATRIX_COL_PINS
+#    undef MATRIX_ROW_PINS
+#    undef SOFT_SERIAL_PIN
+#    undef WS2812_DI_PIN
+#    define MATRIX_COL_PINS { E6, C6, B1, B3, B2 }
+#    define MATRIX_ROW_PINS { B5, F7, F6, B6 }
+#    define SOFT_SERIAL_PIN D0
+#    define WS2812_DI_PIN D2
+#endif
