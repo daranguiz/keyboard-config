@@ -20,11 +20,7 @@ Magic key mappings are included at the bottom of each layout visualization.
 
 ### Split Ergonomic Keyboards
 
-#### PRIMARY Layout
 ![PRIMARY Layout](docs/split/primary.svg)
-
-#### ALT Layout
-![ALT Layout](docs/split/alt.svg)
 
 ### Row-Staggered Keyboards (macOS .keylayout)
 
