@@ -3,23 +3,15 @@ parse_config:
   - KC_
   mark_alternate_layer_activators: !!bool 'true'
   layer_names:
-  - BASE_NIGHT
-  - BASE_GALLIUM
-  - BASE_DUSK
-  - BASE_RACKET
-  - NUM_NIGHT
-  - SYM_NIGHT
-  - NAV_NIGHT
-  - MEDIA_NIGHT
+  - BASE_PRIMARY
+  - BASE_ALT
+  - NUM
+  - SYM
+  - NAV
+  - MEDIA
   layer_legend_map:
-    BASE_NIGHT: NIGHT
-    BASE_GALLIUM: GALLIUM
-    BASE_DUSK: DUSK
-    BASE_RACKET: RACKET
-    NUM_NIGHT: NUM
-    SYM_NIGHT: SYM
-    NAV_NIGHT: NAV
-    MEDIA_NIGHT: MEDIA
+    BASE_PRIMARY: Night
+    BASE_ALT: ALT
   raw_binding_map:
     KC_NO: ''
     U_NA: ''
@@ -53,11 +45,13 @@ parse_config:
     KC_BT_SEL_4: BT 4
     KC_BT_CLR: BT Clr
     DF(BASE_COLEMAK): COAK
-    DF(BASE_GALLIUM): GAUM
+    DF(BASE_GALLIUM): NIHT
     DF(BASE_NIGHT): NIHT
     DF(BASE_NIGHT_V2): NHT2
     DF(BASE_RACKET): RAET
-    DF(BASE_DUSK): DUSK
+    DF(BASE_DUSK): BUYA
+    DF(BASE_PRIMARY): NIHT
+    DF(BASE_ALT): ALT
 draw_config:
   ortho_layout:
     split: !!bool 'true'

@@ -2,7 +2,7 @@
 
 # Keymap Visualization: Corneish-Zen
 
-## BASE_NIGHT Layer
+## BASE_PRIMARY Layer
 
 ```
  0: &none
@@ -12,7 +12,60 @@
  4: &kp K
  5: &kp Q
 
- 6: &kp P
+ 6: &kp J
+ 7: &kp G
+ 8: &kp O
+ 9: &kp U
+10: &kp DOT
+11: &none
+
+12: &none
+13: &hml LGUI N
+14: &hml LALT S
+15: &hml LCTL H
+16: &hml LSFT T
+17: &kp M
+
+18: &kp Y
+19: &hmr LSFT C
+20: &hmr LCTL A
+21: &hmr LALT E
+22: &hmr LGUI I
+23: &none
+
+24: &none
+25: &kp X
+26: &kp V
+27: &kp P
+28: &kp D
+29: &kp Z
+
+30: &kp SQT
+31: &kp W
+32: &kp MINUS
+33: &kp SEMI
+34: &kp COMMA
+35: &none
+
+36: &lt NUM BSPC
+37: &lt SYM R
+38: &mt_ak_primary LSFT 0
+39: &mt LSFT TAB
+40: &lt NAV SPACE
+41: &lt MEDIA ENTER
+```
+
+## BASE_ALT Layer
+
+```
+ 0: &none
+ 1: &kp B
+ 2: &kp F
+ 3: &kp L
+ 4: &kp K
+ 5: &kp Q
+
+ 6: &kp SQT
  7: &kp G
  8: &kp O
  9: &kp U
@@ -35,190 +88,31 @@
 
 24: &none
 25: &kp X
-26: &kp V
+26: &kp P
 27: &kp J
 28: &kp D
-29: &kp Z
+29: &kp V
 
-30: &kp SQT
+30: &kp Z
 31: &kp W
 32: &kp MINUS
 33: &kp SEMI
 34: &kp COMMA
 35: &none
 
-36: &lt NUM_NIGHT BSPC
-37: &lt SYM_NIGHT R
-38: &mt_ak_night LSFT 0
+36: &lt NUM BSPC
+37: &lt SYM R
+38: &mt_ak_alt LSFT 0
 39: &mt LSFT TAB
-40: &lt NAV_NIGHT SPACE
-41: &lt MEDIA_NIGHT ENTER
+40: &lt NAV SPACE
+41: &lt MEDIA ENTER
 ```
 
-## BASE_GALLIUM Layer
+## NUM Layer
 
 ```
  0: &none
- 1: &kp B
- 2: &kp L
- 3: &kp D
- 4: &kp C
- 5: &kp V
-
- 6: &kp J
- 7: &kp Y
- 8: &kp O
- 9: &kp U
-10: &kp DOT
-11: &none
-
-12: &none
-13: &hml LGUI N
-14: &hml LALT R
-15: &hml LCTL T
-16: &hml LSFT S
-17: &kp G
-
-18: &kp P
-19: &hmr LSFT H
-20: &hmr LCTL A
-21: &hmr LALT E
-22: &hmr LGUI I
-23: &kp ENTER
-
-24: &none
-25: &kp X
-26: &kp Q
-27: &kp M
-28: &kp W
-29: &kp Z
-
-30: &kp K
-31: &kp F
-32: &kp SQT
-33: &kp MINUS
-34: &kp COMMA
-35: &none
-
-36: &lt NUM_NIGHT BSPC
-37: &lt_ak_gallium SYM_NIGHT 0
-38: &mt LSFT DEL
-39: &mt LSFT TAB
-40: &lt NAV_NIGHT SPACE
-41: &lt MEDIA_NIGHT ENTER
-```
-
-## BASE_DUSK Layer
-
-```
- 0: &none
- 1: &kp B
- 2: &kp F
- 3: &kp D
- 4: &kp W
- 5: &kp P
-
- 6: &kp J
- 7: &kp SQT
- 8: &kp O
- 9: &kp U
-10: &kp COMMA
-11: &none
-
-12: &none
-13: &hml LGUI N
-14: &hml LALT S
-15: &hml LCTL T
-16: &hml LSFT C
-17: &kp Y
-
-18: &kp M
-19: &hmr LSFT H
-20: &hmr LCTL A
-21: &hmr LALT E
-22: &hmr LGUI I
-23: &none
-
-24: &none
-25: &kp X
-26: &kp V
-27: &kp K
-28: &kp G
-29: &kp Q
-
-30: &kp Z
-31: &kp L
-32: &kp MINUS
-33: &kp FSLH
-34: &kp DOT
-35: &none
-
-36: &lt NUM_NIGHT BSPC
-37: &lt SYM_NIGHT R
-38: &mt_ak_dusk LSFT 0
-39: &mt LSFT TAB
-40: &lt NAV_NIGHT SPACE
-41: &lt MEDIA_NIGHT ENTER
-```
-
-## BASE_RACKET Layer
-
-```
- 0: &none
- 1: &kp F
- 2: &kp D
- 3: &kp L
- 4: &kp W
- 5: &kp J
-
- 6: &kp MINUS
- 7: &kp B
- 8: &kp O
- 9: &kp U
-10: &kp COMMA
-11: &none
-
-12: &none
-13: &hml LGUI S
-14: &hml LALT T
-15: &hml LCTL H
-16: &hml LSFT C
-17: &kp Y
-
-18: &kp Q
-19: &hmr LSFT N
-20: &hmr LCTL A
-21: &hmr LALT E
-22: &hmr LGUI I
-23: &none
-
-24: &none
-25: &kp X
-26: &kp K
-27: &kp M
-28: &kp G
-29: &kp V
-
-30: &kp Z
-31: &kp P
-32: &kp SQT
-33: &kp FSLH
-34: &kp DOT
-35: &none
-
-36: &lt NUM_NIGHT BSPC
-37: &lt SYM_NIGHT R
-38: &mt_ak_racket LSFT 0
-39: &mt LSFT TAB
-40: &lt NAV_NIGHT SPACE
-41: &lt MEDIA_NIGHT ENTER
-```
-
-## NUM_NIGHT Layer
-
-```
- 0: &none
- 1: &none
+ 1: &kp DOLLAR
  2: &kp TILDE
  3: &kp PERCENT
  4: &kp COLON
@@ -228,7 +122,7 @@
  7: &kp N7
  8: &kp N8
  9: &kp N9
-10: &kp COMMA
+10: &kp DOT
 11: &none
 
 12: &none
@@ -252,11 +146,11 @@
 28: &kp LG(V)
 29: &kp LG(LS(Z))
 
-30: &kp DOLLAR
+30: &kp COLON
 31: &kp N4
 32: &kp N5
 33: &kp N6
-34: &kp DOT
+34: &kp COMMA
 35: &none
 
 36: &none
@@ -267,21 +161,21 @@
 41: &kp AT
 ```
 
-## SYM_NIGHT Layer
+## SYM Layer
 
 ```
  0: &none
  1: &kp DOLLAR
  2: &kp ASTERISK
  3: &kp PERCENT
- 4: &kp COLON
+ 4: &kp BSLH
  5: &none
 
  6: &kp PLUS
- 7: &kp MINUS
+ 7: &kp LT
  8: &kp LBRC
  9: &kp RBRC
-10: &kp COMMA
+10: &kp GT
 11: &none
 
 12: &none
@@ -305,11 +199,11 @@
 28: &kp AMPERSAND
 29: &none
 
-30: &kp BSLH
-31: &kp LT
+30: &kp COLON
+31: &kp MINUS
 32: &kp LBKT
 33: &kp RBKT
-34: &kp GT
+34: &kp COMMA
 35: &none
 
 36: &none
@@ -320,7 +214,7 @@
 41: &kp ENTER
 ```
 
-## NAV_NIGHT Layer
+## NAV Layer
 
 ```
  0: &none
@@ -373,14 +267,14 @@
 41: &none
 ```
 
-## MEDIA_NIGHT Layer
+## MEDIA Layer
 
 ```
  0: &none
- 1: &to BASE_NIGHT
- 2: &to BASE_GALLIUM
- 3: &to BASE_DUSK
- 4: &to BASE_RACKET
+ 1: &to BASE_PRIMARY
+ 2: &to BASE_ALT
+ 3: &none
+ 4: &none
  5: &none
 
  6: &none
@@ -427,25 +321,7 @@
 ```
 
 ## Magic Key Mappings
-### BASE_GALLIUM
-- default: REPEAT
-- timeout_ms: 0
-- mappings:
-  - . → /
-  - A → Y
-  - B → R
-  - C → S
-  - E → Y
-  - G → S
-  - M → B
-  - O → K
-  - P → H
-  - R → L
-  - S → C
-  - U → E
-  - Y → E
-
-### BASE_NIGHT
+### BASE_PRIMARY
 - default: REPEAT
 - timeout_ms: 0
 - mappings:
@@ -453,43 +329,17 @@
   - , →  BUT
   - - → >
   - . → /
-  - A → O
-  - B → EFORE
+  - P → L
+  - L → P
+  - E → Y
   - C → Y
   - G → Y
-  - H → L
-  - I → ON
-  - J → UST
-  - M → ENT
-  - N → ION
-  - P → Y
-  - Q → UE
-  - T → ION
-  - U → E
-  - V → S
-  - W → HICH
-  - Y → '
 
-### BASE_DUSK
+### BASE_ALT
 - default: REPEAT
 - timeout_ms: 0
 - mappings:
-  -   → THE
-  - , →  BUT
-  - . → /
-
-### BASE_RACKET
-- default: REPEAT
-- timeout_ms: 0
-- mappings:
-  - . → /
   -   → THE
   - , →  BUT
   - - → >
-  - S → K
-  - K → S
-  - L → K
-  - M → Y
-  - C → K
-  - D → S
-  - F → T
+  - . → /

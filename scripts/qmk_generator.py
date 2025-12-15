@@ -92,7 +92,7 @@ class QMKGenerator:
             extra_layers_code = f"""
 // Board-specific layers (extend standard enum from dario.h)
 enum {{
-    {extra_layers_list} = FUN + 1  // Continue from last standard layer
+    {extra_layers_list} = MEDIA + 1  // Continue from last standard layer
 }};
 """
 

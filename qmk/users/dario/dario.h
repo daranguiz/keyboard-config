@@ -5,15 +5,12 @@
 // Layer definitions
 // NOTE: Order must match config/keymap.yaml layer order
 enum layers {
-    BASE_NIGHT,
-    BASE_GALLIUM,
-    BASE_DUSK,
-    BASE_RACKET,
-    FUN,
-    NUM_NIGHT,
-    SYM_NIGHT,
-    NAV_NIGHT,
-    MEDIA_NIGHT
+    BASE_PRIMARY,
+    BASE_ALT,
+    NUM,
+    SYM,
+    NAV,
+    MEDIA
 };
 
 // Not available/Not used keycodes

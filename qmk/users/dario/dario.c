@@ -6,7 +6,7 @@ bool process_magic_record(uint16_t keycode, keyrecord_t *record);
 __attribute__((weak)) bool process_magic_record(uint16_t keycode, keyrecord_t *record) { return true; }
 
 // Global variable to track current base layer for magic key context
-static uint8_t current_base_layer = BASE_NIGHT;  // Default starting layer
+static uint8_t current_base_layer = BASE_PRIMARY;  // Default starting layer
 
 // Getter function for magic key system to query current base layer
 uint8_t get_current_base_layer(void) {
@@ -37,10 +37,10 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
             return TAPPING_TERM_HRM;
 
         // Layer-tap keys: use standard tapping term (200ms)
-        case LT(NAV_NIGHT, KC_SPC):
-        case LT(NUM_NIGHT, KC_BSPC):
-        case LT(SYM_NIGHT, KC_R):
-        case LT(MEDIA_NIGHT, KC_ENT):
+        case LT(NAV, KC_SPC):
+        case LT(NUM, KC_BSPC):
+        case LT(SYM, KC_R):
+        case LT(MEDIA, KC_ENT):
             return 200;
 
         default:
@@ -66,13 +66,13 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
 #ifdef CHORDAL_HOLD
 static bool is_thumb_keycode(uint16_t keycode) {
     switch (keycode) {
-        // Thumbs on BASE_NIGHT and BASE_GALLIUM (both use _NIGHT variants)
-        case LT(NUM_NIGHT, KC_BSPC):
-        case LT(SYM_NIGHT, KC_R):
+        // Thumbs on BASE_PRIMARY and BASE_ALT
+        case LT(NUM, KC_BSPC):
+        case LT(SYM, KC_R):
         case LSFT_T(KC_DEL):
         case LSFT_T(KC_TAB):
-        case LT(NAV_NIGHT, KC_SPC):
-        case LT(MEDIA_NIGHT, KC_ENT):
+        case LT(NAV, KC_SPC):
+        case LT(MEDIA, KC_ENT):
             return true;
     }
     return false;
@@ -105,17 +105,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     // Track base layer changes for magic key context
     if (record->event.pressed) {
         switch (keycode) {
-            case DF(BASE_NIGHT):
-                current_base_layer = BASE_NIGHT;
+            case DF(BASE_PRIMARY):
+                current_base_layer = BASE_PRIMARY;
                 break;
-            case DF(BASE_GALLIUM):
-                current_base_layer = BASE_GALLIUM;
-                break;
-            case DF(BASE_DUSK):
-                current_base_layer = BASE_DUSK;
-                break;
-            case DF(BASE_RACKET):
-                current_base_layer = BASE_RACKET;
+            case DF(BASE_ALT):
+                current_base_layer = BASE_ALT;
                 break;
         }
     }

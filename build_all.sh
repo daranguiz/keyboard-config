@@ -2,16 +2,22 @@
 set -e
 
 VERBOSE=0
+NO_MAGIC_TRAINING=0
 
 usage() {
-    echo "Usage: $(basename "$0") [-v|--verbose]"
-    echo "  -v, --verbose   Pass verbose flag to ZMK build script"
+    echo "Usage: $(basename "$0") [-v|--verbose] [--no-magic-training]"
+    echo "  -v, --verbose          Pass verbose flag to ZMK build script"
+    echo "  --no-magic-training    Disable magic-key training mode"
 }
 
 while [[ $# -gt 0 ]]; do
     case "$1" in
         -v|--verbose)
             VERBOSE=1
+            shift
+            ;;
+        --no-magic-training)
+            NO_MAGIC_TRAINING=1
             shift
             ;;
         -h|--help)
@@ -74,7 +80,12 @@ echo "================================================"
 echo ""
 
 echo -e "${BLUE}Running keymap generator...${NC}"
-if "$PYTHON_BIN" "$REPO_ROOT/scripts/generate.py"; then
+GENERATE_ARGS=()
+if [ "$NO_MAGIC_TRAINING" -eq 1 ]; then
+    GENERATE_ARGS+=("--no-magic-training")
+    echo "  Magic training: DISABLED"
+fi
+if "$PYTHON_BIN" "$REPO_ROOT/scripts/generate.py" "${GENERATE_ARGS[@]}"; then
     echo -e "${GREEN}✓ Keymap generation successful${NC}"
     echo ""
     KEYGEN_SUCCESS=true
