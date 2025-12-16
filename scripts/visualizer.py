@@ -2404,8 +2404,9 @@ class KeymapVisualizer:
                     {{ fill: #999999 !important; }}
                     /* Increase legend size */
                     .tap {{ font-size: 32px; font-weight: 900; }}
-                    /* Homing key borders (F and J positions on home row) */
-                    .keypos-32 rect, .keypos-35 rect {{
+                    /* Home row key borders (ASDF JKL; positions) */
+                    .keypos-29 rect, .keypos-30 rect, .keypos-31 rect, .keypos-32 rect,
+                    .keypos-35 rect, .keypos-36 rect, .keypos-37 rect, .keypos-38 rect {{
                         stroke: #333333 !important;
                         stroke-width: 3 !important;
                     }}
