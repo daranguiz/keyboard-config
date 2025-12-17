@@ -78,11 +78,14 @@
 // This is a ZMK-only feature (require-prior-idle-ms)
 
 // ----------------------------------------------------------------------------
-// BOARD-SPECIFIC OVERRIDES
+// BOARD-SPECIFIC HARDWARE OVERRIDES
 // ----------------------------------------------------------------------------
+// NOTE: These are HARDWARE pin mappings, not software workarounds.
+// The keymap generator handles LAYOUT ordering correctly; these pins
+// are for specific PCB revisions with different physical wiring.
+//
 // Older Skeletyl PCBs (v1/Elite-C) use a different matrix/serial/LED pinout
-// than the current upstream promicro definition. Override pins here so
-// keymaps remain correct without editing generated files.
+// than the current upstream promicro definition.
 #ifdef KEYBOARD_bastardkb_skeletyl_promicro
 #    undef MATRIX_COL_PINS
 #    undef MATRIX_ROW_PINS

@@ -43,7 +43,7 @@
 30: &kp SQT
 31: &kp W
 32: &kp MINUS
-33: &kp SEMI
+33: &kp FSLH
 34: &kp COMMA
 35: &none
 
@@ -112,10 +112,10 @@
 
 ```
  0: &none
- 1: &kp DOLLAR
- 2: &kp TILDE
+ 1: &kp TILDE
+ 2: &kp AMPERSAND
  3: &kp PERCENT
- 4: &none
+ 4: &kp DOLLAR
  5: &none
 
  6: &kp CARET
@@ -130,9 +130,9 @@
 14: &kp LALT
 15: &kp LCTRL
 16: &kp LSHFT
-17: &kp PIPE
+17: &kp EQUAL
 
-18: &kp HASH
+18: &kp COLON
 19: &kp N1
 20: &kp N2
 21: &kp N3
@@ -146,7 +146,7 @@
 28: &kp LG(V)
 29: &kp LG(LS(Z))
 
-30: &kp COLON
+30: &kp HASH
 31: &kp N4
 32: &kp N5
 33: &kp N6
@@ -156,7 +156,7 @@
 36: &none
 37: &none
 38: &none
-39: &kp FSLH
+39: &ak_primary
 40: &kp N0
 41: &kp AT
 ```
@@ -165,10 +165,10 @@
 
 ```
  0: &none
- 1: &kp DOLLAR
- 2: &kp ASTERISK
+ 1: &kp TILDE
+ 2: &kp AMPERSAND
  3: &kp PERCENT
- 4: &kp BSLH
+ 4: &kp DOLLAR
  5: &none
 
  6: &kp PLUS
@@ -185,8 +185,8 @@
 16: &kp LSHFT
 17: &kp EQUAL
 
-18: &kp EXCL
-19: &kp QUESTION
+18: &kp COLON
+19: &kp EXCL
 20: &kp LPAR
 21: &kp RPAR
 22: &kp SEMI
@@ -195,11 +195,11 @@
 24: &none
 25: &none
 26: &none
-27: &none
-28: &kp AMPERSAND
+27: &kp PIPE
+28: &kp BSLH
 29: &none
 
-30: &kp COLON
+30: &kp ASTERISK
 31: &kp MINUS
 32: &kp LBKT
 33: &kp RBKT
@@ -209,7 +209,7 @@
 36: &none
 37: &none
 38: &none
-39: &kp FSLH
+39: &ak_primary
 40: &kp SPACE
 41: &kp ENTER
 ```

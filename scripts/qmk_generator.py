@@ -158,62 +158,58 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {{
             return self._format_split_3x5_3(keycodes)
 
     def _format_split_3x5_3(self, keycodes: List[str]) -> str:
-        """Format 36-key split 3x5_3 layout"""
+        """Format 36-key split 3x5_3 layout
+
+        Input (row-wise): 0-4 top-left, 5-9 top-right, 10-14 home-left, 15-19 home-right,
+                          20-24 bottom-left, 25-29 bottom-right, 30-32 thumbs-left, 33-35 thumbs-right
+
+        Output (LAYOUT_split_3x5_3): Interleaved rows, no reversal needed.
+        The LAYOUT macro handles physical-to-logical mapping internally.
+        """
         if len(keycodes) != 36:
             raise ValueError(f"Expected 36 keys for 3x5_3 layout, got {len(keycodes)}")
 
-        # Group into rows for readability
-        # Left hand: rows 0-2 (5 keys each)
-        # Right hand: rows 3-5 (5 keys each)
-        # Left thumbs: row 6 (3 keys)
-        # Right thumbs: row 7 (3 keys)
-
+        # Build interleaved rows (left + right per row)
         rows = [
-            keycodes[0:5],   # Left hand row 1
-            keycodes[5:10],  # Left hand row 2
-            keycodes[10:15], # Left hand row 3
-            keycodes[15:20], # Right hand row 1
-            keycodes[20:25], # Right hand row 2
-            keycodes[25:30], # Right hand row 3
-            keycodes[30:33], # Left thumbs
-            keycodes[33:36], # Right thumbs
+            keycodes[0:5] + keycodes[5:10],      # Top row (left + right)
+            keycodes[10:15] + keycodes[15:20],   # Home row (left + right)
+            keycodes[20:25] + keycodes[25:30],   # Bottom row (left + right)
+            keycodes[30:33] + keycodes[33:36],   # Thumbs (left + right)
         ]
 
         formatted_rows = []
         for i, row in enumerate(rows):
-            if i < 6:  # Finger rows
+            if i < 3:  # Finger rows (10 keys each)
                 formatted_rows.append("        " + ", ".join(f"{k:20}" for k in row) + ",")
-            elif i == 6:  # Left thumb row (needs comma)
-                formatted_rows.append("                              " + ", ".join(f"{k:20}" for k in row) + ",")
-            else:  # Right thumb row (last row, no comma)
+            else:  # Thumb row (6 keys, no trailing comma)
                 formatted_rows.append("                              " + ", ".join(f"{k:20}" for k in row))
 
         return f"LAYOUT_split_3x5_3(\n" + "\n".join(formatted_rows) + "\n    )"
 
     def _format_split_3x6_3(self, keycodes: List[str]) -> str:
-        """Format 42-key split 3x6_3 layout"""
+        """Format 42-key split 3x6_3 layout
+
+        Input (row-wise from _pad_to_3x6): 0-11 top (6 left + 6 right), 12-23 home, 24-35 bottom, 36-41 thumbs
+
+        Output (LAYOUT_split_3x6_3): Interleaved rows, no reversal needed.
+        The LAYOUT macro handles physical-to-logical mapping internally.
+        """
         if len(keycodes) != 42:
             raise ValueError(f"Expected 42 keys for 3x6_3 layout, got {len(keycodes)}")
 
-        # Group into rows (6 keys per finger row)
+        # Build interleaved rows (left + right per row)
         rows = [
-            keycodes[0:6],   # Left hand row 1
-            keycodes[6:12],  # Left hand row 2
-            keycodes[12:18], # Left hand row 3
-            keycodes[18:24], # Right hand row 1
-            keycodes[24:30], # Right hand row 2
-            keycodes[30:36], # Right hand row 3
-            keycodes[36:39], # Left thumbs
-            keycodes[39:42], # Right thumbs
+            keycodes[0:6] + keycodes[6:12],      # Top row (left + right)
+            keycodes[12:18] + keycodes[18:24],   # Home row (left + right)
+            keycodes[24:30] + keycodes[30:36],   # Bottom row (left + right)
+            keycodes[36:39] + keycodes[39:42],   # Thumbs (left + right)
         ]
 
         formatted_rows = []
         for i, row in enumerate(rows):
-            if i < 6:  # Finger rows
+            if i < 3:  # Finger rows (12 keys each)
                 formatted_rows.append("        " + ", ".join(f"{k:20}" for k in row) + ",")
-            elif i == 6:  # Left thumb row (needs comma)
-                formatted_rows.append("                                    " + ", ".join(f"{k:20}" for k in row) + ",")
-            else:  # Right thumb row (last row, no comma)
+            else:  # Thumb row (6 keys, no trailing comma)
                 formatted_rows.append("                                    " + ", ".join(f"{k:20}" for k in row))
 
         return f"LAYOUT_split_3x6_3(\n" + "\n".join(formatted_rows) + "\n    )"
@@ -222,19 +218,37 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {{
         """
         Format custom layout (e.g., Lulu, Lily58, Boaty)
 
-        For custom_58 layouts, we expect 58 keys total.
+        For custom_58_from_3x6 layouts (Lulu, Lily58), we expect 58 keys.
+        Input is logical row order: left6 + right6 per row.
+        Output must reverse right-side columns for the LAYOUT macro.
+
         For custom_boaty layouts, we expect 63 keys total.
-        Just format them in rows for readability.
         """
         num_keys = len(keycodes)
 
         if board.layout_size == "custom_boaty":
-            # Boaty: 63 keys arranged as: 12, 12, 12, 14, 13
+            # Boaty: 63 keys - different structure, handle separately
             row_breaks = [12, 12, 12, 14, 13]
-        else:
-            # Lulu/Lily58: 58 keys arranged as: 12, 12, 12, 14, 8
-            row_breaks = [12, 12, 12, 14, 8]
+            rows = []
+            idx = 0
+            for width in row_breaks:
+                row = keycodes[idx:idx+width]
+                rows.append("        " + ", ".join(f"{k:20}" for k in row) + ",")
+                idx += width
+            if rows:
+                rows[-1] = rows[-1].rstrip(",")
+            return f"LAYOUT(\n" + "\n".join(rows) + "\n    )"
 
+        # Lulu/Lily58: 58 keys - no reversal needed
+        # The LAYOUT macro handles physical-to-logical mapping internally
+        # Input from _pad_to_58_keys_from_3x6:
+        #   0-11:  row0 (number row)
+        #   12-23: row1 (top alpha)
+        #   24-35: row2 (home)
+        #   36-49: row3 (bottom + 2 inner keys) = 14 keys
+        #   50-57: row4 (thumbs) = 8 keys
+
+        row_breaks = [12, 12, 12, 14, 8]
         rows = []
         idx = 0
         for width in row_breaks:
@@ -242,7 +256,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {{
             rows.append("        " + ", ".join(f"{k:20}" for k in row) + ",")
             idx += width
         if rows:
-            rows[-1] = rows[-1].rstrip(",")  # no trailing comma on last row
+            rows[-1] = rows[-1].rstrip(",")
 
         return f"LAYOUT(\n" + "\n".join(rows) + "\n    )"
 

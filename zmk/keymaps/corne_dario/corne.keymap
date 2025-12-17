@@ -321,7 +321,7 @@
             bindings = <
                 &none &kp B &kp F &ak_train_primary_l &kp K &kp Q &kp J &kp G &kp O &kp U &kp DOT &none
                 &none &hml LGUI N &hml LALT S &hml LCTL H &hml LSFT T &kp M &ak_train_primary_y &hmr LSFT C &hmr LCTL A &hmr LALT E &hmr LGUI I &none
-                &none &kp X &kp V &ak_train_primary_p &kp D &kp Z &kp SQT &kp W &kp MINUS &kp SEMI &kp COMMA &none
+                &none &kp X &kp V &ak_train_primary_p &kp D &kp Z &kp SQT &kp W &kp MINUS &ak_train_primary_fslh &kp COMMA &none
                 &lt NUM BSPC &lt SYM R &mt_ak_primary LSFT 0 &mt LSFT TAB &lt NAV SPACE &lt MEDIA ENTER
             >;
         };
@@ -337,19 +337,19 @@
 
         num_layer {
             bindings = <
-                &none &kp DOLLAR &kp TILDE &kp PERCENT &none &none &kp CARET &kp N7 &kp N8 &kp N9 &kp DOT &none
-                &none &kp LGUI &kp LALT &kp LCTRL &kp LSHFT &kp PIPE &kp HASH &kp N1 &kp N2 &kp N3 &kp GRAVE &none
-                &none &kp LG(Z) &kp LG(X) &kp LG(C) &kp LG(V) &kp LG(LS(Z)) &kp COLON &kp N4 &kp N5 &kp N6 &kp COMMA &none
-                &none &none &none &kp FSLH &kp N0 &kp AT
+                &none &kp TILDE &kp AMPERSAND &kp PERCENT &kp DOLLAR &none &kp CARET &kp N7 &kp N8 &kp N9 &kp DOT &none
+                &none &kp LGUI &kp LALT &kp LCTRL &kp LSHFT &kp EQUAL &kp COLON &kp N1 &kp N2 &kp N3 &kp GRAVE &none
+                &none &kp LG(Z) &kp LG(X) &kp LG(C) &kp LG(V) &kp LG(LS(Z)) &kp HASH &kp N4 &kp N5 &kp N6 &kp COMMA &none
+                &none &none &none &ak_primary &kp N0 &kp AT
             >;
         };
 
         sym_layer {
             bindings = <
-                &none &kp DOLLAR &kp ASTERISK &kp PERCENT &kp BSLH &none &kp PLUS &kp LT &kp LBRC &kp RBRC &kp GT &none
-                &none &kp LGUI &kp LALT &kp LCTRL &kp LSHFT &kp EQUAL &kp EXCL &kp QUESTION &kp LPAR &kp RPAR &kp SEMI &none
-                &none &none &none &none &kp AMPERSAND &none &kp COLON &kp MINUS &kp LBKT &kp RBKT &kp COMMA &none
-                &none &none &none &kp FSLH &kp SPACE &kp ENTER
+                &none &kp TILDE &kp AMPERSAND &kp PERCENT &kp DOLLAR &none &kp PLUS &kp LT &kp LBRC &kp RBRC &kp GT &none
+                &none &kp LGUI &kp LALT &kp LCTRL &kp LSHFT &kp EQUAL &kp COLON &kp EXCL &kp LPAR &kp RPAR &kp SEMI &none
+                &none &none &none &kp PIPE &kp BSLH &none &kp ASTERISK &kp MINUS &kp LBKT &kp RBKT &kp COMMA &none
+                &none &none &none &ak_primary &kp SPACE &kp ENTER
             >;
         };
 

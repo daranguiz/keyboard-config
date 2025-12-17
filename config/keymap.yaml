@@ -19,7 +19,7 @@ layers:
       right:
         - [J              , G              , O              , U              , DOT            ]
         - [Y              , hrm:LSFT:C     , hrm:LCTL:A     , hrm:LALT:E     , hrm:LGUI:I     ]
-        - [QUOT           , W              , MINS           , SCLN           , COMM           ]
+        - [QUOT           , W              , MINS           , SLSH           , COMM           ]
       thumbs:
         - [lt:NUM:BSPC    , lt:SYM:R        , mt:LSFT:MAGIC  ]
         - [mt:LSFT:TAB    , lt:NAV:SPC      , lt:MEDIA:ENT   ]
@@ -50,16 +50,16 @@ layers:
   NUM:
     core: # (3x5)
       left:
-        - [DLR            , TILD           , PERC           , NONE           , NONE           ]
-        - [LGUI           , LALT           , LCTL           , LSFT           , PIPE           ]
+        - [TILD           , AMPR           , PERC           , DLR            , NONE           ]
+        - [LGUI           , LALT           , LCTL           , LSFT           , EQL            ]
         - [UNDO           , CUT            , COPY           , PASTE          , REDO           ]
       right:
         - [CIRC           , 7              , 8              , 9              , DOT            ]
-        - [HASH           , 1              , 2              , 3              , GRV            ]
-        - [COLN           , 4              , 5              , 6              , COMM           ]
+        - [COLN           , 1              , 2              , 3              , GRV            ]
+        - [HASH           , 4              , 5              , 6              , COMM           ]
       thumbs:
         - [NONE           , NONE           , NONE           ]
-        - [SLSH           , 0              , AT             ]
+        - [MAGIC          , 0              , AT             ]
     extensions:
       3x6_3:
         outer_pinky_left: [NONE, NONE, NONE]
@@ -68,16 +68,16 @@ layers:
   SYM:
     core: # (3x5)
       left:
-        - [DLR            , ASTR           , PERC           , BSLS           , NONE           ]
+        - [TILD           , AMPR           , PERC           , DLR            , NONE           ]
         - [LGUI           , LALT           , LCTL           , LSFT           , EQL            ]
-        - [NONE           , NONE           , NONE           , AMPR           , NONE           ]
+        - [NONE           , NONE           , PIPE           , BSLS           , NONE           ]
       right:
         - [PLUS           , LABK           , LCBR           , RCBR           , RABK           ]
-        - [EXLM           , QUES           , LPRN           , RPRN           , SCLN           ]
-        - [COLN           , MINS           , LBRC           , RBRC           , COMM           ]
+        - [COLN           , EXLM           , LPRN           , RPRN           , SCLN           ]
+        - [ASTR           , MINS           , LBRC           , RBRC           , COMM           ]
       thumbs:
         - [NONE           , NONE           , NONE           ]
-        - [SLSH           , SPC            , ENT            ]
+        - [MAGIC          , SPC            , ENT            ]
     extensions:
       3x6_3:
         outer_pinky_left: [NONE, NONE, NONE]

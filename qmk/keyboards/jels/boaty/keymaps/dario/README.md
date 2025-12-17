@@ -70,7 +70,7 @@ qmk compile -kb jels/boaty -km dario
 52: KC_QUOT
 53: KC_W
 54: KC_MINS
-55: KC_SCLN
+55: KC_SLSH
 56: KC_COMM
 57: LT(NUM, KC_BSPC)
 58: LT(SYM, KC_R)
@@ -174,10 +174,10 @@ qmk compile -kb jels/boaty -km dario
 20: KC_TRNS
 21: KC_TRNS
 22: KC_TRNS
-23: KC_DLR
-24: KC_TILD
+23: KC_TILD
+24: KC_AMPR
 25: KC_PERC
-26: KC_NO
+26: KC_DLR
 27: KC_NO
 28: KC_CIRC
 29: KC_7
@@ -191,8 +191,8 @@ qmk compile -kb jels/boaty -km dario
 37: KC_LALT
 38: KC_LCTL
 39: KC_LSFT
-40: KC_PIPE
-41: KC_HASH
+40: KC_EQL
+41: KC_COLN
 42: KC_1
 43: KC_2
 44: KC_3
@@ -203,7 +203,7 @@ qmk compile -kb jels/boaty -km dario
 49: LGUI(KC_C)
 50: LGUI(KC_V)
 51: SGUI(KC_Z)
-52: KC_COLN
+52: KC_HASH
 53: KC_4
 54: KC_5
 55: KC_6
@@ -211,7 +211,7 @@ qmk compile -kb jels/boaty -km dario
 57: KC_NO
 58: KC_NO
 59: KC_NO
-60: KC_SLSH
+60: QK_AREP
 61: KC_0
 62: KC_AT
 ```
@@ -242,10 +242,10 @@ qmk compile -kb jels/boaty -km dario
 20: KC_TRNS
 21: KC_TRNS
 22: KC_TRNS
-23: KC_DLR
-24: KC_ASTR
+23: KC_TILD
+24: KC_AMPR
 25: KC_PERC
-26: KC_BSLS
+26: KC_DLR
 27: KC_NO
 28: KC_PLUS
 29: KC_LT
@@ -260,18 +260,18 @@ qmk compile -kb jels/boaty -km dario
 38: KC_LCTL
 39: KC_LSFT
 40: KC_EQL
-41: KC_EXLM
-42: KC_QUES
+41: KC_COLN
+42: KC_EXLM
 43: KC_LPRN
 44: KC_RPRN
 45: KC_SCLN
 46: KC_TRNS
 47: KC_NO
 48: KC_NO
-49: KC_NO
-50: KC_AMPR
+49: KC_PIPE
+50: KC_BSLS
 51: KC_NO
-52: KC_COLN
+52: KC_ASTR
 53: KC_MINS
 54: KC_LBRC
 55: KC_RBRC
@@ -279,7 +279,7 @@ qmk compile -kb jels/boaty -km dario
 57: KC_NO
 58: KC_NO
 59: KC_NO
-60: KC_SLSH
+60: QK_AREP
 61: KC_SPC
 62: KC_ENT
 ```

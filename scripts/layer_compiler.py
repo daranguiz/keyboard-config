@@ -311,26 +311,40 @@ class LayerCompiler:
         """
         Pad 42-key 3x6_3 layout into the Lulu/Lily58 58-key matrix.
 
-        Mapping:
+        Input from _pad_to_3x6 (42 keys, row-wise with 12 keys per row):
+        - 0-11:  top row (left 6 + right 6)
+        - 12-23: home row (left 6 + right 6)
+        - 24-35: bottom row (left 6 + right 6)
+        - 36-41: thumbs (left 3 + right 3)
+
+        Output (58 keys):
         - Row 0 (number row): 12 keys -> NONE (no numbers defined)
-        - Main rows (rows 1-3): take 42-key 3x6 data (already includes pinkies)
-          left 3x6 + right 3x6
-        - Row 3 has two center positions (LBRC/RBRC) between halves
-        - Thumb row (row 4): 8 keys -> map 6 thumbs, pad outermost with NONE
+        - Row 1 (top alpha): 12 keys from input top row
+        - Row 2 (home): 12 keys from input home row
+        - Row 3 (bottom): 14 keys (left 6 + 2 inner NONE + right 6)
+        - Row 4 (thumbs): 8 keys (NONE + left 3 + right 3 + NONE)
         """
-        left_top = keycodes[0:6]
-        left_home = keycodes[6:12]
-        left_bottom = keycodes[12:18]
-        right_top = keycodes[18:24]
-        right_home = keycodes[24:30]
-        right_bottom = keycodes[30:36]
-        thumbs = keycodes[36:42]
+        # Input has 12 keys per row (left 6 + right 6)
+        top_row = keycodes[0:12]      # positions 0-11
+        home_row = keycodes[12:24]    # positions 12-23
+        bottom_row = keycodes[24:36]  # positions 24-35
+        thumbs = keycodes[36:42]      # positions 36-41
+
+        # Split each row into left/right halves
+        left_top = top_row[0:6]
+        right_top = top_row[6:12]
+        left_home = home_row[0:6]
+        right_home = home_row[6:12]
+        left_bottom = bottom_row[0:6]
+        right_bottom = bottom_row[6:12]
+        left_thumbs = thumbs[0:3]
+        right_thumbs = thumbs[3:6]
 
         row0 = ["NONE"] * 12
         row1 = left_top + right_top
         row2 = left_home + right_home
         row3 = left_bottom + ["NONE", "NONE"] + right_bottom
-        row4 = ["NONE", thumbs[0], thumbs[1], thumbs[2], thumbs[3], thumbs[4], thumbs[5], "NONE"]
+        row4 = ["NONE"] + left_thumbs + right_thumbs + ["NONE"]
 
         return row0 + row1 + row2 + row3 + row4
 
