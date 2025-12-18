@@ -1,0 +1,5 @@
+name: dario-contextual-hold-tap
+build:
+  cmake: .
+  kconfig: Kconfig
+  dts: dts

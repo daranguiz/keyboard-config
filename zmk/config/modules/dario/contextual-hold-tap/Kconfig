@@ -1,0 +1,28 @@
+menuconfig DARIO_CONTEXTUAL_HOLD_TAP
+    bool "Contextual hold-tap behavior"
+    default y
+    depends on DT_HAS_DARIO_BEHAVIOR_CONTEXTUAL_HOLD_TAP_ENABLED
+    help
+      Hold-tap variant that switches flavor after configurable prior keycodes.
+
+if DARIO_CONTEXTUAL_HOLD_TAP
+
+config DARIO_CONTEXTUAL_HT_MAX_HELD
+    int "Max simultaneously held contextual hold-taps"
+    default 10
+    help
+      Maximum number of simultaneously held contextual hold-tap keys.
+
+config DARIO_CONTEXTUAL_HT_MAX_CAPTURED_EVENTS
+    int "Max captured events"
+    default 40
+    help
+      Maximum number of captured events while resolving contextual hold-tap presses.
+
+config DARIO_CONTEXTUAL_HT_LOG
+    bool "Enable contextual hold-tap debug logging"
+    default n
+    help
+      When enabled, debug logs will be emitted during flavor selection and resolution.
+
+endif

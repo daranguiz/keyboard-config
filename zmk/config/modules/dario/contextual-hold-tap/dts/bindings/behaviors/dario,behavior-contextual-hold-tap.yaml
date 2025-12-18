@@ -1,0 +1,93 @@
+# Whitespace-conditional (contextual) hold-tap behavior
+#
+# Copyright (c) 2025
+# SPDX-License-Identifier: MIT
+
+description: Contextual hold-tap behavior that switches flavor based on the previously emitted keycode
+
+compatible: "dario,behavior-contextual-hold-tap"
+
+include: zero_param.yaml
+
+properties:
+  tap-bindings:
+    type: phandle-array
+    required: true
+    description: Behaviors invoked for the tap decision (in order)
+
+  hold-bindings:
+    type: phandle-array
+    required: true
+    description: Behaviors invoked for the hold decision (in order)
+
+  tapping-term-ms:
+    type: int
+    default: 200
+    description: Tapping term window for hold/tap resolution
+
+  tapping_term_ms:
+    type: int
+    deprecated: true
+
+  quick-tap-ms:
+    type: int
+    default: 0
+    description: Quick tap window (0 disables)
+
+  quick_tap_ms:
+    type: int
+    deprecated: true
+
+  require-prior-idle-ms:
+    type: int
+    default: -1
+    description: Require idle time before enabling quick tap (mirrors ZMK hold-tap)
+
+  normal-flavor:
+    type: string
+    enum:
+      - "balanced"
+      - "tap-preferred"
+      - "hold-preferred"
+    default: "balanced"
+    description: Flavor used normally
+
+  after-flavor:
+    type: string
+    enum:
+      - "balanced"
+      - "tap-preferred"
+      - "hold-preferred"
+    default: "hold-preferred"
+    description: Flavor used after a matched prior keycode within the timeout
+
+  prior-keycodes:
+    type: array
+    default: [SPACE]
+    description: Keycodes that trigger after-flavor when most recently emitted
+
+  prior-timeout-ms:
+    type: int
+    default: 300
+    description: Window (ms) during which the prior keycode influences flavor
+
+  hold-while-undecided:
+    type: boolean
+    description: Mirror of ZMK hold-tap option
+
+  hold-while-undecided-linger:
+    type: boolean
+    description: Mirror of ZMK hold-tap option
+
+  retro-tap:
+    type: boolean
+    description: Mirror of ZMK hold-tap option
+
+  hold-trigger-key-positions:
+    type: array
+    default: []
+    description: Positions that allow hold when first other key is pressed
+
+  hold-trigger-on-release:
+    type: boolean
+    description: Mirror of ZMK hold-tap option

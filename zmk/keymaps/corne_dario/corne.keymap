@@ -148,10 +148,24 @@
             compatible = "zmk,behavior-hold-tap";
             label = "MT_AK_PRIMARY";
             #binding-cells = <2>;
-            flavor = "balanced";
+            flavor = "hold-preferred";
             tapping-term-ms = <200>;
             quick-tap-ms = <200>;
             bindings = <&kp>, <&ak_primary>;
+        };
+
+        cht_ak_primary: cht_ak_primary {
+            compatible = "dario,behavior-contextual-hold-tap";
+            label = "CHT_AK_PRIMARY";
+            #binding-cells = <0>;
+            tap-bindings = <&ak_primary>;
+            hold-bindings = <&kp LSFT>;
+            normal-flavor = "balanced";
+            after-flavor = "hold-preferred";
+            prior-keycodes = <SPACE TAB ENTER KP_ENTER>;
+            prior-timeout-ms = <300>;
+            tapping-term-ms = <200>;
+            quick-tap-ms = <200>;
         };
 
         // Adaptive key for BASE_ALT family
@@ -192,10 +206,24 @@
             compatible = "zmk,behavior-hold-tap";
             label = "MT_AK_ALT";
             #binding-cells = <2>;
-            flavor = "balanced";
+            flavor = "hold-preferred";
             tapping-term-ms = <200>;
             quick-tap-ms = <200>;
             bindings = <&kp>, <&ak_alt>;
+        };
+
+        cht_ak_alt: cht_ak_alt {
+            compatible = "dario,behavior-contextual-hold-tap";
+            label = "CHT_AK_ALT";
+            #binding-cells = <0>;
+            tap-bindings = <&ak_alt>;
+            hold-bindings = <&kp LSFT>;
+            normal-flavor = "balanced";
+            after-flavor = "hold-preferred";
+            prior-keycodes = <SPACE TAB ENTER KP_ENTER>;
+            prior-timeout-ms = <300>;
+            tapping-term-ms = <200>;
+            quick-tap-ms = <200>;
         };
 
     };
@@ -322,7 +350,7 @@
                 &none &kp B &kp F &ak_train_primary_l &kp K &kp Q &kp J &kp G &kp O &kp U &kp DOT &none
                 &none &hml LGUI N &hml LALT S &hml LCTL H &hml LSFT T &kp M &ak_train_primary_y &hmr LSFT C &hmr LCTL A &hmr LALT E &hmr LGUI I &none
                 &none &kp X &kp V &ak_train_primary_p &kp D &kp Z &kp SQT &kp W &kp MINUS &ak_train_primary_fslh &kp COMMA &none
-                &lt NUM BSPC &lt SYM R &mt_ak_primary LSFT 0 &mt LSFT TAB &lt NAV SPACE &lt MEDIA ENTER
+                &lt NUM BSPC &lt SYM R &cht_ak_primary &mt LSFT TAB &lt NAV SPACE &lt MEDIA ENTER
             >;
         };
 
@@ -331,7 +359,7 @@
                 &none &kp B &kp F &kp L &kp K &kp Q &kp SQT &kp G &kp O &kp U &kp DOT &none
                 &kp Y &hml LGUI N &hml LALT S &hml LCTL H &hml LSFT T &kp M &kp Y &hmr LSFT C &hmr LCTL A &hmr LALT E &hmr LGUI I &none
                 &none &kp X &kp P &kp J &kp D &kp V &kp Z &kp W &kp MINUS &kp SEMI &kp COMMA &none
-                &lt NUM BSPC &lt SYM R &mt_ak_alt LSFT 0 &mt LSFT TAB &lt NAV SPACE &lt MEDIA ENTER
+                &lt NUM BSPC &lt SYM R &cht_ak_alt &mt LSFT TAB &lt NAV SPACE &lt MEDIA ENTER
             >;
         };
 

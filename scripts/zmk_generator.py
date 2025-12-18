@@ -683,7 +683,7 @@ class ZMKGenerator:
             code_lines.append(f"            compatible = \"zmk,behavior-hold-tap\";")
             code_lines.append(f"            label = \"MT_AK_{behavior_suffix.upper()}\";")
             code_lines.append(f"            #binding-cells = <2>;")
-            code_lines.append(f"            flavor = \"balanced\";")
+            code_lines.append(f"            flavor = \"hold-preferred\";")
             code_lines.append(f"            tapping-term-ms = <200>;")
             code_lines.append(f"            quick-tap-ms = <200>;")
             code_lines.append(f"            bindings = <&kp>, <&ak_{behavior_suffix}>;")

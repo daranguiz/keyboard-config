@@ -205,6 +205,24 @@ for i in "${!BOARDS[@]}"; do
     if [ -d "$SCRIPT_DIR/config/boards" ]; then
         docker cp "$SCRIPT_DIR/config/boards/." "$CONTAINER_ID:/tmp/zmk-config/boards/" >/dev/null 2>&1
     fi
+    MODULE_ENV=""
+    EXTRA_CMAKE_ARGS=""
+    if [ -d "$SCRIPT_DIR/config/modules" ]; then
+        docker cp "$SCRIPT_DIR/config/modules/." "$CONTAINER_ID:/tmp/zmk-config/modules/" >/dev/null 2>&1
+        MODULES_HOST=$(find "$SCRIPT_DIR/config/modules" -name module.yml -print 2>/dev/null || true)
+        MODULES_LIST=""
+        for path in $MODULES_HOST; do
+            root=${path%/module.yml}
+            root=${root%/zephyr}
+            rel=${root#"$SCRIPT_DIR/config"}
+            MODULES_LIST="${MODULES_LIST};/tmp/zmk-config${rel}"
+        done
+        MODULES_LIST=${MODULES_LIST#;}
+        if [ -n "$MODULES_LIST" ]; then
+            MODULE_ENV="-e ZMK_EXTRA_MODULES=$MODULES_LIST"
+            EXTRA_CMAKE_ARGS="-DZMK_EXTRA_MODULES=$MODULES_LIST"
+        fi
+    fi
     # Optional west manifest (adds custom modules like adaptive-key)
     if [ $MANIFEST_CONFIGURED -eq 0 ] && [ -f "$SCRIPT_DIR/config/west.yml" ]; then
         docker exec -w /workspaces/zmk "$CONTAINER_ID" /bin/bash -c \
@@ -217,13 +235,13 @@ for i in "${!BOARDS[@]}"; do
     # Build inside container
     if [[ $VERBOSE -eq 1 ]]; then
         echo -e "${YELLOW}Verbose build output enabled${NC}"
-        docker exec -w /workspaces/zmk "$CONTAINER_ID" /bin/bash -c \
-            "west build -p -s app -b $BOARD -- $SHIELD_ARG -DZMK_CONFIG=/tmp/zmk-config -DOVERLAY_CONFIG=/tmp/zmk-config/prj.conf" \
+        docker exec $MODULE_ENV -w /workspaces/zmk "$CONTAINER_ID" /bin/bash -c \
+            "west build -p -s app -b $BOARD -- $SHIELD_ARG -DZMK_CONFIG=/tmp/zmk-config -DOVERLAY_CONFIG=/tmp/zmk-config/prj.conf $EXTRA_CMAKE_ARGS" \
             2>&1 | tee "$LOG_FILE"
         BUILD_EXIT=${PIPESTATUS[0]}
     else
-        docker exec -w /workspaces/zmk "$CONTAINER_ID" /bin/bash -c \
-            "west build -p -s app -b $BOARD -- $SHIELD_ARG -DZMK_CONFIG=/tmp/zmk-config -DOVERLAY_CONFIG=/tmp/zmk-config/prj.conf" \
+        docker exec $MODULE_ENV -w /workspaces/zmk "$CONTAINER_ID" /bin/bash -c \
+            "west build -p -s app -b $BOARD -- $SHIELD_ARG -DZMK_CONFIG=/tmp/zmk-config -DOVERLAY_CONFIG=/tmp/zmk-config/prj.conf $EXTRA_CMAKE_ARGS" \
             >"$LOG_FILE" 2>&1
         BUILD_EXIT=$?
     fi
