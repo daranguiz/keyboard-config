@@ -39,6 +39,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         // Layer-tap keys: use standard tapping term (200ms)
         case LT(NAV, KC_SPC):
         case LT(NUM, KC_BSPC):
+        case LT(NUM, QK_AREP):
         case LT(SYM, KC_R):
         case LT(MEDIA, KC_ENT):
             return 200;
@@ -49,11 +50,13 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 }
 
 // Per-key hold-on-other-key-press (hold-preferred behavior)
-// Enables immediate hold activation for TAB and DEL mod-taps
+// Enables immediate hold activation for thumb mod-taps
 bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        // Hold-preferred mod-taps: TAB and DEL with LSFT
+        // Hold-preferred mod-taps: TAB/BSPC/MAGIC with LSFT
         case LSFT_T(KC_TAB):
+        case LSFT_T(KC_BSPC):
+        case LSFT_T(QK_AREP):
         case LSFT_T(KC_DEL):
             return true;  // Immediately select hold action when another key is pressed
         default:
@@ -68,8 +71,11 @@ static bool is_thumb_keycode(uint16_t keycode) {
     switch (keycode) {
         // Thumbs on BASE_* layers
         case LT(NUM, KC_BSPC):
+        case LT(NUM, QK_AREP):
         case LT(SYM, KC_R):
         case LSFT_T(KC_DEL):
+        case LSFT_T(KC_BSPC):
+        case LSFT_T(QK_AREP):
         case LSFT_T(KC_TAB):
         case LT(NAV, KC_SPC):
         case LT(MEDIA, KC_ENT):
