@@ -133,10 +133,10 @@ fi
 echo -e "${GREEN}Dev container started: $CONTAINER_ID${NC}"
 echo ""
 
-# Initialize workspace (only needed first time, but safe to run)
+# Initialize workspace (only needed first time, but safe to run). Force manifest.path to app to avoid stale /tmp/zmk-config.
 echo -e "${YELLOW}Initializing Zephyr workspace...${NC}"
 docker exec -w /workspaces/zmk "$CONTAINER_ID" /bin/bash -c \
-    "west init -l app/ 2>/dev/null || true; west config manifest.path app; west config manifest.file west.yml; west update"
+    "west init -l app/ 2>/dev/null || true; west config --global manifest.path app; west config --global manifest.file west.yml; west update"
 echo ""
 
 # Build each target
@@ -205,7 +205,6 @@ for i in "${!BOARDS[@]}"; do
     if [ -d "$SCRIPT_DIR/config/boards" ]; then
         docker cp "$SCRIPT_DIR/config/boards/." "$CONTAINER_ID:/tmp/zmk-config/boards/" >/dev/null 2>&1
     fi
-    MODULE_ENV=""
     EXTRA_CMAKE_ARGS=""
     if [ -d "$SCRIPT_DIR/config/modules" ]; then
         docker cp "$SCRIPT_DIR/config/modules/." "$CONTAINER_ID:/tmp/zmk-config/modules/" >/dev/null 2>&1
@@ -219,29 +218,32 @@ for i in "${!BOARDS[@]}"; do
         done
         MODULES_LIST=${MODULES_LIST#;}
         if [ -n "$MODULES_LIST" ]; then
-            MODULE_ENV="-e ZMK_EXTRA_MODULES=$MODULES_LIST"
-            EXTRA_CMAKE_ARGS="-DZMK_EXTRA_MODULES=$MODULES_LIST"
+            MODULES_LIST_ESCAPED=${MODULES_LIST//;/\\;}
+            EXTRA_CMAKE_ARGS="-DZMK_EXTRA_MODULES=${MODULES_LIST_ESCAPED} -DZEPHYR_EXTRA_MODULES=${MODULES_LIST_ESCAPED}"
         fi
     fi
+
+    SHIELD_ROOTS="/workspaces/zmk/app/boards/shields/corne;/tmp/zmk-config/boards/shields"
+    SHIELD_ROOTS_ESCAPED=${SHIELD_ROOTS//;/\\;}
+    EXTRA_CMAKE_ARGS="$EXTRA_CMAKE_ARGS -DKCONFIG_WARN_ON=0 -DSHIELD_ROOT=${SHIELD_ROOTS_ESCAPED}"
+
+    BOARD_ROOT_ENV="BOARD_ROOT=/workspaces/zmk/app"
     # Optional west manifest (adds custom modules like adaptive-key)
-    if [ $MANIFEST_CONFIGURED -eq 0 ] && [ -f "$SCRIPT_DIR/config/west.yml" ]; then
-        docker exec -w /workspaces/zmk "$CONTAINER_ID" /bin/bash -c \
-            "west config manifest.path /tmp/zmk-config && west config manifest.file west.yml && west update" >/dev/null 2>&1
-        MANIFEST_CONFIGURED=1
-    fi
+    # Disabled: reconfiguring west manifest to /tmp/zmk-config caused board discovery issues.
+    # Keep using the app manifest already configured in the container.
 
     LOG_FILE="$OUTPUT_DIR/${BUILD_NAME}_build.log"
 
     # Build inside container
     if [[ $VERBOSE -eq 1 ]]; then
         echo -e "${YELLOW}Verbose build output enabled${NC}"
-        docker exec $MODULE_ENV -w /workspaces/zmk "$CONTAINER_ID" /bin/bash -c \
-            "west build -p -s app -b $BOARD -- $SHIELD_ARG -DZMK_CONFIG=/tmp/zmk-config -DOVERLAY_CONFIG=/tmp/zmk-config/prj.conf $EXTRA_CMAKE_ARGS" \
+        docker exec -w /workspaces/zmk "$CONTAINER_ID" /bin/bash -c \
+            "$BOARD_ROOT_ENV west build -p -s app -b $BOARD -- $SHIELD_ARG -DZMK_CONFIG=/tmp/zmk-config -DOVERLAY_CONFIG=/tmp/zmk-config/prj.conf $EXTRA_CMAKE_ARGS" \
             2>&1 | tee "$LOG_FILE"
         BUILD_EXIT=${PIPESTATUS[0]}
     else
-        docker exec $MODULE_ENV -w /workspaces/zmk "$CONTAINER_ID" /bin/bash -c \
-            "west build -p -s app -b $BOARD -- $SHIELD_ARG -DZMK_CONFIG=/tmp/zmk-config -DOVERLAY_CONFIG=/tmp/zmk-config/prj.conf $EXTRA_CMAKE_ARGS" \
+        docker exec -w /workspaces/zmk "$CONTAINER_ID" /bin/bash -c \
+            "$BOARD_ROOT_ENV west build -p -s app -b $BOARD -- $SHIELD_ARG -DZMK_CONFIG=/tmp/zmk-config -DOVERLAY_CONFIG=/tmp/zmk-config/prj.conf $EXTRA_CMAKE_ARGS" \
             >"$LOG_FILE" 2>&1
         BUILD_EXIT=$?
     fi

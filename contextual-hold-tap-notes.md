@@ -18,3 +18,4 @@
 - Updated build script to copy modules and set `ZMK_EXTRA_MODULES` automatically when modules are present.
 - Added usage example and property list to the module README.
 - Swapped magic mod-taps in `zmk/keymaps/corne_dario/corne.keymap` and `zmk/keymaps/corneish_zen_dario/corneish_zen.keymap` to new contextual HT behaviors (`cht_ak_primary` / `cht_ak_alt`) with whitespace-triggered hold-preferred flavor.
+- Build attempt still failing because devicetree binding lookup can't see the contextual HT binding (modules' bindings dirs not in the generated list yet); need to sort out module discovery (ZEPHYR_EXTRA_MODULES handling) before firmware builds.
