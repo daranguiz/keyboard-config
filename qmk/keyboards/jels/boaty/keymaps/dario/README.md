@@ -72,9 +72,9 @@ qmk compile -kb jels/boaty -km dario
 54: KC_MINS
 55: KC_SLSH
 56: KC_COMM
-57: LT(NUM, KC_BSPC)
+57: LT(NUM, QK_AREP)
 58: LT(SYM, KC_R)
-59: LSFT_T(QK_AREP)
+59: LSFT_T(KC_BSPC)
 60: LSFT_T(KC_TAB)
 61: LT(NAV, KC_SPC)
 62: LT(MEDIA, KC_ENT)
@@ -111,7 +111,7 @@ qmk compile -kb jels/boaty -km dario
 25: KC_L
 26: KC_K
 27: KC_Q
-28: KC_QUOT
+28: KC_P
 29: KC_G
 30: KC_O
 31: KC_U
@@ -131,14 +131,82 @@ qmk compile -kb jels/boaty -km dario
 45: LGUI_T(KC_I)
 46: KC_ENT
 47: KC_X
-48: KC_P
+48: KC_V
 49: KC_J
 50: KC_D
-51: KC_V
-52: KC_Z
+51: KC_Z
+52: KC_QUOT
 53: KC_W
 54: KC_MINS
-55: KC_SCLN
+55: KC_SLSH
+56: KC_COMM
+57: LT(NUM, KC_BSPC)
+58: LT(SYM, KC_R)
+59: LSFT_T(QK_AREP)
+60: LSFT_T(KC_TAB)
+61: LT(NAV, KC_SPC)
+62: LT(MEDIA, KC_ENT)
+```
+
+## BASE_ALT2 Layer
+
+```
+ 0: KC_PMNS
+ 1: KC_PSLS
+ 2: KC_PAST
+ 3: KC_P7
+ 4: KC_P8
+ 5: KC_P9
+ 6: KC_P4
+ 7: KC_P5
+ 8: KC_P6
+ 9: KC_PPLS
+10: KC_P1
+11: KC_P2
+12: KC_P3
+13: KC_PENT
+14: KC_NUM_LOCK
+15: KC_P0
+16: KC_P0
+17: KC_PDOT
+18: KC_PENT
+19: KC_PEQL
+20: KC_BSPC
+21: KC_ESC
+22: KC_TAB
+23: KC_B
+24: KC_F
+25: KC_L
+26: KC_K
+27: KC_Q
+28: KC_J
+29: KC_G
+30: KC_O
+31: KC_U
+32: KC_DOT
+33: KC_BSPC
+34: KC_DEL
+35: KC_CAPS
+36: LGUI_T(KC_N)
+37: LALT_T(KC_S)
+38: LCTL_T(KC_H)
+39: LSFT_T(KC_T)
+40: KC_M
+41: KC_Y
+42: LSFT_T(KC_C)
+43: LCTL_T(KC_A)
+44: LALT_T(KC_E)
+45: LGUI_T(KC_I)
+46: KC_ENT
+47: KC_X
+48: KC_V
+49: KC_P
+50: KC_D
+51: KC_Z
+52: KC_QUOT
+53: KC_W
+54: KC_MINS
+55: KC_SLSH
 56: KC_COMM
 57: LT(NUM, KC_BSPC)
 58: LT(SYM, KC_R)
@@ -344,9 +412,9 @@ qmk compile -kb jels/boaty -km dario
 54: KC_NO
 55: KC_NO
 56: KC_NO
-57: KC_BSPC
+57: KC_DEL
 58: KC_ENT
-59: KC_DEL
+59: KC_BSPC
 60: KC_NO
 61: KC_NO
 62: KC_NO
@@ -380,7 +448,7 @@ qmk compile -kb jels/boaty -km dario
 22: KC_TRNS
 23: DF(BASE_PRIMARY)
 24: DF(BASE_ALT)
-25: KC_NO
+25: DF(BASE_ALT2)
 26: KC_NO
 27: KC_NO
 28: KC_NO

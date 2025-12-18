@@ -8,9 +8,69 @@ base_layers:
   BASE_ALT:
     display_name: "ALT"
     description: "Alternative layout"
+  BASE_ALT2:
+    display_name: "ALT2"
+    description: "Alternative layout 2"
 
 layers:
+
+  # # Original Night with the magic shift issue
+  # BASE_PRIMARY:
+  #   core: # (3x5)
+  #     left:
+  #       - [B              , F              , L              , K              , Q              ]
+  #       - [hrm:LGUI:N     , hrm:LALT:S     , hrm:LCTL:H     , hrm:LSFT:T     , M              ]
+  #       - [X              , V              , P              , D              , Z              ]
+  #     right:
+  #       - [J              , G              , O              , U              , DOT            ]
+  #       - [Y              , hrm:LSFT:C     , hrm:LCTL:A     , hrm:LALT:E     , hrm:LGUI:I     ]
+  #       - [QUOT           , W              , MINS           , SLSH           , COMM           ]
+  #     thumbs:
+  #       - [lt:NUM:BSPC    , lt:SYM:R        , mt:LSFT:MAGIC  ]
+  #       - [mt:LSFT:TAB    , lt:NAV:SPC      , lt:MEDIA:ENT   ]
+  #   extensions:
+  #     3x6_3:
+  #       outer_pinky_left: [NONE, NONE, NONE]
+  #       outer_pinky_right: [NONE, NONE, NONE]
+
   BASE_PRIMARY:
+    core: # (3x5)
+      left:
+        - [B              , F              , L              , K              , Q              ]
+        - [hrm:LGUI:N     , hrm:LALT:S     , hrm:LCTL:H     , hrm:LSFT:T     , M              ]
+        - [X              , V              , P              , D              , Z              ]
+      right:
+        - [J              , G              , O              , U              , DOT            ]
+        - [Y              , hrm:LSFT:C     , hrm:LCTL:A     , hrm:LALT:E     , hrm:LGUI:I     ]
+        - [QUOT           , W              , MINS           , SLSH           , COMM           ]
+      thumbs:
+        - [lt:NUM:MAGIC   , lt:SYM:R       ,   mt:LSFT:BSPC]
+        - [mt:LSFT:TAB    , lt:NAV:SPC      , lt:MEDIA:ENT   ]
+    extensions:
+      3x6_3:
+        outer_pinky_left: [NONE, NONE, NONE]
+        outer_pinky_right: [NONE, NONE, NONE]
+
+  # Default night
+  BASE_ALT:
+    core: # (3x5)
+      left:
+        - [B              , F              , L              , K              , Q              ]
+        - [hrm:LGUI:N     , hrm:LALT:S     , hrm:LCTL:H     , hrm:LSFT:T     , M              ]
+        - [X              , V              , J              , D              , Z              ]
+      right:
+        - [P              , G              , O              , U              , DOT            ]
+        - [Y              , hrm:LSFT:C     , hrm:LCTL:A     , hrm:LALT:E     , hrm:LGUI:I     ]
+        - [QUOT           , W              , MINS           , SLSH           , COMM           ]
+      thumbs:
+        - [lt:NUM:BSPC    , lt:SYM:R        , mt:LSFT:MAGIC  ]
+        - [mt:LSFT:TAB    , lt:NAV:SPC      , lt:MEDIA:ENT   ]
+    extensions:
+      3x6_3:
+        outer_pinky_left: [NONE, NONE, NONE]
+        outer_pinky_right: [NONE, NONE, NONE]
+
+  BASE_ALT2:
     core: # (3x5)
       left:
         - [B              , F              , L              , K              , Q              ]
@@ -26,24 +86,6 @@ layers:
     extensions:
       3x6_3:
         outer_pinky_left: [NONE, NONE, NONE]
-        outer_pinky_right: [NONE, NONE, NONE]
-
-  BASE_ALT:
-    core: # (3x5)
-      left:
-        - [B              , F              , L              , K              , Q              ]
-        - [hrm:LGUI:N     , hrm:LALT:S     , hrm:LCTL:H     , hrm:LSFT:T     , M              ]
-        - [X              , P              , J              , D              , V              ]
-      right:
-        - [QUOT           , G              , O              , U              , DOT            ]
-        - [Y              , hrm:LSFT:C     , hrm:LCTL:A     , hrm:LALT:E     , hrm:LGUI:I     ]
-        - [Z              , W              , MINS           , SCLN           , COMM           ]
-      thumbs:
-        - [lt:NUM:BSPC    , lt:SYM:R        , mt:LSFT:MAGIC  ]
-        - [mt:LSFT:TAB    , lt:NAV:SPC      , lt:MEDIA:ENT   ]
-    extensions:
-      3x6_3:
-        outer_pinky_left: [NONE, Y, NONE]
         outer_pinky_right: [NONE, NONE, NONE]
 
   # Supporting layers
@@ -94,7 +136,7 @@ layers:
         - [NONE           , LSFT           , LCTL           , LALT           , LGUI           ]
         - [NONE           , NONE           , NONE           , NONE           , NONE           ]
       thumbs:
-        - [BSPC           , ENT            , DEL            ]
+        - [DEL           , ENT            , BSPC            ]
         - [NONE           , NONE           , NONE           ]
     extensions:
       3x6_3:
@@ -104,7 +146,7 @@ layers:
   MEDIA:
     core: # (3x5)
       left:
-        - [df:BASE_PRIMARY, df:BASE_ALT    , NONE           , NONE           , NONE           ]
+        - [df:BASE_PRIMARY, df:BASE_ALT    , df:BASE_ALT2   , NONE           , NONE           ]
         - [MNXT           , VOLU           , VOLD           , MPRV           , NONE           ]
         - [UNDO           , CUT            , COPY           , PASTE          , REDO           ]
       right:
@@ -130,7 +172,7 @@ combos:
     action: DFU
     timeout_ms: 100  # Slightly longer for easier chord
     require_prior_idle_ms: 150  # Prevent during fast typing (ZMK only)
-    layers: [BASE_PRIMARY, BASE_ALT]
+    layers: [BASE_PRIMARY, BASE_ALT, BASE_ALT2]
 
   - name: dfu_right
     description: "Enter bootloader (right hand)"
@@ -138,7 +180,7 @@ combos:
     action: DFU
     timeout_ms: 100  # Slightly longer for easier chord
     require_prior_idle_ms: 150  # Prevent during fast typing (ZMK only)
-    layers: [BASE_PRIMARY, BASE_ALT]
+    layers: [BASE_PRIMARY, BASE_ALT, BASE_ALT2]
 
   - name: github_url
     description: "Expand to GitHub repo URL"
@@ -146,7 +188,7 @@ combos:
     action: MACRO_GITHUB_URL
     macro_text: "https://github.com/daranguiz/keyboard-config?tab=readme-ov-file#readme"
     timeout_ms: 100  # Slightly longer for 4-key combo
-    layers: [BASE_PRIMARY, BASE_ALT]
+    layers: [BASE_PRIMARY, BASE_ALT, BASE_ALT2]
 
 # Magic key definitions
 # Context-aware keys that produce different outputs based on previous keypress
@@ -173,4 +215,23 @@ magic_keys:
       ",": " BUT"
       "-": ">"
       ".": "/"
+      P: L
+      L: P
+      E: Y
+      C: Y
+      G: Y
+    default_repeat: true
+
+  BASE_ALT2:
+    timeout_ms: 0
+    mappings:
+      " ": THE
+      ",": " BUT"
+      "-": ">"
+      ".": "/"
+      P: L
+      L: P
+      E: Y
+      C: Y
+      G: Y
     default_repeat: true

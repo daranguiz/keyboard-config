@@ -47,9 +47,9 @@
 34: &kp COMMA
 35: &none
 
-36: &lt NUM BSPC
+36: &lt_ak_primary NUM 0
 37: &lt SYM R
-38: &mt_ak_primary LSFT 0
+38: &mt LSFT BSPC
 39: &mt LSFT TAB
 40: &lt NAV SPACE
 41: &lt MEDIA ENTER
@@ -65,14 +65,14 @@
  4: &kp K
  5: &kp Q
 
- 6: &kp SQT
+ 6: &kp P
  7: &kp G
  8: &kp O
  9: &kp U
 10: &kp DOT
 11: &none
 
-12: &kp Y
+12: &none
 13: &hml LGUI N
 14: &hml LALT S
 15: &hml LCTL H
@@ -88,21 +88,74 @@
 
 24: &none
 25: &kp X
-26: &kp P
+26: &kp V
 27: &kp J
 28: &kp D
-29: &kp V
+29: &kp Z
 
-30: &kp Z
+30: &kp SQT
 31: &kp W
 32: &kp MINUS
-33: &kp SEMI
+33: &kp FSLH
 34: &kp COMMA
 35: &none
 
 36: &lt NUM BSPC
 37: &lt SYM R
 38: &mt_ak_alt LSFT 0
+39: &mt LSFT TAB
+40: &lt NAV SPACE
+41: &lt MEDIA ENTER
+```
+
+## BASE_ALT2 Layer
+
+```
+ 0: &none
+ 1: &kp B
+ 2: &kp F
+ 3: &kp L
+ 4: &kp K
+ 5: &kp Q
+
+ 6: &kp J
+ 7: &kp G
+ 8: &kp O
+ 9: &kp U
+10: &kp DOT
+11: &none
+
+12: &none
+13: &hml LGUI N
+14: &hml LALT S
+15: &hml LCTL H
+16: &hml LSFT T
+17: &kp M
+
+18: &kp Y
+19: &hmr LSFT C
+20: &hmr LCTL A
+21: &hmr LALT E
+22: &hmr LGUI I
+23: &none
+
+24: &none
+25: &kp X
+26: &kp V
+27: &kp P
+28: &kp D
+29: &kp Z
+
+30: &kp SQT
+31: &kp W
+32: &kp MINUS
+33: &kp FSLH
+34: &kp COMMA
+35: &none
+
+36: &lt NUM BSPC
+37: &lt SYM R
+38: &mt_ak_alt2 LSFT 0
 39: &mt LSFT TAB
 40: &lt NAV SPACE
 41: &lt MEDIA ENTER
@@ -259,9 +312,9 @@
 34: &none
 35: &none
 
-36: &kp BSPC
+36: &kp DEL
 37: &kp ENTER
-38: &kp DEL
+38: &kp BSPC
 39: &none
 40: &none
 41: &none
@@ -273,7 +326,7 @@
  0: &none
  1: &to BASE_PRIMARY
  2: &to BASE_ALT
- 3: &none
+ 3: &to BASE_ALT2
  4: &none
  5: &none
 
@@ -343,3 +396,22 @@
   - , →  BUT
   - - → >
   - . → /
+  - P → L
+  - L → P
+  - E → Y
+  - C → Y
+  - G → Y
+
+### BASE_ALT2
+- default: REPEAT
+- timeout_ms: 0
+- mappings:
+  -   → THE
+  - , →  BUT
+  - - → >
+  - . → /
+  - P → L
+  - L → P
+  - E → Y
+  - C → Y
+  - G → Y

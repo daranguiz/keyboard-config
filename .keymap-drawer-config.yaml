@@ -5,6 +5,7 @@ parse_config:
   layer_names:
   - BASE_PRIMARY
   - BASE_ALT
+  - BASE_ALT2
   - NUM
   - SYM
   - NAV
@@ -12,6 +13,7 @@ parse_config:
   layer_legend_map:
     BASE_PRIMARY: NIGHT
     BASE_ALT: ALT
+    BASE_ALT2: ALT2
   raw_binding_map:
     KC_NO: ''
     U_NA: ''
@@ -52,6 +54,7 @@ parse_config:
     DF(BASE_DUSK): BUYA
     DF(BASE_PRIMARY): NIHT
     DF(BASE_ALT): ALT
+    DF(BASE_ALT2): ALT2
 draw_config:
   ortho_layout:
     split: !!bool 'true'

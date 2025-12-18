@@ -7,6 +7,7 @@
 enum layers {
     BASE_PRIMARY,
     BASE_ALT,
+    BASE_ALT2,
     NUM,
     SYM,
     NAV,

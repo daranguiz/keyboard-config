@@ -211,38 +211,38 @@ path.combo {
     }
 
     /* Highlight layer-tap keys with bright green on all BASE layers */
-    .layer-ALT .keypos-36 rect,
-    .layer-ALT .keypos-37 rect,
-    .layer-ALT .keypos-40 rect,
-    .layer-ALT .keypos-41 rect {
+    .layer-ALT2 .keypos-36 rect,
+    .layer-ALT2 .keypos-37 rect,
+    .layer-ALT2 .keypos-40 rect,
+    .layer-ALT2 .keypos-41 rect {
       fill: #4CAF50 !important;
       stroke: none !important;
       opacity: 1 !important;
     }
-    .layer-ALT .keypos-36 text,
-    .layer-ALT .keypos-37 text,
-    .layer-ALT .keypos-40 text,
-    .layer-ALT .keypos-41 text {
+    .layer-ALT2 .keypos-36 text,
+    .layer-ALT2 .keypos-37 text,
+    .layer-ALT2 .keypos-40 text,
+    .layer-ALT2 .keypos-41 text {
       fill: white !important;
     }
-    .layer-ALT .keypos-36 use,
-    .layer-ALT .keypos-37 use,
-    .layer-ALT .keypos-40 use,
-    .layer-ALT .keypos-41 use {
+    .layer-ALT2 .keypos-36 use,
+    .layer-ALT2 .keypos-37 use,
+    .layer-ALT2 .keypos-40 use,
+    .layer-ALT2 .keypos-41 use {
       fill: white !important;
     }
 
     /* Highlight home row mods and mod-tap keys with lighter green stroke on all BASE layers */
-    .layer-ALT .keypos-13 rect,
-    .layer-ALT .keypos-14 rect,
-    .layer-ALT .keypos-15 rect,
-    .layer-ALT .keypos-16 rect,
-    .layer-ALT .keypos-19 rect,
-    .layer-ALT .keypos-20 rect,
-    .layer-ALT .keypos-21 rect,
-    .layer-ALT .keypos-22 rect,
-    .layer-ALT .keypos-38 rect,
-    .layer-ALT .keypos-39 rect {
+    .layer-ALT2 .keypos-13 rect,
+    .layer-ALT2 .keypos-14 rect,
+    .layer-ALT2 .keypos-15 rect,
+    .layer-ALT2 .keypos-16 rect,
+    .layer-ALT2 .keypos-19 rect,
+    .layer-ALT2 .keypos-20 rect,
+    .layer-ALT2 .keypos-21 rect,
+    .layer-ALT2 .keypos-22 rect,
+    .layer-ALT2 .keypos-38 rect,
+    .layer-ALT2 .keypos-39 rect {
       stroke: #66BB6A !important;
       stroke-width: 2 !important;
     }
@@ -274,8 +274,8 @@ path.combo {
       opacity: 0.3 !important;
     }
 </style>
-<g transform="translate(30, 0)" class="layer-ALT">
-<text x="420" y="133" class="label" id="ALT" text-anchor="middle" dominant-baseline="middle" font-size="28" style="font-weight: 700; font-family: Helvetica, Arial, sans-serif; stroke: white; stroke-width: 4; paint-order: stroke; text-anchor: middle; dominant-baseline: middle;">ALT</text>
+<g transform="translate(30, 0)" class="layer-ALT2">
+<text x="420" y="133" class="label" id="ALT2" text-anchor="middle" dominant-baseline="middle" font-size="28" style="font-weight: 700; font-family: Helvetica, Arial, sans-serif; stroke: white; stroke-width: 4; paint-order: stroke; text-anchor: middle; dominant-baseline: middle;">ALT2</text>
 <g transform="translate(0, 56)">
 <g transform="translate(28, 49)" class="key keypos-0">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
@@ -302,7 +302,7 @@ path.combo {
 </g>
 <g transform="translate(532, 42)" class="key keypos-6">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
-<text x="0" y="0" class="key tap" style="font-size: 28px; font-weight: 700; font-family: Helvetica, Arial, sans-serif">p</text>
+<text x="0" y="0" class="key tap" style="font-size: 28px; font-weight: 700; font-family: Helvetica, Arial, sans-serif">j</text>
 </g>
 <g transform="translate(588, 35)" class="key keypos-7">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
@@ -390,7 +390,7 @@ path.combo {
 </g>
 <g transform="translate(196, 140)" class="key keypos-27">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
-<text x="0" y="0" class="key tap" style="font-size: 28px; font-weight: 700; font-family: Helvetica, Arial, sans-serif">j</text>
+<text x="0" y="0" class="key tap" style="font-size: 28px; font-weight: 700; font-family: Helvetica, Arial, sans-serif">p</text>
 </g>
 <g transform="translate(252, 147)" class="key keypos-28">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>

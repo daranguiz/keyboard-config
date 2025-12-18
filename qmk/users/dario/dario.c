@@ -66,7 +66,7 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
 #ifdef CHORDAL_HOLD
 static bool is_thumb_keycode(uint16_t keycode) {
     switch (keycode) {
-        // Thumbs on BASE_PRIMARY and BASE_ALT
+        // Thumbs on BASE_* layers
         case LT(NUM, KC_BSPC):
         case LT(SYM, KC_R):
         case LSFT_T(KC_DEL):
@@ -110,6 +110,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 break;
             case DF(BASE_ALT):
                 current_base_layer = BASE_ALT;
+                break;
+            case DF(BASE_ALT2):
+                current_base_layer = BASE_ALT2;
                 break;
         }
     }
