@@ -37,10 +37,17 @@ QK_RBT:
 TRANS:
   qmk: "KC_TRNS"
   zmk: "&trans"
+  display_glyph: "$$mdi:chevron-down$$"
 
 TRNS:
   qmk: "KC_TRNS"
   zmk: "&trans"
+  display_glyph: "$$mdi:chevron-down$$"
+
+REPEAT:
+  qmk: "QK_REP"
+  zmk: "&key_repeat"
+  display_glyph: "$$mdi:repeat-once$$"
 
 # Alpha keys (A-Z)
 A:

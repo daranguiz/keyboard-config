@@ -19,7 +19,7 @@
 10: &kp DOT
 11: &none
 
-12: &none
+12: &key_repeat
 13: &hml LGUI N
 14: &hml LALT S
 15: &hml LCTL H
@@ -31,7 +31,7 @@
 20: &hmr LCTL A
 21: &hmr LALT E
 22: &hmr LGUI I
-23: &none
+23: &key_repeat
 
 24: &none
 25: &kp X
@@ -164,7 +164,7 @@
 ## NUM Layer
 
 ```
- 0: &none
+ 0: &trans
  1: &kp TILDE
  2: &kp AMPERSAND
  3: &kp PERCENT
@@ -176,9 +176,9 @@
  8: &kp N8
  9: &kp N9
 10: &kp DOT
-11: &none
+11: &trans
 
-12: &none
+12: &trans
 13: &kp LGUI
 14: &kp LALT
 15: &kp LCTRL
@@ -190,9 +190,9 @@
 20: &kp N2
 21: &kp N3
 22: &kp GRAVE
-23: &none
+23: &trans
 
-24: &none
+24: &trans
 25: &kp LG(Z)
 26: &kp LG(X)
 27: &kp LG(C)
@@ -204,7 +204,7 @@
 32: &kp N5
 33: &kp N6
 34: &kp COMMA
-35: &none
+35: &trans
 
 36: &none
 37: &none
@@ -217,7 +217,7 @@
 ## SYM Layer
 
 ```
- 0: &none
+ 0: &trans
  1: &kp TILDE
  2: &kp AMPERSAND
  3: &kp PERCENT
@@ -229,9 +229,9 @@
  8: &kp LBRC
  9: &kp RBRC
 10: &kp GT
-11: &none
+11: &trans
 
-12: &none
+12: &trans
 13: &kp LGUI
 14: &kp LALT
 15: &kp LCTRL
@@ -243,9 +243,9 @@
 20: &kp LPAR
 21: &kp RPAR
 22: &kp SEMI
-23: &none
+23: &trans
 
-24: &none
+24: &trans
 25: &none
 26: &none
 27: &kp PIPE
@@ -257,7 +257,7 @@
 32: &kp LBKT
 33: &kp RBKT
 34: &kp COMMA
-35: &none
+35: &trans
 
 36: &none
 37: &none
@@ -270,7 +270,7 @@
 ## NAV Layer
 
 ```
- 0: &none
+ 0: &trans
  1: &none
  2: &kp PG_UP
  3: &none
@@ -282,9 +282,9 @@
  8: &bt BT_SEL 2
  9: &bt BT_SEL 3
 10: &bt BT_CLR
-11: &none
+11: &trans
 
-12: &none
+12: &trans
 13: &none
 14: &kp LEFT
 15: &kp UP
@@ -296,9 +296,9 @@
 20: &kp LCTRL
 21: &kp LALT
 22: &kp LGUI
-23: &none
+23: &trans
 
-24: &none
+24: &trans
 25: &kp END
 26: &kp PG_DN
 27: &kp DOWN
@@ -310,7 +310,7 @@
 32: &none
 33: &none
 34: &none
-35: &none
+35: &trans
 
 36: &kp DEL
 37: &kp ENTER
@@ -323,7 +323,7 @@
 ## MEDIA Layer
 
 ```
- 0: &none
+ 0: &trans
  1: &to BASE_PRIMARY
  2: &to BASE_ALT
  3: &to BASE_ALT2
@@ -335,9 +335,9 @@
  8: &none
  9: &none
 10: &none
-11: &none
+11: &trans
 
-12: &none
+12: &trans
 13: &kp C_NEXT
 14: &kp C_VOL_UP
 15: &kp C_VOL_DN
@@ -349,9 +349,9 @@
 20: &kp LCTRL
 21: &kp LALT
 22: &kp LGUI
-23: &none
+23: &trans
 
-24: &none
+24: &trans
 25: &kp LG(Z)
 26: &kp LG(X)
 27: &kp LG(C)
@@ -363,7 +363,7 @@
 32: &none
 33: &none
 34: &bootloader
-35: &none
+35: &trans
 
 36: &kp C_MUTE
 37: &kp C_PLAY_PAUSE

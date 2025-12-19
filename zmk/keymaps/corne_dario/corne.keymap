@@ -525,7 +525,7 @@
         base_primary_layer {
             bindings = <
                 &none &kp B &kp F &ak_train_primary_l &kp K &kp Q &kp J &kp G &kp O &kp U &kp DOT &none
-                &none &hml LGUI N &hml LALT S &hml LCTL H &hml LSFT T &kp M &ak_train_primary_y &hmr LSFT C &hmr LCTL A &hmr LALT E &hmr LGUI I &none
+                &key_repeat &hml LGUI N &hml LALT S &hml LCTL H &hml LSFT T &kp M &ak_train_primary_y &hmr LSFT C &hmr LCTL A &hmr LALT E &hmr LGUI I &key_repeat
                 &none &kp X &kp V &ak_train_primary_p &kp D &kp Z &kp SQT &kp W &kp MINUS &ak_train_primary_fslh &kp COMMA &none
                 &lt_ak_primary NUM 0 &lt SYM R &mt LSFT BSPC &mt LSFT TAB &lt NAV SPACE &lt MEDIA ENTER
             >;
@@ -551,36 +551,36 @@
 
         num_layer {
             bindings = <
-                &none &kp TILDE &kp AMPERSAND &kp PERCENT &kp DOLLAR &none &kp CARET &kp N7 &kp N8 &kp N9 &kp DOT &none
-                &none &kp LGUI &kp LALT &kp LCTRL &kp LSHFT &kp EQUAL &kp COLON &kp N1 &kp N2 &kp N3 &kp GRAVE &none
-                &none &kp LG(Z) &kp LG(X) &kp LG(C) &kp LG(V) &kp LG(LS(Z)) &kp HASH &kp N4 &kp N5 &kp N6 &kp COMMA &none
+                &trans &kp TILDE &kp AMPERSAND &kp PERCENT &kp DOLLAR &none &kp CARET &kp N7 &kp N8 &kp N9 &kp DOT &trans
+                &trans &kp LGUI &kp LALT &kp LCTRL &kp LSHFT &kp EQUAL &kp COLON &kp N1 &kp N2 &kp N3 &kp GRAVE &trans
+                &trans &kp LG(Z) &kp LG(X) &kp LG(C) &kp LG(V) &kp LG(LS(Z)) &kp HASH &kp N4 &kp N5 &kp N6 &kp COMMA &trans
                 &none &none &none &ak_primary &kp N0 &kp AT
             >;
         };
 
         sym_layer {
             bindings = <
-                &none &kp TILDE &kp AMPERSAND &kp PERCENT &kp DOLLAR &none &kp PLUS &kp LT &kp LBRC &kp RBRC &kp GT &none
-                &none &kp LGUI &kp LALT &kp LCTRL &kp LSHFT &kp EQUAL &kp COLON &kp EXCL &kp LPAR &kp RPAR &kp SEMI &none
-                &none &none &none &kp PIPE &kp BSLH &none &kp ASTERISK &kp MINUS &kp LBKT &kp RBKT &kp COMMA &none
+                &trans &kp TILDE &kp AMPERSAND &kp PERCENT &kp DOLLAR &none &kp PLUS &kp LT &kp LBRC &kp RBRC &kp GT &trans
+                &trans &kp LGUI &kp LALT &kp LCTRL &kp LSHFT &kp EQUAL &kp COLON &kp EXCL &kp LPAR &kp RPAR &kp SEMI &trans
+                &trans &none &none &kp PIPE &kp BSLH &none &kp ASTERISK &kp MINUS &kp LBKT &kp RBKT &kp COMMA &trans
                 &none &none &none &ak_primary &kp SPACE &kp ENTER
             >;
         };
 
         nav_layer {
             bindings = <
-                &none &none &kp PG_UP &none &none &kp ESC &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_CLR &none
-                &none &none &kp LEFT &kp UP &kp RIGHT &kp CAPS &none &kp LSHFT &kp LCTRL &kp LALT &kp LGUI &none
-                &none &kp END &kp PG_DN &kp DOWN &kp HOME &kp INS &none &none &none &none &none &none
+                &trans &none &kp PG_UP &none &none &kp ESC &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_CLR &trans
+                &trans &none &kp LEFT &kp UP &kp RIGHT &kp CAPS &none &kp LSHFT &kp LCTRL &kp LALT &kp LGUI &trans
+                &trans &kp END &kp PG_DN &kp DOWN &kp HOME &kp INS &none &none &none &none &none &trans
                 &kp DEL &kp ENTER &kp BSPC &none &none &none
             >;
         };
 
         media_layer {
             bindings = <
-                &none &to BASE_PRIMARY &to BASE_ALT &to BASE_ALT2 &none &none &none &none &none &none &none &none
-                &none &kp C_NEXT &kp C_VOL_UP &kp C_VOL_DN &kp C_PREV &none &none &kp LSHFT &kp LCTRL &kp LALT &kp LGUI &none
-                &none &kp LG(Z) &kp LG(X) &kp LG(C) &kp LG(V) &kp LG(LS(Z)) &none &none &none &none &bootloader &none
+                &trans &to BASE_PRIMARY &to BASE_ALT &to BASE_ALT2 &none &none &none &none &none &none &none &trans
+                &trans &kp C_NEXT &kp C_VOL_UP &kp C_VOL_DN &kp C_PREV &none &none &kp LSHFT &kp LCTRL &kp LALT &kp LGUI &trans
+                &trans &kp LG(Z) &kp LG(X) &kp LG(C) &kp LG(V) &kp LG(LS(Z)) &none &none &none &none &bootloader &trans
                 &kp C_MUTE &kp C_PLAY_PAUSE &kp C_STOP &none &none &none
             >;
         };

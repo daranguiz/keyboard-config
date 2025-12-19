@@ -48,8 +48,8 @@ layers:
         - [mt:LSFT:TAB    , lt:NAV:SPC      , lt:MEDIA:ENT   ]
     extensions:
       3x6_3:
-        outer_pinky_left: [NONE, NONE, NONE]
-        outer_pinky_right: [NONE, NONE, NONE]
+        outer_pinky_left: [NONE, REPEAT, NONE]
+        outer_pinky_right: [NONE, REPEAT, NONE]
 
   # Default night
   BASE_ALT:
@@ -104,8 +104,8 @@ layers:
         - [MAGIC          , 0              , AT             ]
     extensions:
       3x6_3:
-        outer_pinky_left: [NONE, NONE, NONE]
-        outer_pinky_right: [NONE, NONE, NONE]
+        outer_pinky_left: [TRANS, TRANS, TRANS]
+        outer_pinky_right: [TRANS, TRANS, TRANS]
 
   SYM:
     core: # (3x5)
@@ -122,8 +122,8 @@ layers:
         - [MAGIC          , SPC            , ENT            ]
     extensions:
       3x6_3:
-        outer_pinky_left: [NONE, NONE, NONE]
-        outer_pinky_right: [NONE, NONE, NONE]
+        outer_pinky_left: [TRANS, TRANS, TRANS]
+        outer_pinky_right: [TRANS, TRANS, TRANS]
 
   NAV:
     core: # (3x5)
@@ -140,8 +140,8 @@ layers:
         - [NONE           , NONE           , NONE           ]
     extensions:
       3x6_3:
-        outer_pinky_left: [NONE, NONE, NONE]
-        outer_pinky_right: [NONE, NONE, NONE]
+        outer_pinky_left: [TRANS, TRANS, TRANS]
+        outer_pinky_right: [TRANS, TRANS, TRANS]
 
   MEDIA:
     core: # (3x5)
@@ -158,8 +158,8 @@ layers:
         - [NONE           , NONE           , NONE           ]
     extensions:
       3x6_3:
-        outer_pinky_left: [NONE, NONE, NONE]
-        outer_pinky_right: [NONE, NONE, NONE]
+        outer_pinky_left: [TRANS, TRANS, TRANS]
+        outer_pinky_right: [TRANS, TRANS, TRANS]
 
 # Combo definitions
 # NOTE: Positions use row-wise 36-key numbering (see CLAUDE.md for diagram)
