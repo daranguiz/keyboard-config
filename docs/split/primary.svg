@@ -975,11 +975,11 @@ path.combo {
 </g>
 <g transform="translate(140, 35)" class="key keypos-2">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
-<text x="0" y="0" class="key tap" style="font-size: 20px; font-weight: 400; font-family: Helvetica, Arial, sans-serif">ALT</text>
+<text x="0" y="0" class="key tap" style="font-size: 20px; font-weight: 400; font-family: Helvetica, Arial, sans-serif">NIHT</text>
 </g>
 <g transform="translate(196, 28)" class="key keypos-3">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
-<text x="0" y="0" class="key tap" style="font-size: 20px; font-weight: 400; font-family: Helvetica, Arial, sans-serif">ALT2</text>
+<text x="0" y="0" class="key tap" style="font-size: 20px; font-weight: 400; font-family: Helvetica, Arial, sans-serif">RAET</text>
 </g>
 <g transform="translate(252, 35)" class="key keypos-4">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
@@ -1141,15 +1141,12 @@ path.combo {
 <text x="177.5" y="1959.0" text-anchor="middle" dominant-baseline="central" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: 700; fill: #555;">C</text>
 <text x="227.0" y="1959.0" style="text-anchor: start; dominant-baseline: central; font-family: Arial, sans-serif; font-size: 18px; fill: #000;"><tspan style="font-family: Arial Bold, Arial-Bold, Arial; font-weight: bold;">c</tspan><tspan>y</tspan></text>
 <rect x="370.0" y="1946.0" width="75" height="26" rx="4" fill="#e8eaed"/>
-<text x="407.5" y="1959.0" text-anchor="middle" dominant-baseline="central" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: 700; fill: #555;">E</text>
-<text x="457.0" y="1959.0" style="text-anchor: start; dominant-baseline: central; font-family: Arial, sans-serif; font-size: 18px; fill: #000;"><tspan style="font-family: Arial Bold, Arial-Bold, Arial; font-weight: bold;">e</tspan><tspan>y</tspan></text>
+<text x="407.5" y="1959.0" text-anchor="middle" dominant-baseline="central" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: 700; fill: #555;">G</text>
+<text x="457.0" y="1959.0" style="text-anchor: start; dominant-baseline: central; font-family: Arial, sans-serif; font-size: 18px; fill: #000;"><tspan style="font-family: Arial Bold, Arial-Bold, Arial; font-weight: bold;">g</tspan><tspan>y</tspan></text>
 <rect x="600.0" y="1946.0" width="75" height="26" rx="4" fill="#e8eaed"/>
-<text x="637.5" y="1959.0" text-anchor="middle" dominant-baseline="central" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: 700; fill: #555;">G</text>
-<text x="687.0" y="1959.0" style="text-anchor: start; dominant-baseline: central; font-family: Arial, sans-serif; font-size: 18px; fill: #000;"><tspan style="font-family: Arial Bold, Arial-Bold, Arial; font-weight: bold;">g</tspan><tspan>y</tspan></text>
+<text x="637.5" y="1959.0" text-anchor="middle" dominant-baseline="central" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: 700; fill: #555;">L</text>
+<text x="687.0" y="1959.0" style="text-anchor: start; dominant-baseline: central; font-family: Arial, sans-serif; font-size: 18px; fill: #000;"><tspan style="font-family: Arial Bold, Arial-Bold, Arial; font-weight: bold;">l</tspan><tspan>p</tspan></text>
 <rect x="140.0" y="1984.0" width="75" height="26" rx="4" fill="#e8eaed"/>
-<text x="177.5" y="1997.0" text-anchor="middle" dominant-baseline="central" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: 700; fill: #555;">L</text>
-<text x="227.0" y="1997.0" style="text-anchor: start; dominant-baseline: central; font-family: Arial, sans-serif; font-size: 18px; fill: #000;"><tspan style="font-family: Arial Bold, Arial-Bold, Arial; font-weight: bold;">l</tspan><tspan>p</tspan></text>
-<rect x="370.0" y="1984.0" width="75" height="26" rx="4" fill="#e8eaed"/>
-<text x="407.5" y="1997.0" text-anchor="middle" dominant-baseline="central" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: 700; fill: #555;">P</text>
-<text x="457.0" y="1997.0" style="text-anchor: start; dominant-baseline: central; font-family: Arial, sans-serif; font-size: 18px; fill: #000;"><tspan style="font-family: Arial Bold, Arial-Bold, Arial; font-weight: bold;">p</tspan><tspan>l</tspan></text>
+<text x="177.5" y="1997.0" text-anchor="middle" dominant-baseline="central" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: 700; fill: #555;">P</text>
+<text x="227.0" y="1997.0" style="text-anchor: start; dominant-baseline: central; font-family: Arial, sans-serif; font-size: 18px; fill: #000;"><tspan style="font-family: Arial Bold, Arial-Bold, Arial; font-weight: bold;">p</tspan><tspan>l</tspan></text>
 </svg>

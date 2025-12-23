@@ -100,9 +100,9 @@
 34: &kp COMMA
 35: &none
 
-36: &lt NUM BSPC
+36: &lt_ak_alt NUM 0
 37: &lt SYM R
-38: &mt_ak_alt LSFT 0
+38: &mt LSFT BSPC
 39: &mt LSFT TAB
 40: &lt NAV SPACE
 41: &lt MEDIA ENTER
@@ -112,28 +112,28 @@
 
 ```
  0: &none
- 1: &kp B
- 2: &kp F
+ 1: &kp F
+ 2: &kp D
  3: &kp L
- 4: &kp K
- 5: &kp Q
+ 4: &kp W
+ 5: &kp J
 
- 6: &kp J
- 7: &kp G
+ 6: &kp MINUS
+ 7: &kp B
  8: &kp O
  9: &kp U
-10: &kp DOT
+10: &kp COMMA
 11: &none
 
 12: &none
-13: &hml LGUI N
-14: &hml LALT S
+13: &hml LGUI S
+14: &hml LALT T
 15: &hml LCTL H
-16: &hml LSFT T
-17: &kp M
+16: &hml LSFT C
+17: &kp Y
 
-18: &kp Y
-19: &hmr LSFT C
+18: &kp Q
+19: &hmr LSFT N
 20: &hmr LCTL A
 21: &hmr LALT E
 22: &hmr LGUI I
@@ -141,21 +141,21 @@
 
 24: &none
 25: &kp X
-26: &kp V
-27: &kp P
-28: &kp D
-29: &kp Z
+26: &kp K
+27: &kp M
+28: &kp G
+29: &kp V
 
-30: &kp SQT
-31: &kp W
-32: &kp MINUS
+30: &kp Z
+31: &kp P
+32: &kp SQT
 33: &kp FSLH
-34: &kp COMMA
+34: &kp DOT
 35: &none
 
-36: &lt NUM BSPC
+36: &lt_ak_alt2 NUM 0
 37: &lt SYM R
-38: &mt_ak_alt2 LSFT 0
+38: &mt LSFT BSPC
 39: &mt LSFT TAB
 40: &lt NAV SPACE
 41: &lt MEDIA ENTER
@@ -384,7 +384,6 @@
   - . → /
   - P → L
   - L → P
-  - E → Y
   - C → Y
   - G → Y
 
@@ -396,9 +395,7 @@
   - , →  BUT
   - - → >
   - . → /
-  - P → L
-  - L → P
-  - E → Y
+  - P → Y
   - C → Y
   - G → Y
 
@@ -410,8 +407,3 @@
   - , →  BUT
   - - → >
   - . → /
-  - P → L
-  - L → P
-  - E → Y
-  - C → Y
-  - G → Y

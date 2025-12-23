@@ -6,32 +6,13 @@ base_layers:
     display_name: "NIGHT"
     description: "Primary layout (Night with JP swap and magic)"
   BASE_ALT:
-    display_name: "ALT"
-    description: "Alternative layout"
+    display_name: "NIGHT"
+    description: "Vanilla Night"
   BASE_ALT2:
-    display_name: "ALT2"
-    description: "Alternative layout 2"
+    display_name: "RACKET"
+    description: "Racket"
 
 layers:
-
-  # # Original Night with the magic shift issue
-  # BASE_PRIMARY:
-  #   core: # (3x5)
-  #     left:
-  #       - [B              , F              , L              , K              , Q              ]
-  #       - [hrm:LGUI:N     , hrm:LALT:S     , hrm:LCTL:H     , hrm:LSFT:T     , M              ]
-  #       - [X              , V              , P              , D              , Z              ]
-  #     right:
-  #       - [J              , G              , O              , U              , DOT            ]
-  #       - [Y              , hrm:LSFT:C     , hrm:LCTL:A     , hrm:LALT:E     , hrm:LGUI:I     ]
-  #       - [QUOT           , W              , MINS           , SLSH           , COMM           ]
-  #     thumbs:
-  #       - [lt:NUM:BSPC    , lt:SYM:R        , mt:LSFT:MAGIC  ]
-  #       - [mt:LSFT:TAB    , lt:NAV:SPC      , lt:MEDIA:ENT   ]
-  #   extensions:
-  #     3x6_3:
-  #       outer_pinky_left: [NONE, NONE, NONE]
-  #       outer_pinky_right: [NONE, NONE, NONE]
 
   BASE_PRIMARY:
     core: # (3x5)
@@ -63,7 +44,7 @@ layers:
         - [Y              , hrm:LSFT:C     , hrm:LCTL:A     , hrm:LALT:E     , hrm:LGUI:I     ]
         - [QUOT           , W              , MINS           , SLSH           , COMM           ]
       thumbs:
-        - [lt:NUM:BSPC    , lt:SYM:R        , mt:LSFT:MAGIC  ]
+        - [lt:NUM:MAGIC   , lt:SYM:R       ,   mt:LSFT:BSPC]
         - [mt:LSFT:TAB    , lt:NAV:SPC      , lt:MEDIA:ENT   ]
     extensions:
       3x6_3:
@@ -73,15 +54,15 @@ layers:
   BASE_ALT2:
     core: # (3x5)
       left:
-        - [B              , F              , L              , K              , Q              ]
-        - [hrm:LGUI:N     , hrm:LALT:S     , hrm:LCTL:H     , hrm:LSFT:T     , M              ]
-        - [X              , V              , P              , D              , Z              ]
+        - [F              , D              , L              , W              , J              ]
+        - [hrm:LGUI:S     , hrm:LALT:T     , hrm:LCTL:H     , hrm:LSFT:C     , Y              ]
+        - [X              , K              , M              , G              , V              ]
       right:
-        - [J              , G              , O              , U              , DOT            ]
-        - [Y              , hrm:LSFT:C     , hrm:LCTL:A     , hrm:LALT:E     , hrm:LGUI:I     ]
-        - [QUOT           , W              , MINS           , SLSH           , COMM           ]
+        - [MINS           , B              , O              , U              , COMM           ]
+        - [Q              , hrm:LSFT:N     , hrm:LCTL:A     , hrm:LALT:E     , hrm:LGUI:I     ]
+        - [Z              , P              , QUOT           , SLSH           , DOT            ]
       thumbs:
-        - [lt:NUM:BSPC    , lt:SYM:R        , mt:LSFT:MAGIC  ]
+        - [lt:NUM:MAGIC   , lt:SYM:R       ,   mt:LSFT:BSPC]
         - [mt:LSFT:TAB    , lt:NAV:SPC      , lt:MEDIA:ENT   ]
     extensions:
       3x6_3:
@@ -203,7 +184,6 @@ magic_keys:
       ".": "/"
       P: L
       L: P
-      E: Y
       C: Y
       G: Y
     default_repeat: true
@@ -215,9 +195,7 @@ magic_keys:
       ",": " BUT"
       "-": ">"
       ".": "/"
-      P: L
-      L: P
-      E: Y
+      P: Y
       C: Y
       G: Y
     default_repeat: true
@@ -229,9 +207,4 @@ magic_keys:
       ",": " BUT"
       "-": ">"
       ".": "/"
-      P: L
-      L: P
-      E: Y
-      C: Y
-      G: Y
     default_repeat: true

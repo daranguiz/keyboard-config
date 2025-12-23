@@ -141,10 +141,6 @@
                 trigger-keys = <L>;
                 bindings = <&kp P>;
             };
-            e_trigger {
-                trigger-keys = <E>;
-                bindings = <&kp Y>;
-            };
             c_trigger {
                 trigger-keys = <C>;
                 bindings = <&kp Y>;
@@ -199,14 +195,6 @@
             };
             p_trigger {
                 trigger-keys = <P>;
-                bindings = <&kp L>;
-            };
-            l_trigger {
-                trigger-keys = <L>;
-                bindings = <&kp P>;
-            };
-            e_trigger {
-                trigger-keys = <E>;
                 bindings = <&kp Y>;
             };
             c_trigger {
@@ -260,26 +248,6 @@
             dot_trigger {
                 trigger-keys = <DOT>;
                 bindings = <&kp FSLH>;
-            };
-            p_trigger {
-                trigger-keys = <P>;
-                bindings = <&kp L>;
-            };
-            l_trigger {
-                trigger-keys = <L>;
-                bindings = <&kp P>;
-            };
-            e_trigger {
-                trigger-keys = <E>;
-                bindings = <&kp Y>;
-            };
-            c_trigger {
-                trigger-keys = <C>;
-                bindings = <&kp Y>;
-            };
-            g_trigger {
-                trigger-keys = <G>;
-                bindings = <&kp Y>;
             };
         };
 
@@ -372,7 +340,7 @@
             #binding-cells = <0>;
             bindings = <&kp Y>;
             guard_trigger {
-                trigger-keys = <E C G>;
+                trigger-keys = <C G>;
                 bindings = <&kp HASH>;
             };
         };
@@ -417,32 +385,12 @@
             };
         };
 
-        ak_train_alt_l: ak_train_alt_l {
-            compatible = "zmk,behavior-adaptive-key";
-            #binding-cells = <0>;
-            bindings = <&kp L>;
-            guard_trigger {
-                trigger-keys = <P>;
-                bindings = <&kp HASH>;
-            };
-        };
-
-        ak_train_alt_p: ak_train_alt_p {
-            compatible = "zmk,behavior-adaptive-key";
-            #binding-cells = <0>;
-            bindings = <&kp P>;
-            guard_trigger {
-                trigger-keys = <L>;
-                bindings = <&kp HASH>;
-            };
-        };
-
         ak_train_alt_y: ak_train_alt_y {
             compatible = "zmk,behavior-adaptive-key";
             #binding-cells = <0>;
             bindings = <&kp Y>;
             guard_trigger {
-                trigger-keys = <E C G>;
+                trigger-keys = <P C G>;
                 bindings = <&kp HASH>;
             };
         };
@@ -487,36 +435,6 @@
             };
         };
 
-        ak_train_alt2_l: ak_train_alt2_l {
-            compatible = "zmk,behavior-adaptive-key";
-            #binding-cells = <0>;
-            bindings = <&kp L>;
-            guard_trigger {
-                trigger-keys = <P>;
-                bindings = <&kp HASH>;
-            };
-        };
-
-        ak_train_alt2_p: ak_train_alt2_p {
-            compatible = "zmk,behavior-adaptive-key";
-            #binding-cells = <0>;
-            bindings = <&kp P>;
-            guard_trigger {
-                trigger-keys = <L>;
-                bindings = <&kp HASH>;
-            };
-        };
-
-        ak_train_alt2_y: ak_train_alt2_y {
-            compatible = "zmk,behavior-adaptive-key";
-            #binding-cells = <0>;
-            bindings = <&kp Y>;
-            guard_trigger {
-                trigger-keys = <E C G>;
-                bindings = <&kp HASH>;
-            };
-        };
-
     };
 
     keymap {
@@ -533,19 +451,19 @@
 
         base_alt_layer {
             bindings = <
-                &none &kp B &kp F &ak_train_alt_l &kp K &kp Q &ak_train_alt_p &kp G &kp O &kp U &kp DOT &none
+                &none &kp B &kp F &kp L &kp K &kp Q &kp P &kp G &kp O &kp U &kp DOT &none
                 &none &hml LGUI N &hml LALT S &hml LCTL H &hml LSFT T &kp M &ak_train_alt_y &hmr LSFT C &hmr LCTL A &hmr LALT E &hmr LGUI I &none
                 &none &kp X &kp V &kp J &kp D &kp Z &kp SQT &kp W &kp MINUS &ak_train_alt_fslh &kp COMMA &none
-                &lt NUM BSPC &lt SYM R &mt_ak_alt LSFT 0 &mt LSFT TAB &lt NAV SPACE &lt MEDIA ENTER
+                &lt_ak_alt NUM 0 &lt SYM R &mt LSFT BSPC &mt LSFT TAB &lt NAV SPACE &lt MEDIA ENTER
             >;
         };
 
         base_alt2_layer {
             bindings = <
-                &none &kp B &kp F &ak_train_alt2_l &kp K &kp Q &kp J &kp G &kp O &kp U &kp DOT &none
-                &none &hml LGUI N &hml LALT S &hml LCTL H &hml LSFT T &kp M &ak_train_alt2_y &hmr LSFT C &hmr LCTL A &hmr LALT E &hmr LGUI I &none
-                &none &kp X &kp V &ak_train_alt2_p &kp D &kp Z &kp SQT &kp W &kp MINUS &ak_train_alt2_fslh &kp COMMA &none
-                &lt NUM BSPC &lt SYM R &mt_ak_alt2 LSFT 0 &mt LSFT TAB &lt NAV SPACE &lt MEDIA ENTER
+                &none &kp F &kp D &kp L &kp W &kp J &kp MINUS &kp B &kp O &kp U &kp COMMA &none
+                &none &hml LGUI S &hml LALT T &hml LCTL H &hml LSFT C &kp Y &kp Q &hmr LSFT N &hmr LCTL A &hmr LALT E &hmr LGUI I &none
+                &none &kp X &kp K &kp M &kp G &kp V &kp Z &kp P &kp SQT &ak_train_alt2_fslh &kp DOT &none
+                &lt_ak_alt2 NUM 0 &lt SYM R &mt LSFT BSPC &mt LSFT TAB &lt NAV SPACE &lt MEDIA ENTER
             >;
         };
 

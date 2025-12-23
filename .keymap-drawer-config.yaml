@@ -12,8 +12,8 @@ parse_config:
   - MEDIA
   layer_legend_map:
     BASE_PRIMARY: NIGHT
-    BASE_ALT: ALT
-    BASE_ALT2: ALT2
+    BASE_ALT: NIGHT
+    BASE_ALT2: RACKET
   raw_binding_map:
     KC_NO: ''
     U_NA: ''
@@ -53,8 +53,8 @@ parse_config:
     DF(BASE_RACKET): RAET
     DF(BASE_DUSK): BUYA
     DF(BASE_PRIMARY): NIHT
-    DF(BASE_ALT): ALT
-    DF(BASE_ALT2): ALT2
+    DF(BASE_ALT): NIHT
+    DF(BASE_ALT2): RAET
 draw_config:
   ortho_layout:
     split: !!bool 'true'

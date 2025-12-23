@@ -40,8 +40,8 @@ qmk compile -kb bastardkb/skeletyl/promicro -km dario
 ├─────────┼─────────┼─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┼─────────┼─────────┤
 │ LGUI_T(KC_N) │ LALT_T(KC_S) │ LCTL_T(KC_H) │ LSFT_T(KC_T) │ KC_M    │   │ KC_QUOT │ KC_W    │ KC_MINS │ KC_SLSH │ KC_COMM │
 ╰─────────┴─────────┴─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┴─────────┴─────────╯
-                              │ LT(NUM, KC_BSPC) │ LT(SYM, KC_R) │   │ LT(NAV, KC_SPC) │ LT(MEDIA, KC_ENT) │
-                              │ LSFT_T(QK_AREP) │         │   │         │         │
+                              │ LT(NUM, QK_AREP) │ LT(SYM, KC_R) │   │ LT(NAV, KC_SPC) │ LT(MEDIA, KC_ENT) │
+                              │ LSFT_T(KC_BSPC) │         │   │         │         │
                               ╰─────────┴─────────╯   ╰─────────┴─────────╯
 
 ```
@@ -51,14 +51,14 @@ qmk compile -kb bastardkb/skeletyl/promicro -km dario
 ```
 
 ╭─────────┬─────────┬─────────┬─────────┬─────────╮   ╭─────────┬─────────┬─────────┬─────────┬─────────╮
-│ KC_B    │ KC_F    │ KC_L    │ KC_K    │ KC_Q    │   │ KC_Y    │ LSFT_T(KC_C) │ LCTL_T(KC_A) │ LALT_T(KC_E) │ LGUI_T(KC_I) │
+│ KC_F    │ KC_D    │ KC_L    │ KC_W    │ KC_J    │   │ KC_Q    │ LSFT_T(KC_N) │ LCTL_T(KC_A) │ LALT_T(KC_E) │ LGUI_T(KC_I) │
 ├─────────┼─────────┼─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┼─────────┼─────────┤
-│ KC_J    │ KC_G    │ KC_O    │ KC_U    │ KC_DOT  │   │ KC_X    │ KC_V    │ KC_P    │ KC_D    │ KC_Z    │
+│ KC_MINS │ KC_B    │ KC_O    │ KC_U    │ KC_COMM │   │ KC_X    │ KC_K    │ KC_M    │ KC_G    │ KC_V    │
 ├─────────┼─────────┼─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┼─────────┼─────────┤
-│ LGUI_T(KC_N) │ LALT_T(KC_S) │ LCTL_T(KC_H) │ LSFT_T(KC_T) │ KC_M    │   │ KC_QUOT │ KC_W    │ KC_MINS │ KC_SLSH │ KC_COMM │
+│ LGUI_T(KC_S) │ LALT_T(KC_T) │ LCTL_T(KC_H) │ LSFT_T(KC_C) │ KC_Y    │   │ KC_Z    │ KC_P    │ KC_QUOT │ KC_SLSH │ KC_DOT  │
 ╰─────────┴─────────┴─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┴─────────┴─────────╯
-                              │ LT(NUM, KC_BSPC) │ LT(SYM, KC_R) │   │ LT(NAV, KC_SPC) │ LT(MEDIA, KC_ENT) │
-                              │ LSFT_T(QK_AREP) │         │   │         │         │
+                              │ LT(NUM, QK_AREP) │ LT(SYM, KC_R) │   │ LT(NAV, KC_SPC) │ LT(MEDIA, KC_ENT) │
+                              │ LSFT_T(KC_BSPC) │         │   │         │         │
                               ╰─────────┴─────────╯   ╰─────────┴─────────╯
 
 ```

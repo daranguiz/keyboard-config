@@ -199,7 +199,11 @@ class BaseLayerManager:
         Returns:
             SVG content with display names applied
         """
-        for layer_name in self.keymap_config.layers.keys():
+        # Sort layer names by length (longest first) to avoid substring collision issues
+        # e.g., if we replace BASE_ALT before BASE_ALT2, we get NIGHT2 instead of RACKET
+        layer_names = sorted(self.keymap_config.layers.keys(), key=len, reverse=True)
+
+        for layer_name in layer_names:
             display_name = self.get_display_name(layer_name)
             if display_name != layer_name:
                 svg_content = svg_content.replace(layer_name, display_name)
