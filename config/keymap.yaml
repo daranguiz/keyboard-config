@@ -209,9 +209,9 @@ magic_keys:
       ",": " BUT"
       "-": ">"
       ".": "/"
-      D: S
-      K: S
-      S: K
+      # D: S
+      # K: S
+      # S: K
       C: Y
       G: Y
     default_repeat: true
