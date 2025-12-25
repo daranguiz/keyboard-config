@@ -376,7 +376,7 @@
 ## Magic Key Mappings
 ### BASE_PRIMARY
 - default: REPEAT
-- timeout_ms: 0
+- timeout_ms: 1000
 - mappings:
   -   → THE
   - , →  BUT
@@ -407,3 +407,8 @@
   - , →  BUT
   - - → >
   - . → /
+  - D → S
+  - K → S
+  - S → K
+  - C → Y
+  - G → Y

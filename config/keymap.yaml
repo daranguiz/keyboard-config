@@ -176,7 +176,7 @@ combos:
 # Used to provide alternate bigrams for uncomfortable key combinations
 magic_keys:
   BASE_PRIMARY:
-    timeout_ms: 0  # 0 = no max idle constraint for adaptive key triggers
+    timeout_ms: 1000  # 0 = no max idle constraint for adaptive key triggers
     mappings:
       " ": THE
       ",": " BUT"
@@ -186,6 +186,8 @@ magic_keys:
       L: P
       C: Y
       G: Y
+      # O: A
+      # U: E
     default_repeat: true
 
   BASE_ALT:
@@ -207,4 +209,9 @@ magic_keys:
       ",": " BUT"
       "-": ">"
       ".": "/"
+      D: S
+      K: S
+      S: K
+      C: Y
+      G: Y
     default_repeat: true
