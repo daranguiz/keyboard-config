@@ -32,7 +32,6 @@ layers:
         outer_pinky_left: [NONE, REPEAT, NONE]
         outer_pinky_right: [NONE, REPEAT, NONE]
 
-  # Default night
   BASE_ALT:
     core: # (3x5)
       left:
@@ -44,8 +43,8 @@ layers:
         - [Y              , hrm:LSFT:C     , hrm:LCTL:A     , hrm:LALT:E     , hrm:LGUI:I     ]
         - [QUOT           , W              , MINS           , SLSH           , COMM           ]
       thumbs:
-        - [lt:NUM:MAGIC   , lt:SYM:R       ,   mt:LSFT:BSPC]
-        - [mt:LSFT:TAB    , lt:NAV:SPC      , lt:MEDIA:ENT   ]
+        - [lt:NUM:MAGIC   , lt:SYM:R       , mt:LSFT:BSPC   ]
+        - [mt:LSFT:TAB    , lt:NAV:SPC     , lt:MEDIA:ENT   ]
     extensions:
       3x6_3:
         outer_pinky_left: [NONE, NONE, NONE]
@@ -62,8 +61,8 @@ layers:
         - [Q              , hrm:LSFT:N     , hrm:LCTL:A     , hrm:LALT:E     , hrm:LGUI:I     ]
         - [Z              , P              , QUOT           , SLSH           , DOT            ]
       thumbs:
-        - [lt:NUM:MAGIC   , lt:SYM:R       ,   mt:LSFT:BSPC]
-        - [mt:LSFT:TAB    , lt:NAV:SPC      , lt:MEDIA:ENT   ]
+        - [lt:NUM:MAGIC   , lt:SYM:R       , mt:LSFT:BSPC   ]
+        - [mt:LSFT:TAB    , lt:NAV:SPC     , lt:MEDIA:ENT   ]
     extensions:
       3x6_3:
         outer_pinky_left: [NONE, NONE, NONE]
@@ -186,8 +185,15 @@ magic_keys:
       L: P
       C: Y
       G: Y
-      # O: A
-      # U: E
+
+      B: EFORE
+      I: ON
+      J: UST
+      M: ENT
+      N: ION
+      Q: UE
+      T: ION
+      W: HICH
     default_repeat: true
 
   BASE_ALT:
@@ -197,9 +203,6 @@ magic_keys:
       ",": " BUT"
       "-": ">"
       ".": "/"
-      P: Y
-      C: Y
-      G: Y
     default_repeat: true
 
   BASE_ALT2:
@@ -209,9 +212,6 @@ magic_keys:
       ",": " BUT"
       "-": ">"
       ".": "/"
-      # D: S
-      # K: S
-      # S: K
       C: Y
       G: Y
     default_repeat: true

@@ -14,8 +14,16 @@ enum magic_macros {
     MAGIC_ALT2_CHR_44,
     MAGIC_ALT_CHR_32,
     MAGIC_ALT_CHR_44,
+    MAGIC_PRIMARY_B,
     MAGIC_PRIMARY_CHR_32,
     MAGIC_PRIMARY_CHR_44,
+    MAGIC_PRIMARY_I,
+    MAGIC_PRIMARY_J,
+    MAGIC_PRIMARY_M,
+    MAGIC_PRIMARY_N,
+    MAGIC_PRIMARY_Q,
+    MAGIC_PRIMARY_T,
+    MAGIC_PRIMARY_W,
 };
 
 
@@ -128,6 +136,14 @@ uint16_t get_alt_repeat_key_keycode_user(uint16_t keycode, uint8_t mods) {
             case KC_L: return KC_P;
             case KC_C: return KC_Y;
             case KC_G: return KC_Y;
+            case KC_B: return MAGIC_PRIMARY_B;
+            case KC_I: return MAGIC_PRIMARY_I;
+            case KC_J: return MAGIC_PRIMARY_J;
+            case KC_M: return MAGIC_PRIMARY_M;
+            case KC_N: return MAGIC_PRIMARY_N;
+            case KC_Q: return MAGIC_PRIMARY_Q;
+            case KC_T: return MAGIC_PRIMARY_T;
+            case KC_W: return MAGIC_PRIMARY_W;
         }
     }
 
@@ -138,9 +154,6 @@ uint16_t get_alt_repeat_key_keycode_user(uint16_t keycode, uint8_t mods) {
             case KC_COMM: return MAGIC_ALT_CHR_44;
             case KC_MINS: return KC_GT;
             case KC_DOT: return KC_SLSH;
-            case KC_P: return KC_Y;
-            case KC_C: return KC_Y;
-            case KC_G: return KC_Y;
         }
     }
 
@@ -178,11 +191,35 @@ bool process_magic_record(uint16_t keycode, keyrecord_t *record) {
         case MAGIC_ALT_CHR_44:
             SEND_STRING(" but");
             return false;
+        case MAGIC_PRIMARY_B:
+            SEND_STRING("efore");
+            return false;
         case MAGIC_PRIMARY_CHR_32:
             SEND_STRING("the");
             return false;
         case MAGIC_PRIMARY_CHR_44:
             SEND_STRING(" but");
+            return false;
+        case MAGIC_PRIMARY_I:
+            SEND_STRING("on");
+            return false;
+        case MAGIC_PRIMARY_J:
+            SEND_STRING("ust");
+            return false;
+        case MAGIC_PRIMARY_M:
+            SEND_STRING("ent");
+            return false;
+        case MAGIC_PRIMARY_N:
+            SEND_STRING("ion");
+            return false;
+        case MAGIC_PRIMARY_Q:
+            SEND_STRING("ue");
+            return false;
+        case MAGIC_PRIMARY_T:
+            SEND_STRING("ion");
+            return false;
+        case MAGIC_PRIMARY_W:
+            SEND_STRING("hich");
             return false;
     }
     return true;
@@ -194,8 +231,16 @@ uint16_t magic_training_first_keycode(uint16_t keycode) {
         case MAGIC_ALT2_CHR_44: return KC_NO;
         case MAGIC_ALT_CHR_32: return KC_NO;
         case MAGIC_ALT_CHR_44: return KC_NO;
+        case MAGIC_PRIMARY_B: return KC_NO;
         case MAGIC_PRIMARY_CHR_32: return KC_NO;
         case MAGIC_PRIMARY_CHR_44: return KC_NO;
+        case MAGIC_PRIMARY_I: return KC_NO;
+        case MAGIC_PRIMARY_J: return KC_NO;
+        case MAGIC_PRIMARY_M: return KC_NO;
+        case MAGIC_PRIMARY_N: return KC_NO;
+        case MAGIC_PRIMARY_Q: return KC_NO;
+        case MAGIC_PRIMARY_T: return KC_NO;
+        case MAGIC_PRIMARY_W: return KC_NO;
     }
     return keycode;
 }

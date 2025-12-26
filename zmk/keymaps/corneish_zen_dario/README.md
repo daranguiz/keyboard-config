@@ -386,6 +386,14 @@
   - L → P
   - C → Y
   - G → Y
+  - B → EFORE
+  - I → ON
+  - J → UST
+  - M → ENT
+  - N → ION
+  - Q → UE
+  - T → ION
+  - W → HICH
 
 ### BASE_ALT
 - default: REPEAT
@@ -395,9 +403,6 @@
   - , →  BUT
   - - → >
   - . → /
-  - P → Y
-  - C → Y
-  - G → Y
 
 ### BASE_ALT2
 - default: REPEAT

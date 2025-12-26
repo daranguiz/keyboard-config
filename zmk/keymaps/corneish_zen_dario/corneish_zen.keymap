@@ -66,6 +66,86 @@
                 , <&macro_tap &kp SPACE &kp B &kp U &kp T>
                 ;
         };
+        magic_primary_b: magic_primary_b_macro {
+            compatible = "zmk,behavior-macro";
+            label = "MAGIC_PRIMARY_B";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_wait_time 10>
+                , <&macro_tap_time 10>
+                , <&macro_tap &kp E &kp F &kp O &kp R &kp E>
+                ;
+        };
+        magic_primary_i: magic_primary_i_macro {
+            compatible = "zmk,behavior-macro";
+            label = "MAGIC_PRIMARY_I";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_wait_time 10>
+                , <&macro_tap_time 10>
+                , <&macro_tap &kp O &kp N>
+                ;
+        };
+        magic_primary_j: magic_primary_j_macro {
+            compatible = "zmk,behavior-macro";
+            label = "MAGIC_PRIMARY_J";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_wait_time 10>
+                , <&macro_tap_time 10>
+                , <&macro_tap &kp U &kp S &kp T>
+                ;
+        };
+        magic_primary_m: magic_primary_m_macro {
+            compatible = "zmk,behavior-macro";
+            label = "MAGIC_PRIMARY_M";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_wait_time 10>
+                , <&macro_tap_time 10>
+                , <&macro_tap &kp E &kp N &kp T>
+                ;
+        };
+        magic_primary_n: magic_primary_n_macro {
+            compatible = "zmk,behavior-macro";
+            label = "MAGIC_PRIMARY_N";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_wait_time 10>
+                , <&macro_tap_time 10>
+                , <&macro_tap &kp I &kp O &kp N>
+                ;
+        };
+        magic_primary_q: magic_primary_q_macro {
+            compatible = "zmk,behavior-macro";
+            label = "MAGIC_PRIMARY_Q";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_wait_time 10>
+                , <&macro_tap_time 10>
+                , <&macro_tap &kp U &kp E>
+                ;
+        };
+        magic_primary_t: magic_primary_t_macro {
+            compatible = "zmk,behavior-macro";
+            label = "MAGIC_PRIMARY_T";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_wait_time 10>
+                , <&macro_tap_time 10>
+                , <&macro_tap &kp I &kp O &kp N>
+                ;
+        };
+        magic_primary_w: magic_primary_w_macro {
+            compatible = "zmk,behavior-macro";
+            label = "MAGIC_PRIMARY_W";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_wait_time 10>
+                , <&macro_tap_time 10>
+                , <&macro_tap &kp H &kp I &kp C &kp H>
+                ;
+        };
         magic_alt_chr_32: magic_alt_chr_32_macro {
             compatible = "zmk,behavior-macro";
             label = "MAGIC_ALT_CHR_32";
@@ -157,6 +237,46 @@
                 bindings = <&kp Y>;
                 max-prior-idle-ms = <1000>;
             };
+            b_trigger {
+                trigger-keys = <B>;
+                bindings = <&magic_primary_b>;
+                max-prior-idle-ms = <1000>;
+            };
+            i_trigger {
+                trigger-keys = <I>;
+                bindings = <&magic_primary_i>;
+                max-prior-idle-ms = <1000>;
+            };
+            j_trigger {
+                trigger-keys = <J>;
+                bindings = <&magic_primary_j>;
+                max-prior-idle-ms = <1000>;
+            };
+            m_trigger {
+                trigger-keys = <M>;
+                bindings = <&magic_primary_m>;
+                max-prior-idle-ms = <1000>;
+            };
+            n_trigger {
+                trigger-keys = <N>;
+                bindings = <&magic_primary_n>;
+                max-prior-idle-ms = <1000>;
+            };
+            q_trigger {
+                trigger-keys = <Q>;
+                bindings = <&magic_primary_q>;
+                max-prior-idle-ms = <1000>;
+            };
+            t_trigger {
+                trigger-keys = <T>;
+                bindings = <&magic_primary_t>;
+                max-prior-idle-ms = <1000>;
+            };
+            w_trigger {
+                trigger-keys = <W>;
+                bindings = <&magic_primary_w>;
+                max-prior-idle-ms = <1000>;
+            };
         };
 
         lt_ak_primary: lt_ak_primary {
@@ -200,18 +320,6 @@
             dot_trigger {
                 trigger-keys = <DOT>;
                 bindings = <&kp FSLH>;
-            };
-            p_trigger {
-                trigger-keys = <P>;
-                bindings = <&kp Y>;
-            };
-            c_trigger {
-                trigger-keys = <C>;
-                bindings = <&kp Y>;
-            };
-            g_trigger {
-                trigger-keys = <G>;
-                bindings = <&kp Y>;
             };
         };
 
@@ -368,6 +476,94 @@
             };
         };
 
+        ak_train_primary_magic_primary_b: ak_train_primary_magic_primary_b {
+            compatible = "zmk,behavior-adaptive-key";
+            #binding-cells = <0>;
+            bindings = <&magic_primary_b>;
+            guard_trigger {
+                trigger-keys = <B>;
+                bindings = <&kp HASH>;
+                max-prior-idle-ms = <1000>;
+            };
+        };
+
+        ak_train_primary_magic_primary_i: ak_train_primary_magic_primary_i {
+            compatible = "zmk,behavior-adaptive-key";
+            #binding-cells = <0>;
+            bindings = <&magic_primary_i>;
+            guard_trigger {
+                trigger-keys = <I>;
+                bindings = <&kp HASH>;
+                max-prior-idle-ms = <1000>;
+            };
+        };
+
+        ak_train_primary_magic_primary_j: ak_train_primary_magic_primary_j {
+            compatible = "zmk,behavior-adaptive-key";
+            #binding-cells = <0>;
+            bindings = <&magic_primary_j>;
+            guard_trigger {
+                trigger-keys = <J>;
+                bindings = <&kp HASH>;
+                max-prior-idle-ms = <1000>;
+            };
+        };
+
+        ak_train_primary_magic_primary_m: ak_train_primary_magic_primary_m {
+            compatible = "zmk,behavior-adaptive-key";
+            #binding-cells = <0>;
+            bindings = <&magic_primary_m>;
+            guard_trigger {
+                trigger-keys = <M>;
+                bindings = <&kp HASH>;
+                max-prior-idle-ms = <1000>;
+            };
+        };
+
+        ak_train_primary_magic_primary_n: ak_train_primary_magic_primary_n {
+            compatible = "zmk,behavior-adaptive-key";
+            #binding-cells = <0>;
+            bindings = <&magic_primary_n>;
+            guard_trigger {
+                trigger-keys = <N>;
+                bindings = <&kp HASH>;
+                max-prior-idle-ms = <1000>;
+            };
+        };
+
+        ak_train_primary_magic_primary_q: ak_train_primary_magic_primary_q {
+            compatible = "zmk,behavior-adaptive-key";
+            #binding-cells = <0>;
+            bindings = <&magic_primary_q>;
+            guard_trigger {
+                trigger-keys = <Q>;
+                bindings = <&kp HASH>;
+                max-prior-idle-ms = <1000>;
+            };
+        };
+
+        ak_train_primary_magic_primary_t: ak_train_primary_magic_primary_t {
+            compatible = "zmk,behavior-adaptive-key";
+            #binding-cells = <0>;
+            bindings = <&magic_primary_t>;
+            guard_trigger {
+                trigger-keys = <T>;
+                bindings = <&kp HASH>;
+                max-prior-idle-ms = <1000>;
+            };
+        };
+
+        ak_train_primary_magic_primary_w: ak_train_primary_magic_primary_w {
+            compatible = "zmk,behavior-adaptive-key";
+            #binding-cells = <0>;
+            bindings = <&magic_primary_w>;
+            guard_trigger {
+                trigger-keys = <W>;
+                bindings = <&kp HASH>;
+                max-prior-idle-ms = <1000>;
+            };
+        };
+
         ak_train_alt_magic_alt_chr_32: ak_train_alt_magic_alt_chr_32 {
             compatible = "zmk,behavior-adaptive-key";
             #binding-cells = <0>;
@@ -404,16 +600,6 @@
             bindings = <&kp FSLH>;
             guard_trigger {
                 trigger-keys = <DOT>;
-                bindings = <&kp HASH>;
-            };
-        };
-
-        ak_train_alt_y: ak_train_alt_y {
-            compatible = "zmk,behavior-adaptive-key";
-            #binding-cells = <0>;
-            bindings = <&kp Y>;
-            guard_trigger {
-                trigger-keys = <P C G>;
                 bindings = <&kp HASH>;
             };
         };
@@ -485,7 +671,7 @@
         base_alt_layer {
             bindings = <
                 &none &kp B &kp F &kp L &kp K &kp Q &kp P &kp G &kp O &kp U &kp DOT &none
-                &none &hml LGUI N &hml LALT S &hml LCTL H &hml LSFT T &kp M &ak_train_alt_y &hmr LSFT C &hmr LCTL A &hmr LALT E &hmr LGUI I &none
+                &none &hml LGUI N &hml LALT S &hml LCTL H &hml LSFT T &kp M &kp Y &hmr LSFT C &hmr LCTL A &hmr LALT E &hmr LGUI I &none
                 &none &kp X &kp V &kp J &kp D &kp Z &kp SQT &kp W &kp MINUS &ak_train_alt_fslh &kp COMMA &none
                 &lt_ak_alt NUM 0 &lt SYM R &mt LSFT BSPC &mt LSFT TAB &lt NAV SPACE &lt MEDIA ENTER
             >;
