@@ -13,12 +13,126 @@ from data_model import CompiledLayer, Board, ComboConfiguration, Combo, Validati
 class ZMKGenerator:
     """Generate ZMK devicetree keymap files"""
 
-    def __init__(self, magic_training: bool = False, special_keycodes: Dict[str, Dict[str, str]] = None):
+    def __init__(self, magic_training: bool = False, special_keycodes: Dict[str, Dict[str, str]] = None,
+                 behaviors_dtsi_path: str = None):
         self.magic_training = magic_training
         self.special_keycodes = special_keycodes or {}
         self.char_token_map = self._build_char_token_map()
         # Track macro behaviors generated for magic/combos so bindings can reference them
         self.generated_macros: Dict[str, str] = {}
+        # Parse behavior timings from dario_behaviors.dtsi
+        self.behavior_timings = self._parse_behaviors_dtsi(behaviors_dtsi_path) if behaviors_dtsi_path else {}
+
+    def _parse_behaviors_dtsi(self, dtsi_path: str) -> Dict[str, Dict[str, any]]:
+        """
+        Parse dario_behaviors.dtsi to extract timing values for hold-tap behaviors.
+
+        Returns dict like:
+        {
+            'lt': {'tapping_term_ms': 200, 'quick_tap_ms': 200, 'flavor': 'balanced'},
+            'mt': {'tapping_term_ms': 200, 'quick_tap_ms': 200, 'flavor': 'hold-preferred'},
+            'hml': {'require_prior_idle_ms': 150, 'tapping_term_ms': 280, 'quick_tap_ms': 200, 'flavor': 'balanced',
+                    'hold_trigger_key_positions': '6 7 8 9 10 11 18 19 20 21 22 23 30 31 32 33 34 35 39 40 41'},
+            'hmr': {...}
+        }
+        """
+        try:
+            with open(dtsi_path, 'r') as f:
+                content = f.read()
+        except (FileNotFoundError, IOError) as e:
+            print(f"Warning: Could not read behaviors dtsi file {dtsi_path}: {e}")
+            return {}
+
+        timings = {}
+
+        # Parse &lt and &mt overrides (global behavior overrides)
+        for behavior in ['lt', 'mt']:
+            pattern = rf'&{behavior}\s*\{{\s*([^}}]+)\}}'
+            match = re.search(pattern, content, re.DOTALL)
+            if match:
+                timings[behavior] = self._parse_behavior_block(match.group(1))
+
+        # Parse named behaviors (hml, hmr, etc.)
+        # Pattern: name: label { ... }
+        named_pattern = r'(\w+):\s*\w+\s*\{([^}]+(?:\{[^}]*\}[^}]*)*)\}'
+        for match in re.finditer(named_pattern, content, re.DOTALL):
+            name = match.group(1)
+            if name in ['hml', 'hmr']:
+                timings[name] = self._parse_behavior_block(match.group(2))
+
+        return timings
+
+    def _parse_behavior_block(self, block: str) -> Dict[str, any]:
+        """
+        Parse a behavior block to dynamically extract all properties.
+
+        Returns dict with original dtsi property names as keys, preserving
+        the exact format needed for output (numeric in angle brackets,
+        strings in quotes, booleans as standalone semicolons).
+        """
+        props = {}
+
+        # Match numeric properties: property-name = <value>;
+        for match in re.finditer(r'([\w-]+)\s*=\s*<([^>]+)>', block):
+            prop_name = match.group(1)
+            value = match.group(2).strip()
+            # Try to parse as int, otherwise keep as string (for space-separated lists)
+            try:
+                props[prop_name] = ('numeric', int(value))
+            except ValueError:
+                props[prop_name] = ('numeric_list', value)
+
+        # Match string properties: property-name = "value";
+        for match in re.finditer(r'([\w-]+)\s*=\s*"([^"]+)"', block):
+            prop_name = match.group(1)
+            value = match.group(2)
+            props[prop_name] = ('string', value)
+
+        # Match boolean properties (standalone): property-name;
+        # Must be careful to not match properties with values
+        for match in re.finditer(r'\b([\w-]+)\s*;', block):
+            prop_name = match.group(1)
+            # Only add if not already captured as a property with value
+            if prop_name not in props:
+                # Skip common non-property tokens
+                if prop_name not in ['compatible', 'label', 'bindings']:
+                    props[prop_name] = ('boolean', True)
+
+        return props
+
+    def _emit_behavior_properties(self, behavior: str, indent: str = "            ",
+                                   exclude: List[str] = None) -> List[str]:
+        """
+        Emit all properties for a behavior as dtsi code lines.
+
+        Args:
+            behavior: The behavior name (e.g., 'lt', 'mt', 'hml')
+            indent: Indentation string for each line
+            exclude: List of property names to skip (e.g., 'bindings' which is set separately)
+
+        Returns:
+            List of dtsi code lines with properties
+        """
+        exclude = exclude or []
+        lines = []
+
+        if behavior not in self.behavior_timings:
+            return lines
+
+        for prop_name, (prop_type, value) in self.behavior_timings[behavior].items():
+            if prop_name in exclude:
+                continue
+
+            if prop_type == 'numeric':
+                lines.append(f"{indent}{prop_name} = <{value}>;")
+            elif prop_type == 'numeric_list':
+                lines.append(f"{indent}{prop_name} = <{value}>;")
+            elif prop_type == 'string':
+                lines.append(f"{indent}{prop_name} = \"{value}\";")
+            elif prop_type == 'boolean':
+                lines.append(f"{indent}{prop_name};")
+
+        return lines
 
     def generate_keymap(
         self,
@@ -666,26 +780,27 @@ class ZMKGenerator:
             code_lines.append(f"        }};")
             code_lines.append("")
 
+            # Properties to exclude (set explicitly in generated code)
+            exclude_props = ['compatible', 'label', 'binding-cells', 'bindings']
+
             # Layer-tap helper so MAGIC can be used as the tap side of a layer-tap
+            # All properties dynamically sourced from &lt in dario_behaviors.dtsi
             code_lines.append(f"        lt_ak_{behavior_suffix}: lt_ak_{behavior_suffix} {{")
             code_lines.append(f"            compatible = \"zmk,behavior-hold-tap\";")
             code_lines.append(f"            label = \"LT_AK_{behavior_suffix.upper()}\";")
             code_lines.append(f"            #binding-cells = <2>;")
-            code_lines.append(f"            flavor = \"balanced\";")
-            code_lines.append(f"            tapping-term-ms = <200>;")
-            code_lines.append(f"            quick-tap-ms = <200>;")
+            code_lines.extend(self._emit_behavior_properties('lt', exclude=exclude_props))
             code_lines.append(f"            bindings = <&mo>, <&ak_{behavior_suffix}>;")
             code_lines.append(f"        }};")
             code_lines.append("")
 
             # Mod-tap helper so MAGIC can be used as the tap side of a mod-tap
+            # All properties dynamically sourced from &mt in dario_behaviors.dtsi
             code_lines.append(f"        mt_ak_{behavior_suffix}: mt_ak_{behavior_suffix} {{")
             code_lines.append(f"            compatible = \"zmk,behavior-hold-tap\";")
             code_lines.append(f"            label = \"MT_AK_{behavior_suffix.upper()}\";")
             code_lines.append(f"            #binding-cells = <2>;")
-            code_lines.append(f"            flavor = \"balanced\";")
-            code_lines.append(f"            tapping-term-ms = <200>;")
-            code_lines.append(f"            quick-tap-ms = <200>;")
+            code_lines.extend(self._emit_behavior_properties('mt', exclude=exclude_props))
             code_lines.append(f"            bindings = <&kp>, <&ak_{behavior_suffix}>;")
             code_lines.append(f"        }};")
             code_lines.append("")
@@ -817,18 +932,17 @@ class ZMKGenerator:
                 if kc.startswith("&hml"):
                     hrm_name = f"hml_train_{behavior_suffix}_{alt_safe}"
                     # Left-hand hold-tap wrapper using the training adaptive key as tap
+                    # Uses timing from hml in dario_behaviors.dtsi
                     if hrm_name not in hrm_behavior_names:
+                        # Properties to exclude (set explicitly in generated code)
+                        exclude_props = ['compatible', 'label', 'binding-cells', 'bindings']
                         code_lines.append(f"        {hrm_name}: {hrm_name} {{")
                         code_lines.append(f"            compatible = \"zmk,behavior-hold-tap\";")
                         code_lines.append(f"            label = \"HML_TRAIN_{behavior_suffix.upper()}_{alt_safe.upper()}\";")
                         code_lines.append(f"            #binding-cells = <2>;")
-                        code_lines.append(f"            flavor = \"balanced\";")
-                        code_lines.append(f"            require-prior-idle-ms = <150>;")
-                        code_lines.append(f"            tapping-term-ms = <280>;")
-                        code_lines.append(f"            quick-tap-ms = <175>;")
+                        # All properties dynamically sourced from hml in dario_behaviors.dtsi
+                        code_lines.extend(self._emit_behavior_properties('hml', exclude=exclude_props))
                         code_lines.append(f"            bindings = <&kp>, <{ak_train_ref}>;")
-                        code_lines.append(f"            hold-trigger-key-positions = <6 7 8 9 10 11 18 19 20 21 22 23 30 31 32 33 34 35 39 40 41>;  // right hand + thumbs")
-                        code_lines.append(f"            hold-trigger-on-release;")
                         code_lines.append(f"        }};")
                         code_lines.append("")
                         hrm_behavior_names.add(hrm_name)
@@ -838,18 +952,17 @@ class ZMKGenerator:
 
                 elif kc.startswith("&hmr"):
                     hrm_name = f"hmr_train_{behavior_suffix}_{alt_safe}"
+                    # Right-hand hold-tap wrapper using the training adaptive key as tap
+                    # All properties dynamically sourced from hmr in dario_behaviors.dtsi
                     if hrm_name not in hrm_behavior_names:
+                        # Properties to exclude (set explicitly in generated code)
+                        exclude_props = ['compatible', 'label', 'binding-cells', 'bindings']
                         code_lines.append(f"        {hrm_name}: {hrm_name} {{")
                         code_lines.append(f"            compatible = \"zmk,behavior-hold-tap\";")
                         code_lines.append(f"            label = \"HMR_TRAIN_{behavior_suffix.upper()}_{alt_safe.upper()}\";")
                         code_lines.append(f"            #binding-cells = <2>;")
-                        code_lines.append(f"            flavor = \"balanced\";")
-                        code_lines.append(f"            require-prior-idle-ms = <150>;")
-                        code_lines.append(f"            tapping-term-ms = <280>;")
-                        code_lines.append(f"            quick-tap-ms = <175>;")
+                        code_lines.extend(self._emit_behavior_properties('hmr', exclude=exclude_props))
                         code_lines.append(f"            bindings = <&kp>, <{ak_train_ref}>;")
-                        code_lines.append(f"            hold-trigger-key-positions = <0 1 2 3 4 5 12 13 14 15 16 17 24 25 26 27 28 29 36 37 38>;  // left hand + thumbs")
-                        code_lines.append(f"            hold-trigger-on-release;")
                         code_lines.append(f"        }};")
                         code_lines.append("")
                         hrm_behavior_names.add(hrm_name)

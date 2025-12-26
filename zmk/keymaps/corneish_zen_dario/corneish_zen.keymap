@@ -283,9 +283,9 @@
             compatible = "zmk,behavior-hold-tap";
             label = "LT_AK_PRIMARY";
             #binding-cells = <2>;
-            flavor = "balanced";
             tapping-term-ms = <200>;
             quick-tap-ms = <200>;
+            flavor = "balanced";
             bindings = <&mo>, <&ak_primary>;
         };
 
@@ -293,9 +293,9 @@
             compatible = "zmk,behavior-hold-tap";
             label = "MT_AK_PRIMARY";
             #binding-cells = <2>;
-            flavor = "balanced";
             tapping-term-ms = <200>;
             quick-tap-ms = <200>;
+            flavor = "hold-preferred";
             bindings = <&kp>, <&ak_primary>;
         };
 
@@ -327,9 +327,9 @@
             compatible = "zmk,behavior-hold-tap";
             label = "LT_AK_ALT";
             #binding-cells = <2>;
-            flavor = "balanced";
             tapping-term-ms = <200>;
             quick-tap-ms = <200>;
+            flavor = "balanced";
             bindings = <&mo>, <&ak_alt>;
         };
 
@@ -337,9 +337,9 @@
             compatible = "zmk,behavior-hold-tap";
             label = "MT_AK_ALT";
             #binding-cells = <2>;
-            flavor = "balanced";
             tapping-term-ms = <200>;
             quick-tap-ms = <200>;
+            flavor = "hold-preferred";
             bindings = <&kp>, <&ak_alt>;
         };
 
@@ -379,9 +379,9 @@
             compatible = "zmk,behavior-hold-tap";
             label = "LT_AK_ALT2";
             #binding-cells = <2>;
-            flavor = "balanced";
             tapping-term-ms = <200>;
             quick-tap-ms = <200>;
+            flavor = "balanced";
             bindings = <&mo>, <&ak_alt2>;
         };
 
@@ -389,9 +389,9 @@
             compatible = "zmk,behavior-hold-tap";
             label = "MT_AK_ALT2";
             #binding-cells = <2>;
-            flavor = "balanced";
             tapping-term-ms = <200>;
             quick-tap-ms = <200>;
+            flavor = "hold-preferred";
             bindings = <&kp>, <&ak_alt2>;
         };
 

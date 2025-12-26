@@ -223,7 +223,12 @@ class KeymapGenerator:
 
     def _generate_zmk(self, board, compiled_layers):
         """Generate ZMK keymap files"""
-        generator = ZMKGenerator(magic_training=self.magic_training, special_keycodes=self.special_keycodes)
+        behaviors_dtsi = self.repo_root / "zmk" / "config" / "dario_behaviors.dtsi"
+        generator = ZMKGenerator(
+            magic_training=self.magic_training,
+            special_keycodes=self.special_keycodes,
+            behaviors_dtsi_path=str(behaviors_dtsi) if behaviors_dtsi.exists() else None
+        )
         output_dir = self.repo_root / board.get_output_directory()
 
         # Generate keymap file with combos and magic keys
