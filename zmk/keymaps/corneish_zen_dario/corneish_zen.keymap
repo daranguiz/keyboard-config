@@ -200,21 +200,25 @@
             space_trigger {
                 trigger-keys = <SPACE>;
                 bindings = <&magic_primary_chr_32>;
+                strict-modifiers;
                 max-prior-idle-ms = <1000>;
             };
             comma_trigger {
                 trigger-keys = <COMMA>;
                 bindings = <&magic_primary_chr_44>;
+                strict-modifiers;
                 max-prior-idle-ms = <1000>;
             };
             minus_trigger {
                 trigger-keys = <MINUS>;
                 bindings = <&kp GT>;
+                strict-modifiers;
                 max-prior-idle-ms = <1000>;
             };
             dot_trigger {
                 trigger-keys = <DOT>;
                 bindings = <&kp FSLH>;
+                strict-modifiers;
                 max-prior-idle-ms = <1000>;
             };
             p_trigger {
@@ -277,6 +281,18 @@
                 bindings = <&magic_primary_w>;
                 max-prior-idle-ms = <1000>;
             };
+            lt_trigger {
+                trigger-keys = <LT>;
+                bindings = <&kp GT>;
+                strict-modifiers;
+                max-prior-idle-ms = <1000>;
+            };
+            n1_trigger {
+                trigger-keys = <N1>;
+                bindings = <&kp COLON>;
+                strict-modifiers;
+                max-prior-idle-ms = <1000>;
+            };
         };
 
         lt_ak_primary: lt_ak_primary {
@@ -308,18 +324,22 @@
             space_trigger {
                 trigger-keys = <SPACE>;
                 bindings = <&magic_alt_chr_32>;
+                strict-modifiers;
             };
             comma_trigger {
                 trigger-keys = <COMMA>;
                 bindings = <&magic_alt_chr_44>;
+                strict-modifiers;
             };
             minus_trigger {
                 trigger-keys = <MINUS>;
                 bindings = <&kp GT>;
+                strict-modifiers;
             };
             dot_trigger {
                 trigger-keys = <DOT>;
                 bindings = <&kp FSLH>;
+                strict-modifiers;
             };
         };
 
@@ -352,18 +372,22 @@
             space_trigger {
                 trigger-keys = <SPACE>;
                 bindings = <&magic_alt2_chr_32>;
+                strict-modifiers;
             };
             comma_trigger {
                 trigger-keys = <COMMA>;
                 bindings = <&magic_alt2_chr_44>;
+                strict-modifiers;
             };
             minus_trigger {
                 trigger-keys = <MINUS>;
                 bindings = <&kp GT>;
+                strict-modifiers;
             };
             dot_trigger {
                 trigger-keys = <DOT>;
                 bindings = <&kp FSLH>;
+                strict-modifiers;
             };
             c_trigger {
                 trigger-keys = <C>;
@@ -426,7 +450,7 @@
             #binding-cells = <0>;
             bindings = <&kp GT>;
             guard_trigger {
-                trigger-keys = <MINUS>;
+                trigger-keys = <MINUS LT>;
                 bindings = <&kp HASH>;
                 max-prior-idle-ms = <1000>;
             };
@@ -564,6 +588,17 @@
             };
         };
 
+        ak_train_primary_colon: ak_train_primary_colon {
+            compatible = "zmk,behavior-adaptive-key";
+            #binding-cells = <0>;
+            bindings = <&kp COLON>;
+            guard_trigger {
+                trigger-keys = <N1>;
+                bindings = <&kp HASH>;
+                max-prior-idle-ms = <1000>;
+            };
+        };
+
         ak_train_alt_magic_alt_chr_32: ak_train_alt_magic_alt_chr_32 {
             compatible = "zmk,behavior-adaptive-key";
             #binding-cells = <0>;
@@ -689,7 +724,7 @@
         num_layer {
             bindings = <
                 &trans &kp TILDE &kp AMPERSAND &kp PERCENT &kp DOLLAR &none &kp CARET &kp N7 &kp N8 &kp N9 &kp DOT &trans
-                &trans &kp LGUI &kp LALT &kp LCTRL &kp LSHFT &kp EQUAL &kp COLON &kp N1 &kp N2 &kp N3 &kp GRAVE &trans
+                &trans &kp LGUI &kp LALT &kp LCTRL &kp LSHFT &kp EQUAL &ak_train_primary_colon &kp N1 &kp N2 &kp N3 &kp GRAVE &trans
                 &trans &kp LG(Z) &kp LG(X) &kp LG(C) &kp LG(V) &kp LG(LS(Z)) &kp HASH &kp N4 &kp N5 &kp N6 &kp COMMA &trans
                 &none &none &none &ak_primary &kp N0 &kp AT
             >;
@@ -697,9 +732,9 @@
 
         sym_layer {
             bindings = <
-                &trans &kp TILDE &kp AMPERSAND &kp PERCENT &kp DOLLAR &none &kp PLUS &kp LT &kp LBRC &kp RBRC &kp GT &trans
-                &trans &kp LGUI &kp LALT &kp LCTRL &kp LSHFT &kp EQUAL &kp COLON &kp EXCL &kp LPAR &kp RPAR &kp SEMI &trans
-                &trans &none &none &kp PIPE &kp BSLH &none &kp ASTERISK &kp MINUS &kp LBKT &kp RBKT &kp COMMA &trans
+                &trans &kp TILDE &kp AMPERSAND &kp PERCENT &kp DOLLAR &none &kp LT &kp ASTERISK &kp LBRC &kp RBRC &kp BSLH &trans
+                &trans &kp LGUI &kp LALT &kp LCTRL &kp LSHFT &kp EQUAL &ak_train_primary_colon &kp EXCL &kp LPAR &kp RPAR &kp SEMI &trans
+                &trans &none &none &none &kp PIPE &none &ak_train_primary_gt &kp PLUS &kp LBKT &kp RBKT &kp COMMA &trans
                 &none &none &none &ak_primary &kp SPACE &kp ENTER
             >;
         };

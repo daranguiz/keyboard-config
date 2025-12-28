@@ -224,11 +224,11 @@
  4: &kp DOLLAR
  5: &none
 
- 6: &kp PLUS
- 7: &kp LT
+ 6: &kp LT
+ 7: &kp ASTERISK
  8: &kp LBRC
  9: &kp RBRC
-10: &kp GT
+10: &kp BSLH
 11: &trans
 
 12: &trans
@@ -248,12 +248,12 @@
 24: &trans
 25: &none
 26: &none
-27: &kp PIPE
-28: &kp BSLH
+27: &none
+28: &kp PIPE
 29: &none
 
-30: &kp ASTERISK
-31: &kp MINUS
+30: &kp GT
+31: &kp PLUS
 32: &kp LBKT
 33: &kp RBKT
 34: &kp COMMA
@@ -394,6 +394,8 @@
   - Q → UE
   - T → ION
   - W → HICH
+  - < → >
+  - 1 → :
 
 ### BASE_ALT
 - default: REPEAT

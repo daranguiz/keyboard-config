@@ -296,6 +296,32 @@ The firmware uses QMK Community Modules for advanced features:
 - Configured per-keymap via `keymap.json` files
 - See https://getreuer.info/posts/keyboards/qmk-community-modules for setup details
 
+### Magic Key Training
+
+Magic training is a learning aid that helps build muscle memory for using the magic (alternate repeat) key instead of typing common bigrams directly.
+
+**How It Works**:
+- When you type a key followed by its magic alternate (e.g., `1` then `:` when `"1": ":"` is configured), training outputs `#` instead of the alternate character
+- This "punishment" encourages you to use the magic key for these bigrams
+- Training only activates for bigrams that have magic mappings defined
+
+**Configuration**:
+Training is enabled by default. To disable it, pass `--no-magic-training` to the generator:
+```bash
+python3 scripts/generate.py --no-magic-training
+```
+
+**Implementation Details**:
+
+*QMK*: Training logic is in `qmk/users/dario/magic.c`. It intercepts keypresses via `magic_process_record()` and compares the current key against `magic_training_first_keycode()` to detect direct bigrams.
+
+*ZMK*: Training uses adaptive-key behaviors (`ak_train_*`) that replace magic alternate keys in the keymap. Each training behavior checks if the previous key was a magic trigger; if so, it outputs `#` instead of the normal character.
+
+**Technical Notes**:
+- Non-alpha triggers use `strict-modifiers` to prevent base keys (e.g., `COMMA`) from matching shifted variants (e.g., `LT` = Shift+Comma)
+- Overlay layers (NUM, SYM, etc.) also get training behaviors applied to magic alternate keys
+- Alpha keys don't use strict-modifiers since shifted alphas (capitals) should still trigger the unshifted magic mapping
+
 ## Making Changes
 
 **Note**: All changes must comply with the [project constitution](.specify/memory/constitution.md), which defines mandatory principles for upstream modularity, 36-key layout consistency, extension modularity, keyboard inventory transparency, and visual keymap documentation.

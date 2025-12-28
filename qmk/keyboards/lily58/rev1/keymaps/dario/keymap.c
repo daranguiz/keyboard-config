@@ -63,9 +63,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
     [SYM] = LAYOUT(
         KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               ,
-        KC_TRNS             , KC_TILD             , KC_AMPR             , KC_PERC             , KC_DLR              , KC_NO               , KC_PLUS             , KC_LT               , KC_LCBR             , KC_RCBR             , KC_GT               , KC_TRNS             ,
+        KC_TRNS             , KC_TILD             , KC_AMPR             , KC_PERC             , KC_DLR              , KC_NO               , KC_LT               , KC_ASTR             , KC_LCBR             , KC_RCBR             , KC_BSLS             , KC_TRNS             ,
         KC_TRNS             , KC_LGUI             , KC_LALT             , KC_LCTL             , KC_LSFT             , KC_EQL              , KC_COLN             , KC_EXLM             , KC_LPRN             , KC_RPRN             , KC_SCLN             , KC_TRNS             ,
-        KC_TRNS             , KC_NO               , KC_NO               , KC_PIPE             , KC_BSLS             , KC_NO               , KC_NO               , KC_NO               , KC_ASTR             , KC_MINS             , KC_LBRC             , KC_RBRC             , KC_COMM             , KC_TRNS             ,
+        KC_TRNS             , KC_NO               , KC_NO               , KC_NO               , KC_PIPE             , KC_NO               , KC_NO               , KC_NO               , KC_GT               , KC_PLUS             , KC_LBRC             , KC_RBRC             , KC_COMM             , KC_TRNS             ,
         KC_NO               , KC_NO               , KC_NO               , KC_NO               , QK_AREP             , KC_SPC              , KC_ENT              , KC_NO               
     ),
     [NAV] = LAYOUT(
@@ -156,6 +156,8 @@ uint16_t get_alt_repeat_key_keycode_user(uint16_t keycode, uint8_t mods) {
             case KC_Q: return MAGIC_PRIMARY_Q;
             case KC_T: return MAGIC_PRIMARY_T;
             case KC_W: return MAGIC_PRIMARY_W;
+            case KC_LT: return KC_GT;
+            case KC_1: return KC_COLN;
         }
     }
 

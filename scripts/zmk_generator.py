@@ -249,6 +249,14 @@ class ZMKGenerator:
                 if base_layer in training_replacements:
                     replacement_map = training_replacements[base_layer]
                     keycodes = [replacement_map.get(kc, kc) for kc in keycodes]
+            else:
+                # For overlay layers (NUM, SYM, etc.) that aren't associated with a specific
+                # base layer, apply training from ALL base layers. This ensures magic alternates
+                # like COLON (from "1": ":") get trained even when typed on overlay layers.
+                # If the same keycode has different training behaviors in different base layers,
+                # we prefer the first one (typically PRIMARY).
+                for base_layer, replacement_map in training_replacements.items():
+                    keycodes = [replacement_map.get(kc, kc) for kc in keycodes]
 
         bindings = self._format_bindings(keycodes, board.layout_size)
 
@@ -772,6 +780,14 @@ class ZMKGenerator:
                 code_lines.append(f"            {trigger_name} {{")
                 code_lines.append(f"                trigger-keys = <{prev_keycode}>;")
                 code_lines.append(f"                bindings = <{alt_zmk}>;")
+                # Non-alpha keys need strict-modifiers to prevent base keys (COMMA) from
+                # matching shifted variants (LT = LS(COMMA)). Without this, the COMMA trigger
+                # would greedily match LT keypresses since {} is a subset of {shift}.
+                # Alpha keys don't need this since we WANT shifted alphas (capitals) to
+                # trigger the unshifted magic mapping (e.g., 'A' should trigger 'a' magic).
+                is_alpha = len(prev_keycode) == 1 and prev_keycode.isalpha()
+                if not is_alpha:
+                    code_lines.append(f"                strict-modifiers;")
                 # If timeout_ms is 0, omit the property to allow unlimited timing
                 if mapping.timeout_ms > 0:
                     code_lines.append(f"                max-prior-idle-ms = <{mapping.timeout_ms}>;")

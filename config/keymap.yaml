@@ -92,11 +92,11 @@ layers:
       left:
         - [TILD           , AMPR           , PERC           , DLR            , NONE           ]
         - [LGUI           , LALT           , LCTL           , LSFT           , EQL            ]
-        - [NONE           , NONE           , PIPE           , BSLS           , NONE           ]
+        - [NONE           , NONE           , NONE           , PIPE           , NONE           ]
       right:
-        - [PLUS           , LABK           , LCBR           , RCBR           , RABK           ]
+        - [LABK           , ASTR           , LCBR           , RCBR           , BSLS           ]
         - [COLN           , EXLM           , LPRN           , RPRN           , SCLN           ]
-        - [ASTR           , MINS           , LBRC           , RBRC           , COMM           ]
+        - [RABK           , PLUS           , LBRC           , RBRC           , COMM           ]
       thumbs:
         - [NONE           , NONE           , NONE           ]
         - [MAGIC          , SPC            , ENT            ]
@@ -194,6 +194,9 @@ magic_keys:
       Q: UE
       T: ION
       W: HICH
+
+      "<": ">"
+      "1": ":"
     default_repeat: true
 
   BASE_ALT:
