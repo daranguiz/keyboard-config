@@ -215,7 +215,7 @@ class KeymapGenerator:
         output_dir = self.repo_root / board.get_output_directory()
 
         # Generate all files (combos and magic keys are now inline in keymap.c)
-        files = generator.generate_keymap(board, compiled_layers, output_dir, self.combos, self.magic_config)
+        files = generator.generate_keymap(board, compiled_layers, output_dir, self.combos, self.magic_config, self.keymap_config.layers)
 
         # Write keymap files
         FileSystemWriter.write_all(output_dir, files)

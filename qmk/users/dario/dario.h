@@ -19,10 +19,8 @@ enum layers {
 #define U_NU KC_NO  // key available but not used
 #define U_NP KC_NO  // key is not present
 
-// Text expansion macros
-enum custom_macros {
-    MACRO_GITHUB_URL = SAFE_RANGE
-};
+// Note: Custom keycodes (combo macros, magic macros) are defined per-keymap
+// in the generated keymap.c file, starting from SAFE_RANGE
 
 // Base layer tracking for magic key context
 uint8_t get_current_base_layer(void);

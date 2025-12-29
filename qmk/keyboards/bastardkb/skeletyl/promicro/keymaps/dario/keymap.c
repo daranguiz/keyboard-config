@@ -5,12 +5,10 @@
 
 #include "dario.h"
 
-#ifndef MACRO_GITHUB_URL
-#define MACRO_GITHUB_URL SAFE_RANGE
-#endif
-
 enum magic_macros {
-    MAGIC_ALT2_CHR_32 = MACRO_GITHUB_URL + 1,
+    MACRO_GITHUB_URL = SAFE_RANGE,
+    MACRO_PD_TO_PH,
+    MAGIC_ALT2_CHR_32,
     MAGIC_ALT2_CHR_44,
     MAGIC_ALT_CHR_32,
     MAGIC_ALT_CHR_44,
@@ -80,6 +78,7 @@ enum combo_events {
     COMBO_DFU_LEFT,
     COMBO_DFU_RIGHT,
     COMBO_GITHUB_URL,
+    COMBO_PD_TO_PH,
     COMBO_LENGTH
 };
 
@@ -87,14 +86,16 @@ enum combo_events {
 
 // Combo key sequences
 const uint16_t PROGMEM dfu_left_combo[] = {KC_B, KC_Q, KC_Z, COMBO_END};
-const uint16_t PROGMEM dfu_right_combo[] = {KC_P, KC_DOT, KC_QUOT, COMBO_END};
+const uint16_t PROGMEM dfu_right_combo[] = {KC_J, KC_DOT, KC_QUOT, COMBO_END};
 const uint16_t PROGMEM github_url_combo[] = {KC_G, KC_O, KC_U, KC_DOT, COMBO_END};
+const uint16_t PROGMEM pd_to_ph_combo[] = {KC_P, KC_D, COMBO_END};
 
 // Combo definitions
 combo_t key_combos[] = {
     [COMBO_DFU_LEFT] = COMBO(dfu_left_combo, QK_BOOT),
     [COMBO_DFU_RIGHT] = COMBO(dfu_right_combo, QK_BOOT),
-    [COMBO_GITHUB_URL] = COMBO(github_url_combo, MACRO_GITHUB_URL)
+    [COMBO_GITHUB_URL] = COMBO(github_url_combo, MACRO_GITHUB_URL),
+    [COMBO_PD_TO_PH] = COMBO(pd_to_ph_combo, MACRO_PD_TO_PH)
 };
 
 
@@ -113,8 +114,30 @@ bool combo_should_trigger(uint16_t combo_index, combo_t *combo, uint16_t keycode
         case COMBO_GITHUB_URL:
             // Only active on BASE_PRIMARY, BASE_ALT, BASE_ALT2
             return (layer == BASE_PRIMARY || layer == BASE_ALT || layer == BASE_ALT2);
+        case COMBO_PD_TO_PH:
+            // Only active on BASE_PRIMARY
+            return (layer == BASE_PRIMARY);
         default:
             return true;  // Other combos active on all layers
+    }
+}
+
+
+// Combo macro handlers
+bool process_combo_macros(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case MACRO_GITHUB_URL:
+            if (record->event.pressed) {
+                SEND_STRING("https://github.com/daranguiz/keyboard-config?tab=readme-ov-file#readme");
+            }
+            return false;
+        case MACRO_PD_TO_PH:
+            if (record->event.pressed) {
+                SEND_STRING("ph");
+            }
+            return false;
+        default:
+            return true;
     }
 }
 

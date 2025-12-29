@@ -43,9 +43,26 @@
             bindings = <&github_url>;
             layers = <0 1 2>;
         };
+
+        combo_pd_to_ph {
+            timeout-ms = <20>;
+            key-positions = <27 28>;
+            bindings = <&pd_to_ph>;
+            layers = <0>;
+        };
     };
 
     macros {
+        pd_to_ph: pd_to_ph_macro {
+            compatible = "zmk,behavior-macro";
+            label = "PD_TO_PH";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_wait_time 10>
+                , <&macro_tap_time 10>
+                , <&macro_tap &kp P &kp H>
+                ;
+        };
         magic_primary_chr_32: magic_primary_chr_32_macro {
             compatible = "zmk,behavior-macro";
             label = "MAGIC_PRIMARY_CHR_32";

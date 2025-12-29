@@ -170,6 +170,15 @@ combos:
     timeout_ms: 100  # Slightly longer for 4-key combo
     layers: [BASE_PRIMARY, BASE_ALT, BASE_ALT2]
 
+  - name: pd_to_ph
+    description: "PD combo produces PH"
+    key_positions: [22, 23]  # P and D on left hand bottom row
+    action: MACRO_PH
+    macro_text: "ph"
+    timeout_ms: 20
+    layers: [BASE_PRIMARY]
+
+
 # Magic key definitions
 # Context-aware keys that produce different outputs based on previous keypress
 # Used to provide alternate bigrams for uncomfortable key combinations

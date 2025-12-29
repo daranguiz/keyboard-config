@@ -23,7 +23,8 @@ class QMKGenerator:
         compiled_layers: List[CompiledLayer],
         output_dir: Path,
         combos: ComboConfiguration = None,
-        magic_config: 'MagicKeyConfiguration' = None
+        magic_config: 'MagicKeyConfiguration' = None,
+        raw_layers: Dict[str, 'Layer'] = None
     ) -> Dict[str, str]:
         """
         Generate all QMK files for a board
@@ -34,6 +35,7 @@ class QMKGenerator:
             output_dir: Output directory path
             combos: Optional combo configuration
             magic_config: Optional magic key configuration
+            raw_layers: Raw layer definitions (for combo keycode lookup)
 
         Returns:
             Dictionary of {filename: content} for all generated files
@@ -41,7 +43,7 @@ class QMKGenerator:
         files = {}
 
         # Generate keymap.c
-        files['keymap.c'] = self.generate_keymap_c(board, compiled_layers, combos, magic_config)
+        files['keymap.c'] = self.generate_keymap_c(board, compiled_layers, combos, magic_config, raw_layers)
 
         # Generate config.h
         files['config.h'] = self.generate_config_h(board, compiled_layers)
@@ -59,7 +61,8 @@ class QMKGenerator:
         board: Board,
         compiled_layers: List[CompiledLayer],
         combos: ComboConfiguration = None,
-        magic_config: 'MagicKeyConfiguration' = None
+        magic_config: 'MagicKeyConfiguration' = None,
+        raw_layers: Dict[str, 'Layer'] = None
     ) -> str:
         """
         Generate keymap.c file
@@ -69,6 +72,7 @@ class QMKGenerator:
             compiled_layers: List of compiled layers
             combos: Optional combo configuration
             magic_config: Optional magic key configuration
+            raw_layers: Raw layer definitions (for combo keycode lookup)
 
         Returns:
             Complete keymap.c file content
@@ -96,21 +100,32 @@ enum {{
 }};
 """
 
-        # Generate combo code if combos are provided
-        combo_code = ""
+        # Collect combo macros first (for text expansion combos)
+        combo_macros = []
         if combos and combos.combos:
-            combo_code = "\n" + self.generate_combos_inline(combos, layer_names, compiled_layers, board)
+            for combo in combos.combos:
+                if combo.macro_text is not None:
+                    macro_name = f"MACRO_{combo.name.upper()}"
+                    combo_macros.append((macro_name, combo.macro_text))
 
         # Generate magic key code if magic_config is provided
         magic_code = ""
-        magic_enum = ""
         magic_handlers = ""
         self.magic_macros = {}
         if magic_config and magic_config.mappings:
             magic_code, self.magic_macros = self.generate_magic_keys_inline(magic_config, compiled_layers)
-            if self.magic_macros:
-                magic_enum = "\n" + self.generate_magic_macro_enum(self.magic_macros)
-                magic_handlers = "\n" + self.generate_magic_macro_handlers(self.magic_macros)
+
+        # Generate unified custom keycode enum (combo macros first, then magic macros)
+        custom_enum = self.generate_custom_keycode_enum(combo_macros, self.magic_macros)
+
+        # Generate magic handlers if we have magic macros
+        if self.magic_macros:
+            magic_handlers = "\n" + self.generate_magic_macro_handlers(self.magic_macros)
+
+        # Generate combo code if combos are provided (without the macro enum - that's in custom_enum)
+        combo_code = ""
+        if combos and combos.combos:
+            combo_code = "\n" + self.generate_combos_inline(combos, layer_names, compiled_layers, board, raw_layers, skip_macro_enum=True)
 
         return f"""// AUTO-GENERATED - DO NOT EDIT
 // Generated from config/keymap.yaml by scripts/generate.py
@@ -118,7 +133,7 @@ enum {{
 // Firmware: QMK
 
 #include "dario.h"
-{magic_enum}
+{custom_enum}
 {extra_layers_code}
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {{
 {layers_code}
@@ -523,36 +538,156 @@ combo_t key_combos[] = {{
 #endif  // COMBO_ENABLE
 """
 
+    def _extract_base_keycode(self, qmk_keycode: str) -> str:
+        """
+        Extract the base keycode from a QMK keycode, stripping mod-tap wrappers.
+
+        Examples:
+            "LGUI_T(KC_N)" -> "KC_N"
+            "LALT_T(KC_S)" -> "KC_S"
+            "LT(NUM, KC_MAGIC)" -> "KC_MAGIC"
+            "KC_B" -> "KC_B"
+            "XXXXXXX" -> None (transparent/none keys)
+        """
+        import re
+
+        # Skip transparent/none keys
+        if qmk_keycode in ("XXXXXXX", "_______", "KC_NO", "KC_TRNS"):
+            return None
+
+        # Match mod-tap patterns like LGUI_T(KC_X), LALT_T(KC_X), etc.
+        mod_tap_match = re.match(r'[A-Z]+_T\((.+)\)', qmk_keycode)
+        if mod_tap_match:
+            return mod_tap_match.group(1)
+
+        # Match layer-tap patterns like LT(LAYER, KC_X)
+        layer_tap_match = re.match(r'LT\([^,]+,\s*(.+)\)', qmk_keycode)
+        if layer_tap_match:
+            return layer_tap_match.group(1)
+
+        # Already a plain keycode
+        return qmk_keycode
+
+    def _get_combo_keycodes(
+        self,
+        combo: 'Combo',
+        raw_layers: Dict[str, 'Layer']
+    ) -> List[str]:
+        """
+        Look up keycodes for combo positions from the raw layer definitions.
+
+        Uses the first layer in combo.layers (or first base layer if not specified)
+        to determine what keys are at each position in the 36-key core layout.
+        """
+        if not raw_layers:
+            raise ValueError(f"Combo '{combo.name}' requires raw_layers for keycode lookup")
+
+        # Find the layer to use for keycode lookup
+        target_layer_name = None
+        if combo.layers:
+            target_layer_name = combo.layers[0]
+        else:
+            # Use first base layer
+            for layer_name in raw_layers.keys():
+                if layer_name.startswith("BASE_"):
+                    target_layer_name = layer_name
+                    break
+
+        if not target_layer_name:
+            raise ValueError(f"Combo '{combo.name}' has no valid layer for keycode lookup")
+
+        target_layer = raw_layers.get(target_layer_name)
+        if not target_layer:
+            raise ValueError(f"Combo '{combo.name}' references layer '{target_layer_name}' which doesn't exist")
+
+        if not target_layer.core:
+            raise ValueError(f"Combo '{combo.name}' references layer '{target_layer_name}' which has no core layout")
+
+        # Flatten the core layout to 36 keys in row-wise order
+        # KeyGrid.rows structure after parsing:
+        #   rows[0:3] = left hand rows (3 rows × 5 cols)
+        #   rows[3:6] = right hand rows (3 rows × 5 cols)
+        #   rows[6] = left thumb keys (3 keys)
+        #   rows[7] = right thumb keys (3 keys)
+        core = target_layer.core
+        flat_keys = []
+
+        # Top row: left[0] + right[0] (positions 0-9)
+        flat_keys.extend(core.rows[0])  # Left top row
+        flat_keys.extend(core.rows[3])  # Right top row
+
+        # Home row: left[1] + right[1] (positions 10-19)
+        flat_keys.extend(core.rows[1])  # Left home row
+        flat_keys.extend(core.rows[4])  # Right home row
+
+        # Bottom row: left[2] + right[2] (positions 20-29)
+        flat_keys.extend(core.rows[2])  # Left bottom row
+        flat_keys.extend(core.rows[5])  # Right bottom row
+
+        # Thumbs: thumbs[0] + thumbs[1] (positions 30-35)
+        flat_keys.extend(core.rows[6])  # Left thumbs
+        flat_keys.extend(core.rows[7])  # Right thumbs
+
+        # Look up keycodes at each combo position
+        keycodes = []
+        for pos in combo.key_positions:
+            if pos >= len(flat_keys):
+                raise ValueError(
+                    f"Combo '{combo.name}' references position {pos} but layer '{target_layer_name}' "
+                    f"only has {len(flat_keys)} core keys"
+                )
+
+            raw_key = flat_keys[pos]
+
+            # Extract base key from HRM/LT wrappers (e.g., "hrm:LGUI:N" -> "N")
+            if raw_key.startswith("hrm:") or raw_key.startswith("mt:"):
+                # Format: hrm:MOD:KEY or mt:MOD:KEY
+                parts = raw_key.split(":")
+                raw_key = parts[-1] if len(parts) >= 3 else raw_key
+            elif raw_key.startswith("lt:"):
+                # Format: lt:LAYER:KEY
+                parts = raw_key.split(":")
+                raw_key = parts[-1] if len(parts) >= 3 else raw_key
+
+            # Skip transparent/none keys
+            if raw_key in ("NONE", "TRANS", "XXX", "_______"):
+                raise ValueError(
+                    f"Combo '{combo.name}' references position {pos} which has a "
+                    f"transparent/none key in layer '{target_layer_name}'"
+                )
+
+            # Convert to QMK keycode
+            qmk_keycode = f"KC_{raw_key}"
+
+            keycodes.append(qmk_keycode)
+
+        return keycodes
+
     def generate_combos_inline(
         self,
         combos: ComboConfiguration,
         layer_names: List[str],
         compiled_layers: List[CompiledLayer],
-        board: Board
+        board: Board,
+        raw_layers: Dict[str, 'Layer'] = None,
+        skip_macro_enum: bool = False
     ) -> str:
         """
         Generate combo code inline for keymap.c (not separate files)
 
         This is identical to generate_combos_c but without file headers
         and the #include directives since it's embedded in keymap.c
+
+        Args:
+            skip_macro_enum: If True, don't generate the macro enum (it's in generate_custom_keycode_enum)
         """
         if not combos.combos:
             return ""
 
-        # Generate combo sequences; prefer keycodes for stability across layouts
+        # Generate combo sequences by looking up keycodes from raw layer definitions
         sequences = []
         for combo in combos.combos:
-            # Special-case known combos to avoid layout position drift
-            if combo.name == "dfu_left":
-                keys = ["KC_B", "KC_Q", "KC_Z"]
-            elif combo.name == "dfu_right":
-                keys = ["KC_P", "KC_DOT", "KC_QUOT"]
-            elif combo.name == "github_url":
-                keys = ["KC_G", "KC_O", "KC_U", "KC_DOT"]
-            else:
-                translated_positions = self.translate_combo_positions(combo.key_positions, board)
-                keys = [str(p) for p in translated_positions]
-
+            keys = self._get_combo_keycodes(combo, raw_layers)
             positions_str = ", ".join(keys)
             sequences.append(f"const uint16_t PROGMEM {combo.name}_combo[] = {{{positions_str}, COMBO_END}};")
         sequences_code = "\n".join(sequences)
@@ -610,9 +745,54 @@ bool combo_should_trigger(uint16_t combo_index, combo_t *combo, uint16_t keycode
 }}
 """
 
+        # Generate macro definitions for combos with macro_text
+        combo_macros = []
+        combo_macro_handlers = []
+        for combo in combos.combos:
+            if combo.macro_text is not None:
+                macro_name = f"MACRO_{combo.name.upper()}"
+                combo_macros.append(macro_name)
+                # Generate handler case
+                combo_macro_handlers.append(f"""        case {macro_name}:
+            if (record->event.pressed) {{
+                SEND_STRING("{combo.macro_text}");
+            }}
+            return false;""")
+
+        # Generate macro enum if there are any combo macros (unless skip_macro_enum is True)
+        macro_enum_code = ""
+        if combo_macros and not skip_macro_enum:
+            # First macro uses SAFE_RANGE, rest increment from there
+            enum_entries = [f"    {combo_macros[0]} = SAFE_RANGE"]
+            for macro_name in combo_macros[1:]:
+                enum_entries.append(f"    {macro_name}")
+            enum_entries_str = ",\n".join(enum_entries)
+            macro_enum_code = f"""
+// Combo macro keycodes
+enum combo_macros {{
+{enum_entries_str}
+}};
+"""
+
+        # Generate process_combo_macros handler for combo macros
+        macro_handler_code = ""
+        if combo_macro_handlers:
+            handlers = "\n".join(combo_macro_handlers)
+            macro_handler_code = f"""
+
+// Combo macro handlers
+bool process_combo_macros(uint16_t keycode, keyrecord_t *record) {{
+    switch (keycode) {{
+{handlers}
+        default:
+            return true;
+    }}
+}}
+"""
+
         return f"""
 #ifdef COMBO_ENABLE
-
+{macro_enum_code}
 // Combo indices
 enum combo_events {{
     {combo_enums},
@@ -629,7 +809,7 @@ combo_t key_combos[] = {{
 {combos_array}
 }};
 {process_combo_code}
-{layer_filter_code}
+{layer_filter_code}{macro_handler_code}
 #endif  // COMBO_ENABLE
 """
 
@@ -864,9 +1044,56 @@ combo_t key_combos[] = {{
                 safe_prev = f"CHR_{ord(chars)}"
         return f"MAGIC_{behavior_suffix}_{safe_prev}".upper()
 
+    def generate_custom_keycode_enum(
+        self,
+        combo_macros: List[Tuple[str, str]],
+        magic_macros: Dict[str, str]
+    ) -> str:
+        """
+        Generate a unified enum for all custom keycodes (combo macros + magic macros).
+
+        Combo macros come first, then magic macros continue from there.
+        This ensures no keycode value conflicts.
+
+        Args:
+            combo_macros: List of (macro_name, macro_text) tuples for combo macros
+            magic_macros: Dict of {macro_name: text} for magic macros
+
+        Returns:
+            C enum definition string
+        """
+        if not combo_macros and not magic_macros:
+            return ""
+
+        lines = []
+        enum_entries = []
+
+        # Combo macros come first
+        if combo_macros:
+            # First combo macro starts at SAFE_RANGE
+            enum_entries.append(f"    {combo_macros[0][0]} = SAFE_RANGE")
+            for macro_name, _ in combo_macros[1:]:
+                enum_entries.append(f"    {macro_name}")
+
+        # Magic macros follow combo macros
+        if magic_macros:
+            magic_names = sorted(magic_macros.keys())
+            for name in magic_names:
+                enum_entries.append(f"    {name}")
+
+        if enum_entries:
+            lines.append("")
+            lines.append("enum magic_macros {")
+            lines.append(",\n".join(enum_entries) + ",")
+            lines.append("};")
+            lines.append("")
+
+        return "\n".join(lines)
+
     def generate_magic_macro_enum(self, macro_map: Dict[str, str]) -> str:
         """
         Emit enum definitions for magic text expansion keycodes.
+        DEPRECATED: Use generate_custom_keycode_enum instead for unified enum.
         """
         if not macro_map:
             return ""

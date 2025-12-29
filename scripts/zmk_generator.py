@@ -59,7 +59,11 @@ class ZMKGenerator:
         self.special_keycodes = special_keycodes or {}
         self.char_token_map = self._build_char_token_map()
         # Track macro behaviors generated for magic/combos so bindings can reference them
-        self.generated_macros: Dict[str, str] = {}
+        # Track generated macros to avoid duplicates
+        # Pre-populate with macros defined in dario_behaviors.dtsi
+        self.generated_macros: Dict[str, str] = {
+            "github_url": "defined in dario_behaviors.dtsi"  # Skip - already defined
+        }
         # Parse behavior timings from dario_behaviors.dtsi
         self.behavior_timings = self._parse_behaviors_dtsi(behaviors_dtsi_path) if behaviors_dtsi_path else {}
 
@@ -208,6 +212,9 @@ class ZMKGenerator:
         macro_defs: List[str] = []
         if combos and combos.combos:
             combos_section = "\n" + self.generate_combos_section(combos, layer_names, board)
+            # Collect combo macros (text expansion combos)
+            combo_macro_defs = self._collect_combo_macros(combos)
+            macro_defs.extend(combo_macro_defs)
 
         if magic_config and magic_config.mappings:
             magic_macro_defs, macro_refs = self._collect_magic_macros(magic_config)

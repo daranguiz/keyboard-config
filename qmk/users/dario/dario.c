@@ -5,6 +5,10 @@
 bool process_magic_record(uint16_t keycode, keyrecord_t *record);
 __attribute__((weak)) bool process_magic_record(uint16_t keycode, keyrecord_t *record) { return true; }
 
+// Forward declaration: generated per-keymap for combo macro handling
+bool process_combo_macros(uint16_t keycode, keyrecord_t *record);
+__attribute__((weak)) bool process_combo_macros(uint16_t keycode, keyrecord_t *record) { return true; }
+
 // Global variable to track current base layer for magic key context
 static uint8_t current_base_layer = BASE_PRIMARY;  // Default starting layer
 
@@ -148,13 +152,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         return false;
     }
 
-    switch (keycode) {
-        case MACRO_GITHUB_URL:
-            if (record->event.pressed) {
-                SEND_STRING("https://github.com/daranguiz/keyboard-config?tab=readme-ov-file#readme");
-            }
-            return false;
+    // Delegate combo macro handling (generated per-keymap)
+    if (!process_combo_macros(keycode, record)) {
+        return false;
     }
+
     return true;
 }
 
