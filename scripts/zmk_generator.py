@@ -4,7 +4,47 @@ ZMK keymap generator
 Generates ZMK devicetree (.keymap) files from compiled layers
 """
 
-from typing import List, Dict, Tuple
+# =============================================================================
+# SHIFTED-ALPHA TRAINING RULES (strict-modifiers on training guard_triggers)
+# =============================================================================
+#
+# These rules determine when `strict-modifiers` is added to training behaviors'
+# guard_trigger, which controls whether shifted alpha PREDECESSORS trigger
+# magic training. This does NOT affect the magic key itself (which should
+# always work for both shifted and unshifted alphas).
+#
+# SPEC (DO NOT MODIFY WITHOUT UPDATING THIS):
+# 1. Only applies to base alpha layers (not symbol/overlay layers)
+# 2. If magic key is on left thumb cluster AND shift is on same left thumb
+#    cluster → disable training for shifted alphas on RIGHT half
+# 3. Magic training should still work for lowercase alphas (unshifted)
+# 4. Only thumb-cluster magic keys matter (finger magic keys are ignored)
+# 5. If both thumb clusters have magic+shift, disable for both halves
+# 6. Rule only triggers if BOTH magic AND shift are on same thumb cluster
+#
+# RATIONALE:
+# When magic and shift are co-located on the same thumb cluster, using magic
+# for a shifted alpha on the opposite hand would require a thumb same-finger
+# bigram (SFB). We disable training for these cases so users aren't punished
+# for typing shift+alpha directly.
+#
+# EXAMPLE (BASE_PRIMARY layout):
+#   Left thumbs:  [MAGIC(30), R(31), SHIFT(32)]
+#   Right thumbs: [SHIFT(33), SPC(34), ENT(35)]
+#
+#   Magic+shift on LEFT thumb cluster → colocation['left'] = True
+#
+#   Training for 'G→Y' (G is right-hand predecessor):
+#     - 'g' then 'y' → training fires, outputs '#'
+#     - 'G' (shifted) then 'y' → strict-modifiers blocks, outputs 'y'
+#     - 'G' then magic → magic works, outputs 'y'
+#
+#   Training for 'N→ion' (N is left-hand predecessor):
+#     - 'n' then 'i' → training fires, outputs '#'
+#     - 'N' (shifted) then 'i' → training still fires (no strict-modifiers)
+# =============================================================================
+
+from typing import List, Dict, Tuple, Optional
 import re
 from pathlib import Path
 from data_model import CompiledLayer, Board, ComboConfiguration, Combo, ValidationError
@@ -706,6 +746,117 @@ class ZMKGenerator:
 
         return macro_defs, macro_refs
 
+    def _detect_magic_shift_thumb_colocation(self, compiled_layer: CompiledLayer) -> Dict[str, bool]:
+        """
+        Detect which thumb clusters have both magic AND shift keys co-located.
+
+        This is used to selectively disable magic training for shifted alphas.
+        When magic and shift are on the same thumb cluster, using magic to type
+        a shifted alpha on the OPPOSITE hand would require a thumb same-finger
+        bigram (SFB): hold shift with thumb, then tap magic with same thumb.
+
+        For example, with this layout:
+            Left thumbs:  [MAGIC, R, SHIFT]  (positions 30-32)
+            Right thumbs: [SHIFT, SPC, ENT]  (positions 33-35)
+
+        To type shifted 'U' (right hand) via magic, user would need:
+            1. Hold left shift (thumb position 32)
+            2. Type 'U' (right hand)
+            3. Tap magic (thumb position 30) - THUMB SFB with shift!
+
+        By detecting this co-location, we can disable training for shifted alphas
+        on the opposite hand, so users aren't punished for typing shift+alpha
+        directly instead of using the thumb-SFB magic approach.
+
+        Returns dict with:
+          - 'left': True if left thumb cluster has both magic and shift
+          - 'right': True if right thumb cluster has both magic and shift
+
+        Handles different layout sizes:
+          - 36-key (3x5_3): thumbs at positions 30-32 (left), 33-35 (right)
+          - 42-key (3x6_3): thumbs at positions 36-38 (left), 39-41 (right)
+        """
+        # Position ranges for thumb clusters depend on layout size
+        # See CLAUDE.md "Key Position Numbering" for position reference
+        # 36-key (3x5_3): thumbs at 30-32 (left), 33-35 (right)
+        # 42-key (3x6_3): thumbs at 36-38 (left), 39-41 (right)
+        num_keys = len(compiled_layer.keycodes)
+        if num_keys <= 36:
+            left_thumb_positions = [30, 31, 32]
+            right_thumb_positions = [33, 34, 35]
+        else:  # 42-key or larger
+            left_thumb_positions = [36, 37, 38]
+            right_thumb_positions = [39, 40, 41]
+
+        def has_magic_and_shift(positions: List[int]) -> bool:
+            has_magic = False
+            has_shift = False
+            for pos in positions:
+                if pos < len(compiled_layer.keycodes):
+                    kc = compiled_layer.keycodes[pos]
+                    # Magic keys in ZMK: &ak_<layer>, &lt_ak_<layer>, &mt_ak_<layer>
+                    # These are adaptive-key behaviors generated for each base layer
+                    if '&ak_' in kc or '&lt_ak_' in kc or '&mt_ak_' in kc:
+                        has_magic = True
+                    # Shift keys in ZMK: &mt LSFT, &kp LSFT, etc.
+                    # Look for LSFT (ZMK's left shift) or LSHIFT (alternate naming)
+                    if 'LSFT' in kc or 'LSHIFT' in kc:
+                        has_shift = True
+            return has_magic and has_shift
+
+        return {
+            'left': has_magic_and_shift(left_thumb_positions),
+            'right': has_magic_and_shift(right_thumb_positions)
+        }
+
+    def _get_alpha_hand(self, alpha: str, compiled_layer: CompiledLayer) -> Optional[str]:
+        """
+        Determine which hand an alpha key is on in the given base layer.
+
+        This scans the compiled layer's keycodes to find where a specific alpha
+        letter is positioned. Used by the shifted-alpha training logic to determine
+        if an alpha should have strict-modifiers added.
+
+        Keycodes may be in various forms:
+            - Plain: "&kp U"
+            - Home row mod: "&hml LGUI N" or "&hmr LSFT C"
+            - Other behaviors that end with the letter
+
+        Returns 'left', 'right', or None if alpha not found on the main finger grid.
+        """
+        # Position ranges depend on layout size (see CLAUDE.md Key Position Numbering)
+        # 36-key (3x5_3):
+        #   Left:  0-4 (top), 10-14 (home), 20-24 (bottom)
+        #   Right: 5-9 (top), 15-19 (home), 25-29 (bottom)
+        # 42-key (3x6_3):
+        #   Left:  0-5 (top), 12-17 (home), 24-29 (bottom)
+        #   Right: 6-11 (top), 18-23 (home), 30-35 (bottom)
+        num_keys = len(compiled_layer.keycodes)
+        if num_keys <= 36:
+            left_positions = list(range(0, 5)) + list(range(10, 15)) + list(range(20, 25))
+            right_positions = list(range(5, 10)) + list(range(15, 20)) + list(range(25, 30))
+        else:  # 42-key or larger
+            left_positions = list(range(0, 6)) + list(range(12, 18)) + list(range(24, 30))
+            right_positions = list(range(6, 12)) + list(range(18, 24)) + list(range(30, 36))
+
+        alpha_upper = alpha.upper()
+
+        for pos in left_positions:
+            if pos < len(compiled_layer.keycodes):
+                kc = compiled_layer.keycodes[pos]
+                # Match keycodes that contain or end with the alpha letter
+                # Examples: "&kp U", "&hml LGUI N", "&hmr LSFT C"
+                if f' {alpha_upper}' in kc or kc.endswith(f' {alpha_upper}') or kc == f'&kp {alpha_upper}':
+                    return 'left'
+
+        for pos in right_positions:
+            if pos < len(compiled_layer.keycodes):
+                kc = compiled_layer.keycodes[pos]
+                if f' {alpha_upper}' in kc or kc.endswith(f' {alpha_upper}') or kc == f'&kp {alpha_upper}':
+                    return 'right'
+
+        return None
+
     def generate_magic_keys_section(
         self,
         magic_config: 'MagicKeyConfiguration',
@@ -783,8 +934,10 @@ class ZMKGenerator:
                 # Non-alpha keys need strict-modifiers to prevent base keys (COMMA) from
                 # matching shifted variants (LT = LS(COMMA)). Without this, the COMMA trigger
                 # would greedily match LT keypresses since {} is a subset of {shift}.
-                # Alpha keys don't need this since we WANT shifted alphas (capitals) to
-                # trigger the unshifted magic mapping (e.g., 'A' should trigger 'a' magic).
+                # Alpha keys should NOT have strict-modifiers here - we WANT shifted alphas
+                # (capitals) to trigger the magic mapping (e.g., 'G' should trigger 'g' magic).
+                # Training strict-modifiers for shifted alphas is handled separately in
+                # generate_magic_training_section.
                 is_alpha = len(prev_keycode) == 1 and prev_keycode.isalpha()
                 if not is_alpha:
                     code_lines.append(f"                strict-modifiers;")
@@ -854,6 +1007,11 @@ class ZMKGenerator:
         training_meta: Dict[str, Dict[str, Dict[str, str]]] = {}
 
         for base_layer, mapping in magic_config.mappings.items():
+            # Detect magic+shift co-location for this base layer
+            # See SHIFTED-ALPHA TRAINING RULES at top of file for full spec
+            base_layer_obj = next((l for l in compiled_layers if l.name == base_layer), None)
+            colocation = self._detect_magic_shift_thumb_colocation(base_layer_obj) if base_layer_obj else {'left': False, 'right': False}
+
             # Group prev keys by alt output
             grouped: Dict[str, List[str]] = {}
             alt_lookup: Dict[str, object] = {}
@@ -902,6 +1060,31 @@ class ZMKGenerator:
                 code_lines.append(f"            guard_trigger {{")
                 code_lines.append(f"                trigger-keys = <{' '.join(trigger_keys)}>;")
                 code_lines.append(f"                bindings = <&kp HASH>;")
+
+                # Add strict-modifiers for alpha predecessors on opposite hand from magic+shift
+                # This disables training for shifted predecessors to avoid thumb SFBs.
+                # See SHIFTED-ALPHA TRAINING RULES at top of file for full spec.
+                #
+                # When magic+shift are co-located on one thumb cluster, typing a shifted
+                # alpha on the opposite hand and then using magic would require a thumb SFB.
+                # By adding strict-modifiers, shifted predecessors don't match the trigger,
+                # so training doesn't punish users for typing the bigram directly.
+                needs_strict = False
+                for prev_key in prev_list:
+                    if isinstance(prev_key, str) and len(prev_key) == 1 and prev_key.isalpha():
+                        alpha_hand = self._get_alpha_hand(prev_key, base_layer_obj) if base_layer_obj else None
+                        if alpha_hand == 'left' and colocation.get('right'):
+                            needs_strict = True
+                            break
+                        elif alpha_hand == 'right' and colocation.get('left'):
+                            needs_strict = True
+                            break
+                        elif colocation.get('left') and colocation.get('right'):
+                            needs_strict = True
+                            break
+                if needs_strict:
+                    code_lines.append(f"                strict-modifiers;  // Disable training for shifted predecessors")
+
                 if mapping.timeout_ms > 0:
                     code_lines.append(f"                max-prior-idle-ms = <{mapping.timeout_ms}>;")
                 code_lines.append(f"            }};")

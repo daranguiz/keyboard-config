@@ -496,6 +496,7 @@
             guard_trigger {
                 trigger-keys = <C G>;
                 bindings = <&kp HASH>;
+                strict-modifiers;  // Disable training for shifted predecessors
                 max-prior-idle-ms = <1000>;
             };
         };
@@ -518,6 +519,7 @@
             guard_trigger {
                 trigger-keys = <I>;
                 bindings = <&kp HASH>;
+                strict-modifiers;  // Disable training for shifted predecessors
                 max-prior-idle-ms = <1000>;
             };
         };
@@ -529,6 +531,7 @@
             guard_trigger {
                 trigger-keys = <J>;
                 bindings = <&kp HASH>;
+                strict-modifiers;  // Disable training for shifted predecessors
                 max-prior-idle-ms = <1000>;
             };
         };
@@ -584,6 +587,7 @@
             guard_trigger {
                 trigger-keys = <W>;
                 bindings = <&kp HASH>;
+                strict-modifiers;  // Disable training for shifted predecessors
                 max-prior-idle-ms = <1000>;
             };
         };
