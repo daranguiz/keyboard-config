@@ -9,6 +9,11 @@ echo "Release Discovery"
 echo "========================================"
 echo ""
 
+# Fetch latest tags from remote
+echo "## Fetching tags..."
+git fetch --tags origin 2>/dev/null || echo "⚠️  Could not fetch tags"
+echo ""
+
 # Git status
 echo "## Git Status"
 UNCOMMITTED=$(git status --porcelain)
