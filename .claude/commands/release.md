@@ -24,130 +24,74 @@ Optional arguments:
 
 ## Execution Steps
 
-### 1. Pre-flight Checks
+### 1. Run Discovery
 
-Check git status:
-
-```bash
-git status --porcelain
-```
-
-If there are uncommitted changes, warn the user and ask:
-- **Option A**: Show me the changes (run `git status` and `git diff --stat`)
-- **Option B**: Continue anyway (create release from current HEAD)
-- **Option C**: Abort
-
-Check if `gh` CLI is authenticated:
+Run the discovery script to gather all release information:
 
 ```bash
-gh auth status
+./scripts/release-info.sh
 ```
 
-If not authenticated, provide instructions:
-```bash
-gh auth login
-```
+This script:
+- Fetches latest tags from remote
+- Checks git status (uncommitted changes)
+- Verifies GitHub CLI authentication
+- Extracts layout name from keymap.yaml
+- Generates suggested tag name (handles duplicates)
+- Lists commits since last release
+- Counts build artifacts
 
-### 2. Build All Firmware
+If there are issues (uncommitted changes, not authenticated, missing artifacts), address them before proceeding.
 
-Run the build script to generate all artifacts:
+### 2. Verify Build Artifacts
+
+The discovery script shows artifact counts. If `out/` is missing or empty, run:
 
 ```bash
 ./build_all.sh
 ```
 
-Verify that `out/` directory exists and contains build artifacts:
-- `out/qmk/` with firmware files
-- `out/zmk/` with firmware files
-- `out/visualizations/` with diagrams
+### 3. Confirm Release Details
 
-If build fails, abort and report the error.
+From the discovery output, note:
+- **Suggested tag**: e.g., `Night-2025-12-28` or `Night-2025-12-28-2` if tag exists
+- **Layout name**: e.g., "Night"
+- **Commits**: Changes since last release
+- **Artifacts**: QMK count, ZMK count, visualizations, keylayouts
 
-### 3. Determine Release Name
+### 4. Generate Release Notes
 
-Extract the current base layout name from `config/keymap.yaml`:
+Write release notes based on the commits since the last tag. The discovery script (`scripts/release-info.sh`) shows:
+- Commits since last release
+- Build artifact counts (QMK, ZMK, visualizations, keylayouts)
 
-```bash
-grep "^base_layers:" -A 10 config/keymap.yaml | grep "BASE_" | head -1 | sed 's/.*BASE_//' | sed 's/:.*//' | awk '{print toupper(substr($0,1,1)) tolower(substr($0,2))}'
-```
+**Guidelines for writing release notes:**
 
-This extracts the layout name and converts it to title case (e.g., "NIGHT" → "Night").
+1. **Summarize the changes** - Don't just list commit messages. Write a brief, human-readable summary of what changed and why it matters.
 
-If `$ARGUMENTS` contains a custom release name, use that instead.
+2. **Group related changes** - If multiple commits relate to the same feature, group them together.
 
-Default release title: `{layout_name}` (e.g., "Night")
+3. **Highlight user-facing changes** - Focus on what users will notice: new combos, layout changes, bug fixes, new keyboards supported.
 
-### 4. Generate Tag Name
+4. **Keep it concise** - 2-5 sentences is usually enough. Users can check the commit log for details.
 
-Generate tag name with format: `{layout_name}-YYYY-MM-DD`
+5. **Include build info** - Mention how many keyboards are included (from discovery output).
 
-Example: `Night-2025-12-28`
+**Example release notes:**
 
-Check if tag already exists:
+> Added dynamic combo macro support - combos with text output (like "ph" for P+D) are now automatically generated for both QMK and ZMK. This makes it easy to add new text-expansion combos in keymap.yaml.
+>
+> Includes firmware for 4 QMK keyboards and 4 ZMK keyboards.
 
-```bash
-git tag -l "{tag_name}"
-```
-
-If tag exists, suggest incrementing:
-- `Night-2025-12-28-2`
-- `Night-2025-12-28-3`
-- etc.
-
-Ask user to confirm or provide custom tag name.
-
-### 5. Generate Release Notes
-
-Auto-generate release notes from commits since last tag:
+Write the release notes to a temporary file for the release script:
 
 ```bash
-# Get the last release tag
-LAST_TAG=$(git describe --tags --abbrev=0 HEAD^ 2>/dev/null || echo "")
-
-# Get commits since last tag (or all commits if no previous tag)
-if [ -z "$LAST_TAG" ]; then
-  COMMITS=$(git log --pretty=format:"- %s (%h)" --no-merges HEAD)
-else
-  COMMITS=$(git log ${LAST_TAG}..HEAD --pretty=format:"- %s (%h)" --no-merges)
-fi
-
-# Count firmware files
-QMK_COUNT=$(find out/qmk -type f \( -name "*.hex" -o -name "*.uf2" \) 2>/dev/null | wc -l | tr -d ' ')
-ZMK_COUNT=$(find out/zmk -type f -name "*.uf2" 2>/dev/null | wc -l | tr -d ' ')
+cat > release-notes.md << 'EOF'
+{your release notes here}
+EOF
 ```
 
-Create `release-notes.md`:
-
-```markdown
-# Keyboard Firmware - {release_title}
-
-## What's Changed
-
-${COMMITS}
-
-## Build Artifacts
-
-This release includes firmware for:
-- **QMK**: ${QMK_COUNT} keyboard(s)
-- **ZMK**: ${ZMK_COUNT} keyboard(s)
-
-Download `keyboard-firmware-{tag_name}.zip` and extract to find firmware files for your keyboard.
-
-## Installation
-
-1. Download `keyboard-firmware-{tag_name}.zip`
-2. Extract the zip file
-3. Find your keyboard's firmware in `qmk/` or `zmk/` folder
-4. Flash to your keyboard using QMK Toolbox or your preferred method
-
----
-
-**Full Changelog**: https://github.com/{owner}/{repo}/compare/{last_tag}...{tag_name}
-```
-
-If user provided custom release notes in `$ARGUMENTS`, use those instead.
-
-### 6. Execute Release Script
+### 5. Execute Release Script
 
 Display a summary and ask for user approval:
 
@@ -180,7 +124,7 @@ The script will:
 5. Upload the zip as a release asset
 6. Clean up temporary files
 
-### 7. Report Success
+### 6. Report Success
 
 After the script completes, display the release URL and summary:
 
