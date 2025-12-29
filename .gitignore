@@ -7,6 +7,8 @@
 
 # Build output directory
 out/
+out.zip
+*.zip
 
 # Legacy firmware files (scattered)
 *.hex
