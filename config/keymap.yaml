@@ -72,7 +72,7 @@ layers:
   SYM:
     core: # (3x5)
       left:
-        - [TILD           , AMPR           , PERC           , DLR            , NONE           ]
+        - [AMPR           , PERC           , DLR            , QUES           , TILD           ]
         - [LGUI           , LALT           , LCTL           , LSFT           , BSLS           ]
         - [CIRC           , PIPE           , HASH           , RABK           , NONE           ]
       right:
@@ -87,10 +87,28 @@ layers:
         outer_pinky_left: [TRANS, TRANS, TRANS]
         outer_pinky_right: [TRANS, TRANS, TRANS]
 
+  # SYM:
+  #   core: # (3x5)
+  #     left:
+  #       - [TILD           , AMPR           , PERC           , DLR            , NONE           ]
+  #       - [LGUI           , LALT           , LCTL           , LSFT           , BSLS           ]
+  #       - [CIRC           , PIPE           , HASH           , RABK           , NONE           ]
+  #     right:
+  #       - [LABK           , ASTR           , LCBR           , RCBR           , EQL            ]
+  #       - [SCLN           , EXLM           , LPRN           , RPRN           , COLN           ]
+  #       - [DQUO           , PLUS           , LBRC           , RBRC           , COMM           ]
+  #     thumbs:
+  #       - [NONE           , NONE           , NONE           ]
+  #       - [MAGIC          , SPC            , ENT            ]
+  #   extensions:
+  #     3x6_3:
+  #       outer_pinky_left: [TRANS, TRANS, TRANS]
+  #       outer_pinky_right: [TRANS, TRANS, TRANS]
+
   NUM:
     core: # (3x5)
       left:
-        - [TILD           , AMPR           , PERC           , DLR            , NONE           ]
+        - [AMPR           , PERC           , DLR            , QUES           , TILD           ]
         - [LGUI           , LALT           , LCTL           , LSFT           , BSLS           ]
         - [UNDO           , CUT            , COPY           , PASTE          , REDO           ]
       right:
