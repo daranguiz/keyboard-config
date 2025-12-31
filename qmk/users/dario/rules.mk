@@ -7,6 +7,7 @@ REPEAT_KEY_ENABLE = yes     # QK_REP / QK_AREP support
 
 # User preference features
 COMBO_ENABLE = yes          # Key combos
+KEY_OVERRIDE_ENABLE = yes   # Shift-morph (sm:) key overrides
 COMMAND_ENABLE = no         # Commands for debug and configuration
 
 # Console for magic debugging:

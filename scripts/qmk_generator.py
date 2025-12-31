@@ -649,7 +649,7 @@ combo_t key_combos[] = {{
 
             raw_key = flat_keys[pos]
 
-            # Extract base key from HRM/LT wrappers (e.g., "hrm:LGUI:N" -> "N")
+            # Extract base key from HRM/LT/SM wrappers (e.g., "hrm:LGUI:N" -> "N")
             if raw_key.startswith("hrm:") or raw_key.startswith("mt:"):
                 # Format: hrm:MOD:KEY or mt:MOD:KEY
                 parts = raw_key.split(":")
@@ -658,6 +658,10 @@ combo_t key_combos[] = {{
                 # Format: lt:LAYER:KEY
                 parts = raw_key.split(":")
                 raw_key = parts[-1] if len(parts) >= 3 else raw_key
+            elif raw_key.startswith("sm:"):
+                # Format: sm:BASE:SHIFTED - extract the BASE key
+                parts = raw_key.split(":")
+                raw_key = parts[1] if len(parts) >= 3 else raw_key
 
             # Skip transparent/none keys
             if raw_key in ("NONE", "TRANS", "XXX", "_______"):

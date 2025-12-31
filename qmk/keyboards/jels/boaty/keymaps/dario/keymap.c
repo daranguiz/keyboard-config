@@ -93,8 +93,8 @@ enum combo_events {
 
 // Combo key sequences
 const uint16_t PROGMEM dfu_left_combo[] = {KC_B, KC_Q, KC_Z, COMBO_END};
-const uint16_t PROGMEM dfu_right_combo[] = {KC_J, KC_sm:DOT:GRV, KC_QUOT, COMBO_END};
-const uint16_t PROGMEM github_url_combo[] = {KC_G, KC_O, KC_U, KC_sm:DOT:GRV, COMBO_END};
+const uint16_t PROGMEM dfu_right_combo[] = {KC_J, KC_DOT, KC_QUOT, COMBO_END};
+const uint16_t PROGMEM github_url_combo[] = {KC_G, KC_O, KC_U, KC_DOT, COMBO_END};
 const uint16_t PROGMEM pd_to_ph_combo[] = {KC_P, KC_D, COMBO_END};
 
 // Combo definitions
