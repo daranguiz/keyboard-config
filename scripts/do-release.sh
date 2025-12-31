@@ -2,17 +2,34 @@
 set -e
 
 # Release script for keyboard firmware
-# Usage: ./scripts/do-release.sh <tag_name> <release_title> <release_notes_file>
+# Usage: ./scripts/do-release.sh <tag_name> <release_title> [release_notes]
+#
+# Release notes can be provided as a string, or omitted to auto-generate from commits:
+#   Direct string: ./do-release.sh tag title "notes text here"
+#   Auto-generate: ./do-release.sh tag title
 
 TAG_NAME="$1"
 RELEASE_TITLE="$2"
-RELEASE_NOTES_FILE="$3"
+RELEASE_NOTES_TEXT="$3"
 
 if [ -z "$TAG_NAME" ] || [ -z "$RELEASE_TITLE" ]; then
-  echo "Usage: $0 <tag_name> <release_title> [release_notes_file]"
+  echo "Usage: $0 <tag_name> <release_title> [release_notes]"
   echo ""
-  echo "Example: $0 Night-2025-12-28 \"Night\" release-notes.md"
+  echo "Examples:"
+  echo "  $0 Night-2025-12-28 \"Night\" \"Release notes here\""
+  echo "  $0 Night-2025-12-28 \"Night\"  # auto-generates notes"
   exit 1
+fi
+
+# Handle release notes input
+RELEASE_NOTES_FILE=""
+CLEANUP_NOTES_FILE=false
+
+if [ -n "$RELEASE_NOTES_TEXT" ]; then
+  # Direct string provided - write to temp file
+  RELEASE_NOTES_FILE=".release-notes-tmp-$$"
+  CLEANUP_NOTES_FILE=true
+  echo "$RELEASE_NOTES_TEXT" > "$RELEASE_NOTES_FILE"
 fi
 
 ZIP_NAME="keyboard-firmware-${TAG_NAME}.zip"
@@ -97,7 +114,7 @@ fi
 echo ""
 echo "🧹 Cleaning up..."
 rm "${ZIP_NAME}"
-if [ -n "$RELEASE_NOTES_FILE" ] && [ -f "$RELEASE_NOTES_FILE" ]; then
+if [ "$CLEANUP_NOTES_FILE" = true ] && [ -f "$RELEASE_NOTES_FILE" ]; then
   rm "$RELEASE_NOTES_FILE"
 fi
 echo "✅ Cleanup complete"

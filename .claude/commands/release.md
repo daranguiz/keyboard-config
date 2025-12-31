@@ -79,17 +79,13 @@ Write release notes based on the commits since the last tag. The discovery scrip
 
 **Example release notes:**
 
-> Added dynamic combo macro support - combos with text output (like "ph" for P+D) are now automatically generated for both QMK and ZMK. This makes it easy to add new text-expansion combos in keymap.yaml.
->
-> Includes firmware for 4 QMK keyboards and 4 ZMK keyboards.
-
-Write the release notes to a temporary file for the release script:
-
-```bash
-cat > release-notes.md << 'EOF'
-{your release notes here}
-EOF
 ```
+Fixed forward slash position in Nightlight layout.
+
+Includes firmware for 4 QMK keyboards and 4 ZMK keyboards, plus keylayout files for macOS.
+```
+
+**IMPORTANT**: Release notes should be prepared as a string variable that will be passed directly to the release script (not written to a file). Multi-line notes are supported.
 
 ### 5. Execute Release Script
 
@@ -110,10 +106,20 @@ This will:
 Proceed? (y/n)
 ```
 
-If approved, execute the release script:
+If approved, execute the release script with release notes as a direct string argument:
 
 ```bash
-bash scripts/do-release.sh "{tag_name}" "{release_title}" release-notes.md
+bash scripts/do-release.sh "{tag_name}" "{release_title}" "Your release notes here.
+
+Can include multiple lines.
+
+Includes firmware for X QMK keyboards and Y ZMK keyboards."
+```
+
+Or omit the third argument to auto-generate notes from commits:
+
+```bash
+bash scripts/do-release.sh "{tag_name}" "{release_title}"
 ```
 
 The script will:
@@ -122,7 +128,7 @@ The script will:
 3. Create the zip file
 4. Create the GitHub release
 5. Upload the zip as a release asset
-6. Clean up temporary files
+6. Clean up temporary files (including any temp files created for release notes)
 
 ### 6. Report Success
 
@@ -211,10 +217,11 @@ If any prerequisite is missing, provide clear installation/setup instructions.
 - Release naming follows the current base layout (e.g., "Night", "Gallium", "Dusk")
 - Tags are date-based by default: `{Layout}-YYYY-MM-DD`
 - The entire `out/` folder is zipped, including QMK, ZMK, and visualizations
-- Release notes auto-generate from commit messages since last tag
+- Release notes can be provided as a direct string argument or auto-generated from commits
+- Multi-line release notes are fully supported - just pass them as a quoted string
 - The `scripts/do-release.sh` script handles all git and GitHub operations
 - This skill does NOT commit changes - ensure your changes are committed first
-- The script will clean up temporary files (zip and release-notes.md) after completion
+- The script automatically cleans up temporary files after completion
 
 ## Script Details
 
