@@ -39,6 +39,32 @@ Magic key mappings are included at the bottom of each layout visualization.
 #### Sturdy
 ![Sturdy Layout](docs/rowstagger/sturdy.svg)
 
+## Testing
+
+The project includes a comprehensive tiered testing suite:
+
+### Quick Regression Tests (Tier 1)
+```bash
+pytest                    # < 30 seconds
+```
+
+Runs unit tests and integration tests (without firmware compilation) to catch regressions quickly.
+
+### Comprehensive Tests (Tier 2)
+```bash
+pytest --tier2            # 5-15 minutes, requires QMK/ZMK setup
+```
+
+Compiles actual firmware for all boards to ensure generated code builds successfully.
+
+### Coverage Report
+```bash
+pytest --cov=scripts --cov-report=html
+open htmlcov/index.html
+```
+
+See [CLAUDE.md](CLAUDE.md) for detailed testing documentation.
+
 ## About
 
 This repository uses a unified YAML configuration to generate keymaps for both QMK and ZMK firmware. All keymaps are defined in `config/keymap.yaml` and automatically generated for each keyboard.

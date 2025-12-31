@@ -1,0 +1,52 @@
+repos:
+  - repo: local
+    hooks:
+      - id: pytest-tier1
+        name: Run Tier 1 tests
+        entry: pytest
+        args: [-m, tier1, --maxfail=3, -q]
+        language: system
+        pass_filenames: false
+        stages: [pre-push]
+        verbose: true
+
+      - id: check-yaml
+        name: Check YAML syntax
+        entry: python
+        args: [-c, "import yaml; import sys; [yaml.safe_load(open(f)) for f in sys.argv[1:]]"]
+        language: system
+        files: \.(yaml|yml)$
+        stages: [pre-commit]
+
+      - id: check-generated-warning
+        name: Prevent editing generated files
+        entry: bash
+        args: [-c, 'if grep -l "AUTO-GENERATED" "$@" 2>/dev/null; then echo "ERROR: Attempting to commit auto-generated files. Edit config files instead."; exit 1; fi', --]
+        language: system
+        files: (keymap\.c|config\.h|rules\.mk|.*\.keymap)$
+        stages: [pre-commit]
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: trailing-whitespace
+        exclude: (\.md|\.txt)$
+      - id: end-of-file-fixer
+      - id: check-added-large-files
+        args: ['--maxkb=1000']
+      - id: check-case-conflict
+      - id: check-merge-conflict
+
+  - repo: https://github.com/psf/black
+    rev: 24.2.0
+    hooks:
+      - id: black
+        args: [--line-length=100]
+        files: ^(scripts|tests)/.*\.py$
+
+  - repo: https://github.com/pycqa/isort
+    rev: 5.13.2
+    hooks:
+      - id: isort
+        args: [--profile=black, --line-length=100]
+        files: ^(scripts|tests)/.*\.py$
