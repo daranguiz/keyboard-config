@@ -13,8 +13,8 @@ group: "126"
 
 layout:
   - [b,    f,    r,    l,    x,       "'",  g,    o,    u,    "." ,  "[",  "]"]
-  - [n,    s,    h,    t,    m,       y,    c,    a,    e,    i,     /       ]
-  - [v,    j,    k,    d,    z,       p,    w,    q,    ";",  ","            ]
+  - [n,    s,    h,    t,    m,       y,    c,    a,    e,    i,     ";"       ]
+  - [v,    j,    k,    d,    z,       p,    w,    q,    "/",  ","            ]
 
 # Fingermap (which finger presses each key)
 # 0=L-pinky, 1=L-ring, 2=L-middle, 3=L-index
