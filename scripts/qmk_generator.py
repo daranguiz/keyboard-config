@@ -13,9 +13,10 @@ from data_model import Board, CompiledLayer, ComboConfiguration, Combo
 class QMKGenerator:
     """Generate QMK C keymap files"""
 
-    def __init__(self):
+    def __init__(self, special_keycodes: Dict[str, Dict[str, str]] = None):
         # Track magic macro strings for QMK (text expansions)
         self.magic_macros: Dict[str, str] = {}
+        self.special_keycodes = special_keycodes or {}
 
     def generate_keymap(
         self,
@@ -24,7 +25,8 @@ class QMKGenerator:
         output_dir: Path,
         combos: ComboConfiguration = None,
         magic_config: 'MagicKeyConfiguration' = None,
-        raw_layers: Dict[str, 'Layer'] = None
+        raw_layers: Dict[str, 'Layer'] = None,
+        shift_morphs: List[Tuple[str, str]] = None
     ) -> Dict[str, str]:
         """
         Generate all QMK files for a board
@@ -36,6 +38,7 @@ class QMKGenerator:
             combos: Optional combo configuration
             magic_config: Optional magic key configuration
             raw_layers: Raw layer definitions (for combo keycode lookup)
+            shift_morphs: List of (base_key, shifted_key) tuples for shift-morph generation
 
         Returns:
             Dictionary of {filename: content} for all generated files
@@ -43,7 +46,7 @@ class QMKGenerator:
         files = {}
 
         # Generate keymap.c
-        files['keymap.c'] = self.generate_keymap_c(board, compiled_layers, combos, magic_config, raw_layers)
+        files['keymap.c'] = self.generate_keymap_c(board, compiled_layers, combos, magic_config, raw_layers, shift_morphs)
 
         # Generate config.h
         files['config.h'] = self.generate_config_h(board, compiled_layers)
@@ -62,7 +65,8 @@ class QMKGenerator:
         compiled_layers: List[CompiledLayer],
         combos: ComboConfiguration = None,
         magic_config: 'MagicKeyConfiguration' = None,
-        raw_layers: Dict[str, 'Layer'] = None
+        raw_layers: Dict[str, 'Layer'] = None,
+        shift_morphs: List[Tuple[str, str]] = None
     ) -> str:
         """
         Generate keymap.c file
@@ -73,6 +77,7 @@ class QMKGenerator:
             combos: Optional combo configuration
             magic_config: Optional magic key configuration
             raw_layers: Raw layer definitions (for combo keycode lookup)
+            shift_morphs: List of (base_key, shifted_key) tuples for key override generation
 
         Returns:
             Complete keymap.c file content
@@ -127,6 +132,11 @@ enum {{
         if combos and combos.combos:
             combo_code = "\n" + self.generate_combos_inline(combos, layer_names, compiled_layers, board, raw_layers, skip_macro_enum=True)
 
+        # Generate key overrides for shift-morph behaviors
+        key_override_code = ""
+        if shift_morphs:
+            key_override_code = "\n" + self.generate_key_overrides(shift_morphs)
+
         return f"""// AUTO-GENERATED - DO NOT EDIT
 // Generated from config/keymap.yaml by scripts/generate.py
 // Board: {board.name}
@@ -138,7 +148,7 @@ enum {{
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {{
 {layers_code}
 }};
-{combo_code}{magic_code}{magic_handlers}"""
+{combo_code}{magic_code}{magic_handlers}{key_override_code}"""
 
     def format_layer_definition(
         self,
@@ -1193,3 +1203,69 @@ combo_t key_combos[] = {{
         token = re.sub(r'[^A-Za-z0-9_]+', "_", token)
         token = token.strip("_")
         return token or "key"
+
+    def generate_key_overrides(self, shift_morphs: List[Tuple[str, str]]) -> str:
+        """
+        Generate QMK key_override_t definitions for shift-morph behaviors.
+
+        Key overrides intercept Shift+key and produce a different keycode.
+        For example, sm:COMM:AT makes Shift+, produce @ instead of <.
+
+        Args:
+            shift_morphs: List of (base_key, shifted_key) tuples
+
+        Returns:
+            C code string with key override definitions
+        """
+        if not shift_morphs:
+            return ""
+
+        lines = [
+            "",
+            "#ifdef KEY_OVERRIDE_ENABLE",
+            "// Shift-morph key overrides (sm: syntax)",
+            "// These override the default shifted behavior of keys",
+        ]
+
+        # Generate individual override definitions
+        override_refs = []
+        for base_key, shifted_key in shift_morphs:
+            # Get QMK keycodes
+            base_qmk = self._get_qmk_keycode(base_key)
+            shifted_qmk = self._get_qmk_keycode(shifted_key)
+
+            # Generate unique name for this override
+            override_name = f"sm_{base_key.lower()}_{shifted_key.lower()}"
+
+            lines.append(f"const key_override_t {override_name} = ko_make_basic(MOD_MASK_SHIFT, {base_qmk}, {shifted_qmk});")
+            override_refs.append(f"&{override_name}")
+
+        # Generate the key_overrides array
+        lines.append("")
+        lines.append("const key_override_t *key_overrides[] = {")
+        for ref in override_refs:
+            lines.append(f"    {ref},")
+        lines.append("    NULL")
+        lines.append("};")
+        lines.append("#endif  // KEY_OVERRIDE_ENABLE")
+        lines.append("")
+
+        return "\n".join(lines)
+
+    def _get_qmk_keycode(self, key: str) -> str:
+        """
+        Get QMK keycode for a key name.
+
+        Args:
+            key: Key name from keymap (e.g., "COMM", "AT", "GRV")
+
+        Returns:
+            QMK keycode (e.g., "KC_COMM", "KC_AT", "KC_GRV")
+        """
+        # Check if key is in special_keycodes (keycodes.yaml)
+        if key in self.special_keycodes:
+            qmk_code = self.special_keycodes[key].get('qmk', '')
+            if qmk_code:
+                return qmk_code
+        # Default: add KC_ prefix
+        return f"KC_{key}"

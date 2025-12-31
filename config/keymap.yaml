@@ -21,9 +21,9 @@ layers:
         - [hrm:LGUI:N     , hrm:LALT:S     , hrm:LCTL:H     , hrm:LSFT:T     , M              ]
         - [X              , V              , P              , D              , Z              ]
       right:
-        - [J              , G              , O              , U              , DOT            ]
+        - [J              , G              , O              , U              , sm:DOT:GRV     ]
         - [Y              , hrm:LSFT:C     , hrm:LCTL:A     , hrm:LALT:E     , hrm:LGUI:I     ]
-        - [QUOT           , W              , MINS           , SLSH           , COMM           ]
+        - [QUOT           , W              , MINS           , SLSH           , sm:COMM:AT     ]
       thumbs:
         - [lt:NUM:MAGIC   , lt:SYM:R       ,   mt:LSFT:BSPC]
         - [mt:LSFT:TAB    , lt:NAV:SPC      , lt:MEDIA:ENT   ]
@@ -39,9 +39,9 @@ layers:
         - [hrm:LGUI:N     , hrm:LALT:S     , hrm:LCTL:H     , hrm:LSFT:T     , M              ]
         - [X              , V              , J              , D              , Z              ]
       right:
-        - [P              , G              , O              , U              , DOT            ]
+        - [P              , G              , O              , U              , sm:DOT:GRV     ]
         - [Y              , hrm:LSFT:C     , hrm:LCTL:A     , hrm:LALT:E     , hrm:LGUI:I     ]
-        - [QUOT           , W              , MINS           , SLSH           , COMM           ]
+        - [QUOT           , W              , MINS           , SLSH           , sm:COMM:AT     ]
       thumbs:
         - [lt:NUM:MAGIC   , lt:SYM:R       , mt:LSFT:BSPC   ]
         - [mt:LSFT:TAB    , lt:NAV:SPC     , lt:MEDIA:ENT   ]
@@ -57,9 +57,9 @@ layers:
         - [hrm:LGUI:S     , hrm:LALT:T     , hrm:LCTL:H     , hrm:LSFT:C     , Y              ]
         - [X              , K              , M              , G              , V              ]
       right:
-        - [MINS           , B              , O              , U              , COMM           ]
+        - [MINS           , B              , O              , U              , sm:COMM:AT     ]
         - [Q              , hrm:LSFT:N     , hrm:LCTL:A     , hrm:LALT:E     , hrm:LGUI:I     ]
-        - [Z              , P              , QUOT           , SLSH           , DOT            ]
+        - [Z              , P              , QUOT           , SLSH           , sm:DOT:GRV     ]
       thumbs:
         - [lt:NUM:MAGIC   , lt:SYM:R       , mt:LSFT:BSPC   ]
         - [mt:LSFT:TAB    , lt:NAV:SPC     , lt:MEDIA:ENT   ]
@@ -81,7 +81,7 @@ layers:
         - [HASH           , 4              , 5              , 6              , COMM           ]
       thumbs:
         - [NONE           , NONE           , NONE           ]
-        - [MAGIC          , 0              , AT             ]
+        - [MAGIC          , SPC            , 0              ]
     extensions:
       3x6_3:
         outer_pinky_left: [TRANS, TRANS, TRANS]

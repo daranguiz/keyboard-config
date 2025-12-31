@@ -167,6 +167,12 @@ class KeymapGenerator:
                 print(f"⚠️  Warning: Board specifies keymap_file '{board.keymap_file}' but file not found")
 
         try:
+            # Clear any previously tracked shift-morphs before compiling this board
+            if board.firmware == "qmk":
+                self.qmk_translator.clear_shift_morphs()
+            else:
+                self.zmk_translator.clear_shift_morphs()
+
             # Compile all layers for this board
             compiled_layers = []
             for layer in keymap_config.layers.values():
@@ -211,11 +217,14 @@ class KeymapGenerator:
 
     def _generate_qmk(self, board, compiled_layers):
         """Generate QMK keymap files"""
-        generator = QMKGenerator()
+        generator = QMKGenerator(special_keycodes=self.special_keycodes)
         output_dir = self.repo_root / board.get_output_directory()
 
+        # Get shift-morphs collected during compilation
+        shift_morphs = self.qmk_translator.get_shift_morphs()
+
         # Generate all files (combos and magic keys are now inline in keymap.c)
-        files = generator.generate_keymap(board, compiled_layers, output_dir, self.combos, self.magic_config, self.keymap_config.layers)
+        files = generator.generate_keymap(board, compiled_layers, output_dir, self.combos, self.magic_config, self.keymap_config.layers, shift_morphs)
 
         # Write keymap files
         FileSystemWriter.write_all(output_dir, files)
@@ -231,8 +240,11 @@ class KeymapGenerator:
         )
         output_dir = self.repo_root / board.get_output_directory()
 
+        # Get shift-morphs collected during compilation
+        shift_morphs = self.zmk_translator.get_shift_morphs()
+
         # Generate keymap file with combos and magic keys
-        keymap_content = generator.generate_keymap(board, compiled_layers, self.combos, self.magic_config)
+        keymap_content = generator.generate_keymap(board, compiled_layers, self.combos, self.magic_config, shift_morphs)
         visualization = generator.generate_visualization(board, compiled_layers)
 
         # Prepare files to write

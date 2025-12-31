@@ -684,6 +684,29 @@ class KeymapVisualizer:
 
         return pattern.sub(_replace, svg_content)
 
+    def _get_key_display(self, keycode: str) -> str:
+        """
+        Get display string for a simple keycode (used by shift-morph display)
+
+        Args:
+            keycode: Simple keycode (e.g., "COMM", "AT", "GRV")
+
+        Returns:
+            Display string (e.g., ",", "@", "`")
+        """
+        # Check keycodes.yaml for display_glyph or display_name
+        if keycode in self.keycodes:
+            kc_data = self.keycodes[keycode]
+            if isinstance(kc_data, dict):
+                if "display_glyph" in kc_data:
+                    return kc_data["display_glyph"]
+                if "display_name" in kc_data:
+                    return kc_data["display_name"]
+                if "char" in kc_data:
+                    return kc_data["char"]
+        # Fallback to key name
+        return keycode
+
     def _translate_keycode_for_display(self, keycode: str) -> str:
         """
         Translate keymap.yaml format directly to keymap-drawer display format
@@ -737,6 +760,16 @@ class KeymapVisualizer:
             if len(parts) == 2:
                 layer = parts[1]
                 return f"DF({layer})"
+
+        # Handle shift-morph: sm:BASE:SHIFTED -> BASE/SHIFTED (e.g., ,/@)
+        if keycode.startswith("sm:"):
+            parts = keycode.split(":")
+            if len(parts) == 3:
+                base_key, shifted_key = parts[1], parts[2]
+                # Get display names for both keys
+                base_display = self._get_key_display(base_key)
+                shifted_display = self._get_key_display(shifted_key)
+                return f"{base_display}/{shifted_display}"
 
         # Check for custom display glyph/name in keycodes.yaml
         if keycode in self.keycodes:

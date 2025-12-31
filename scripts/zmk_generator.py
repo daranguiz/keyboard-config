@@ -183,7 +183,8 @@ class ZMKGenerator:
         board: Board,
         compiled_layers: List[CompiledLayer],
         combos: ComboConfiguration = None,
-        magic_config: 'MagicKeyConfiguration' = None
+        magic_config: 'MagicKeyConfiguration' = None,
+        shift_morphs: List[Tuple[str, str]] = None
     ) -> str:
         """
         Generate .keymap devicetree file for ZMK
@@ -193,6 +194,7 @@ class ZMKGenerator:
             compiled_layers: List of compiled layers (already translated to ZMK syntax)
             combos: Optional combo configuration
             magic_config: Optional magic key configuration
+            shift_morphs: Optional list of (base_key, shifted_key) tuples for mod-morph generation
 
         Returns:
             Complete .keymap file content as string
@@ -234,6 +236,15 @@ class ZMKGenerator:
                 )
                 if training_behaviors:
                     behaviors_section += "\n" + training_behaviors
+
+        # Generate shift-morph (mod-morph) behaviors
+        if shift_morphs:
+            shift_morph_section = self.generate_shift_morph_behaviors(shift_morphs)
+            if shift_morph_section:
+                if behaviors_section:
+                    behaviors_section += "\n" + shift_morph_section
+                else:
+                    behaviors_section = "\n" + shift_morph_section
 
         # Generate layer definitions (with optional training replacements)
         layer_defs = []
@@ -1307,3 +1318,62 @@ class ZMKGenerator:
             if isinstance(ch, str) and len(ch) == 1:
                 char_map[ch] = token
         return char_map
+
+    def generate_shift_morph_behaviors(self, shift_morphs: List[Tuple[str, str]]) -> str:
+        """
+        Generate ZMK mod-morph behaviors for shift-morph keys.
+
+        Mod-morph behaviors output a different key when shift is held.
+        For example, sm:COMM:AT makes Shift+, produce @ instead of <.
+
+        Args:
+            shift_morphs: List of (base_key, shifted_key) tuples
+
+        Returns:
+            ZMK devicetree behaviors section
+        """
+        if not shift_morphs:
+            return ""
+
+        lines = [
+            "    // Shift-morph behaviors (mod-morph)",
+            "    // These output a different key when shift is held",
+            "    behaviors {",
+        ]
+
+        for base_key, shifted_key in shift_morphs:
+            behavior_name = f"sm_{base_key.lower()}_{shifted_key.lower()}"
+
+            # Get ZMK keycodes
+            base_zmk = self._get_zmk_keycode(base_key)
+            shifted_zmk = self._get_zmk_keycode(shifted_key)
+
+            lines.append(f"        {behavior_name}: {behavior_name} {{")
+            lines.append(f"            compatible = \"zmk,behavior-mod-morph\";")
+            lines.append(f"            #binding-cells = <0>;")
+            lines.append(f"            bindings = <{base_zmk}>, <{shifted_zmk}>;")
+            lines.append(f"            mods = <(MOD_LSFT|MOD_RSFT)>;")
+            lines.append(f"        }};")
+            lines.append("")
+
+        lines.append("    };")
+
+        return "\n".join(lines)
+
+    def _get_zmk_keycode(self, key: str) -> str:
+        """
+        Get ZMK keycode binding for a key name.
+
+        Args:
+            key: Key name from keymap (e.g., "COMM", "AT", "GRV")
+
+        Returns:
+            ZMK binding (e.g., "&kp COMMA", "&kp AT", "&kp GRAVE")
+        """
+        # Check if key is in special_keycodes (keycodes.yaml)
+        if key in self.special_keycodes:
+            zmk_code = self.special_keycodes[key].get('zmk', '')
+            if zmk_code:
+                return zmk_code
+        # Default: add &kp prefix
+        return f"&kp {key}"

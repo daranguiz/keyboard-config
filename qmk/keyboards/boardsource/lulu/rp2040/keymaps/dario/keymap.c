@@ -57,7 +57,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TRNS             , KC_TILD             , KC_AMPR             , KC_PERC             , KC_DLR              , KC_NO               , KC_CIRC             , KC_7                , KC_8                , KC_9                , KC_DOT              , KC_TRNS             ,
         KC_TRNS             , KC_LGUI             , KC_LALT             , KC_LCTL             , KC_LSFT             , KC_BSLS             , KC_COLN             , KC_1                , KC_2                , KC_3                , KC_GRV              , KC_TRNS             ,
         KC_TRNS             , LGUI(KC_Z)          , LGUI(KC_X)          , LGUI(KC_C)          , LGUI(KC_V)          , SGUI(KC_Z)          , KC_NO               , KC_NO               , KC_HASH             , KC_4                , KC_5                , KC_6                , KC_COMM             , KC_TRNS             ,
-        KC_NO               , KC_NO               , KC_NO               , KC_NO               , QK_AREP             , KC_0                , KC_AT               , KC_NO               
+        KC_NO               , KC_NO               , KC_NO               , KC_NO               , QK_AREP             , KC_SPC              , KC_0                , KC_NO               
     ),
     [SYM] = LAYOUT(
         KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               ,
@@ -98,8 +98,8 @@ enum combo_events {
 
 // Combo key sequences
 const uint16_t PROGMEM dfu_left_combo[] = {KC_B, KC_Q, KC_Z, COMBO_END};
-const uint16_t PROGMEM dfu_right_combo[] = {KC_J, KC_DOT, KC_QUOT, COMBO_END};
-const uint16_t PROGMEM github_url_combo[] = {KC_G, KC_O, KC_U, KC_DOT, COMBO_END};
+const uint16_t PROGMEM dfu_right_combo[] = {KC_J, KC_sm:DOT:GRV, KC_QUOT, COMBO_END};
+const uint16_t PROGMEM github_url_combo[] = {KC_G, KC_O, KC_U, KC_sm:DOT:GRV, COMBO_END};
 const uint16_t PROGMEM pd_to_ph_combo[] = {KC_P, KC_D, COMBO_END};
 
 // Combo definitions
@@ -281,3 +281,17 @@ uint16_t magic_training_first_keycode(uint16_t keycode) {
     }
     return keycode;
 }
+
+
+#ifdef KEY_OVERRIDE_ENABLE
+// Shift-morph key overrides (sm: syntax)
+// These override the default shifted behavior of keys
+const key_override_t sm_dot_grv = ko_make_basic(MOD_MASK_SHIFT, KC_DOT, KC_GRV);
+const key_override_t sm_comm_at = ko_make_basic(MOD_MASK_SHIFT, KC_COMM, KC_AT);
+
+const key_override_t *key_overrides[] = {
+    &sm_dot_grv,
+    &sm_comm_at,
+    NULL
+};
+#endif  // KEY_OVERRIDE_ENABLE

@@ -37,6 +37,22 @@ class ZMKTranslator:
         self.magic_config = magic_config
         self.current_key_index = 0  # Track current key position for context-aware translation
         self.current_layer = None  # Track current layer for layer-aware translation
+        # Track shift-morph definitions for behavior generation
+        # Format: {(base_key, shifted_key): True}
+        self.shift_morphs: Dict[tuple, bool] = {}
+
+    def get_shift_morphs(self) -> list:
+        """
+        Get list of shift-morph definitions for behavior generation
+
+        Returns:
+            List of (base_key, shifted_key) tuples
+        """
+        return list(self.shift_morphs.keys())
+
+    def clear_shift_morphs(self):
+        """Clear tracked shift-morphs (call before processing a new keymap)"""
+        self.shift_morphs = {}
 
     def translate(self, unified) -> str:
         """
@@ -146,6 +162,20 @@ class ZMKTranslator:
         """
         parts = unified.split(':')
         alias_name = parts[0]
+
+        # Special handling for shift-morph (sm:BASE:SHIFTED)
+        if alias_name == 'sm':
+            if len(parts) != 3:
+                raise ValidationError(
+                    f"Shift-morph 'sm' expects 2 parameters (base_key, shifted_key), "
+                    f"got {len(parts) - 1}"
+                )
+            base_key = parts[1]
+            shifted_key = parts[2]
+            # Track this shift-morph for behavior generation
+            self.shift_morphs[(base_key, shifted_key)] = True
+            # Return reference to the mod-morph behavior that will be generated
+            return f"&sm_{base_key.lower()}_{shifted_key.lower()}"
 
         # Check if alias exists
         if alias_name not in self.aliases:

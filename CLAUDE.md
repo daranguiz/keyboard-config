@@ -180,6 +180,20 @@ The codebase uses a **single source of truth** approach for keymap definitions t
 4. **Mac-Optimized**: Clipboard shortcuts use Cmd key (LCMD/SCMD)
 5. **Colemak Base Layer**: Default alphas layout
 
+### Behavior Syntax
+
+The keymap YAML uses special prefixed syntax for complex key behaviors. These are firmware-agnostic and translate to both QMK and ZMK:
+
+| Syntax | Description | Example | QMK Output | ZMK Output |
+|--------|-------------|---------|------------|------------|
+| `hrm:MOD:KEY` | Home row mod (tap=key, hold=mod) | `hrm:LGUI:A` | `LGUI_T(KC_A)` | `&hml LGUI A` |
+| `mt:MOD:KEY` | Mod-tap (simpler than hrm) | `mt:LSFT:TAB` | `LSFT_T(KC_TAB)` | `&mt LSFT TAB` |
+| `lt:LAYER:KEY` | Layer-tap (tap=key, hold=layer) | `lt:NAV:SPC` | `LT(NAV, KC_SPC)` | `&lt NAV SPC` |
+| `df:LAYER` | Set default layer | `df:BASE_ALT` | `DF(BASE_ALT)` | `&to BASE_ALT` |
+| `sm:BASE:SHIFTED` | Shift-morph (shift produces different key) | `sm:COMM:AT` | Key override | Mod-morph behavior |
+
+**Shift-Morph (`sm:`)**: Overrides what a key produces when shift is held. For example, `sm:COMM:AT` makes the comma key produce `@` when shifted (instead of `<`). This is implemented via QMK's Key Override feature and ZMK's mod-morph behavior.
+
 ### Key Position Numbering (Row-Wise)
 
 The codebase uses a **consistent row-wise numbering scheme** for all key positions. This applies to combo definitions, L36 references, and internal data structures.

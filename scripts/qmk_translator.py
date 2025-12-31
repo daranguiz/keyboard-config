@@ -26,6 +26,22 @@ class QMKTranslator:
         """
         self.aliases = aliases or {}
         self.special_keycodes = special_keycodes or {}
+        # Track shift-morph definitions for code generation
+        # Format: {(base_key, shifted_key): True}
+        self.shift_morphs: Dict[tuple, bool] = {}
+
+    def get_shift_morphs(self) -> list:
+        """
+        Get list of shift-morph definitions for code generation
+
+        Returns:
+            List of (base_key, shifted_key) tuples
+        """
+        return list(self.shift_morphs.keys())
+
+    def clear_shift_morphs(self):
+        """Clear tracked shift-morphs (call before processing a new keymap)"""
+        self.shift_morphs = {}
 
     def translate(self, unified) -> str:
         """
@@ -108,6 +124,22 @@ class QMKTranslator:
         """
         parts = unified.split(':')
         alias_name = parts[0]
+
+        # Special handling for shift-morph (sm:BASE:SHIFTED)
+        if alias_name == 'sm':
+            if len(parts) != 3:
+                raise ValidationError(
+                    f"Shift-morph 'sm' expects 2 parameters (base_key, shifted_key), "
+                    f"got {len(parts) - 1}"
+                )
+            base_key = parts[1]
+            shifted_key = parts[2]
+            # Track this shift-morph for code generation
+            self.shift_morphs[(base_key, shifted_key)] = True
+            # Return the base keycode - the key override will handle the shift behavior
+            if base_key in self.special_keycodes:
+                return self.special_keycodes[base_key].get('qmk', f'KC_{base_key}')
+            return f'KC_{base_key}'
 
         # Check if alias exists
         if alias_name not in self.aliases:

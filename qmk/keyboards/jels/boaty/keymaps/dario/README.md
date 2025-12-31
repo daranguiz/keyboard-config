@@ -280,8 +280,8 @@ qmk compile -kb jels/boaty -km dario
 58: KC_NO
 59: KC_NO
 60: QK_AREP
-61: KC_0
-62: KC_AT
+61: KC_SPC
+62: KC_0
 ```
 
 ## SYM Layer

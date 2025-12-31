@@ -712,32 +712,50 @@
 
     };
 
+    // Shift-morph behaviors (mod-morph)
+    // These output a different key when shift is held
+    behaviors {
+        sm_dot_grv: sm_dot_grv {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp DOT>, <&kp GRAVE>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+        };
+
+        sm_comm_at: sm_comm_at {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp COMMA>, <&kp AT>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+        };
+
+    };
     keymap {
         compatible = "zmk,keymap";
 
         base_primary_layer {
             bindings = <
-                &none &kp B &kp F &ak_train_primary_l &kp K &kp Q &kp J &kp G &kp O &kp U &kp DOT &none
+                &none &kp B &kp F &ak_train_primary_l &kp K &kp Q &kp J &kp G &kp O &kp U &sm_dot_grv &none
                 &key_repeat &hml LGUI N &hml LALT S &hml LCTL H &hml LSFT T &kp M &ak_train_primary_y &hmr LSFT C &hmr LCTL A &hmr LALT E &hmr LGUI I &key_repeat
-                &none &kp X &kp V &ak_train_primary_p &kp D &kp Z &kp SQT &kp W &kp MINUS &ak_train_primary_fslh &kp COMMA &none
+                &none &kp X &kp V &ak_train_primary_p &kp D &kp Z &kp SQT &kp W &kp MINUS &ak_train_primary_fslh &sm_comm_at &none
                 &lt_ak_primary NUM 0 &lt SYM R &mt LSFT BSPC &mt LSFT TAB &lt NAV SPACE &lt MEDIA ENTER
             >;
         };
 
         base_alt_layer {
             bindings = <
-                &none &kp B &kp F &kp L &kp K &kp Q &kp P &kp G &kp O &kp U &kp DOT &none
+                &none &kp B &kp F &kp L &kp K &kp Q &kp P &kp G &kp O &kp U &sm_dot_grv &none
                 &none &hml LGUI N &hml LALT S &hml LCTL H &hml LSFT T &kp M &kp Y &hmr LSFT C &hmr LCTL A &hmr LALT E &hmr LGUI I &none
-                &none &kp X &kp V &kp J &kp D &kp Z &kp SQT &kp W &kp MINUS &ak_train_alt_fslh &kp COMMA &none
+                &none &kp X &kp V &kp J &kp D &kp Z &kp SQT &kp W &kp MINUS &ak_train_alt_fslh &sm_comm_at &none
                 &lt_ak_alt NUM 0 &lt SYM R &mt LSFT BSPC &mt LSFT TAB &lt NAV SPACE &lt MEDIA ENTER
             >;
         };
 
         base_alt2_layer {
             bindings = <
-                &none &kp F &kp D &kp L &kp W &kp J &kp MINUS &kp B &kp O &kp U &kp COMMA &none
+                &none &kp F &kp D &kp L &kp W &kp J &kp MINUS &kp B &kp O &kp U &sm_comm_at &none
                 &none &hml LGUI S &hml LALT T &hml LCTL H &hml LSFT C &ak_train_alt2_y &kp Q &hmr LSFT N &hmr LCTL A &hmr LALT E &hmr LGUI I &none
-                &none &kp X &kp K &kp M &kp G &kp V &kp Z &kp P &kp SQT &ak_train_alt2_fslh &kp DOT &none
+                &none &kp X &kp K &kp M &kp G &kp V &kp Z &kp P &kp SQT &ak_train_alt2_fslh &sm_dot_grv &none
                 &lt_ak_alt2 NUM 0 &lt SYM R &mt LSFT BSPC &mt LSFT TAB &lt NAV SPACE &lt MEDIA ENTER
             >;
         };
@@ -747,7 +765,7 @@
                 &trans &kp TILDE &kp AMPERSAND &kp PERCENT &kp DOLLAR &none &kp CARET &kp N7 &kp N8 &kp N9 &kp DOT &trans
                 &trans &kp LGUI &kp LALT &kp LCTRL &kp LSHFT &kp BSLH &ak_train_primary_colon &kp N1 &kp N2 &kp N3 &kp GRAVE &trans
                 &trans &kp LG(Z) &kp LG(X) &kp LG(C) &kp LG(V) &kp LG(LS(Z)) &kp HASH &kp N4 &kp N5 &kp N6 &kp COMMA &trans
-                &none &none &none &ak_primary &kp N0 &kp AT
+                &none &none &none &ak_primary &kp SPACE &kp N0
             >;
         };
 

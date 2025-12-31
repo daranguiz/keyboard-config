@@ -16,7 +16,7 @@
  7: &kp G
  8: &kp O
  9: &kp U
-10: &kp DOT
+10: &sm_dot_grv
 11: &none
 
 12: &key_repeat
@@ -44,7 +44,7 @@
 31: &kp W
 32: &kp MINUS
 33: &kp FSLH
-34: &kp COMMA
+34: &sm_comm_at
 35: &none
 
 36: &lt_ak_primary NUM 0
@@ -69,7 +69,7 @@
  7: &kp G
  8: &kp O
  9: &kp U
-10: &kp DOT
+10: &sm_dot_grv
 11: &none
 
 12: &none
@@ -97,7 +97,7 @@
 31: &kp W
 32: &kp MINUS
 33: &kp FSLH
-34: &kp COMMA
+34: &sm_comm_at
 35: &none
 
 36: &lt_ak_alt NUM 0
@@ -122,7 +122,7 @@
  7: &kp B
  8: &kp O
  9: &kp U
-10: &kp COMMA
+10: &sm_comm_at
 11: &none
 
 12: &none
@@ -150,7 +150,7 @@
 31: &kp P
 32: &kp SQT
 33: &kp FSLH
-34: &kp DOT
+34: &sm_dot_grv
 35: &none
 
 36: &lt_ak_alt2 NUM 0
@@ -210,8 +210,8 @@
 37: &none
 38: &none
 39: &ak_primary
-40: &kp N0
-41: &kp AT
+40: &kp SPACE
+41: &kp N0
 ```
 
 ## SYM Layer

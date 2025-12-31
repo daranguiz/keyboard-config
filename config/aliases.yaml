@@ -44,6 +44,14 @@ behaviors:
     params: [layer]
     firmware_support: [qmk, zmk]
 
+  sm:
+    description: "Shift-morph (shift produces different key instead of normal shifted output)"
+    # Note: sm requires special code generation - patterns are handled specially in generators
+    qmk_pattern: "SM_{base_key}_{shifted_key}"
+    zmk_pattern: "&sm_{base_key}_{shifted_key}"
+    params: [base_key, shifted_key]
+    firmware_support: [qmk, zmk]
+
 # Keycode mappings for special cases
 keycodes:
   NONE:
