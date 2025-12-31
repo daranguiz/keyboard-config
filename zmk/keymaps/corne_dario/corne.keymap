@@ -304,9 +304,27 @@
                 strict-modifiers;
                 max-prior-idle-ms = <1000>;
             };
-            n1_trigger {
-                trigger-keys = <N1>;
-                bindings = <&kp COLON>;
+            lbkt_trigger {
+                trigger-keys = <LBKT>;
+                bindings = <&kp RBKT>;
+                strict-modifiers;
+                max-prior-idle-ms = <1000>;
+            };
+            lpar_trigger {
+                trigger-keys = <LPAR>;
+                bindings = <&kp UNDERSCORE>;
+                strict-modifiers;
+                max-prior-idle-ms = <1000>;
+            };
+            fslh_trigger {
+                trigger-keys = <FSLH>;
+                bindings = <&kp ASTERISK>;
+                strict-modifiers;
+                max-prior-idle-ms = <1000>;
+            };
+            asterisk_trigger {
+                trigger-keys = <ASTERISK>;
+                bindings = <&kp FSLH>;
                 strict-modifiers;
                 max-prior-idle-ms = <1000>;
             };
@@ -478,7 +496,7 @@
             #binding-cells = <0>;
             bindings = <&kp FSLH>;
             guard_trigger {
-                trigger-keys = <DOT>;
+                trigger-keys = <DOT ASTERISK>;
                 bindings = <&kp HASH>;
                 max-prior-idle-ms = <1000>;
             };
@@ -609,12 +627,34 @@
             };
         };
 
-        ak_train_primary_colon: ak_train_primary_colon {
+        ak_train_primary_rbkt: ak_train_primary_rbkt {
             compatible = "zmk,behavior-adaptive-key";
             #binding-cells = <0>;
-            bindings = <&kp COLON>;
+            bindings = <&kp RBKT>;
             guard_trigger {
-                trigger-keys = <N1>;
+                trigger-keys = <LBKT>;
+                bindings = <&kp HASH>;
+                max-prior-idle-ms = <1000>;
+            };
+        };
+
+        ak_train_primary_underscore: ak_train_primary_underscore {
+            compatible = "zmk,behavior-adaptive-key";
+            #binding-cells = <0>;
+            bindings = <&kp UNDERSCORE>;
+            guard_trigger {
+                trigger-keys = <LPAR>;
+                bindings = <&kp HASH>;
+                max-prior-idle-ms = <1000>;
+            };
+        };
+
+        ak_train_primary_asterisk: ak_train_primary_asterisk {
+            compatible = "zmk,behavior-adaptive-key";
+            #binding-cells = <0>;
+            bindings = <&kp ASTERISK>;
+            guard_trigger {
+                trigger-keys = <FSLH>;
                 bindings = <&kp HASH>;
                 max-prior-idle-ms = <1000>;
             };
@@ -762,17 +802,17 @@
 
         sym_layer {
             bindings = <
-                &trans &kp TILDE &kp AMPERSAND &kp PERCENT &kp DOLLAR &none &kp LT &kp ASTERISK &kp LBRC &kp RBRC &kp EQUAL &trans
-                &trans &kp LGUI &kp LALT &kp LCTRL &kp LSHFT &kp BSLH &ak_train_primary_colon &kp EXCL &kp LPAR &kp RPAR &kp SEMI &trans
-                &trans &kp CARET &kp PIPE &kp HASH &ak_train_primary_gt &none &kp DQT &kp PLUS &kp LBKT &kp RBKT &kp COMMA &trans
+                &trans &kp AMPERSAND &kp PERCENT &kp DOLLAR &ak_train_primary_gt &kp TILDE &kp LT &kp PLUS &kp LBRC &kp RBRC &kp EQUAL &trans
+                &trans &kp LGUI &kp LALT &kp LCTRL &kp LSHFT &kp BSLH &kp SEMI &kp EXCL &kp LPAR &kp RPAR &kp COLON &trans
+                &trans &kp CARET &kp PIPE &kp HASH &ak_train_primary_rbkt &none &kp DQT &ak_train_primary_asterisk &kp LBKT &kp QUESTION &kp COMMA &trans
                 &none &none &none &ak_primary &kp SPACE &kp ENTER
             >;
         };
 
         num_layer {
             bindings = <
-                &trans &kp TILDE &kp AMPERSAND &kp PERCENT &kp DOLLAR &none &kp CARET &kp N7 &kp N8 &kp N9 &kp DOT &trans
-                &trans &kp LGUI &kp LALT &kp LCTRL &kp LSHFT &kp BSLH &ak_train_primary_colon &kp N1 &kp N2 &kp N3 &kp GRAVE &trans
+                &trans &kp AMPERSAND &kp PERCENT &kp DOLLAR &ak_train_primary_gt &kp TILDE &kp CARET &kp N7 &kp N8 &kp N9 &kp DOT &trans
+                &trans &kp LGUI &kp LALT &kp LCTRL &kp LSHFT &kp BSLH &kp SEMI &kp N1 &kp N2 &kp N3 &kp COLON &trans
                 &trans &kp LG(Z) &kp LG(X) &kp LG(C) &kp LG(V) &kp LG(LS(Z)) &kp HASH &kp N4 &kp N5 &kp N6 &kp COMMA &trans
                 &none &none &none &ak_primary &kp SPACE &kp N0
             >;

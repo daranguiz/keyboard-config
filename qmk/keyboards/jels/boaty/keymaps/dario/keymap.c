@@ -49,16 +49,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
     [SYM] = LAYOUT(
         KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             ,
-        KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TILD             ,
-        KC_AMPR             , KC_PERC             , KC_DLR              , KC_NO               , KC_LT               , KC_ASTR             , KC_LCBR             , KC_RCBR             , KC_EQL              , KC_TRNS             , KC_TRNS             , KC_TRNS             ,
-        KC_LGUI             , KC_LALT             , KC_LCTL             , KC_LSFT             , KC_BSLS             , KC_COLN             , KC_EXLM             , KC_LPRN             , KC_RPRN             , KC_SCLN             , KC_TRNS             , KC_CIRC             , KC_PIPE             , KC_HASH             ,
-        KC_GT               , KC_NO               , KC_DQUO             , KC_PLUS             , KC_LBRC             , KC_RBRC             , KC_COMM             , KC_NO               , KC_NO               , KC_NO               , QK_AREP             , KC_SPC              , KC_ENT              
+        KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_AMPR             ,
+        KC_PERC             , KC_DLR              , KC_GT               , KC_TILD             , KC_LT               , KC_PLUS             , KC_LCBR             , KC_RCBR             , KC_EQL              , KC_TRNS             , KC_TRNS             , KC_TRNS             ,
+        KC_LGUI             , KC_LALT             , KC_LCTL             , KC_LSFT             , KC_BSLS             , KC_SCLN             , KC_EXLM             , KC_LPRN             , KC_RPRN             , KC_COLN             , KC_TRNS             , KC_CIRC             , KC_PIPE             , KC_HASH             ,
+        KC_RBRC             , KC_NO               , KC_DQUO             , KC_ASTR             , KC_LBRC             , KC_QUES             , KC_COMM             , KC_NO               , KC_NO               , KC_NO               , QK_AREP             , KC_SPC              , KC_ENT              
     ),
     [NUM] = LAYOUT(
         KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             ,
-        KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TILD             ,
-        KC_AMPR             , KC_PERC             , KC_DLR              , KC_NO               , KC_CIRC             , KC_7                , KC_8                , KC_9                , KC_DOT              , KC_TRNS             , KC_TRNS             , KC_TRNS             ,
-        KC_LGUI             , KC_LALT             , KC_LCTL             , KC_LSFT             , KC_BSLS             , KC_COLN             , KC_1                , KC_2                , KC_3                , KC_GRV              , KC_TRNS             , LGUI(KC_Z)          , LGUI(KC_X)          , LGUI(KC_C)          ,
+        KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_TRNS             , KC_AMPR             ,
+        KC_PERC             , KC_DLR              , KC_GT               , KC_TILD             , KC_CIRC             , KC_7                , KC_8                , KC_9                , KC_DOT              , KC_TRNS             , KC_TRNS             , KC_TRNS             ,
+        KC_LGUI             , KC_LALT             , KC_LCTL             , KC_LSFT             , KC_BSLS             , KC_SCLN             , KC_1                , KC_2                , KC_3                , KC_COLN             , KC_TRNS             , LGUI(KC_Z)          , LGUI(KC_X)          , LGUI(KC_C)          ,
         LGUI(KC_V)          , SGUI(KC_Z)          , KC_HASH             , KC_4                , KC_5                , KC_6                , KC_COMM             , KC_NO               , KC_NO               , KC_NO               , QK_AREP             , KC_SPC              , KC_0                
     ),
     [NAV] = LAYOUT(
@@ -175,7 +175,10 @@ uint16_t get_alt_repeat_key_keycode_user(uint16_t keycode, uint8_t mods) {
             case KC_T: return MAGIC_PRIMARY_T;
             case KC_W: return MAGIC_PRIMARY_W;
             case KC_LT: return KC_GT;
-            case KC_1: return KC_COLN;
+            case KC_LBRC: return KC_RBRC;
+            case KC_LPRN: return KC_UNDS;
+            case KC_SLSH: return KC_ASTR;
+            case KC_ASTR: return KC_SLSH;
         }
     }
 

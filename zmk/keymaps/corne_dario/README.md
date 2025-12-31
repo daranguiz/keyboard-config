@@ -165,14 +165,14 @@
 
 ```
  0: &trans
- 1: &kp TILDE
- 2: &kp AMPERSAND
- 3: &kp PERCENT
- 4: &kp DOLLAR
- 5: &none
+ 1: &kp AMPERSAND
+ 2: &kp PERCENT
+ 3: &kp DOLLAR
+ 4: &kp GT
+ 5: &kp TILDE
 
  6: &kp LT
- 7: &kp ASTERISK
+ 7: &kp PLUS
  8: &kp LBRC
  9: &kp RBRC
 10: &kp EQUAL
@@ -185,24 +185,24 @@
 16: &kp LSHFT
 17: &kp BSLH
 
-18: &kp COLON
+18: &kp SEMI
 19: &kp EXCL
 20: &kp LPAR
 21: &kp RPAR
-22: &kp SEMI
+22: &kp COLON
 23: &trans
 
 24: &trans
 25: &kp CARET
 26: &kp PIPE
 27: &kp HASH
-28: &kp GT
+28: &kp RBKT
 29: &none
 
 30: &kp DQT
-31: &kp PLUS
+31: &kp ASTERISK
 32: &kp LBKT
-33: &kp RBKT
+33: &kp QUESTION
 34: &kp COMMA
 35: &trans
 
@@ -218,11 +218,11 @@
 
 ```
  0: &trans
- 1: &kp TILDE
- 2: &kp AMPERSAND
- 3: &kp PERCENT
- 4: &kp DOLLAR
- 5: &none
+ 1: &kp AMPERSAND
+ 2: &kp PERCENT
+ 3: &kp DOLLAR
+ 4: &kp GT
+ 5: &kp TILDE
 
  6: &kp CARET
  7: &kp N7
@@ -238,11 +238,11 @@
 16: &kp LSHFT
 17: &kp BSLH
 
-18: &kp COLON
+18: &kp SEMI
 19: &kp N1
 20: &kp N2
 21: &kp N3
-22: &kp GRAVE
+22: &kp COLON
 23: &trans
 
 24: &trans
@@ -395,7 +395,10 @@
   - T → ION
   - W → HICH
   - < → >
-  - 1 → :
+  - [ → ]
+  - ( → _
+  - / → *
+  - * → /
 
 ### BASE_ALT
 - default: REPEAT

@@ -1,0 +1,25 @@
+[run]
+source = scripts
+omit =
+    scripts/migrate_*.py
+    scripts/update_keymap_drawer_config.py
+    */test_*.py
+    */__pycache__/*
+    .venv/*
+
+[report]
+exclude_lines =
+    pragma: no cover
+    def __repr__
+    raise AssertionError
+    raise NotImplementedError
+    if __name__ == .__main__.:
+    if TYPE_CHECKING:
+    @abstractmethod
+
+precision = 2
+show_missing = true
+skip_covered = false
+
+[html]
+directory = htmlcov

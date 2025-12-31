@@ -475,6 +475,88 @@ When adding a new base layer layout (e.g., a new alpha layout like Dusk, Gallium
 - Magic key mappings can be refined over time based on usage
 - Visualizations are automatically generated for all base layers
 
+### Adding New Features
+
+When adding new features to the generator, you MUST:
+
+1. **Update tests**: Add test cases to the appropriate test file
+   - Unit tests for new syntax/behaviors in `tests/unit/test_*_translator.py`
+   - Integration tests for end-to-end generation in `tests/integration/`
+   - Update `tests/integration/test_full_keymap_generation.py` if the feature uses production config
+
+2. **Update golden files** if output format changes:
+   ```bash
+   pytest tests/integration/test_golden_snapshots.py --snapshot-update
+   git add tests/fixtures/golden/
+   ```
+
+3. **Verify all tests pass**:
+   ```bash
+   pytest                    # Tier 1 (fast, < 30s)
+   pytest --tier2            # Tier 2 (comprehensive, optional locally)
+   ```
+
+4. **Update documentation**:
+   - Update syntax table in CLAUDE.md if adding new behavior prefix
+   - Update README.md if user-facing feature
+   - Add test documentation in tests/README.md if needed
+
+**Testing Philosophy**:
+- **Tier 1 tests** (< 30s) run on every commit - catch regressions fast
+- **Tier 2 tests** (5-15min) run in CI - validate firmware builds
+- Golden files catch unintended changes in generated code
+- Full-featured keymap test ensures all features work together
+
+## Testing
+
+The project uses a comprehensive tiered testing approach:
+
+### Quick Regression Tests (Tier 1)
+```bash
+pytest                    # < 30 seconds, runs by default
+```
+
+Tier 1 tests include:
+- Unit tests for all Python modules
+- Integration tests for code generation (no compilation)
+- Golden file snapshot comparisons
+- Full-featured keymap generation test (validates all real-world features)
+
+### Comprehensive Tests (Tier 2)
+```bash
+pytest --tier2            # 5-15 minutes, requires QMK/ZMK setup
+```
+
+Tier 2 tests include:
+- Actual QMK firmware compilation (all boards)
+- Actual ZMK firmware compilation (all boards)
+- Full build_all.sh pipeline validation
+
+### Coverage Report
+```bash
+pytest --cov=scripts --cov-report=html
+open htmlcov/index.html
+```
+
+**Test Organization**:
+- `tests/unit/` - Unit tests for individual modules
+- `tests/integration/` - Integration tests (codegen without compilation)
+- `tests/e2e/` - End-to-end tests (with firmware compilation)
+- `tests/fixtures/` - Test data and golden files
+- `tests/helpers.py` - Shared test utilities
+
+**Running Specific Tests**:
+```bash
+# Single test file
+pytest tests/unit/test_validator.py -v
+
+# Single test function
+pytest tests/unit/test_validator.py::test_production_config_is_valid -v
+
+# Update golden snapshots
+pytest tests/integration/test_golden_snapshots.py --snapshot-update
+```
+
 ## File Organization
 
 ### New Architecture (Post-Migration)
