@@ -745,7 +745,7 @@
         num_layer {
             bindings = <
                 &trans &kp TILDE &kp AMPERSAND &kp PERCENT &kp DOLLAR &none &kp CARET &kp N7 &kp N8 &kp N9 &kp DOT &trans
-                &trans &kp LGUI &kp LALT &kp LCTRL &kp LSHFT &kp EQUAL &ak_train_primary_colon &kp N1 &kp N2 &kp N3 &kp GRAVE &trans
+                &trans &kp LGUI &kp LALT &kp LCTRL &kp LSHFT &kp BSLH &ak_train_primary_colon &kp N1 &kp N2 &kp N3 &kp GRAVE &trans
                 &trans &kp LG(Z) &kp LG(X) &kp LG(C) &kp LG(V) &kp LG(LS(Z)) &kp HASH &kp N4 &kp N5 &kp N6 &kp COMMA &trans
                 &none &none &none &ak_primary &kp N0 &kp AT
             >;
@@ -753,9 +753,9 @@
 
         sym_layer {
             bindings = <
-                &trans &kp TILDE &kp AMPERSAND &kp PERCENT &kp DOLLAR &none &kp LT &kp ASTERISK &kp LBRC &kp RBRC &kp BSLH &trans
-                &trans &kp LGUI &kp LALT &kp LCTRL &kp LSHFT &kp EQUAL &ak_train_primary_colon &kp EXCL &kp LPAR &kp RPAR &kp SEMI &trans
-                &trans &none &none &none &kp PIPE &none &ak_train_primary_gt &kp PLUS &kp LBKT &kp RBKT &kp COMMA &trans
+                &trans &kp TILDE &kp AMPERSAND &kp PERCENT &kp DOLLAR &none &kp LT &kp ASTERISK &kp LBRC &kp RBRC &kp EQUAL &trans
+                &trans &kp LGUI &kp LALT &kp LCTRL &kp LSHFT &kp BSLH &ak_train_primary_colon &kp EXCL &kp LPAR &kp RPAR &kp SEMI &trans
+                &trans &none &kp PIPE &kp HASH &kp DQT &none &ak_train_primary_gt &kp PLUS &kp LBKT &kp RBKT &kp COMMA &trans
                 &none &none &none &ak_primary &kp SPACE &kp ENTER
             >;
         };

@@ -73,7 +73,7 @@ layers:
     core: # (3x5)
       left:
         - [TILD           , AMPR           , PERC           , DLR            , NONE           ]
-        - [LGUI           , LALT           , LCTL           , LSFT           , EQL            ]
+        - [LGUI           , LALT           , LCTL           , LSFT           , BSLS           ]
         - [UNDO           , CUT            , COPY           , PASTE          , REDO           ]
       right:
         - [CIRC           , 7              , 8              , 9              , DOT            ]
@@ -91,10 +91,10 @@ layers:
     core: # (3x5)
       left:
         - [TILD           , AMPR           , PERC           , DLR            , NONE           ]
-        - [LGUI           , LALT           , LCTL           , LSFT           , EQL            ]
-        - [NONE           , NONE           , NONE           , PIPE           , NONE           ]
+        - [LGUI           , LALT           , LCTL           , LSFT           , BSLS           ]
+        - [NONE           , PIPE           , HASH           , DQUO           , NONE           ]
       right:
-        - [LABK           , ASTR           , LCBR           , RCBR           , BSLS           ]
+        - [LABK           , ASTR           , LCBR           , RCBR           , EQL            ]
         - [COLN           , EXLM           , LPRN           , RPRN           , SCLN           ]
         - [RABK           , PLUS           , LBRC           , RBRC           , COMM           ]
       thumbs:

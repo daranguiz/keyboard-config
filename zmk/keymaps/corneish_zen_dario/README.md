@@ -183,7 +183,7 @@
 14: &kp LALT
 15: &kp LCTRL
 16: &kp LSHFT
-17: &kp EQUAL
+17: &kp BSLH
 
 18: &kp COLON
 19: &kp N1
@@ -228,7 +228,7 @@
  7: &kp ASTERISK
  8: &kp LBRC
  9: &kp RBRC
-10: &kp BSLH
+10: &kp EQUAL
 11: &trans
 
 12: &trans
@@ -236,7 +236,7 @@
 14: &kp LALT
 15: &kp LCTRL
 16: &kp LSHFT
-17: &kp EQUAL
+17: &kp BSLH
 
 18: &kp COLON
 19: &kp EXCL
@@ -247,9 +247,9 @@
 
 24: &trans
 25: &none
-26: &none
-27: &none
-28: &kp PIPE
+26: &kp PIPE
+27: &kp HASH
+28: &kp DQT
 29: &none
 
 30: &kp GT
