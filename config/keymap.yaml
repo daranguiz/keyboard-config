@@ -92,7 +92,7 @@ layers:
       left:
         - [TILD           , AMPR           , PERC           , DLR            , NONE           ]
         - [LGUI           , LALT           , LCTL           , LSFT           , BSLS           ]
-        - [NONE           , PIPE           , HASH           , RABK           , NONE           ]
+        - [CIRC           , PIPE           , HASH           , RABK           , NONE           ]
       right:
         - [LABK           , ASTR           , LCBR           , RCBR           , EQL            ]
         - [COLN           , EXLM           , LPRN           , RPRN           , SCLN           ]

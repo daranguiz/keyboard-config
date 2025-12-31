@@ -773,7 +773,7 @@
             bindings = <
                 &trans &kp TILDE &kp AMPERSAND &kp PERCENT &kp DOLLAR &none &kp LT &kp ASTERISK &kp LBRC &kp RBRC &kp EQUAL &trans
                 &trans &kp LGUI &kp LALT &kp LCTRL &kp LSHFT &kp BSLH &ak_train_primary_colon &kp EXCL &kp LPAR &kp RPAR &kp SEMI &trans
-                &trans &none &kp PIPE &kp HASH &ak_train_primary_gt &none &kp DQT &kp PLUS &kp LBKT &kp RBKT &kp COMMA &trans
+                &trans &kp CARET &kp PIPE &kp HASH &ak_train_primary_gt &none &kp DQT &kp PLUS &kp LBKT &kp RBKT &kp COMMA &trans
                 &none &none &none &ak_primary &kp SPACE &kp ENTER
             >;
         };

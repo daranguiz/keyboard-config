@@ -246,7 +246,7 @@
 23: &trans
 
 24: &trans
-25: &none
+25: &kp CARET
 26: &kp PIPE
 27: &kp HASH
 28: &kp GT

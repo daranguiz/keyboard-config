@@ -334,7 +334,7 @@ qmk compile -kb jels/boaty -km dario
 44: KC_RPRN
 45: KC_SCLN
 46: KC_TRNS
-47: KC_NO
+47: KC_CIRC
 48: KC_PIPE
 49: KC_HASH
 50: KC_GT
