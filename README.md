@@ -41,29 +41,54 @@ Magic key mappings are included at the bottom of each layout visualization.
 
 ## Testing
 
-The project includes a comprehensive tiered testing suite:
+The project includes a comprehensive tiered testing suite with 228 tests:
+
+### Test Runner Script
+
+```bash
+./run-tests.sh            # Run Tier 1 tests (fast, < 2 min)
+./run-tests.sh --tier2    # Run Tier 2 E2E tests (15-30 min)
+./run-tests.sh --all --coverage --cov-html  # All tests with coverage
+./run-tests.sh --help     # See all options
+```
 
 ### Quick Regression Tests (Tier 1)
 ```bash
-pytest                    # < 30 seconds
+./run-tests.sh            # Recommended
+# or
+pytest                    # Direct pytest
 ```
 
-Runs unit tests and integration tests (without firmware compilation) to catch regressions quickly.
+**196 tests** including unit tests and integration tests (without firmware compilation) to catch regressions quickly.
 
 ### Comprehensive Tests (Tier 2)
 ```bash
-pytest --tier2            # 5-15 minutes, requires QMK/ZMK setup
+./run-tests.sh --tier2    # Recommended
+# or
+pytest --tier2            # Direct pytest
 ```
 
-Compiles actual firmware for all boards to ensure generated code builds successfully.
+**32 tests** that compile actual QMK and ZMK firmware for all boards to ensure generated code builds successfully.
+
+Requires:
+- QMK firmware repo (`QMK_FIRMWARE_PATH`)
+- ZMK firmware repo (`ZMK_REPO`)
+- Docker (for ZMK builds)
 
 ### Coverage Report
 ```bash
+./run-tests.sh --coverage --cov-html  # Recommended (auto-opens browser)
+# or
 pytest --cov=scripts --cov-report=html
 open htmlcov/index.html
 ```
 
-See [CLAUDE.md](CLAUDE.md) for detailed testing documentation.
+### Environment Check
+```bash
+./run-tests.sh --check-env  # Verify Tier 2 test requirements
+```
+
+See [tests/README.md](tests/README.md) for detailed testing documentation.
 
 ## About
 
