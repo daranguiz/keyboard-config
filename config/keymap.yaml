@@ -72,13 +72,13 @@ layers:
   SYM:
     core: # (3x5)
       left:
-        - [AMPR           , PERC           , DLR            , QUES           , TILD           ]
+        - [AMPR           , PERC           , DLR            , RABK           , TILD           ]
         - [LGUI           , LALT           , LCTL           , LSFT           , BSLS           ]
-        - [CIRC           , PIPE           , HASH           , RABK           , NONE           ]
+        - [CIRC           , PIPE           , HASH           , RBRC           , NONE           ]
       right:
         - [LABK           , ASTR           , LCBR           , RCBR           , EQL            ]
         - [SCLN           , EXLM           , LPRN           , RPRN           , COLN           ]
-        - [DQUO           , PLUS           , LBRC           , RBRC           , COMM           ]
+        - [DQUO           , PLUS           , LBRC           , QUES           , COMM           ]
       thumbs:
         - [NONE           , NONE           , NONE           ]
         - [MAGIC          , SPC            , ENT            ]
@@ -108,7 +108,7 @@ layers:
   NUM:
     core: # (3x5)
       left:
-        - [AMPR           , PERC           , DLR            , QUES           , TILD           ]
+        - [AMPR           , PERC           , DLR            , RABK           , TILD           ]
         - [LGUI           , LALT           , LCTL           , LSFT           , BSLS           ]
         - [UNDO           , CUT            , COPY           , PASTE          , REDO           ]
       right:
@@ -223,7 +223,8 @@ magic_keys:
       W: HICH
 
       "<": ">"
-      # "1": ":"
+      "[": "]"
+      "(": "_"
     default_repeat: true
 
   BASE_ALT:
