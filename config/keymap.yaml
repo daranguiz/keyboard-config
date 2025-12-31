@@ -77,7 +77,7 @@ layers:
         - [CIRC           , PIPE           , HASH           , RABK           , NONE           ]
       right:
         - [LABK           , ASTR           , LCBR           , RCBR           , EQL            ]
-        - [COLN           , EXLM           , LPRN           , RPRN           , SCLN           ]
+        - [SCLN           , EXLM           , LPRN           , RPRN           , COLN           ]
         - [DQUO           , PLUS           , LBRC           , RBRC           , COMM           ]
       thumbs:
         - [NONE           , NONE           , NONE           ]
@@ -95,7 +95,7 @@ layers:
         - [UNDO           , CUT            , COPY           , PASTE          , REDO           ]
       right:
         - [CIRC           , 7              , 8              , 9              , DOT            ]
-        - [COLN           , 1              , 2              , 3              , GRV            ]
+        - [SCLN           , 1              , 2              , 3              , COLN           ]
         - [HASH           , 4              , 5              , 6              , COMM           ]
       thumbs:
         - [NONE           , NONE           , NONE           ]
@@ -205,7 +205,7 @@ magic_keys:
       W: HICH
 
       "<": ">"
-      "1": ":"
+      # "1": ":"
     default_repeat: true
 
   BASE_ALT:
