@@ -225,6 +225,8 @@ magic_keys:
       "<": ">"
       "[": "]"
       "(": "_"
+      "/": "*"
+      "*": "/"
     default_repeat: true
 
   BASE_ALT:
