@@ -535,6 +535,13 @@ class KeymapVisualizer:
 
         css += '''
 
+    /* Style shifted keys (sm: syntax) to be larger and more visible */
+    text.shifted {
+      font-size: 18px !important;
+      font-weight: 600 !important;
+      fill: #555 !important;
+    }
+
     /* Make sure ghost keys (on other layers) are clearly different */
     .key.ghost rect {
       opacity: 0.3 !important;
@@ -707,6 +714,35 @@ class KeymapVisualizer:
         # Fallback to key name
         return keycode
 
+    def _convert_sm_markers_to_dicts(self, yaml_content: str) -> str:
+        """
+        Convert SM_MARKER:base|shifted to keymap-drawer dict format {t: base, s: shifted}
+
+        This post-processes the parsed YAML to enable stacked display of shift-morph keys,
+        showing the base key prominently and shifted key smaller below.
+
+        Args:
+            yaml_content: YAML string from keymap parse
+
+        Returns:
+            YAML string with SM_MARKER entries converted to dict format
+        """
+        import re
+
+        # Pattern matches: SM MARKER:x|y or SM_MARKER:x|y (possibly quoted in YAML)
+        # keymap-drawer converts underscores to spaces, so we need to handle both
+        # The marker could appear as 'SM MARKER:,|@' or 'SM_MARKER:,|@' in the YAML
+        # Note: Use \s not \\s in raw string - \\s matches literal backslash+s, not whitespace!
+        pattern = r"['\"]?SM[ _]MARKER:([^|'\"]+)\|([^'\"\s]+)['\"]?"
+
+        def replace_marker(match):
+            tap = match.group(1)
+            shifted = match.group(2)
+            # Return keymap-drawer dict format for stacked display
+            return f'{{t: "{tap}", s: "{shifted}"}}'
+
+        return re.sub(pattern, replace_marker, yaml_content)
+
     def _translate_keycode_for_display(self, keycode: str) -> str:
         """
         Translate keymap.yaml format directly to keymap-drawer display format
@@ -761,7 +797,8 @@ class KeymapVisualizer:
                 layer = parts[1]
                 return f"DF({layer})"
 
-        # Handle shift-morph: sm:BASE:SHIFTED -> BASE/SHIFTED (e.g., ,/@)
+        # Handle shift-morph: sm:BASE:SHIFTED -> SM_MARKER for stacked display
+        # The marker will be post-processed to keymap-drawer dict format {t: base, s: shifted}
         if keycode.startswith("sm:"):
             parts = keycode.split(":")
             if len(parts) == 3:
@@ -769,7 +806,8 @@ class KeymapVisualizer:
                 # Get display names for both keys
                 base_display = self._get_key_display(base_key)
                 shifted_display = self._get_key_display(shifted_key)
-                return f"{base_display}/{shifted_display}"
+                # Use marker format that will be converted to {t: "x", s: "y"} in post-processing
+                return f"SM_MARKER:{base_display}|{shifted_display}"
 
         # Check for custom display glyph/name in keycodes.yaml
         if keycode in self.keycodes:
@@ -930,6 +968,9 @@ class KeymapVisualizer:
                 layer_names = ["COLEMAK", "GALLIUM", "NIGHT", "NUM", "SYM", "NAV", "MEDIA", "FUN"]
                 for i, name in enumerate(layer_names):
                     parsed_keymap = parsed_keymap.replace(f"L{i}:", f"{name}:")
+
+                # Post-process: Convert SM_MARKER entries to stacked display format
+                parsed_keymap = self._convert_sm_markers_to_dicts(parsed_keymap)
 
                 # Draw SVG (config must come before subcommand)
                 draw_cmd = ["keymap", "-c", str(layout_config), "draw", "-"]
@@ -1237,6 +1278,9 @@ class KeymapVisualizer:
                 layer_names = [layer.name for layer in layers]
                 for i, name in enumerate(layer_names):
                     parsed_keymap = parsed_keymap.replace(f"L{i}:", f"{name}:")
+
+                # Post-process: Convert SM_MARKER entries to stacked display format
+                parsed_keymap = self._convert_sm_markers_to_dicts(parsed_keymap)
 
                 # Draw SVG (config must come before subcommand)
                 draw_cmd = ["keymap", "-c", str(layout_config), "draw", "-"]
@@ -2025,6 +2069,9 @@ class KeymapVisualizer:
                 for i, name in enumerate(layer_names):
                     parsed_keymap = parsed_keymap.replace(f"L{i}:", f"{name}:")
 
+                # Post-process: Convert SM_MARKER entries to stacked display format
+                parsed_keymap = self._convert_sm_markers_to_dicts(parsed_keymap)
+
                 # Draw SVG (config must come before subcommand)
                 draw_cmd = ["keymap", "-c", str(layout_config), "draw", "-"]
 
@@ -2157,6 +2204,9 @@ class KeymapVisualizer:
             # Rename layer
             clean_name = primary_base.replace('BASE_', '')
             parsed_keymap = parse_result.stdout.replace("L0:", f"{clean_name}:")
+
+            # Post-process: Convert SM_MARKER entries to stacked display format
+            parsed_keymap = self._convert_sm_markers_to_dicts(parsed_keymap)
 
             # Draw
             draw_cmd = ["keymap", "-c", str(temp_config), "draw", "-"]

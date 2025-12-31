@@ -70,20 +70,22 @@ draw_config:
       \ 1.2.4 1.8-1.6-.9-1.6.9.4-1.8-1.4-1.2 1.8-.2z\"/>\n</svg>\n"
   glyph_tap_size: 28
   glyph_hold_size: 20
-  glyph_shifted_size: 16
-  svg_extra_style: "/* Increase font size and make bold for all tap labels (matching\
-    \ row-stagger) */\n.tap {\n  font-size: 24px !important;\n  font-weight: 600 !important;\n\
-    }\n\n/* Remove underline from layer activator text */\ntext.layer-activator {\n\
-    \  text-decoration: none !important;\n}\n\n/* Remove bold from hold text (layer\
-    \ names on modifier keys) */\ntext.hold {\n  font-weight: normal !important;\n\
-    }\n\n/* Highlight layer-tap thumb keys (positions 21, 31-33, 35) with bright green\
-    \ on all BASE layers */\n.layer-BASE_COLEMAK .keypos-31 rect,\n.layer-BASE_COLEMAK\
-    \ .keypos-32 rect,\n.layer-BASE_COLEMAK .keypos-33 rect,\n.layer-BASE_COLEMAK\
-    \ .keypos-35 rect,\n.layer-BASE_COLEMAK .keypos-29 rect,\n.layer-BASE_GALLIUM\
-    \ .keypos-31 rect,\n.layer-BASE_GALLIUM .keypos-32 rect,\n.layer-BASE_GALLIUM\
-    \ .keypos-33 rect,\n.layer-BASE_GALLIUM .keypos-35 rect,\n.layer-BASE_GALLIUM\
-    \ .keypos-29 rect {\n  fill: #4CAF50 !important;\n  stroke: none !important;\n\
-    \  opacity: 1 !important;\n}\n.layer-BASE_COLEMAK .keypos-31 text,\n.layer-BASE_COLEMAK\
+  glyph_shifted_size: 20
+  svg_extra_style: "/* Style shifted keys (sm: syntax) to be more visible */\n.shifted\
+    \ {\n  font-weight: 600 !important;\n  fill: #666 !important;\n}\n\n/* Increase\
+    \ font size and make bold for all tap labels (matching row-stagger) */\n.tap {\n\
+    \  font-size: 24px !important;\n  font-weight: 600 !important;\n}\n\n/* Remove\
+    \ underline from layer activator text */\ntext.layer-activator {\n  text-decoration:\
+    \ none !important;\n}\n\n/* Remove bold from hold text (layer names on modifier\
+    \ keys) */\ntext.hold {\n  font-weight: normal !important;\n}\n\n/* Highlight\
+    \ layer-tap thumb keys (positions 21, 31-33, 35) with bright green on all BASE\
+    \ layers */\n.layer-BASE_COLEMAK .keypos-31 rect,\n.layer-BASE_COLEMAK .keypos-32\
+    \ rect,\n.layer-BASE_COLEMAK .keypos-33 rect,\n.layer-BASE_COLEMAK .keypos-35\
+    \ rect,\n.layer-BASE_COLEMAK .keypos-29 rect,\n.layer-BASE_GALLIUM .keypos-31\
+    \ rect,\n.layer-BASE_GALLIUM .keypos-32 rect,\n.layer-BASE_GALLIUM .keypos-33\
+    \ rect,\n.layer-BASE_GALLIUM .keypos-35 rect,\n.layer-BASE_GALLIUM .keypos-29\
+    \ rect {\n  fill: #4CAF50 !important;\n  stroke: none !important;\n  opacity:\
+    \ 1 !important;\n}\n.layer-BASE_COLEMAK .keypos-31 text,\n.layer-BASE_COLEMAK\
     \ .keypos-32 text,\n.layer-BASE_COLEMAK .keypos-33 text,\n.layer-BASE_COLEMAK\
     \ .keypos-35 text,\n.layer-BASE_COLEMAK .keypos-29 text,\n.layer-BASE_GALLIUM\
     \ .keypos-31 text,\n.layer-BASE_GALLIUM .keypos-32 text,\n.layer-BASE_GALLIUM\

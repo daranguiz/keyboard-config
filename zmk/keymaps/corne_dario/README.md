@@ -249,10 +249,10 @@
 25: &none
 26: &kp PIPE
 27: &kp HASH
-28: &kp DQT
+28: &kp GT
 29: &none
 
-30: &kp GT
+30: &kp DQT
 31: &kp PLUS
 32: &kp LBKT
 33: &kp RBKT

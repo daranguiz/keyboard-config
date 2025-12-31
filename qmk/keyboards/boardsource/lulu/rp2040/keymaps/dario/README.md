@@ -307,11 +307,11 @@ qmk compile -kb boardsource/lulu/rp2040 -km dario
 37: KC_NO
 38: KC_PIPE
 39: KC_HASH
-40: KC_DQUO
+40: KC_GT
 41: KC_NO
 42: KC_NO
 43: KC_NO
-44: KC_GT
+44: KC_DQUO
 45: KC_PLUS
 46: KC_LBRC
 47: KC_RBRC
