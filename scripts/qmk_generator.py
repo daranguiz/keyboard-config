@@ -7,7 +7,7 @@ Generates QMK C code files from compiled layers
 from pathlib import Path
 from typing import List, Dict, Tuple
 import re
-from data_model import Board, CompiledLayer, ComboConfiguration, Combo
+from data_model import Board, CompiledLayer, ComboConfiguration, Combo, ValidationError
 
 
 class QMKGenerator:
@@ -17,6 +17,7 @@ class QMKGenerator:
         # Track magic macro strings for QMK (text expansions)
         self.magic_macros: Dict[str, str] = {}
         self.special_keycodes = special_keycodes or {}
+        self.char_token_map = self._build_char_token_map()
 
     def generate_keymap(
         self,
@@ -986,50 +987,60 @@ combo_t key_combos[] = {{
         Translate simple keycode to QMK format (for magic key mappings)
 
         Args:
-            keycode: Simple keycode (e.g., "A", ".", "/")
+            keycode: Simple keycode (e.g., "A", ".", "/") or disambiguated dict
 
         Returns:
-            QMK keycode (e.g., "KC_A", "KC_DOT", "KC_SLSH")
+            QMK keycode from keycodes.yaml (e.g., "KC_A", "KC_DOT")
         """
+        if isinstance(keycode, dict):
+            if 'kc' in keycode and isinstance(keycode['kc'], str):
+                return self._translate_simple_keycode(keycode['kc'])
+            if 'text' in keycode and isinstance(keycode['text'], str):
+                raise ValidationError("Magic key text mappings must be handled as macros")
+
         if isinstance(keycode, list):
             keycode = "".join(str(k) for k in keycode)
 
         if not isinstance(keycode, str):
             keycode = str(keycode)
 
-        # Handle special characters
-        special_chars = {
-            ".": "KC_DOT",
-            ",": "KC_COMM",
-            "/": "KC_SLSH",
-            "'": "KC_QUOT",
-            "-": "KC_MINS",
-            ";": "KC_SCLN",
-            "[": "KC_LBRC",
-            "]": "KC_RBRC",
-            " ": "KC_SPC",
-            ">": "KC_GT",
-            "<": "KC_LT",
-            ":": "KC_COLN",
-            "?": "KC_QUES",
-            "=": "KC_EQL",
-            "#": "KC_HASH",
-            "_": "KC_UNDS",
-        }
+        # Prefer direct keycodes.yaml token lookup
+        if keycode in self.special_keycodes:
+            qmk_val = self.special_keycodes[keycode].get("qmk")
+            if qmk_val:
+                return qmk_val
+            raise ValidationError(f"Missing QMK value for keycode '{keycode}' in keycodes.yaml")
 
-        if keycode in special_chars:
-            return special_chars[keycode]
+        # Map single-character tokens via keycodes.yaml char metadata
+        if len(keycode) == 1:
+            token = self.char_token_map.get(keycode)
+            if token and token in self.special_keycodes:
+                qmk_val = self.special_keycodes[token].get("qmk")
+                if qmk_val:
+                    return qmk_val
+                raise ValidationError(f"Missing QMK value for keycode '{token}' in keycodes.yaml")
+            raise ValidationError(f"Unknown magic key '{keycode}' not found in keycodes.yaml")
 
-        # Single letter: KC_X
-        if len(keycode) == 1 and keycode.isalpha():
-            return f"KC_{keycode.upper()}"
+        raise ValidationError(f"Unknown magic key '{keycode}' not found in keycodes.yaml")
 
-        # Already prefixed
-        if keycode.startswith("KC_"):
-            return keycode
+    def _build_char_token_map(self) -> Dict[str, str]:
+        """
+        Build a mapping from single characters to keycodes.yaml tokens.
+        """
+        char_map: Dict[str, str] = {}
+        for token, meta in self.special_keycodes.items():
+            if not isinstance(meta, dict):
+                continue
 
-        # Default: add KC_ prefix
-        return f"KC_{keycode}"
+            ch = meta.get("char")
+            if not ch:
+                display_name = meta.get("display_name")
+                if isinstance(display_name, str) and len(display_name) == 1:
+                    ch = display_name
+
+            if isinstance(ch, str) and len(ch) == 1:
+                char_map[ch] = token
+        return char_map
 
     def _extract_magic_macro_sequence(self, alt_key) -> List[str]:
         """
