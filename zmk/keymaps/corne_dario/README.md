@@ -161,59 +161,6 @@
 41: &lt MEDIA ENTER
 ```
 
-## NUM Layer
-
-```
- 0: &trans
- 1: &kp TILDE
- 2: &kp AMPERSAND
- 3: &kp PERCENT
- 4: &kp DOLLAR
- 5: &none
-
- 6: &kp CARET
- 7: &kp N7
- 8: &kp N8
- 9: &kp N9
-10: &kp DOT
-11: &trans
-
-12: &trans
-13: &kp LGUI
-14: &kp LALT
-15: &kp LCTRL
-16: &kp LSHFT
-17: &kp BSLH
-
-18: &kp COLON
-19: &kp N1
-20: &kp N2
-21: &kp N3
-22: &kp GRAVE
-23: &trans
-
-24: &trans
-25: &kp LG(Z)
-26: &kp LG(X)
-27: &kp LG(C)
-28: &kp LG(V)
-29: &kp LG(LS(Z))
-
-30: &kp HASH
-31: &kp N4
-32: &kp N5
-33: &kp N6
-34: &kp COMMA
-35: &trans
-
-36: &none
-37: &none
-38: &none
-39: &ak_primary
-40: &kp SPACE
-41: &kp N0
-```
-
 ## SYM Layer
 
 ```
@@ -265,6 +212,59 @@
 39: &ak_primary
 40: &kp SPACE
 41: &kp ENTER
+```
+
+## NUM Layer
+
+```
+ 0: &trans
+ 1: &kp TILDE
+ 2: &kp AMPERSAND
+ 3: &kp PERCENT
+ 4: &kp DOLLAR
+ 5: &none
+
+ 6: &kp CARET
+ 7: &kp N7
+ 8: &kp N8
+ 9: &kp N9
+10: &kp DOT
+11: &trans
+
+12: &trans
+13: &kp LGUI
+14: &kp LALT
+15: &kp LCTRL
+16: &kp LSHFT
+17: &kp BSLH
+
+18: &kp COLON
+19: &kp N1
+20: &kp N2
+21: &kp N3
+22: &kp GRAVE
+23: &trans
+
+24: &trans
+25: &kp LG(Z)
+26: &kp LG(X)
+27: &kp LG(C)
+28: &kp LG(V)
+29: &kp LG(LS(Z))
+
+30: &kp HASH
+31: &kp N4
+32: &kp N5
+33: &kp N6
+34: &kp COMMA
+35: &trans
+
+36: &none
+37: &none
+38: &none
+39: &ak_primary
+40: &kp SPACE
+41: &kp N0
 ```
 
 ## NAV Layer

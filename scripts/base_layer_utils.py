@@ -142,7 +142,7 @@ class BaseLayerManager:
             family = [base_name]
 
             # Standard utility layers (always present in some form)
-            utility_base_names = ["NUM", "SYM", "NAV", "MEDIA", "FUN"]
+            utility_base_names = ["SYM", "NUM", "NAV", "MEDIA", "FUN"]
 
             for util_name in utility_base_names:
                 # FUN layer is always shared (no variant)
