@@ -27,7 +27,7 @@ from data_model import Layer, KeyGrid, Board
 class TestBasicCompilation:
     """Test basic layer compilation"""
 
-    def test_compile_36_to_36(self, keymap_config, qmk_translator):
+    def test_compile_36_to_36(self, keymap_config, layer_compiler):
         """Compiling 36-key layer for 36-key board should not add padding"""
         # Get a base layer
         base_layers = [name for name in keymap_config.layers if name.startswith("BASE")]
@@ -46,14 +46,13 @@ class TestBasicCompilation:
             layout_size="3x5_3"
         )
 
-        compiler = LayerCompiler(keymap_config, qmk_translator)
-        compiled = compiler.compile_layer(layer_name, layer, board)
+        compiled = layer_compiler.compile_layer(layer, board, "qmk")
 
         # Should have exactly 36 keys
         assert len(compiled.keycodes) == 36, \
             f"36-key board should have 36 keys, got {len(compiled.keycodes)}"
 
-    def test_compile_36_to_42(self, keymap_config, qmk_translator):
+    def test_compile_36_to_42(self, keymap_config, layer_compiler):
         """Compiling 36-key layer for 42-key board should add extensions"""
         # Get a base layer
         base_layers = [name for name in keymap_config.layers if name.startswith("BASE")]
@@ -76,14 +75,13 @@ class TestBasicCompilation:
             layout_size="3x6_3"
         )
 
-        compiler = LayerCompiler(keymap_config, qmk_translator)
-        compiled = compiler.compile_layer(layer_name, layer, board)
+        compiled = layer_compiler.compile_layer(layer, board, "qmk")
 
         # Should have 42 keys (36 + 6 from outer pinky columns)
         assert len(compiled.keycodes) == 42, \
             f"42-key board should have 42 keys, got {len(compiled.keycodes)}"
 
-    def test_compiled_layer_metadata(self, keymap_config, qmk_translator):
+    def test_compiled_layer_metadata(self, keymap_config, layer_compiler):
         """Compiled layer should have correct metadata"""
         base_layers = [name for name in keymap_config.layers if name.startswith("BASE")]
         if not base_layers:
@@ -100,15 +98,14 @@ class TestBasicCompilation:
             layout_size="3x5_3"
         )
 
-        compiler = LayerCompiler(keymap_config, qmk_translator)
-        compiled = compiler.compile_layer(layer_name, layer, board)
+        compiled = layer_compiler.compile_layer(layer, board, "qmk")
 
         # Check metadata
         assert compiled.name == layer_name
         assert compiled.board == board
         assert compiled.firmware == "qmk"
 
-    def test_keycodes_are_translated(self, keymap_config, qmk_translator):
+    def test_keycodes_are_translated(self, keymap_config, layer_compiler):
         """Compiled keycodes should be translated to firmware format"""
         base_layers = [name for name in keymap_config.layers if name.startswith("BASE")]
         if not base_layers:
@@ -125,8 +122,7 @@ class TestBasicCompilation:
             layout_size="3x5_3"
         )
 
-        compiler = LayerCompiler(keymap_config, qmk_translator)
-        compiled = compiler.compile_layer(layer_name, layer, board)
+        compiled = layer_compiler.compile_layer(layer, board, "qmk")
 
         # Check that keycodes are QMK format (KC_* or special macros)
         for keycode in compiled.keycodes:
@@ -140,7 +136,7 @@ class TestBasicCompilation:
 class TestExtensionHandling:
     """Test extension application"""
 
-    def test_extensions_applied_for_matching_board(self, keymap_config, qmk_translator):
+    def test_extensions_applied_for_matching_board(self, keymap_config, layer_compiler):
         """Extensions should be applied for boards that need them"""
         # Find a layer with 3x6_3 extension
         layers_with_ext = [
@@ -162,13 +158,12 @@ class TestExtensionHandling:
             layout_size="3x6_3"
         )
 
-        compiler = LayerCompiler(keymap_config, qmk_translator)
-        compiled = compiler.compile_layer(layer_name, layer, board)
+        compiled = layer_compiler.compile_layer(layer, board, "qmk")
 
         # Should have 42 keys
         assert len(compiled.keycodes) == 42
 
-    def test_extensions_not_applied_for_36_key_board(self, keymap_config, qmk_translator):
+    def test_extensions_not_applied_for_36_key_board(self, keymap_config, layer_compiler):
         """Extensions should not be applied for 36-key boards"""
         # Find a layer with 3x6_3 extension
         layers_with_ext = [
@@ -190,8 +185,7 @@ class TestExtensionHandling:
             layout_size="3x5_3"
         )
 
-        compiler = LayerCompiler(keymap_config, qmk_translator)
-        compiled = compiler.compile_layer(layer_name, layer, board)
+        compiled = layer_compiler.compile_layer(layer, board, "qmk")
 
         # Should have exactly 36 keys (extensions not applied)
         assert len(compiled.keycodes) == 36
@@ -201,42 +195,31 @@ class TestExtensionHandling:
 class TestFullLayoutLayers:
     """Test full_layout layer handling"""
 
-    def test_full_layout_compilation(self, keymap_config, qmk_translator):
+    def test_full_layout_compilation(self, full_layout_config, layer_compiler):
         """Layers with full_layout should compile correctly"""
-        # Find layers with full_layout
+        # Use test fixture with full_layout layers
         full_layout_layers = [
-            (name, layer) for name, layer in keymap_config.layers.items()
+            (name, layer) for name, layer in full_layout_config.layers.items()
             if layer.full_layout
         ]
 
-        if not full_layout_layers:
-            pytest.skip("No full_layout layers")
+        assert len(full_layout_layers) > 0, "Test fixture should have full_layout layers"
 
         layer_name, layer = full_layout_layers[0]
 
         # Determine board size from full_layout length
         full_size = len(layer.full_layout.flatten())
 
-        if full_size == 58:
-            board = Board(
-                id="test",
-                name="Test",
-                firmware="qmk",
-                qmk_keyboard="test/board",
-                layout_size="custom_58_from_3x6"
-            )
-        else:
-            # Use appropriate board size
-            board = Board(
-                id="test",
-                name="Test",
-                firmware="qmk",
-                qmk_keyboard="test/board",
-                layout_size="3x5_3"
-            )
+        # Use custom board size for boaty-style layout
+        board = Board(
+            id="test",
+            name="Test",
+            firmware="qmk",
+            qmk_keyboard="test/board",
+            layout_size="custom_63"
+        )
 
-        compiler = LayerCompiler(keymap_config, qmk_translator)
-        compiled = compiler.compile_layer(layer_name, layer, board)
+        compiled = layer_compiler.compile_layer(layer, board, "qmk")
 
         # Should have same number of keys as full_layout
         assert len(compiled.keycodes) == full_size
@@ -246,39 +229,32 @@ class TestFullLayoutLayers:
 class TestL36References:
     """Test L36 position reference resolution"""
 
-    def test_l36_references_resolved(self, keymap_config, qmk_translator):
+    def test_l36_references_resolved(self, full_layout_config, layer_compiler):
         """L36_N references should be resolved to actual keycodes"""
-        # Find layers with full_layout (likely to have L36 refs)
+        # Use test fixture with full_layout and L36 references
         full_layout_layers = [
-            (name, layer) for name, layer in keymap_config.layers.items()
+            (name, layer) for name, layer in full_layout_config.layers.items()
             if layer.full_layout
         ]
 
-        if not full_layout_layers:
-            pytest.skip("No full_layout layers")
+        assert len(full_layout_layers) > 0, "Test fixture should have full_layout layers"
 
         layer_name, layer = full_layout_layers[0]
 
-        # Check if it has L36 references
+        # Check that it has L36 references (parsed as dicts)
         flat = layer.full_layout.flatten()
-        has_l36_refs = any(
-            isinstance(k, dict) and k.get("_ref") == "L36"
-            for k in flat
-        )
-
-        if not has_l36_refs:
-            pytest.skip("No L36 references in this layer")
+        l36_refs = [k for k in flat if isinstance(k, dict) and k.get("_ref") == "L36"]
+        assert len(l36_refs) > 0, f"Test fixture should have L36 references in {layer_name}"
 
         board = Board(
             id="test",
             name="Test",
             firmware="qmk",
             qmk_keyboard="test/board",
-            layout_size="custom_58_from_3x6"
+            layout_size="custom_63"
         )
 
-        compiler = LayerCompiler(keymap_config, qmk_translator)
-        compiled = compiler.compile_layer(layer_name, layer, board)
+        compiled = layer_compiler.compile_layer(layer, board, "qmk")
 
         # All keycodes should be strings (L36 refs resolved)
         for keycode in compiled.keycodes:
@@ -290,7 +266,7 @@ class TestL36References:
 class TestTranslatorContext:
     """Test translator context setting"""
 
-    def test_translator_receives_layer_context(self, keymap_config, qmk_translator):
+    def test_translator_receives_layer_context(self, keymap_config, layer_compiler):
         """Compiler should set layer context on translator"""
         base_layers = [name for name in keymap_config.layers if name.startswith("BASE")]
         if not base_layers:
@@ -307,10 +283,8 @@ class TestTranslatorContext:
             layout_size="3x5_3"
         )
 
-        compiler = LayerCompiler(keymap_config, qmk_translator)
-
         # Compile layer - translator should receive context
-        compiled = compiler.compile_layer(layer_name, layer, board)
+        compiled = layer_compiler.compile_layer(layer, board, "qmk")
 
         # Just verify compilation succeeded
         assert compiled is not None
@@ -321,7 +295,7 @@ class TestTranslatorContext:
 class TestMultipleLayerCompilation:
     """Test compiling multiple layers"""
 
-    def test_compile_all_layers_for_board(self, keymap_config, qmk_translator):
+    def test_compile_all_layers_for_board(self, keymap_config, layer_compiler):
         """Should be able to compile all layers for a board"""
         board = Board(
             id="test",
@@ -331,13 +305,11 @@ class TestMultipleLayerCompilation:
             layout_size="3x5_3"
         )
 
-        compiler = LayerCompiler(keymap_config, qmk_translator)
-
         # Compile all layers
         compiled_layers = []
         for layer_name, layer in keymap_config.layers.items():
             try:
-                compiled = compiler.compile_layer(layer_name, layer, board)
+                compiled = layer_compiler.compile_layer(layer, board, "qmk")
                 compiled_layers.append(compiled)
             except Exception as e:
                 # Some layers may not compile for 36-key boards (like GAME)
@@ -378,20 +350,20 @@ class TestMultipleLayerCompilation:
 class TestErrorHandling:
     """Test error handling in compilation"""
 
-    def test_missing_extension_for_large_board(self, keymap_config, qmk_translator):
-        """Compiling layer without extension for large board should handle gracefully"""
-        # Get a layer without 3x6_3 extension
-        layers_without_ext = [
-            (name, layer) for name, layer in keymap_config.layers.items()
-            if layer.core and "3x6_3" not in layer.extensions
-        ]
+    def test_none_filled_extensions_compile(self, no_extensions_config, layer_compiler):
+        """Compiling layer with NONE-filled extensions should work correctly"""
+        # Get the NAV_NO_EXT layer specifically (has all-NONE extensions)
+        assert "NAV_NO_EXT" in no_extensions_config.layers, "Test fixture should have NAV_NO_EXT layer"
+        layer = no_extensions_config.layers["NAV_NO_EXT"]
 
-        if not layers_without_ext:
-            pytest.skip("All layers have extensions")
+        # Verify it has 3x6_3 extensions with all NONE
+        assert "3x6_3" in layer.extensions, "NAV_NO_EXT should have 3x6_3 extensions"
+        ext = layer.extensions["3x6_3"]
+        # Check that outer_pinky keys are NONE
+        assert all(k == "NONE" for k in ext.keys["outer_pinky_left"]), "Left extensions should be NONE"
+        assert all(k == "NONE" for k in ext.keys["outer_pinky_right"]), "Right extensions should be NONE"
 
-        layer_name, layer = layers_without_ext[0]
-
-        # Try to compile for 42-key board
+        # Compile for 42-key board
         board = Board(
             id="test",
             name="Test",
@@ -400,16 +372,13 @@ class TestErrorHandling:
             layout_size="3x6_3"
         )
 
-        compiler = LayerCompiler(keymap_config, qmk_translator)
+        compiled = layer_compiler.compile_layer(layer, board, "qmk")
 
-        # This might raise or might pad with KC_NO - either is acceptable
-        try:
-            compiled = compiler.compile_layer(layer_name, layer, board)
-            # If it succeeds, should have 42 keys
-            assert len(compiled.keycodes) == 42
-        except Exception:
-            # Raising an error is also acceptable behavior
-            pass
+        # Should have 42 keys (36 core + 6 extension)
+        assert len(compiled.keycodes) == 42
+
+        # Extension keys should be KC_NO (translated from NONE)
+        assert "KC_NO" in compiled.keycodes, "Should have KC_NO from NONE extensions"
 
 
 if __name__ == "__main__":

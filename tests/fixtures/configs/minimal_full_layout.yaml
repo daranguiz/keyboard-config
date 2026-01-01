@@ -1,0 +1,96 @@
+# Minimal keymap config for testing full_layout with L36 references
+# This tests the L36 reference resolution feature
+
+base_layers:
+  BASE_TEST:
+    display_name: "TEST"
+    description: "Test base layer"
+
+layers:
+  # Core layer (36 keys) - source for L36 references
+  BASE_TEST:
+    core:
+      left:
+        - [Q, W, E, R, T]
+        - [A, S, D, F, G]
+        - [Z, X, C, V, B]
+      right:
+        - [Y, U, I, O, P]
+        - [H, J, K, L, SCLN]
+        - [N, M, COMM, DOT, SLSH]
+      thumbs:
+        - [ESC, SPC, TAB]
+        - [ENT, BSPC, DEL]
+    extensions:
+      3x6_3:
+        outer_pinky_left: [GRV, LBRC, RBRC]
+        outer_pinky_right: [MINS, EQL, BSLS]
+
+  # Full layout layer using L36 references (63 keys for boaty-style layout)
+  # NOTE: Layers with full_layout + L36 refs must ALSO have core (for reference resolution)
+  NAV_TEST:
+    core:
+      left:
+        - [NONE, NONE, NONE, NONE, NONE]
+        - [LGUI, LALT, LCTL, LSFT, NONE]
+        - [NONE, NONE, NONE, NONE, NONE]
+      right:
+        - [NONE, LEFT, DOWN, UP, RGHT]
+        - [NONE, HOME, PGDN, PGUP, END]
+        - [NONE, NONE, NONE, NONE, NONE]
+      thumbs:
+        - [NONE, NONE, NONE]
+        - [TRNS, TRNS, TRNS]
+    full_layout: [
+      # Numpad area (21 keys)
+      PMNS,
+      PSLS, PAST,
+      P7, P8, P9,
+      P4, P5, P6, PPLS,
+      P1, P2, P3, PENT, NLCK,
+      P0, P0, PDOT, PENT, PEQL, BSPC,
+
+      # Main area using L36 references (42 keys)
+      ESC, TAB, L36_0, L36_1, L36_2, L36_3, L36_4, L36_5, L36_6, L36_7, L36_8, L36_9, BSPC, DEL,
+      CAPS, L36_10, L36_11, L36_12, L36_13, L36_14, L36_15, L36_16, L36_17, L36_18, L36_19, ENT,
+      L36_20, L36_21, L36_22, L36_23, L36_24, L36_25, L36_26, L36_27, L36_28, L36_29,
+      L36_30, L36_31, L36_32, L36_33, L36_34, L36_35
+    ]
+    extensions:
+      3x6_3:
+        outer_pinky_left: [NONE, NONE, NONE]
+        outer_pinky_right: [NONE, NONE, NONE]
+
+  # Another full_layout layer to test multiple layers
+  NUM_TEST:
+    core:
+      left:
+        - [N1, N2, N3, N4, N5]
+        - [N6, N7, N8, N9, N0]
+        - [MINS, EQL, LBRC, RBRC, BSLS]
+      right:
+        - [GRV, SCLN, QUOT, COMM, DOT]
+        - [SLSH, NONE, NONE, NONE, NONE]
+        - [NONE, NONE, NONE, NONE, NONE]
+      thumbs:
+        - [TRNS, TRNS, TRNS]
+        - [TRNS, TRNS, TRNS]
+    full_layout: [
+      # Numpad area
+      TRNS,
+      TRNS, TRNS,
+      TRNS, TRNS, TRNS,
+      TRNS, TRNS, TRNS, TRNS,
+      TRNS, TRNS, TRNS, TRNS, TRNS,
+      TRNS, TRNS, TRNS, TRNS, TRNS, TRNS,
+
+      # Main area using L36 references
+      TRNS, TRNS, L36_0, L36_1, L36_2, L36_3, L36_4, L36_5, L36_6, L36_7, L36_8, L36_9, TRNS, TRNS,
+      TRNS, L36_10, L36_11, L36_12, L36_13, L36_14, L36_15, L36_16, L36_17, L36_18, L36_19, TRNS,
+      L36_20, L36_21, L36_22, L36_23, L36_24, L36_25, L36_26, L36_27, L36_28, L36_29,
+      L36_30, L36_31, L36_32, L36_33, L36_34, L36_35
+    ]
+    extensions:
+      3x6_3:
+        outer_pinky_left: [NONE, NONE, NONE]
+        outer_pinky_right: [NONE, NONE, NONE]

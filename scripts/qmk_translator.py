@@ -43,6 +43,24 @@ class QMKTranslator:
         """Clear tracked shift-morphs (call before processing a new keymap)"""
         self.shift_morphs = {}
 
+    def set_context(self, layer: str = None, position: int = None) -> None:
+        """Set layer and position context for translation.
+
+        Args:
+            layer: Layer name (currently unused for QMK, reserved for future use)
+            position: Key position index (currently unused for QMK)
+
+        Note:
+            QMK doesn't need position awareness like ZMK does for home row mods.
+            This method provides API compatibility for tests and future enhancements.
+        """
+        # QMK doesn't need position awareness like ZMK does for hrm
+        # But provide API compatibility for tests
+        if layer is not None:
+            self.current_layer = layer
+        if position is not None:
+            self.current_position = position
+
     def translate(self, unified) -> str:
         """
         Translate unified keycode to QMK C syntax

@@ -320,6 +320,49 @@ class ZMKTranslator:
         """
         self.current_key_index = index
 
+    def set_context(self, layer: str = None, position: int = None) -> None:
+        """Set layer and position context for translation.
+
+        Args:
+            layer: Layer name (for magic key awareness)
+            position: Key position index (for left/right hand detection in hrm)
+
+        Note:
+            This is a convenience method that combines layer and position setting.
+            It internally calls set_key_index() for position awareness.
+        """
+        if layer is not None:
+            self.current_layer = layer
+        if position is not None:
+            self.set_key_index(position)
+
+    @property
+    def layer_map(self) -> dict:
+        """Get layer name to index mapping.
+
+        Returns:
+            Dictionary mapping layer names to indices
+
+        Note:
+            This property exposes the layer_indices dictionary that is set via
+            set_layer_indices(). Returns empty dict if not initialized.
+        """
+        return self.layer_indices if hasattr(self, 'layer_indices') else {}
+
+    def get_mod_morphs(self) -> list:
+        """Alias for get_shift_morphs() for API compatibility.
+
+        In ZMK terminology, shift-morphs are implemented as mod-morphs.
+
+        Returns:
+            List of (base_key, shifted_key) tuples
+
+        Note:
+            This is an alias for get_shift_morphs() to maintain compatibility
+            with ZMK terminology where shift-morphs are called mod-morphs.
+        """
+        return self.get_shift_morphs()
+
     def _is_left_hand_key(self, key_index: int) -> bool:
         """
         Determine if a key position is on the left hand (row-wise numbering)

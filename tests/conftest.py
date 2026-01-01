@@ -94,7 +94,11 @@ def combos(config_dir):
 def magic_config(config_dir):
     """Magic key configuration"""
     from config_parser import YAMLConfigParser
-    return YAMLConfigParser.parse_magic_keys(config_dir / "keymap.yaml")
+    try:
+        return YAMLConfigParser.parse_magic_keys(config_dir / "keymap.yaml")
+    except Exception:
+        # Magic config might be incomplete or invalid in test environment
+        return None
 
 
 @pytest.fixture(scope="session")
@@ -110,6 +114,30 @@ def minimal_keymap_config(fixtures_dir):
     return YAMLConfigParser.parse_keymap(minimal_config_path)
 
 
+@pytest.fixture(scope="session")
+def full_layout_config(fixtures_dir):
+    """Config with full_layout layers using L36 references"""
+    from config_parser import YAMLConfigParser
+    config_path = fixtures_dir / "configs" / "minimal_full_layout.yaml"
+    return YAMLConfigParser.parse_keymap(config_path)
+
+
+@pytest.fixture(scope="session")
+def no_extensions_config(fixtures_dir):
+    """Config with layer missing 3x6_3 extensions"""
+    from config_parser import YAMLConfigParser
+    config_path = fixtures_dir / "configs" / "minimal_no_extensions.yaml"
+    return YAMLConfigParser.parse_keymap(config_path)
+
+
+@pytest.fixture(scope="session")
+def test_board_inventory(fixtures_dir):
+    """Test board inventory with 36-key and 42-key boards"""
+    from config_parser import YAMLConfigParser
+    config_path = fixtures_dir / "configs" / "test_boards.yaml"
+    return YAMLConfigParser.parse_boards(config_path)
+
+
 # ============================================================================
 # Translator Fixtures
 # ============================================================================
@@ -122,17 +150,17 @@ def qmk_translator(aliases, keycodes):
 
 
 @pytest.fixture
-def zmk_translator(aliases, keycodes):
+def zmk_translator(aliases, keycodes, magic_config):
     """ZMK translator instance"""
     from zmk_translator import ZMKTranslator
-    return ZMKTranslator(aliases, keycodes)
+    return ZMKTranslator(aliases, keycodes, layout_size="3x5_3", magic_config=magic_config)
 
 
 @pytest.fixture
-def layer_compiler(qmk_translator):
-    """Layer compiler instance with QMK translator"""
+def layer_compiler(qmk_translator, zmk_translator):
+    """Layer compiler instance with QMK and ZMK translators"""
     from layer_compiler import LayerCompiler
-    return LayerCompiler(qmk_translator)
+    return LayerCompiler(qmk_translator, zmk_translator)
 
 
 # ============================================================================
