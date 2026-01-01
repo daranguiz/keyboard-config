@@ -1,0 +1,49 @@
+# Minimal keymap config with layer missing 3x6_3 extensions
+# This tests error handling when extensions are missing for large boards
+
+base_layers:
+  BASE_TEST:
+    display_name: "TEST"
+    description: "Test base layer"
+
+layers:
+  # Layer WITH extensions (should work on both 36 and 42 key boards)
+  BASE_TEST:
+    core:
+      left:
+        - [Q, W, E, R, T]
+        - [A, S, D, F, G]
+        - [Z, X, C, V, B]
+      right:
+        - [Y, U, I, O, P]
+        - [H, J, K, L, SCLN]
+        - [N, M, COMM, DOT, SLSH]
+      thumbs:
+        - [ESC, SPC, TAB]
+        - [ENT, BSPC, DEL]
+    extensions:
+      3x6_3:
+        outer_pinky_left: [GRV, LBRC, RBRC]
+        outer_pinky_right: [MINS, EQL, BSLS]
+
+  # Layer WITHOUT meaningful extensions (tests NONE padding)
+  # NOTE: Validator requires all layers have same extension types
+  # This tests that NONE-filled extensions work correctly
+  NAV_NO_EXT:
+    core:
+      left:
+        - [NONE, NONE, NONE, NONE, NONE]
+        - [LGUI, LALT, LCTL, LSFT, NONE]
+        - [NONE, NONE, NONE, NONE, NONE]
+      right:
+        - [NONE, LEFT, DOWN, UP, RGHT]
+        - [NONE, HOME, PGDN, PGUP, END]
+        - [NONE, NONE, NONE, NONE, NONE]
+      thumbs:
+        - [NONE, NONE, NONE]
+        - [TRNS, TRNS, TRNS]
+    extensions:
+      3x6_3:
+        # All NONE - tests that unused extensions compile correctly
+        outer_pinky_left: [NONE, NONE, NONE]
+        outer_pinky_right: [NONE, NONE, NONE]

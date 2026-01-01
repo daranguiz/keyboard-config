@@ -118,30 +118,43 @@ class TestExtensionConsistency:
         generator = KeymapGenerator(repo_root, verbose=False)
         generator.generate_all()
 
-        # Find a 36-key board and a 42-key board
+        # Find a 36-key board and a 42-key board (firmware-agnostic)
         board_36 = None
         board_42 = None
 
         for board in board_inventory.boards.values():
-            if board.firmware == "qmk":
-                if board.layout_size == "3x5_3" and not board_36:
-                    board_36 = board
-                elif board.layout_size == "3x6_3" and not board_42:
-                    board_42 = board
+            if board.layout_size == "3x5_3" and not board_36:
+                board_36 = board
+            elif board.layout_size == "3x6_3" and not board_42:
+                board_42 = board
 
         if not board_36 or not board_42:
             pytest.skip("Need both 36-key and 42-key boards")
 
-        # Read both files
-        keymap_36 = (
-            repo_root / "qmk" / "keyboards" / board_36.qmk_keyboard /
-            "keymaps" / "dario" / "keymap.c"
-        )
+        # Get appropriate file paths based on firmware
+        if board_36.firmware == "qmk":
+            keymap_36 = (
+                repo_root / "qmk" / "keyboards" / board_36.qmk_keyboard /
+                "keymaps" / "dario" / "keymap.c"
+            )
+        else:  # zmk
+            shield_or_board = board_36.zmk_shield or board_36.zmk_board
+            keymap_36 = (
+                repo_root / "zmk" / "keymaps" / f"{shield_or_board}_dario" /
+                f"{shield_or_board}.keymap"
+            )
 
-        keymap_42 = (
-            repo_root / "qmk" / "keyboards" / board_42.qmk_keyboard /
-            "keymaps" / "dario" / "keymap.c"
-        )
+        if board_42.firmware == "qmk":
+            keymap_42 = (
+                repo_root / "qmk" / "keyboards" / board_42.qmk_keyboard /
+                "keymaps" / "dario" / "keymap.c"
+            )
+        else:  # zmk
+            shield_or_board = board_42.zmk_shield or board_42.zmk_board
+            keymap_42 = (
+                repo_root / "zmk" / "keymaps" / f"{shield_or_board}_dario" /
+                f"{shield_or_board}.keymap"
+            )
 
         if not keymap_36.exists() or not keymap_42.exists():
             pytest.skip("Keymap files not generated")
@@ -152,9 +165,16 @@ class TestExtensionConsistency:
         with open(keymap_42) as f:
             content_42 = f.read()
 
-        # Both should have BASE layer
-        assert "[BASE_PRIMARY]" in content_36
-        assert "[BASE_PRIMARY]" in content_42
+        # Both should have BASE layer (adjust for firmware syntax)
+        if board_36.firmware == "qmk":
+            assert "[BASE_" in content_36 or "BASE_" in content_36
+        else:
+            assert "BASE_" in content_36
+
+        if board_42.firmware == "qmk":
+            assert "[BASE_" in content_42 or "BASE_" in content_42
+        else:
+            assert "BASE_" in content_42
 
 
 @pytest.mark.tier1

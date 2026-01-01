@@ -168,7 +168,8 @@ class TestShiftMorph:
         assert result == "KC_DOT"
 
         morphs = qmk_translator.get_shift_morphs()
-        assert any(m["base"] == "KC_DOT" for m in morphs)
+        # Morphs are tuples (base, shifted) without KC_ prefix
+        assert any(m[0] == "DOT" for m in morphs)
 
     def test_multiple_shift_morphs_tracked(self, qmk_translator):
         """Multiple shift-morphs should all be tracked"""
@@ -229,10 +230,10 @@ class TestEdgeCases:
     """Test edge cases and error handling"""
 
     def test_empty_keycode(self, qmk_translator):
-        """Empty keycode should be handled"""
-        result = qmk_translator.translate("")
-        # Should return something (KC_NO or raise - either is acceptable)
-        assert result is not None
+        """Empty keycode should raise ValidationError"""
+        from data_model import ValidationError
+        with pytest.raises(ValidationError):
+            qmk_translator.translate("")
 
     def test_unknown_keycode_with_prefix(self, qmk_translator):
         """Unknown prefix should be handled"""

@@ -1,0 +1,22 @@
+# Test board inventory with both 36-key and 42-key boards
+# This ensures cross-board consistency tests can run
+
+boards:
+  test_36:
+    name: "Test 36-key Board"
+    firmware: qmk
+    qmk_keyboard: "test/board36"
+    layout_size: "3x5_3"  # 36 keys
+
+  test_42:
+    name: "Test 42-key Board"
+    firmware: qmk
+    qmk_keyboard: "test/board42"
+    layout_size: "3x6_3"  # 42 keys
+
+  test_boaty:
+    name: "Test Boaty-style Board"
+    firmware: qmk
+    qmk_keyboard: "test/boaty"
+    layout_size: "custom_63"
+    keymap_file: "minimal_full_layout.yaml"  # Uses L36 references

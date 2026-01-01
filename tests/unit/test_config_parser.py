@@ -245,25 +245,28 @@ class TestIntegerKeycodes:
 class TestL36References:
     """Test L36 position reference parsing"""
 
-    def test_l36_references_in_full_layout(self, keymap_config):
+    def test_l36_references_in_full_layout(self, full_layout_config):
         """L36_N references should be parsed in full_layout"""
-        # Check for layers with full_layout
+        # Use test fixture with full_layout layers
         layers_with_full = [
-            layer for layer in keymap_config.layers.values()
+            layer for layer in full_layout_config.layers.values()
             if layer.full_layout
         ]
 
-        if not layers_with_full:
-            pytest.skip("No layers with full_layout")
+        assert len(layers_with_full) > 0, "Test fixture should have full_layout layers"
 
-        # Check that L36 references are strings starting with "L36_"
+        # Check that L36 references are parsed as dicts with _ref="L36"
         for layer in layers_with_full:
             flat = layer.full_layout.flatten()
-            for keycode in flat:
-                if keycode.startswith("L36_"):
-                    # Should be a string
-                    assert isinstance(keycode, str), \
-                        f"L36 reference should be string, got {type(keycode)}"
+            l36_refs = [k for k in flat if isinstance(k, dict) and k.get("_ref") == "L36"]
+            assert len(l36_refs) > 0, f"Should have at least one L36 reference in {layer.name}"
+
+            for ref in l36_refs:
+                # Should be a dict with _ref and index
+                assert isinstance(ref, dict), f"L36 reference should be dict, got {type(ref)}"
+                assert ref.get("_ref") == "L36", "Should have _ref='L36'"
+                assert "index" in ref, "Should have index field"
+                assert 0 <= ref["index"] <= 35, "Index should be 0-35"
 
 
 @pytest.mark.tier1
