@@ -4,13 +4,13 @@
 base_layers:
   BASE_PRIMARY:
     display_name: "NIGHT"
-    description: "Primary layout (Night with JP swap and magic)"
+    description: "LHM Night"
   BASE_ALT:
     display_name: "NIGHT"
     description: "Vanilla Night"
   BASE_ALT2:
     display_name: "NIGHT"
-    description: "LHM Night"
+    description: "Night with JP swap and magic"
 
 layers:
 
