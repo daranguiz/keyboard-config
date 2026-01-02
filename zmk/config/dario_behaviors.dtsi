@@ -17,6 +17,10 @@
     flavor = "hold-preferred";
 };
 
+&sl {
+    release-after-ms = <2000>;
+};
+
 / {
     behaviors {
         hml: home_row_mod_left {

@@ -72,8 +72,8 @@ layers:
   SYM:
     core: # (3x5)
       left:
-        - [AMPR           , PERC           , DLR            , RABK           , TILD           ]
-        - [LGUI           , LALT           , LCTL           , LSFT           , BSLS           ]
+        - [TILD           , NONE           , NONE            , NONE           , NONE           ]
+        - [hrm:LGUI:AMPR     , hrm:LALT:PERC     , hrm:LCTL:DLR     , hrm:LSFT:RABK     , BSLS              ]
         - [CIRC           , PIPE           , HASH           , RBRC           , NONE           ]
       right:
         - [LABK           , PLUS           , LCBR           , RCBR           , EQL            ]
@@ -108,8 +108,8 @@ layers:
   NUM:
     core: # (3x5)
       left:
-        - [AMPR           , PERC           , DLR            , RABK           , TILD           ]
-        - [LGUI           , LALT           , LCTL           , LSFT           , BSLS           ]
+        - [TILD           , NONE           , NONE            , NONE           , NONE           ]
+        - [hrm:LGUI:AMPR     , hrm:LALT:PERC     , hrm:LCTL:DLR     , hrm:LSFT:RABK     , BSLS              ]
         - [UNDO           , CUT            , COPY           , PASTE          , REDO           ]
       right:
         - [LBRC           , 7              , 8              , 9              , DOT            ]
