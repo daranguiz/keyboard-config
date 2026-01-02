@@ -163,6 +163,7 @@ uint16_t get_alt_repeat_key_keycode_user(uint16_t keycode, uint8_t mods) {
             case KC_DOT: return KC_SLSH;
             case KC_C: return KC_Y;
             case KC_G: return KC_Y;
+            case KC_P: return KC_T;
             case KC_SLSH: return KC_ASTR;
             case KC_ASTR: return KC_SLSH;
         }
