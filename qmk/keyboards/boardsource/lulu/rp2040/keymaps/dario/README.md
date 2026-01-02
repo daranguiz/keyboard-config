@@ -285,7 +285,7 @@ qmk compile -kb boardsource/lulu/rp2040 -km dario
 15: KC_DLR
 16: OSL(SYM_SHADOW)
 17: KC_NO
-18: KC_LBRC
+18: KC_HASH
 19: KC_7
 20: KC_8
 21: KC_9
@@ -297,7 +297,7 @@ qmk compile -kb boardsource/lulu/rp2040 -km dario
 27: LCTL_T(KC_LBRC)
 28: LSFT_T(KC_RBRC)
 29: KC_NO
-30: KC_RBRC
+30: KC_SCLN
 31: KC_1
 32: KC_2
 33: KC_3
@@ -311,7 +311,7 @@ qmk compile -kb boardsource/lulu/rp2040 -km dario
 41: SGUI(KC_Z)
 42: KC_NO
 43: KC_NO
-44: KC_HASH
+44: KC_DQUO
 45: KC_4
 46: KC_5
 47: KC_6

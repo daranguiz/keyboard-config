@@ -315,7 +315,7 @@ qmk compile -kb jels/boaty -km dario
 25: KC_DLR
 26: OSL(SYM_SHADOW)
 27: KC_NO
-28: KC_LBRC
+28: KC_HASH
 29: KC_7
 30: KC_8
 31: KC_9
@@ -328,7 +328,7 @@ qmk compile -kb jels/boaty -km dario
 38: LCTL_T(KC_LBRC)
 39: LSFT_T(KC_RBRC)
 40: KC_NO
-41: KC_RBRC
+41: KC_SCLN
 42: KC_1
 43: KC_2
 44: KC_3
@@ -339,7 +339,7 @@ qmk compile -kb jels/boaty -km dario
 49: LGUI(KC_C)
 50: LGUI(KC_V)
 51: SGUI(KC_Z)
-52: KC_HASH
+52: KC_DQUO
 53: KC_4
 54: KC_5
 55: KC_6

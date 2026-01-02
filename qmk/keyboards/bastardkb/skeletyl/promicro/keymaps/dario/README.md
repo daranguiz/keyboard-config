@@ -85,11 +85,11 @@ qmk compile -kb bastardkb/skeletyl/promicro -km dario
 ```
 
 ╭─────────┬─────────┬─────────┬─────────┬─────────╮   ╭─────────┬─────────┬─────────┬─────────┬─────────╮
-│ KC_AMPR │ KC_PERC │ KC_DLR  │ OSL(SYM_SHADOW) │ KC_NO   │   │ KC_RBRC │ KC_1    │ KC_2    │ KC_3    │ KC_0    │
+│ KC_AMPR │ KC_PERC │ KC_DLR  │ OSL(SYM_SHADOW) │ KC_NO   │   │ KC_SCLN │ KC_1    │ KC_2    │ KC_3    │ KC_0    │
 ├─────────┼─────────┼─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┼─────────┼─────────┤
-│ KC_LBRC │ KC_7    │ KC_8    │ KC_9    │ KC_DOT  │   │ LGUI(KC_Z) │ LGUI(KC_X) │ LGUI(KC_C) │ LGUI(KC_V) │ SGUI(KC_Z) │
+│ KC_HASH │ KC_7    │ KC_8    │ KC_9    │ KC_DOT  │   │ LGUI(KC_Z) │ LGUI(KC_X) │ LGUI(KC_C) │ LGUI(KC_V) │ SGUI(KC_Z) │
 ├─────────┼─────────┼─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┼─────────┼─────────┤
-│ LGUI_T(KC_LABK) │ LALT_T(KC_RABK) │ LCTL_T(KC_LBRC) │ LSFT_T(KC_RBRC) │ KC_NO   │   │ KC_HASH │ KC_4    │ KC_5    │ KC_6    │ KC_COMM │
+│ LGUI_T(KC_LABK) │ LALT_T(KC_RABK) │ LCTL_T(KC_LBRC) │ LSFT_T(KC_RBRC) │ KC_NO   │   │ KC_DQUO │ KC_4    │ KC_5    │ KC_6    │ KC_COMM │
 ╰─────────┴─────────┴─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┴─────────┴─────────╯
                               │ KC_NO   │ KC_NO   │   │ KC_SPC  │ KC_ENT  │
                               │ KC_NO   │         │   │         │         │

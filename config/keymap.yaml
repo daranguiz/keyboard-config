@@ -94,9 +94,9 @@ layers:
         - [hrm:LGUI:LABK  , hrm:LALT:RABK  , hrm:LCTL:LBRC  , hrm:LSFT:RBRC  , NONE           ]
         - [UNDO           , CUT            , COPY           , PASTE          , REDO           ]
       right:
-        - [LBRC           , 7              , 8              , 9              , DOT            ]
-        - [RBRC           , 1              , 2              , 3              , 0              ]
-        - [HASH           , 4              , 5              , 6              , COMM           ]
+        - [HASH           , 7              , 8              , 9              , DOT            ]
+        - [SCLN           , 1              , 2              , 3              , 0              ]
+        - [DQUO           , 4              , 5              , 6              , COMM           ]
       thumbs:
         - [NONE           , NONE           , NONE           ]
         - [MAGIC          , SPC            , ENT            ]

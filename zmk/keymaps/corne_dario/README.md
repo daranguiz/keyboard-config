@@ -224,7 +224,7 @@
  4: &sl SYM_SHADOW
  5: &none
 
- 6: &kp LBKT
+ 6: &kp HASH
  7: &kp N7
  8: &kp N8
  9: &kp N9
@@ -238,7 +238,7 @@
 16: &hml LSFT RBKT
 17: &none
 
-18: &kp RBKT
+18: &kp SEMI
 19: &kp N1
 20: &kp N2
 21: &kp N3
@@ -252,7 +252,7 @@
 28: &kp LG(V)
 29: &kp LG(LS(Z))
 
-30: &kp HASH
+30: &kp DQT
 31: &kp N4
 32: &kp N5
 33: &kp N6
