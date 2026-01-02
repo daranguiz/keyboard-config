@@ -165,13 +165,13 @@
 
 ```
  0: &trans
- 1: &none
- 2: &none
- 3: &kp TILDE
+ 1: &kp AMPERSAND
+ 2: &kp PERCENT
+ 3: &kp DOLLAR
  4: &sl NUM
  5: &none
 
- 6: &kp LT
+ 6: &kp HASH
  7: &kp PLUS
  8: &kp LBRC
  9: &kp RBRC
@@ -179,11 +179,11 @@
 11: &trans
 
 12: &trans
-13: &hml LGUI AMPERSAND
-14: &hml LALT PERCENT
-15: &hml LCTL DOLLAR
-16: &hml LSFT GT
-17: &kp BSLH
+13: &hml LGUI LT
+14: &hml LALT GT
+15: &hml LCTL LBKT
+16: &hml LSFT RBKT
+17: &none
 
 18: &kp SEMI
 19: &kp EXCL
@@ -195,13 +195,13 @@
 24: &trans
 25: &kp CARET
 26: &kp PIPE
-27: &kp HASH
-28: &kp RBKT
+27: &kp TILDE
+28: &kp BSLH
 29: &none
 
 30: &kp DQT
 31: &kp ASTERISK
-32: &kp LBKT
+32: &kp UNDERSCORE
 33: &kp QUESTION
 34: &kp COMMA
 35: &trans
@@ -218,9 +218,9 @@
 
 ```
  0: &trans
- 1: &none
- 2: &none
- 3: &kp TILDE
+ 1: &kp AMPERSAND
+ 2: &kp PERCENT
+ 3: &kp DOLLAR
  4: &sl SYM_SHADOW
  5: &none
 
@@ -232,11 +232,11 @@
 11: &trans
 
 12: &trans
-13: &hml LGUI AMPERSAND
-14: &hml LALT PERCENT
-15: &hml LCTL DOLLAR
-16: &hml LSFT GT
-17: &kp BSLH
+13: &hml LGUI LT
+14: &hml LALT GT
+15: &hml LCTL LBKT
+16: &hml LSFT RBKT
+17: &none
 
 18: &kp RBKT
 19: &kp N1
@@ -377,13 +377,13 @@
 
 ```
  0: &trans
- 1: &none
- 2: &none
- 3: &kp TILDE
+ 1: &kp AMPERSAND
+ 2: &kp PERCENT
+ 3: &kp DOLLAR
  4: &sl NUM
  5: &none
 
- 6: &kp LT
+ 6: &kp HASH
  7: &kp PLUS
  8: &kp LBRC
  9: &kp RBRC
@@ -391,11 +391,11 @@
 11: &trans
 
 12: &trans
-13: &hml LGUI AMPERSAND
-14: &hml LALT PERCENT
-15: &hml LCTL DOLLAR
-16: &hml LSFT GT
-17: &kp BSLH
+13: &hml LGUI LT
+14: &hml LALT GT
+15: &hml LCTL LBKT
+16: &hml LSFT RBKT
+17: &none
 
 18: &kp SEMI
 19: &kp EXCL
@@ -407,13 +407,13 @@
 24: &trans
 25: &kp CARET
 26: &kp PIPE
-27: &kp HASH
-28: &kp RBKT
+27: &kp TILDE
+28: &kp BSLH
 29: &none
 
 30: &kp DQT
 31: &kp ASTERISK
-32: &kp LBKT
+32: &kp UNDERSCORE
 33: &kp QUESTION
 34: &kp COMMA
 35: &trans
@@ -435,21 +435,8 @@
   - , →  BUT
   - - → >
   - . → /
-  - P → L
-  - L → P
   - C → Y
   - G → Y
-  - B → EFORE
-  - I → ON
-  - J → UST
-  - M → ENT
-  - N → ION
-  - Q → UE
-  - T → ION
-  - W → HICH
-  - < → >
-  - [ → ]
-  - ( → _
   - / → *
   - * → /
 
@@ -464,14 +451,24 @@
 
 ### BASE_ALT2
 - default: REPEAT
-- timeout_ms: 0
+- timeout_ms: 1000
 - mappings:
   -   → THE
   - , →  BUT
   - - → >
   - . → /
+  - P → L
+  - L → P
   - C → Y
   - G → Y
+  - B → EFORE
+  - I → ON
+  - J → UST
+  - M → ENT
+  - N → ION
+  - Q → UE
+  - T → ION
+  - W → HICH
   - < → >
   - [ → ]
   - ( → _

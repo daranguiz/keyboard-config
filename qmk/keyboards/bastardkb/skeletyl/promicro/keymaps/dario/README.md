@@ -68,11 +68,11 @@ qmk compile -kb bastardkb/skeletyl/promicro -km dario
 ```
 
 ╭─────────┬─────────┬─────────┬─────────┬─────────╮   ╭─────────┬─────────┬─────────┬─────────┬─────────╮
-│ KC_NO   │ KC_NO   │ KC_TILD │ OSL(NUM) │ KC_NO   │   │ KC_SCLN │ KC_EXLM │ KC_LPRN │ KC_RPRN │ KC_COLN │
+│ KC_AMPR │ KC_PERC │ KC_DLR  │ OSL(NUM) │ KC_NO   │   │ KC_SCLN │ KC_EXLM │ KC_LPRN │ KC_RPRN │ KC_COLN │
 ├─────────┼─────────┼─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┼─────────┼─────────┤
-│ KC_LT   │ KC_PLUS │ KC_LCBR │ KC_RCBR │ KC_EQL  │   │ KC_CIRC │ KC_PIPE │ KC_HASH │ KC_RBRC │ KC_NO   │
+│ KC_HASH │ KC_PLUS │ KC_LCBR │ KC_RCBR │ KC_EQL  │   │ KC_CIRC │ KC_PIPE │ KC_TILD │ KC_BSLS │ KC_NO   │
 ├─────────┼─────────┼─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┼─────────┼─────────┤
-│ LGUI_T(KC_AMPR) │ LALT_T(KC_PERC) │ LCTL_T(KC_DLR) │ LSFT_T(KC_RABK) │ KC_BSLS │   │ KC_DQUO │ KC_ASTR │ KC_LBRC │ KC_QUES │ KC_COMM │
+│ LGUI_T(KC_LABK) │ LALT_T(KC_RABK) │ LCTL_T(KC_LBRC) │ LSFT_T(KC_RBRC) │ KC_NO   │   │ KC_DQUO │ KC_ASTR │ KC_UNDS │ KC_QUES │ KC_COMM │
 ╰─────────┴─────────┴─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┴─────────┴─────────╯
                               │ KC_NO   │ KC_NO   │   │ KC_SPC  │ KC_ENT  │
                               │ KC_NO   │         │   │         │         │
@@ -85,11 +85,11 @@ qmk compile -kb bastardkb/skeletyl/promicro -km dario
 ```
 
 ╭─────────┬─────────┬─────────┬─────────┬─────────╮   ╭─────────┬─────────┬─────────┬─────────┬─────────╮
-│ KC_NO   │ KC_NO   │ KC_TILD │ OSL(SYM_SHADOW) │ KC_NO   │   │ KC_RBRC │ KC_1    │ KC_2    │ KC_3    │ KC_0    │
+│ KC_AMPR │ KC_PERC │ KC_DLR  │ OSL(SYM_SHADOW) │ KC_NO   │   │ KC_RBRC │ KC_1    │ KC_2    │ KC_3    │ KC_0    │
 ├─────────┼─────────┼─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┼─────────┼─────────┤
 │ KC_LBRC │ KC_7    │ KC_8    │ KC_9    │ KC_DOT  │   │ LGUI(KC_Z) │ LGUI(KC_X) │ LGUI(KC_C) │ LGUI(KC_V) │ SGUI(KC_Z) │
 ├─────────┼─────────┼─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┼─────────┼─────────┤
-│ LGUI_T(KC_AMPR) │ LALT_T(KC_PERC) │ LCTL_T(KC_DLR) │ LSFT_T(KC_RABK) │ KC_BSLS │   │ KC_HASH │ KC_4    │ KC_5    │ KC_6    │ KC_COMM │
+│ LGUI_T(KC_LABK) │ LALT_T(KC_RABK) │ LCTL_T(KC_LBRC) │ LSFT_T(KC_RBRC) │ KC_NO   │   │ KC_HASH │ KC_4    │ KC_5    │ KC_6    │ KC_COMM │
 ╰─────────┴─────────┴─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┴─────────┴─────────╯
                               │ KC_NO   │ KC_NO   │   │ KC_SPC  │ KC_ENT  │
                               │ KC_NO   │         │   │         │         │
@@ -136,11 +136,11 @@ qmk compile -kb bastardkb/skeletyl/promicro -km dario
 ```
 
 ╭─────────┬─────────┬─────────┬─────────┬─────────╮   ╭─────────┬─────────┬─────────┬─────────┬─────────╮
-│ KC_NO   │ KC_NO   │ KC_TILD │ OSL(NUM) │ KC_NO   │   │ KC_SCLN │ KC_EXLM │ KC_LPRN │ KC_RPRN │ KC_COLN │
+│ KC_AMPR │ KC_PERC │ KC_DLR  │ OSL(NUM) │ KC_NO   │   │ KC_SCLN │ KC_EXLM │ KC_LPRN │ KC_RPRN │ KC_COLN │
 ├─────────┼─────────┼─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┼─────────┼─────────┤
-│ KC_LT   │ KC_PLUS │ KC_LCBR │ KC_RCBR │ KC_EQL  │   │ KC_CIRC │ KC_PIPE │ KC_HASH │ KC_RBRC │ KC_NO   │
+│ KC_HASH │ KC_PLUS │ KC_LCBR │ KC_RCBR │ KC_EQL  │   │ KC_CIRC │ KC_PIPE │ KC_TILD │ KC_BSLS │ KC_NO   │
 ├─────────┼─────────┼─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┼─────────┼─────────┤
-│ LGUI_T(KC_AMPR) │ LALT_T(KC_PERC) │ LCTL_T(KC_DLR) │ LSFT_T(KC_RABK) │ KC_BSLS │   │ KC_DQUO │ KC_ASTR │ KC_LBRC │ KC_QUES │ KC_COMM │
+│ LGUI_T(KC_LABK) │ LALT_T(KC_RABK) │ LCTL_T(KC_LBRC) │ LSFT_T(KC_RBRC) │ KC_NO   │   │ KC_DQUO │ KC_ASTR │ KC_UNDS │ KC_QUES │ KC_COMM │
 ╰─────────┴─────────┴─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┴─────────┴─────────╯
                               │ KC_NO   │ KC_NO   │   │ KC_SPC  │ KC_ENT  │
                               │ KC_NO   │         │   │         │         │

@@ -25,8 +25,8 @@ layers:
         - [Y              , hrm:LSFT:C     , hrm:LCTL:A     , hrm:LALT:E     , hrm:LGUI:I     ]
         - [QUOT           , W              , MINS           , SLSH           , sm:COMM:AT     ]
       thumbs:
-        - [lt:NUM:MAGIC   , lt:SYM:R       ,   mt:LSFT:BSPC]
-        - [mt:LSFT:TAB    , lt:NAV:SPC      , lt:MEDIA:ENT   ]
+        - [lt:NUM:MAGIC   , lt:SYM:R       , mt:LSFT:BSPC   ]
+        - [mt:LSFT:TAB    , lt:NAV:SPC     , lt:MEDIA:ENT   ]
     extensions:
       3x6_3:
         outer_pinky_left: [NONE, REPEAT, NONE]
@@ -61,8 +61,8 @@ layers:
         - [Y              , hrm:LSFT:C     , hrm:LCTL:A     , hrm:LALT:E     , hrm:LGUI:I     ]
         - [QUOT           , W              , MINS           , SLSH           , sm:COMM:AT     ]
       thumbs:
-        - [lt:NUM:MAGIC   , lt:SYM:R       ,   mt:LSFT:BSPC]
-        - [mt:LSFT:TAB    , lt:NAV:SPC      , lt:MEDIA:ENT   ]
+        - [lt:NUM:MAGIC   , lt:SYM:R       , mt:LSFT:BSPC   ]
+        - [mt:LSFT:TAB    , lt:NAV:SPC     , lt:MEDIA:ENT   ]
     extensions:
       3x6_3:
         outer_pinky_left: [NONE, REPEAT, NONE]
@@ -72,13 +72,13 @@ layers:
   SYM:
     core: # (3x5)
       left:
-        - [NONE           , NONE           , TILD           , osl:NUM            , NONE           ]
-        - [hrm:LGUI:AMPR     , hrm:LALT:PERC     , hrm:LCTL:DLR     , hrm:LSFT:RABK     , BSLS              ]
-        - [CIRC           , PIPE           , HASH           , RBRC           , NONE           ]
+        - [AMPR           , PERC           , DLR            , osl:NUM        , NONE           ]
+        - [hrm:LGUI:LABK  , hrm:LALT:RABK  , hrm:LCTL:LBRC  , hrm:LSFT:RBRC  , NONE           ]
+        - [CIRC           , PIPE           , TILD           , BSLS           , NONE           ]
       right:
-        - [LABK           , PLUS           , LCBR           , RCBR           , EQL            ]
+        - [HASH           , PLUS           , LCBR           , RCBR           , EQL            ]
         - [SCLN           , EXLM           , LPRN           , RPRN           , COLN           ]
-        - [DQUO           , ASTR           , LBRC           , QUES           , COMM           ]
+        - [DQUO           , ASTR           , UNDS           , QUES           , COMM           ]
       thumbs:
         - [NONE           , NONE           , NONE           ]
         - [MAGIC          , SPC            , ENT            ]
@@ -87,37 +87,19 @@ layers:
         outer_pinky_left: [TRANS, TRANS, TRANS]
         outer_pinky_right: [TRANS, TRANS, TRANS]
 
-  # SYM:
-  #   core: # (3x5)
-  #     left:
-  #       - [TILD           , AMPR           , PERC           , DLR            , NONE           ]
-  #       - [LGUI           , LALT           , LCTL           , LSFT           , BSLS           ]
-  #       - [CIRC           , PIPE           , HASH           , RABK           , NONE           ]
-  #     right:
-  #       - [LABK           , ASTR           , LCBR           , RCBR           , EQL            ]
-  #       - [SCLN           , EXLM           , LPRN           , RPRN           , COLN           ]
-  #       - [DQUO           , PLUS           , LBRC           , RBRC           , COMM           ]
-  #     thumbs:
-  #       - [NONE           , NONE           , NONE           ]
-  #       - [MAGIC          , SPC            , ENT            ]
-  #   extensions:
-  #     3x6_3:
-  #       outer_pinky_left: [TRANS, TRANS, TRANS]
-  #       outer_pinky_right: [TRANS, TRANS, TRANS]
-
   NUM:
     core: # (3x5)
       left:
-        - [NONE           , NONE           , TILD            , osl:SYM           , NONE           ]
-        - [hrm:LGUI:AMPR     , hrm:LALT:PERC     , hrm:LCTL:DLR     , hrm:LSFT:RABK     , BSLS              ]
+        - [AMPR           , PERC           , DLR            , osl:SYM        , NONE           ]
+        - [hrm:LGUI:LABK  , hrm:LALT:RABK  , hrm:LCTL:LBRC  , hrm:LSFT:RBRC  , NONE           ]
         - [UNDO           , CUT            , COPY           , PASTE          , REDO           ]
       right:
         - [LBRC           , 7              , 8              , 9              , DOT            ]
-        - [RBRC           , 1              , 2              , 3              , 0           ]
+        - [RBRC           , 1              , 2              , 3              , 0              ]
         - [HASH           , 4              , 5              , 6              , COMM           ]
       thumbs:
         - [NONE           , NONE           , NONE           ]
-        - [MAGIC          , SPC            , ENT              ]
+        - [MAGIC          , SPC            , ENT            ]
     extensions:
       3x6_3:
         outer_pinky_left: [TRANS, TRANS, TRANS]
@@ -131,10 +113,10 @@ layers:
         - [END            , PGDN           , DOWN           , HOME           , INS            ]
       right:
         - [NONE           , NONE           , NONE           , NONE           , NONE           ]
-        - [NONE      , LSFT           , LCTL           , LALT           , LGUI           ]
+        - [NONE           , LSFT           , LCTL           , LALT           , LGUI           ]
         - [NONE           , NONE           , NONE           , NONE           , NONE           ]
       thumbs:
-        - [DEL            , ENT            , BSPC            ]
+        - [DEL            , ENT            , BSPC           ]
         - [NONE           , NONE           , NONE           ]
     extensions:
       3x6_3:
@@ -211,9 +193,9 @@ magic_keys:
       C: Y
       G: Y
 
-      "<": ">"
-      "[": "]"
-      "(": "_"
+      # "<": ">"
+      # "[": "]"
+      # "(": "_"
       "/": "*"
       "*": "/"
     default_repeat: true
