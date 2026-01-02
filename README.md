@@ -30,6 +30,9 @@ Magic key mappings are included at the bottom of each layout visualization.
 #### Nightlight
 ![Nightlight Layout](docs/rowstagger/nightlight.svg)
 
+#### Nightlight-LHM
+![Nightlight-LHM Layout](docs/rowstagger/nightlight-lhm.svg)
+
 #### Rain
 ![Rain Layout](docs/rowstagger/rain.svg)
 
