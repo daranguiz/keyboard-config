@@ -138,6 +138,54 @@ def test_board_inventory(fixtures_dir):
     return YAMLConfigParser.parse_boards(config_path)
 
 
+@pytest.fixture(scope="session")
+def reference_keymap_config(fixtures_dir):
+    """
+    Reference keymap configuration for parity testing.
+
+    This is a FIXED config that exercises all syntax patterns.
+    Use this instead of production config for deterministic tests.
+    """
+    from config_parser import YAMLConfigParser
+    config_path = fixtures_dir / "configs" / "reference_keymap.yaml"
+
+    if not config_path.exists():
+        pytest.skip(f"Reference config not yet created: {config_path}")
+
+    return YAMLConfigParser.parse_keymap(config_path)
+
+
+@pytest.fixture(scope="session")
+def reference_board_inventory(fixtures_dir):
+    """
+    Reference board inventory for parity testing.
+
+    Includes QMK and ZMK boards in 36-key and 42-key variants.
+    """
+    from config_parser import YAMLConfigParser
+    config_path = fixtures_dir / "configs" / "reference_boards.yaml"
+
+    if not config_path.exists():
+        pytest.skip(f"Reference boards config not yet created: {config_path}")
+
+    return YAMLConfigParser.parse_boards(config_path)
+
+
+@pytest.fixture(scope="session")
+def reference_magic_config(fixtures_dir):
+    """Magic key configuration from reference keymap"""
+    from config_parser import YAMLConfigParser
+    config_path = fixtures_dir / "configs" / "reference_keymap.yaml"
+
+    if not config_path.exists():
+        return None
+
+    try:
+        return YAMLConfigParser.parse_magic_keys(config_path)
+    except Exception:
+        return None
+
+
 # ============================================================================
 # Translator Fixtures
 # ============================================================================
