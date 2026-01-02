@@ -112,45 +112,45 @@
 
 ```
  0: &none
- 1: &kp F
- 2: &kp D
+ 1: &kp B
+ 2: &kp F
  3: &kp L
- 4: &kp W
- 5: &kp J
+ 4: &kp D
+ 5: &kp Q
 
- 6: &kp MINUS
- 7: &kp B
+ 6: &kp J
+ 7: &kp G
  8: &kp O
  9: &kp U
-10: &sm_comm_at
+10: &sm_dot_grv
 11: &none
 
-12: &none
-13: &hml LGUI S
-14: &hml LALT T
+12: &key_repeat
+13: &hml LGUI N
+14: &hml LALT S
 15: &hml LCTL H
-16: &hml LSFT C
-17: &kp Y
+16: &hml LSFT T
+17: &kp K
 
-18: &kp Q
-19: &hmr LSFT N
+18: &kp Y
+19: &hmr LSFT C
 20: &hmr LCTL A
 21: &hmr LALT E
 22: &hmr LGUI I
-23: &none
+23: &key_repeat
 
 24: &none
 25: &kp X
-26: &kp K
+26: &kp V
 27: &kp M
-28: &kp G
-29: &kp V
+28: &kp P
+29: &kp Z
 
-30: &kp Z
-31: &kp P
-32: &kp SQT
+30: &kp SQT
+31: &kp W
+32: &kp MINUS
 33: &kp FSLH
-34: &sm_dot_grv
+34: &sm_comm_at
 35: &none
 
 36: &lt_ak_alt2 NUM 0
@@ -224,7 +224,7 @@
  4: &kp GT
  5: &kp TILDE
 
- 6: &kp CARET
+ 6: &kp LBKT
  7: &kp N7
  8: &kp N8
  9: &kp N9
@@ -238,7 +238,7 @@
 16: &kp LSHFT
 17: &kp BSLH
 
-18: &kp SEMI
+18: &kp RBKT
 19: &kp N1
 20: &kp N2
 21: &kp N3
@@ -277,11 +277,11 @@
  4: &none
  5: &kp ESC
 
- 6: &bt BT_SEL 0
- 7: &bt BT_SEL 1
- 8: &bt BT_SEL 2
- 9: &bt BT_SEL 3
-10: &bt BT_CLR
+ 6: &none
+ 7: &none
+ 8: &none
+ 9: &none
+10: &none
 11: &trans
 
 12: &trans
@@ -330,11 +330,11 @@
  4: &none
  5: &none
 
- 6: &none
- 7: &none
- 8: &none
- 9: &none
-10: &none
+ 6: &bt BT_SEL 0
+ 7: &bt BT_SEL 1
+ 8: &bt BT_SEL 2
+ 9: &bt BT_SEL 3
+10: &bt BT_CLR
 11: &trans
 
 12: &trans
@@ -419,3 +419,8 @@
   - . → /
   - C → Y
   - G → Y
+  - < → >
+  - [ → ]
+  - ( → _
+  - / → *
+  - * → /

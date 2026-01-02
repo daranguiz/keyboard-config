@@ -39,9 +39,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                               LT(NUM, QK_AREP)    , LT(SYM, KC_R)       , LSFT_T(KC_BSPC)     , LSFT_T(KC_TAB)      , LT(NAV, KC_SPC)     , LT(MEDIA, KC_ENT)   
     ),
     [BASE_ALT2] = LAYOUT_split_3x5_3(
-        KC_F                , KC_D                , KC_L                , KC_W                , KC_J                , KC_MINS             , KC_B                , KC_O                , KC_U                , KC_COMM             ,
-        LGUI_T(KC_S)        , LALT_T(KC_T)        , LCTL_T(KC_H)        , LSFT_T(KC_C)        , KC_Y                , KC_Q                , LSFT_T(KC_N)        , LCTL_T(KC_A)        , LALT_T(KC_E)        , LGUI_T(KC_I)        ,
-        KC_X                , KC_K                , KC_M                , KC_G                , KC_V                , KC_Z                , KC_P                , KC_QUOT             , KC_SLSH             , KC_DOT              ,
+        KC_B                , KC_F                , KC_L                , KC_D                , KC_Q                , KC_J                , KC_G                , KC_O                , KC_U                , KC_DOT              ,
+        LGUI_T(KC_N)        , LALT_T(KC_S)        , LCTL_T(KC_H)        , LSFT_T(KC_T)        , KC_K                , KC_Y                , LSFT_T(KC_C)        , LCTL_T(KC_A)        , LALT_T(KC_E)        , LGUI_T(KC_I)        ,
+        KC_X                , KC_V                , KC_M                , KC_P                , KC_Z                , KC_QUOT             , KC_W                , KC_MINS             , KC_SLSH             , KC_COMM             ,
                               LT(NUM, QK_AREP)    , LT(SYM, KC_R)       , LSFT_T(KC_BSPC)     , LSFT_T(KC_TAB)      , LT(NAV, KC_SPC)     , LT(MEDIA, KC_ENT)   
     ),
     [SYM] = LAYOUT_split_3x5_3(
@@ -51,8 +51,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                               KC_NO               , KC_NO               , KC_NO               , QK_AREP             , KC_SPC              , KC_ENT              
     ),
     [NUM] = LAYOUT_split_3x5_3(
-        KC_AMPR             , KC_PERC             , KC_DLR              , KC_GT               , KC_TILD             , KC_CIRC             , KC_7                , KC_8                , KC_9                , KC_DOT              ,
-        KC_LGUI             , KC_LALT             , KC_LCTL             , KC_LSFT             , KC_BSLS             , KC_SCLN             , KC_1                , KC_2                , KC_3                , KC_COLN             ,
+        KC_AMPR             , KC_PERC             , KC_DLR              , KC_GT               , KC_TILD             , KC_LBRC             , KC_7                , KC_8                , KC_9                , KC_DOT              ,
+        KC_LGUI             , KC_LALT             , KC_LCTL             , KC_LSFT             , KC_BSLS             , KC_RBRC             , KC_1                , KC_2                , KC_3                , KC_COLN             ,
         LGUI(KC_Z)          , LGUI(KC_X)          , LGUI(KC_C)          , LGUI(KC_V)          , SGUI(KC_Z)          , KC_HASH             , KC_4                , KC_5                , KC_6                , KC_COMM             ,
                               KC_NO               , KC_NO               , KC_NO               , QK_AREP             , KC_SPC              , KC_0                
     ),
@@ -194,6 +194,11 @@ uint16_t get_alt_repeat_key_keycode_user(uint16_t keycode, uint8_t mods) {
             case KC_DOT: return KC_SLSH;
             case KC_C: return KC_Y;
             case KC_G: return KC_Y;
+            case KC_LT: return KC_GT;
+            case KC_LBRC: return KC_RBRC;
+            case KC_LPRN: return KC_UNDS;
+            case KC_SLSH: return KC_ASTR;
+            case KC_ASTR: return KC_SLSH;
         }
     }
 

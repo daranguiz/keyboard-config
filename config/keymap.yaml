@@ -9,8 +9,8 @@ base_layers:
     display_name: "NIGHT"
     description: "Vanilla Night"
   BASE_ALT2:
-    display_name: "RACKET"
-    description: "Racket"
+    display_name: "NIGHT"
+    description: "LHM Night"
 
 layers:
 
@@ -53,20 +53,20 @@ layers:
   BASE_ALT2:
     core: # (3x5)
       left:
-        - [F              , D              , L              , W              , J              ]
-        - [hrm:LGUI:S     , hrm:LALT:T     , hrm:LCTL:H     , hrm:LSFT:C     , Y              ]
-        - [X              , K              , M              , G              , V              ]
+        - [B              , F              , L              , D              , Q              ]
+        - [hrm:LGUI:N     , hrm:LALT:S     , hrm:LCTL:H     , hrm:LSFT:T     , K              ]
+        - [X              , V              , M              , P              , Z              ]
       right:
-        - [MINS           , B              , O              , U              , sm:COMM:AT     ]
-        - [Q              , hrm:LSFT:N     , hrm:LCTL:A     , hrm:LALT:E     , hrm:LGUI:I     ]
-        - [Z              , P              , QUOT           , SLSH           , sm:DOT:GRV     ]
+        - [J              , G              , O              , U              , sm:DOT:GRV     ]
+        - [Y              , hrm:LSFT:C     , hrm:LCTL:A     , hrm:LALT:E     , hrm:LGUI:I     ]
+        - [QUOT           , W              , MINS           , SLSH           , sm:COMM:AT     ]
       thumbs:
-        - [lt:NUM:MAGIC   , lt:SYM:R       , mt:LSFT:BSPC   ]
-        - [mt:LSFT:TAB    , lt:NAV:SPC     , lt:MEDIA:ENT   ]
+        - [lt:NUM:MAGIC   , lt:SYM:R       ,   mt:LSFT:BSPC]
+        - [mt:LSFT:TAB    , lt:NAV:SPC      , lt:MEDIA:ENT   ]
     extensions:
       3x6_3:
-        outer_pinky_left: [NONE, NONE, NONE]
-        outer_pinky_right: [NONE, NONE, NONE]
+        outer_pinky_left: [NONE, REPEAT, NONE]
+        outer_pinky_right: [NONE, REPEAT, NONE]
 
   # Supporting layers
   SYM:
@@ -247,4 +247,10 @@ magic_keys:
       ".": "/"
       C: Y
       G: Y
+
+      "<": ">"
+      "[": "]"
+      "(": "_"
+      "/": "*"
+      "*": "/"
     default_repeat: true
