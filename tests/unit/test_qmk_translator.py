@@ -197,6 +197,23 @@ class TestShiftMorph:
 
 
 @pytest.mark.tier1
+class TestCapsWord:
+    """Test caps word keycode translation"""
+
+    def test_caps_word_basic(self, qmk_translator):
+        """CAPS_WORD should translate to CW_TOGG"""
+        assert qmk_translator.translate("CAPS_WORD") == "CW_TOGG"
+
+    def test_caps_word_vs_caps_lock(self, qmk_translator):
+        """CAPS_WORD and CAPS should be distinct"""
+        caps_word = qmk_translator.translate("CAPS_WORD")
+        caps_lock = qmk_translator.translate("CAPS")
+        assert caps_word == "CW_TOGG"
+        assert caps_lock == "KC_CAPS"
+        assert caps_word != caps_lock
+
+
+@pytest.mark.tier1
 class TestMagicKey:
     """Test magic key translation"""
 

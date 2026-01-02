@@ -88,6 +88,33 @@ class TestFullKeymapGeneration:
             assert_file_exists(keymap_file)
             assert_file_exists(keymap_dir / "README.md")
 
+    def test_caps_word_in_generated_keymaps(self, repo_root, board_inventory):
+        """Verify CAPS_WORD generates correct keycodes in all boards"""
+        generator = KeymapGenerator(repo_root, verbose=False)
+        generator.generate_all()
+
+        # Check QMK boards for CW_TOGG
+        qmk_boards = [board for board in board_inventory.boards.values() if board.firmware == "qmk"]
+        for board in qmk_boards:
+            keymap_c = repo_root / "qmk" / "keyboards" / board.qmk_keyboard / "keymaps" / "dario" / "keymap.c"
+            assert_file_exists(keymap_c)
+            with open(keymap_c) as f:
+                content = f.read()
+            assert "CW_TOGG" in content, f"{board.id} should have CW_TOGG keycode in NAV layer"
+
+        # Check ZMK boards for &caps_word
+        zmk_boards = [board for board in board_inventory.boards.values() if board.firmware == "zmk"]
+        for board in zmk_boards:
+            if board.zmk_shield:
+                keymap_file = repo_root / "zmk" / "keymaps" / f"{board.zmk_shield}_dario" / f"{board.zmk_shield}.keymap"
+            else:
+                keymap_file = repo_root / "zmk" / "keymaps" / f"{board.zmk_board}_dario" / f"{board.zmk_board}.keymap"
+
+            if keymap_file.exists():
+                with open(keymap_file) as f:
+                    content = f.read()
+                assert "&caps_word" in content, f"{board.id} should have &caps_word behavior in NAV layer"
+
 
 @pytest.mark.tier1
 class TestQMKFeatures:

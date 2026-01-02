@@ -381,7 +381,7 @@ qmk compile -kb jels/boaty -km dario
 23: KC_NO
 24: KC_PGUP
 25: KC_NO
-26: KC_NO
+26: CW_TOGG
 27: KC_ESC
 28: KC_NO
 29: KC_NO

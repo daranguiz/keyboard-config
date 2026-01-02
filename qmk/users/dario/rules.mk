@@ -4,6 +4,7 @@ EXTRAKEY_ENABLE = yes       # Audio control and System control
 NKRO_ENABLE = yes           # N-Key Rollover
 LTO_ENABLE = yes            # Link Time Optimization for smaller firmware
 REPEAT_KEY_ENABLE = yes     # QK_REP / QK_AREP support
+CAPS_WORD_ENABLE = yes      # Caps word (CW_TOGG) support
 
 # User preference features
 COMBO_ENABLE = yes          # Key combos

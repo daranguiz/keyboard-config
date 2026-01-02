@@ -108,7 +108,7 @@ layers:
   NAV:
     core: # (3x5)
       left:
-        - [NONE           , PGUP           , NONE           , NONE           , ESC            ]
+        - [NONE           , PGUP           , NONE           , CAPS_WORD      , ESC            ]
         - [NONE           , LEFT           , UP             , RGHT           , CAPS           ]
         - [END            , PGDN           , DOWN           , HOME           , INS            ]
       right:

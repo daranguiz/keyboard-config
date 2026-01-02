@@ -346,7 +346,7 @@ qmk compile -kb lily58/rev1 -km dario
 13: KC_NO
 14: KC_PGUP
 15: KC_NO
-16: KC_NO
+16: CW_TOGG
 17: KC_ESC
 18: KC_NO
 19: KC_NO

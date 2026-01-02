@@ -274,7 +274,7 @@
  1: &none
  2: &kp PG_UP
  3: &none
- 4: &none
+ 4: &caps_word
  5: &kp ESC
 
  6: &none

@@ -184,6 +184,23 @@ class TestShiftMorph:
 
 
 @pytest.mark.tier1
+class TestCapsWord:
+    """Test caps word behavior translation"""
+
+    def test_caps_word_basic(self, zmk_translator):
+        """CAPS_WORD should translate to &caps_word"""
+        assert zmk_translator.translate("CAPS_WORD") == "&caps_word"
+
+    def test_caps_word_vs_caps_lock(self, zmk_translator):
+        """CAPS_WORD and CAPS should be distinct"""
+        caps_word = zmk_translator.translate("CAPS_WORD")
+        caps_lock = zmk_translator.translate("CAPS")
+        assert caps_word == "&caps_word"
+        assert caps_lock == "&kp CAPS"
+        assert caps_word != caps_lock
+
+
+@pytest.mark.tier1
 class TestMagicKey:
     """Test magic key translation with layer awareness"""
 

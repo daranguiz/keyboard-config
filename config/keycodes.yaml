@@ -520,6 +520,11 @@ CAPS:
   qmk: "KC_CAPS"
   zmk: "&kp CAPS"
   display_glyph: "$$mdi:apple-keyboard-caps$$"
+CAPS_WORD:
+  qmk: "CW_TOGG"
+  zmk: "&caps_word"
+  display_name: "CapWord"
+  display_glyph: "$$mdi:format-letter-case-upper$$"
 SCRL:
   qmk: "KC_SCRL"
   zmk: "&kp SCROLLLOCK"
