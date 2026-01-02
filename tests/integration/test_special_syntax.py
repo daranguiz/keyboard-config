@@ -7,6 +7,7 @@ Tests all special syntax features end-to-end:
 - lt: (layer-tap)
 - mt: (mod-tap)
 - df: (default layer)
+- osl: (one-shot layer)
 - sm: (shift-morph)
 - L36 position references
 - Magic key behaviors
@@ -160,6 +161,40 @@ class TestDefaultLayer:
 
         # Should have &to behaviors
         assert "&to" in content, "Should have &to default layer behaviors"
+
+
+@pytest.mark.tier1
+class TestOneShotLayer:
+    """Test osl: syntax generates correctly"""
+
+    def test_qmk_osl_generates_one_shot_layer(self, repo_root):
+        """osl: should generate OSL() macros in QMK"""
+        generator = KeymapGenerator(repo_root, verbose=False)
+        generator.generate_for_board("skeletyl")
+
+        keymap_file = (
+            repo_root / "qmk" / "keyboards" / "bastardkb" / "skeletyl" /
+            "promicro" / "keymaps" / "dario" / "keymap.c"
+        )
+
+        with open(keymap_file) as f:
+            content = f.read()
+
+        # Should have OSL macros for one-shot layers
+        assert "OSL(" in content, "Should have OSL() one-shot layer macros"
+
+    def test_zmk_osl_generates_sticky_layer(self, repo_root):
+        """osl: should generate &sl behaviors in ZMK"""
+        generator = KeymapGenerator(repo_root, verbose=False)
+        generator.generate_for_board("chocofi")
+
+        keymap_file = repo_root / "zmk" / "keymaps" / "corne_dario" / "corne.keymap"
+
+        with open(keymap_file) as f:
+            content = f.read()
+
+        # Should have &sl behaviors
+        assert "&sl" in content, "Should have &sl one-shot layer behaviors"
 
 
 @pytest.mark.tier1

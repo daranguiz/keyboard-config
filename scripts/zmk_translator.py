@@ -62,6 +62,7 @@ class ZMKTranslator:
         - "A" -> "&kp A"
         - "hrm:LGUI:A" -> "&hrm LGUI A"
         - "lt:NAV:SPC" -> "&lt NAV SPC"
+        - "osl:NAV" -> "&sl NAV"
         - "NONE" -> "&none"
         - "bt:next" -> "&bt BT_NXT"
 

@@ -79,14 +79,14 @@ class BaseLayerManager:
         Returns:
             Variant suffix (e.g., "", "_NIGHT", "_V2") or "" for standard family
         """
-        # Extract all lt: references from the base layer
+        # Extract all layer references from layer-tap and one-shot keys
         lt_refs = []
 
         # Check all rows for layer-tap references (thumbs are rows 6 and 7)
         if base_layer.core and base_layer.core.rows:
             for row in base_layer.core.rows:
                 for key in row:
-                    if isinstance(key, str) and key.startswith("lt:"):
+                    if isinstance(key, str) and key.startswith(("lt:", "osl:")):
                         parts = key.split(":")
                         if len(parts) >= 2:
                             lt_refs.append(parts[1])

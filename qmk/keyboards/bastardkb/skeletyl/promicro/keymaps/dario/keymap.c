@@ -45,16 +45,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                               LT(NUM, QK_AREP)    , LT(SYM, KC_R)       , LSFT_T(KC_BSPC)     , LSFT_T(KC_TAB)      , LT(NAV, KC_SPC)     , LT(MEDIA, KC_ENT)   
     ),
     [SYM] = LAYOUT_split_3x5_3(
-        KC_AMPR             , KC_PERC             , KC_DLR              , KC_GT               , KC_TILD             , KC_LT               , KC_PLUS             , KC_LCBR             , KC_RCBR             , KC_EQL              ,
-        KC_LGUI             , KC_LALT             , KC_LCTL             , KC_LSFT             , KC_BSLS             , KC_SCLN             , KC_EXLM             , KC_LPRN             , KC_RPRN             , KC_COLN             ,
+        KC_NO               , KC_TILD             , OSL(NUM)            , KC_NO               , KC_NO               , KC_LT               , KC_PLUS             , KC_LCBR             , KC_RCBR             , KC_EQL              ,
+        LGUI_T(KC_AMPR)     , LALT_T(KC_PERC)     , LCTL_T(KC_DLR)      , LSFT_T(KC_RABK)     , KC_BSLS             , KC_SCLN             , KC_EXLM             , KC_LPRN             , KC_RPRN             , KC_COLN             ,
         KC_CIRC             , KC_PIPE             , KC_HASH             , KC_RBRC             , KC_NO               , KC_DQUO             , KC_ASTR             , KC_LBRC             , KC_QUES             , KC_COMM             ,
                               KC_NO               , KC_NO               , KC_NO               , QK_AREP             , KC_SPC              , KC_ENT              
     ),
     [NUM] = LAYOUT_split_3x5_3(
-        KC_AMPR             , KC_PERC             , KC_DLR              , KC_GT               , KC_TILD             , KC_LBRC             , KC_7                , KC_8                , KC_9                , KC_DOT              ,
-        KC_LGUI             , KC_LALT             , KC_LCTL             , KC_LSFT             , KC_BSLS             , KC_RBRC             , KC_1                , KC_2                , KC_3                , KC_COLN             ,
+        KC_NO               , KC_TILD             , OSL(SYM_SHADOW)     , KC_NO               , KC_NO               , KC_LBRC             , KC_7                , KC_8                , KC_9                , KC_DOT              ,
+        LGUI_T(KC_AMPR)     , LALT_T(KC_PERC)     , LCTL_T(KC_DLR)      , LSFT_T(KC_RABK)     , KC_BSLS             , KC_RBRC             , KC_1                , KC_2                , KC_3                , KC_0                ,
         LGUI(KC_Z)          , LGUI(KC_X)          , LGUI(KC_C)          , LGUI(KC_V)          , SGUI(KC_Z)          , KC_HASH             , KC_4                , KC_5                , KC_6                , KC_COMM             ,
-                              KC_NO               , KC_NO               , KC_NO               , QK_AREP             , KC_SPC              , KC_0                
+                              KC_NO               , KC_NO               , KC_NO               , QK_AREP             , KC_SPC              , KC_ENT              
     ),
     [NAV] = LAYOUT_split_3x5_3(
         KC_NO               , KC_PGUP             , KC_NO               , KC_NO               , KC_ESC              , KC_NO               , KC_NO               , KC_NO               , KC_NO               , KC_NO               ,
@@ -67,6 +67,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_MNXT             , KC_VOLU             , KC_VOLD             , KC_MPRV             , KC_NO               , KC_NO               , KC_LSFT             , KC_LCTL             , KC_LALT             , KC_LGUI             ,
         LGUI(KC_Z)          , LGUI(KC_X)          , LGUI(KC_C)          , LGUI(KC_V)          , SGUI(KC_Z)          , KC_NO               , KC_NO               , KC_NO               , KC_NO               , QK_BOOT             ,
                               KC_MUTE             , KC_MPLY             , KC_MSTP             , KC_NO               , KC_NO               , KC_NO               
+    ),
+    [SYM_SHADOW] = LAYOUT_split_3x5_3(
+        KC_NO               , KC_TILD             , OSL(NUM)            , KC_NO               , KC_NO               , KC_LT               , KC_PLUS             , KC_LCBR             , KC_RCBR             , KC_EQL              ,
+        LGUI_T(KC_AMPR)     , LALT_T(KC_PERC)     , LCTL_T(KC_DLR)      , LSFT_T(KC_RABK)     , KC_BSLS             , KC_SCLN             , KC_EXLM             , KC_LPRN             , KC_RPRN             , KC_COLN             ,
+        KC_CIRC             , KC_PIPE             , KC_HASH             , KC_RBRC             , KC_NO               , KC_DQUO             , KC_ASTR             , KC_LBRC             , KC_QUES             , KC_COMM             ,
+                              KC_NO               , KC_NO               , KC_NO               , QK_AREP             , KC_SPC              , KC_ENT              
     ),
 };
 

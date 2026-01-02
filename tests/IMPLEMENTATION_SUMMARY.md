@@ -82,6 +82,7 @@ Implemented a comprehensive tiered regression testing system for the keyboard-co
    - lt: syntax (lt:NAV:SPC → LT(NAV, KC_SPC))
    - mt: syntax (mt:LSFT:TAB → LSFT_T(KC_TAB))
    - df: syntax (df:BASE_NIGHT → DF(BASE_NIGHT))
+   - osl: syntax (osl:NAV → OSL(NAV))
    - sm: shift-morph tracking
    - MAGIC → QK_AREP
    - Bluetooth keycode filtering (bt:next → KC_NO)
@@ -93,6 +94,7 @@ Implemented a comprehensive tiered regression testing system for the keyboard-co
    - hrm: with position awareness (left/right)
    - lt: syntax (lt:NAV:SPC → &lt NAV SPC)
    - df: syntax (df:BASE_NIGHT → &to BASE_NIGHT)
+   - osl: syntax (osl:NAV → &sl NAV)
    - sm: mod-morph behaviors
    - MAGIC with layer awareness
    - Bluetooth keycodes (bt:next → &bt BT_NXT)
@@ -161,6 +163,7 @@ Implemented a comprehensive tiered regression testing system for the keyboard-co
    - lt: generates layer-tap (QMK: LT(), ZMK: &lt)
    - mt: generates mod-tap (QMK: _T(), ZMK: &mt)
    - df: generates default layer switch (QMK: DF(), ZMK: &to)
+   - osl: generates one-shot layer (QMK: OSL(), ZMK: &sl)
    - sm: generates shift-morph (QMK: key overrides, ZMK: mod-morph)
    - L36 references resolve correctly
    - MAGIC key generation (QMK: QK_AREP, ZMK: &ak_)

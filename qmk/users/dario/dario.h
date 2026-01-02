@@ -2,17 +2,8 @@
 
 #include QMK_KEYBOARD_H
 
-// Layer definitions
-// NOTE: Order must match config/keymap.yaml layer order
-enum layers {
-    BASE_PRIMARY,
-    BASE_ALT,
-    BASE_ALT2,
-    NUM,
-    SYM,
-    NAV,
-    MEDIA
-};
+// Layer definitions (auto-generated)
+#include "layers.gen.h"
 
 // Not available/Not used keycodes
 #define U_NA KC_NO  // key present but not available for use

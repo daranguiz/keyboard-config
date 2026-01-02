@@ -8,6 +8,7 @@ Tests QMK keycode translation including:
 - Layer-tap (lt:NAV:SPC → LT(NAV, KC_SPC))
 - Mod-tap (mt:LSFT:TAB → LSFT_T(KC_TAB))
 - Default layer (df:BASE_ALT → DF(BASE_ALT))
+- One-shot layer (osl:NAV → OSL(NAV))
 - Shift-morph tracking (sm:COMM:AT → KC_COMM + track)
 - Magic key (MAGIC → QK_AREP)
 - Bluetooth filtering (bt:next → KC_NO)
@@ -147,6 +148,21 @@ class TestDefaultLayer:
         """df: should work with any layer name"""
         result = qmk_translator.translate("df:GAME")
         assert result == "DF(GAME)"
+
+
+@pytest.mark.tier1
+class TestOneShotLayer:
+    """Test one-shot layer (osl:) translation"""
+
+    def test_osl_nav(self, qmk_translator):
+        """osl:NAV should translate to OSL(NAV)"""
+        result = qmk_translator.translate("osl:NAV")
+        assert result == "OSL(NAV)"
+
+    def test_osl_variant_layer(self, qmk_translator):
+        """osl:NUM_NIGHT should translate to OSL(NUM_NIGHT)"""
+        result = qmk_translator.translate("osl:NUM_NIGHT")
+        assert result == "OSL(NUM_NIGHT)"
 
 
 @pytest.mark.tier1

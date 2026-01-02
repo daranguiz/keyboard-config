@@ -126,6 +126,7 @@ This integration test uses the **real production config** to ensure all features
 - Magic keys
 - Shift-morphs (sm:)
 - Layer-tap (lt:)
+- One-shot layers (osl:)
 - Mod-tap (mt:)
 - Home row mods (hrm:)
 - Extensions (3x6_3)

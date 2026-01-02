@@ -186,7 +186,8 @@ class KeymapVisualizer:
 
     def _generate_layer_tap_mappings(self) -> Dict[str, Dict[str, str]]:
         """
-        Extract all layer-tap and mod-tap keys from keymap.yaml and generate display mappings
+        Extract layer-tap, mod-tap, and one-shot layer keys from keymap.yaml
+        and generate display mappings
 
         Returns:
             Dictionary mapping QMK codes to {tap, hold} display format
@@ -205,6 +206,7 @@ class KeymapVisualizer:
         # Track unique (layer, key) or (mod, key) combinations
         lt_combinations = set()  # For layer-tap keys
         mt_combinations = set()  # For mod-tap keys
+        osl_layers = set()  # For one-shot layer keys
 
         # Scan all layers
         for layer_name, layer in keymap_config.layers.items():
@@ -220,6 +222,10 @@ class KeymapVisualizer:
                             parts = keycode.split(":")
                             if len(parts) == 3:
                                 mt_combinations.add((parts[1], parts[2]))
+                        elif keycode.startswith("osl:"):
+                            parts = keycode.split(":")
+                            if len(parts) == 2:
+                                osl_layers.add(parts[1])
 
             # Scan extensions
             if layer.extensions:
@@ -237,6 +243,10 @@ class KeymapVisualizer:
                                     parts = keycode.split(":")
                                     if len(parts) == 3:
                                         mt_combinations.add((parts[1], parts[2]))
+                                elif keycode.startswith("osl:"):
+                                    parts = keycode.split(":")
+                                    if len(parts) == 2:
+                                        osl_layers.add(parts[1])
 
         # Generate mappings
         mappings = {}
@@ -261,6 +271,12 @@ class KeymapVisualizer:
             hold_display = self._get_friendly_key_name(mod)
             mappings[qmk_code] = {"tap": tap_display, "hold": hold_display}
 
+        # One-shot layer mappings
+        for layer in osl_layers:
+            qmk_code = f"OSL({layer})"
+            tap_display = layer_legend_map.get(layer, layer)
+            mappings[qmk_code] = {"tap": tap_display, "hold": "STICKY"}
+
         return mappings
 
     def is_available(self) -> bool:
@@ -283,7 +299,7 @@ class KeymapVisualizer:
             layout_size: Layout size identifier
 
         Returns:
-            List of key positions that have layer-tap (lt:) keys
+            List of key positions that have layer activators (lt:, osl:)
         """
         # Load the keymap config
         keymap_config = YAMLConfigParser.parse_keymap(
@@ -301,10 +317,10 @@ class KeymapVisualizer:
         # Reorder to QMK format to match SVG positions
         reordered = self._reorder_keys_for_qmk(keycodes, layout_size)
 
-        # Find positions with lt: prefix
+        # Find positions with layer activator prefixes
         layer_tap_positions = []
         for i, keycode in enumerate(reordered):
-            if keycode.startswith("lt:"):
+            if keycode.startswith(("lt:", "osl:")):
                 layer_tap_positions.append(i)
 
         return layer_tap_positions
@@ -405,6 +421,27 @@ class KeymapVisualizer:
                 base_layer_selectors.append(f"    .layer-{layer} .keypos-{pos} rect")
                 base_layer_text_selectors.append(f"    .layer-{layer} .keypos-{pos} text")
 
+        # Add one-shot layer keys (osl:) for all layers in the visualization
+        osl_selectors = []
+        osl_text_selectors = []
+        layers_for_osl = layers_in_viz
+        if layers_for_osl is None:
+            keymap_config = YAMLConfigParser.parse_keymap(self.config_dir / "keymap.yaml")
+            layers_for_osl = list(keymap_config.layers.values())
+
+        for layer in layers_for_osl:
+            if not getattr(layer, "core", None):
+                continue
+            keycodes = self._build_superset_layer(layer, layout_size)
+            reordered = self._reorder_keys_for_qmk(keycodes, layout_size)
+            for i, keycode in enumerate(reordered):
+                if keycode.startswith("osl:"):
+                    osl_selectors.append(f"    .layer-{layer.name} .keypos-{i} rect")
+                    osl_text_selectors.append(f"    .layer-{layer.name} .keypos-{i} text")
+
+        base_layer_selectors.extend(osl_selectors)
+        base_layer_text_selectors.extend(osl_text_selectors)
+
         # Build home row mod selectors dynamically from hrm: and mt: prefixes
         home_row_selectors = []
         for layer in base_layers:
@@ -430,7 +467,7 @@ class KeymapVisualizer:
       font-weight: normal !important;
     }
 
-    /* Highlight layer-tap keys with bright green on all BASE layers */
+    /* Highlight layer activators (lt/osl) with bright green */
 '''
         css += ",\n".join(base_layer_selectors)
         css += ''' {
@@ -462,7 +499,7 @@ class KeymapVisualizer:
     /* On other layers, highlight the key that keeps you on that layer */
 '''
 
-        # For non-BASE layers, find the position of the layer-tap key that activates them
+        # For non-BASE layers, find the position of the layer activator key (lt/osl)
         # Look through the actual layers being visualized to find the correct activator positions
         layer_activator_positions = {}
 
@@ -481,7 +518,7 @@ class KeymapVisualizer:
 
                 # Find positions for each layer activator in this base layer
                 for i, keycode in enumerate(reordered):
-                    if keycode.startswith("lt:"):
+                    if keycode.startswith(("lt:", "osl:")):
                         parts = keycode.split(":")
                         if len(parts) >= 2:
                             layer_name = parts[1]
@@ -499,7 +536,7 @@ class KeymapVisualizer:
 
             # Find positions for each layer activator
             for i, keycode in enumerate(reordered):
-                if keycode.startswith("lt:"):
+                if keycode.startswith(("lt:", "osl:")):
                     parts = keycode.split(":")
                     if len(parts) >= 2:
                         layer_name = parts[1]
@@ -585,7 +622,7 @@ class KeymapVisualizer:
         # Generate dynamic CSS based on layout size and BASE layers
         config['draw_config']['svg_extra_style'] = self._generate_dynamic_css(layout_size, base_layers, layers_in_viz)
 
-        # Auto-generate layer-tap and mod-tap mappings from keymap.yaml
+        # Auto-generate layer-tap, mod-tap, and one-shot mappings from keymap.yaml
         auto_generated_mappings = self._generate_layer_tap_mappings()
 
         # Merge auto-generated mappings into raw_binding_map
@@ -595,9 +632,12 @@ class KeymapVisualizer:
         if 'raw_binding_map' not in config['parse_config']:
             config['parse_config']['raw_binding_map'] = {}
 
-        # Remove old layer-tap and mod-tap entries (will be replaced by auto-generated ones)
+        # Remove old layer-tap, mod-tap, and one-shot entries (will be replaced by auto-generated ones)
         raw_binding_map = config['parse_config']['raw_binding_map']
-        keys_to_remove = [k for k in raw_binding_map.keys() if k.startswith("LT(") or "_T(KC_" in k]
+        keys_to_remove = [
+            k for k in raw_binding_map.keys()
+            if k.startswith("LT(") or k.startswith("OSL(") or "_T(KC_" in k
+        ]
         for key in keys_to_remove:
             del raw_binding_map[key]
 
@@ -753,7 +793,7 @@ class KeymapVisualizer:
         Checks keycodes.yaml for display_glyph or display_name overrides.
 
         Args:
-            keycode: Raw keycode from keymap.yaml (e.g., "hrm:LGUI:A", "lt:NAV:SPC")
+            keycode: Raw keycode from keymap.yaml (e.g., "hrm:LGUI:A", "lt:NAV:SPC", "osl:NAV")
 
         Returns:
             Keycode string for keymap-drawer display
@@ -796,6 +836,13 @@ class KeymapVisualizer:
             if len(parts) == 2:
                 layer = parts[1]
                 return f"DF({layer})"
+
+        # Handle one-shot layer: osl:LAYER -> OSL(LAYER)
+        if keycode.startswith("osl:"):
+            parts = keycode.split(":")
+            if len(parts) == 2:
+                layer = parts[1]
+                return f"OSL({layer})"
 
         # Handle shift-morph: sm:BASE:SHIFTED -> SM_MARKER for stacked display
         # The marker will be post-processed to keymap-drawer dict format {t: base, s: shifted}

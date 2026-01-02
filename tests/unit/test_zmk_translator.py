@@ -7,6 +7,7 @@ Tests ZMK keycode translation including:
 - Home row mods with position awareness (hrm:LGUI:A → &hml LGUI A)
 - Layer-tap (lt:NAV:SPC → &lt NAV SPACE)
 - Default layer (df:BASE_ALT → &to BASE_ALT)
+- One-shot layer (osl:NAV → &sl NAV)
 - Shift-morph via mod-morph behaviors
 - Magic key with layer awareness (&ak_magic_night)
 - Bluetooth keycodes (bt:next → &bt BT_NXT)
@@ -123,6 +124,21 @@ class TestDefaultLayer:
         result = zmk_translator.translate("df:BASE_PRIMARY")
         assert "&to" in result
         # Should have a number (layer index)
+
+
+@pytest.mark.tier1
+class TestOneShotLayer:
+    """Test one-shot layer (osl:) translation"""
+
+    def test_osl_nav(self, zmk_translator):
+        """osl:NAV should translate to &sl NAV"""
+        result = zmk_translator.translate("osl:NAV")
+        assert result == "&sl NAV"
+
+    def test_osl_variant_layer(self, zmk_translator):
+        """osl:NUM_NIGHT should translate to &sl NUM_NIGHT"""
+        result = zmk_translator.translate("osl:NUM_NIGHT")
+        assert result == "&sl NUM_NIGHT"
 
 
 @pytest.mark.tier1

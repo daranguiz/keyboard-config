@@ -14,7 +14,7 @@ Test Philosophy:
 Coverage:
 - Basic keycodes (alpha, numbers, special keys)
 - Home row mods with position awareness (left/right)
-- Layer-tap, mod-tap, default layer
+- Layer-tap, mod-tap, default layer, one-shot layer
 - Shift-morph (base key for QMK, behavior ref for ZMK)
 - Bluetooth filtering (QMK filters to KC_NO)
 - Magic key
@@ -206,6 +206,14 @@ MOD_TAP_CASES = [
 DEFAULT_LAYER_CASES = [
     ("df:BASE_REF", 0, "NAV_REF", "DF(BASE_REF)", "&to BASE_REF", "DF BASE_REF"),
     ("df:NAV_REF", 0, "BASE_REF", "DF(NAV_REF)", "&to NAV_REF", "DF NAV_REF"),
+]
+
+# -----------------------------------------------------------------------------
+# ONE-SHOT LAYER (osl:)
+# -----------------------------------------------------------------------------
+ONE_SHOT_LAYER_CASES = [
+    ("osl:NAV_REF", 0, "BASE_REF", "OSL(NAV_REF)", "&sl NAV_REF", "OSL NAV_REF"),
+    ("osl:NUM_REF", 0, "BASE_REF", "OSL(NUM_REF)", "&sl NUM_REF", "OSL NUM_REF"),
 ]
 
 # -----------------------------------------------------------------------------
@@ -450,6 +458,24 @@ class TestDefaultLayerParity:
 
 
 @pytest.mark.tier1
+class TestOneShotLayerParity:
+    """Test one-shot layer (osl:) translation parity"""
+
+    @pytest.mark.parametrize(
+        "unified,pos,layer,qmk_exp,zmk_exp,desc",
+        ONE_SHOT_LAYER_CASES,
+        ids=[c[5] for c in ONE_SHOT_LAYER_CASES]
+    )
+    def test_one_shot_layer(self, qmk_translator, zmk_translator,
+                            unified, pos, layer, qmk_exp, zmk_exp, desc):
+        qmk_translator.set_context(layer=layer, position=pos)
+        zmk_translator.set_context(layer=layer, position=pos)
+
+        assert qmk_translator.translate(unified) == qmk_exp, f"QMK {desc}"
+        assert zmk_translator.translate(unified) == zmk_exp, f"ZMK {desc}"
+
+
+@pytest.mark.tier1
 class TestShiftMorphParity:
     """Test shift-morph (sm:) translation parity"""
 
@@ -577,6 +603,7 @@ def _count_test_cases():
         len(LAYER_TAP_CASES) +
         len(MOD_TAP_CASES) +
         len(DEFAULT_LAYER_CASES) +
+        len(ONE_SHOT_LAYER_CASES) +
         len(SHIFT_MORPH_CASES) +
         len(BLUETOOTH_CASES) +
         len(MAGIC_CASES) +

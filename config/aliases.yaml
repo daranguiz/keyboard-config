@@ -44,6 +44,13 @@ behaviors:
     params: [layer]
     firmware_support: [qmk, zmk]
 
+  osl:
+    description: "One-shot layer (sticky layer in ZMK)"
+    qmk_pattern: "OSL({layer})"
+    zmk_pattern: "&sl {layer}"
+    params: [layer]
+    firmware_support: [qmk, zmk]
+
   sm:
     description: "Shift-morph (shift produces different key instead of normal shifted output)"
     # Note: sm requires special code generation - patterns are handled specially in generators

@@ -72,7 +72,7 @@ layers:
   SYM:
     core: # (3x5)
       left:
-        - [TILD           , NONE           , NONE            , NONE           , NONE           ]
+        - [NONE           , TILD           , osl:NUM            , NONE           , NONE           ]
         - [hrm:LGUI:AMPR     , hrm:LALT:PERC     , hrm:LCTL:DLR     , hrm:LSFT:RABK     , BSLS              ]
         - [CIRC           , PIPE           , HASH           , RBRC           , NONE           ]
       right:
@@ -108,16 +108,16 @@ layers:
   NUM:
     core: # (3x5)
       left:
-        - [TILD           , NONE           , NONE            , NONE           , NONE           ]
+        - [NONE           , TILD           , osl:SYM            , NONE           , NONE           ]
         - [hrm:LGUI:AMPR     , hrm:LALT:PERC     , hrm:LCTL:DLR     , hrm:LSFT:RABK     , BSLS              ]
         - [UNDO           , CUT            , COPY           , PASTE          , REDO           ]
       right:
         - [LBRC           , 7              , 8              , 9              , DOT            ]
-        - [RBRC           , 1              , 2              , 3              , COLN           ]
+        - [RBRC           , 1              , 2              , 3              , 0           ]
         - [HASH           , 4              , 5              , 6              , COMM           ]
       thumbs:
         - [NONE           , NONE           , NONE           ]
-        - [MAGIC          , SPC            , 0              ]
+        - [MAGIC          , SPC            , ENT              ]
     extensions:
       3x6_3:
         outer_pinky_left: [TRANS, TRANS, TRANS]

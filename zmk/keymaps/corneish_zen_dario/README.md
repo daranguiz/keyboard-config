@@ -165,11 +165,11 @@
 
 ```
  0: &trans
- 1: &kp AMPERSAND
- 2: &kp PERCENT
- 3: &kp DOLLAR
- 4: &kp GT
- 5: &kp TILDE
+ 1: &none
+ 2: &kp TILDE
+ 3: &sl NUM
+ 4: &none
+ 5: &none
 
  6: &kp LT
  7: &kp PLUS
@@ -179,10 +179,10 @@
 11: &trans
 
 12: &trans
-13: &kp LGUI
-14: &kp LALT
-15: &kp LCTRL
-16: &kp LSHFT
+13: &hml LGUI AMPERSAND
+14: &hml LALT PERCENT
+15: &hml LCTL DOLLAR
+16: &hml LSFT GT
 17: &kp BSLH
 
 18: &kp SEMI
@@ -218,11 +218,11 @@
 
 ```
  0: &trans
- 1: &kp AMPERSAND
- 2: &kp PERCENT
- 3: &kp DOLLAR
- 4: &kp GT
- 5: &kp TILDE
+ 1: &none
+ 2: &kp TILDE
+ 3: &sl SYM_SHADOW
+ 4: &none
+ 5: &none
 
  6: &kp LBKT
  7: &kp N7
@@ -232,17 +232,17 @@
 11: &trans
 
 12: &trans
-13: &kp LGUI
-14: &kp LALT
-15: &kp LCTRL
-16: &kp LSHFT
+13: &hml LGUI AMPERSAND
+14: &hml LALT PERCENT
+15: &hml LCTL DOLLAR
+16: &hml LSFT GT
 17: &kp BSLH
 
 18: &kp RBKT
 19: &kp N1
 20: &kp N2
 21: &kp N3
-22: &kp COLON
+22: &kp N0
 23: &trans
 
 24: &trans
@@ -264,7 +264,7 @@
 38: &none
 39: &ak_primary
 40: &kp SPACE
-41: &kp N0
+41: &kp ENTER
 ```
 
 ## NAV Layer
@@ -371,6 +371,59 @@
 39: &none
 40: &none
 41: &none
+```
+
+## SYM_SHADOW Layer
+
+```
+ 0: &trans
+ 1: &none
+ 2: &kp TILDE
+ 3: &sl NUM
+ 4: &none
+ 5: &none
+
+ 6: &kp LT
+ 7: &kp PLUS
+ 8: &kp LBRC
+ 9: &kp RBRC
+10: &kp EQUAL
+11: &trans
+
+12: &trans
+13: &hml LGUI AMPERSAND
+14: &hml LALT PERCENT
+15: &hml LCTL DOLLAR
+16: &hml LSFT GT
+17: &kp BSLH
+
+18: &kp SEMI
+19: &kp EXCL
+20: &kp LPAR
+21: &kp RPAR
+22: &kp COLON
+23: &trans
+
+24: &trans
+25: &kp CARET
+26: &kp PIPE
+27: &kp HASH
+28: &kp RBKT
+29: &none
+
+30: &kp DQT
+31: &kp ASTERISK
+32: &kp LBKT
+33: &kp QUESTION
+34: &kp COMMA
+35: &trans
+
+36: &none
+37: &none
+38: &none
+39: &ak_primary
+40: &kp SPACE
+41: &kp ENTER
 ```
 
 ## Magic Key Mappings

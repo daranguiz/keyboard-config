@@ -99,10 +99,11 @@ class QMKGenerator:
         if has_extra_layers:
             # Define extra layer enum values after the standard layers
             extra_layers_list = ", ".join(board.extra_layers)
+            last_layer = layer_names[-1] if layer_names else "MEDIA"
             extra_layers_code = f"""
 // Board-specific layers (extend standard enum from dario.h)
 enum {{
-    {extra_layers_list} = MEDIA + 1  // Continue from last standard layer
+    {extra_layers_list} = {last_layer} + 1  // Continue from last standard layer
 }};
 """
 

@@ -24,13 +24,14 @@ Examples:
 import sys
 import argparse
 import subprocess
+import copy
 from pathlib import Path
 
 # Add scripts directory to Python path
 sys.path.insert(0, str(Path(__file__).parent))
 
 from config_parser import YAMLConfigParser
-from data_model import ValidationError
+from data_model import ValidationError, KeymapConfiguration
 from qmk_translator import QMKTranslator
 from zmk_translator import ZMKTranslator
 from layer_compiler import LayerCompiler
@@ -41,6 +42,100 @@ from validator import ConfigValidator
 from visualizer import KeymapVisualizer
 from keylayout_translator import KeylayoutTranslator
 from keylayout_generator import KeylayoutGenerator
+
+
+def apply_osl_shadows(keymap_config: KeymapConfiguration) -> KeymapConfiguration:
+    """
+    Auto-generate shadow layers for OSL collisions.
+
+    If a layer contains osl:TARGET where TARGET is at or below the source
+    layer's priority (index), create TARGET_SHADOW as a clone of TARGET and
+    rewrite the keycode to osl:TARGET_SHADOW.
+    """
+    config = copy.deepcopy(keymap_config)
+    original_layer_names = list(config.layers.keys())
+    layer_index = {name: idx for idx, name in enumerate(original_layer_names)}
+    shadow_targets = set()
+
+    def _parse_osl_target(keycode: str, source_layer: str) -> str:
+        parts = keycode.split(":")
+        if len(parts) != 2 or not parts[1]:
+            raise ValidationError(
+                f"Layer {source_layer}: Invalid osl syntax '{keycode}'. Expected osl:<LAYER>"
+            )
+        target = parts[1]
+        if target not in layer_index:
+            raise ValidationError(
+                f"Layer {source_layer}: OSL target layer '{target}' does not exist"
+            )
+        return target
+
+    def _scan_keycodes(keycodes, source_layer: str) -> None:
+        for keycode in keycodes:
+            if isinstance(keycode, str) and keycode.startswith("osl:"):
+                target = _parse_osl_target(keycode, source_layer)
+                if layer_index[target] <= layer_index[source_layer]:
+                    shadow_targets.add(target)
+
+    def _scan_layer(layer, source_layer: str) -> None:
+        if layer.core:
+            for row in layer.core.rows:
+                _scan_keycodes(row, source_layer)
+        if layer.full_layout:
+            for row in layer.full_layout.rows:
+                _scan_keycodes(row, source_layer)
+        if layer.extensions:
+            for ext in layer.extensions.values():
+                for key_list in ext.keys.values():
+                    keys = key_list if isinstance(key_list, list) else [key_list]
+                    _scan_keycodes(keys, source_layer)
+
+    for layer_name in original_layer_names:
+        _scan_layer(config.layers[layer_name], layer_name)
+
+    for target in original_layer_names:
+        if target not in shadow_targets:
+            continue
+        shadow_name = f"{target}_SHADOW"
+        if shadow_name in config.layers:
+            raise ValidationError(
+                f"Shadow layer '{shadow_name}' already exists. "
+                "Remove or rename it to allow auto-generation."
+            )
+        shadow_layer = copy.deepcopy(config.layers[target])
+        shadow_layer.name = shadow_name
+        config.layers[shadow_name] = shadow_layer
+
+    def _rewrite_keycode(keycode: str, source_layer: str) -> str:
+        if not (isinstance(keycode, str) and keycode.startswith("osl:")):
+            return keycode
+        target = _parse_osl_target(keycode, source_layer)
+        if target in shadow_targets and layer_index[target] <= layer_index[source_layer]:
+            return f"osl:{target}_SHADOW"
+        return keycode
+
+    def _rewrite_layer(layer, source_layer: str) -> None:
+        if layer.core:
+            for row in layer.core.rows:
+                for i, keycode in enumerate(row):
+                    row[i] = _rewrite_keycode(keycode, source_layer)
+        if layer.full_layout:
+            for row in layer.full_layout.rows:
+                for i, keycode in enumerate(row):
+                    row[i] = _rewrite_keycode(keycode, source_layer)
+        if layer.extensions:
+            for ext in layer.extensions.values():
+                for key_list_name, key_list in ext.keys.items():
+                    if isinstance(key_list, list):
+                        for i, keycode in enumerate(key_list):
+                            key_list[i] = _rewrite_keycode(keycode, source_layer)
+                    else:
+                        ext.keys[key_list_name] = _rewrite_keycode(key_list, source_layer)
+
+    for layer_name in original_layer_names:
+        _rewrite_layer(config.layers[layer_name], layer_name)
+
+    return config
 
 
 class KeymapGenerator:
@@ -166,6 +261,12 @@ class KeymapGenerator:
             else:
                 print(f"⚠️  Warning: Board specifies keymap_file '{board.keymap_file}' but file not found")
 
+        # Apply automatic OSL shadow layers (priority collision handling)
+        keymap_config = apply_osl_shadows(keymap_config)
+
+        # Update layer indices for ZMK translator (shadow layers appended at end)
+        self.zmk_translator.set_layer_indices(list(keymap_config.layers.keys()))
+
         try:
             # Clear any previously tracked shift-morphs before compiling this board
             if board.firmware == "qmk":
@@ -196,7 +297,7 @@ class KeymapGenerator:
 
             # Generate files based on firmware
             if board.firmware == "qmk":
-                self._generate_qmk(board, compiled_layers)
+                self._generate_qmk(board, compiled_layers, keymap_config)
             elif board.firmware == "zmk":
                 self._generate_zmk(board, compiled_layers)
             else:
@@ -215,7 +316,7 @@ class KeymapGenerator:
             traceback.print_exc()
             return False
 
-    def _generate_qmk(self, board, compiled_layers):
+    def _generate_qmk(self, board, compiled_layers, keymap_config):
         """Generate QMK keymap files"""
         generator = QMKGenerator(special_keycodes=self.special_keycodes)
         output_dir = self.repo_root / board.get_output_directory()
@@ -224,11 +325,40 @@ class KeymapGenerator:
         shift_morphs = self.qmk_translator.get_shift_morphs()
 
         # Generate all files (combos and magic keys are now inline in keymap.c)
-        files = generator.generate_keymap(board, compiled_layers, output_dir, self.combos, self.magic_config, self.keymap_config.layers, shift_morphs)
+        files = generator.generate_keymap(
+            board,
+            compiled_layers,
+            output_dir,
+            self.combos,
+            self.magic_config,
+            keymap_config.layers,
+            shift_morphs
+        )
 
         # Write keymap files
         FileSystemWriter.write_all(output_dir, files)
         print(f"  📝 Wrote {len(files)} files to {output_dir}")
+
+        # Write generated layer enum for QMK userspace
+        self._write_qmk_layers_header([layer.name for layer in compiled_layers])
+
+    def _write_qmk_layers_header(self, layer_names):
+        """Write auto-generated layer enum header for QMK userspace."""
+        header_path = self.repo_root / "qmk" / "users" / "dario" / "layers.gen.h"
+        enum_lines = ",\n    ".join(layer_names)
+        content = (
+            "// AUTO-GENERATED - DO NOT EDIT\n"
+            "// Generated from config/keymap.yaml by scripts/generate.py\n"
+            "\n"
+            "#pragma once\n"
+            "\n"
+            "// Layer definitions\n"
+            "// NOTE: Order must match config/keymap.yaml\n"
+            "enum layers {\n"
+            f"    {enum_lines}\n"
+            "};\n"
+        )
+        FileSystemWriter.write_file(header_path, content)
 
     def _generate_zmk(self, board, compiled_layers):
         """Generate ZMK keymap files"""

@@ -36,6 +36,7 @@ layers:
 - Simple: `A`, `SPC`, `ENT`, `BSPC`, `LEFT`, `DOWN`, etc.
 - Homerow mods: `hrm:LGUI:A` (hold for modifier, tap for key)
 - Layer-tap: `lt:NAV:SPC` (hold for layer, tap for key)
+- One-shot layer: `osl:NAV` (one key on layer, then return)
 - Bluetooth (ZMK only): `bt:next`, `bt:prev`, `bt:clear`
 - Special: `NONE` (no key), `DFU` (bootloader)
 

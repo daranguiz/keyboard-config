@@ -72,6 +72,12 @@ def translate_to_unified(qmk_keycode: str) -> str:
         layer, key = layer_tap_match.groups()
         return f"lt:{layer}:{key}"
 
+    # Handle one-shot layer: OSL(NAV) -> osl:NAV
+    one_shot_match = re.match(r'OSL\((\w+)\)', qmk_keycode)
+    if one_shot_match:
+        layer = one_shot_match.group(1)
+        return f"osl:{layer}"
+
     # Handle special unavailable/unused markers
     if qmk_keycode in ('KC_NO', 'U_NA', 'U_NU', 'U_NP'):
         return 'NONE'

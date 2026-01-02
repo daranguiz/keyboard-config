@@ -217,11 +217,11 @@ qmk compile -kb boardsource/lulu/rp2040 -km dario
 10: KC_NO
 11: KC_NO
 12: KC_TRNS
-13: KC_AMPR
-14: KC_PERC
-15: KC_DLR
-16: KC_GT
-17: KC_TILD
+13: KC_NO
+14: KC_TILD
+15: OSL(NUM)
+16: KC_NO
+17: KC_NO
 18: KC_LT
 19: KC_PLUS
 20: KC_LCBR
@@ -229,10 +229,10 @@ qmk compile -kb boardsource/lulu/rp2040 -km dario
 22: KC_EQL
 23: KC_TRNS
 24: KC_TRNS
-25: KC_LGUI
-26: KC_LALT
-27: KC_LCTL
-28: KC_LSFT
+25: LGUI_T(KC_AMPR)
+26: LALT_T(KC_PERC)
+27: LCTL_T(KC_DLR)
+28: LSFT_T(KC_RABK)
 29: KC_BSLS
 30: KC_SCLN
 31: KC_EXLM
@@ -280,11 +280,11 @@ qmk compile -kb boardsource/lulu/rp2040 -km dario
 10: KC_NO
 11: KC_NO
 12: KC_TRNS
-13: KC_AMPR
-14: KC_PERC
-15: KC_DLR
-16: KC_GT
-17: KC_TILD
+13: KC_NO
+14: KC_TILD
+15: OSL(SYM_SHADOW)
+16: KC_NO
+17: KC_NO
 18: KC_LBRC
 19: KC_7
 20: KC_8
@@ -292,16 +292,16 @@ qmk compile -kb boardsource/lulu/rp2040 -km dario
 22: KC_DOT
 23: KC_TRNS
 24: KC_TRNS
-25: KC_LGUI
-26: KC_LALT
-27: KC_LCTL
-28: KC_LSFT
+25: LGUI_T(KC_AMPR)
+26: LALT_T(KC_PERC)
+27: LCTL_T(KC_DLR)
+28: LSFT_T(KC_RABK)
 29: KC_BSLS
 30: KC_RBRC
 31: KC_1
 32: KC_2
 33: KC_3
-34: KC_COLN
+34: KC_0
 35: KC_TRNS
 36: KC_TRNS
 37: LGUI(KC_Z)
@@ -323,7 +323,7 @@ qmk compile -kb boardsource/lulu/rp2040 -km dario
 53: KC_NO
 54: QK_AREP
 55: KC_SPC
-56: KC_0
+56: KC_ENT
 57: KC_NO
 ```
 
@@ -450,6 +450,69 @@ qmk compile -kb boardsource/lulu/rp2040 -km dario
 54: KC_NO
 55: KC_NO
 56: KC_NO
+57: KC_NO
+```
+
+## SYM_SHADOW Layer
+
+```
+ 0: KC_NO
+ 1: KC_NO
+ 2: KC_NO
+ 3: KC_NO
+ 4: KC_NO
+ 5: KC_NO
+ 6: KC_NO
+ 7: KC_NO
+ 8: KC_NO
+ 9: KC_NO
+10: KC_NO
+11: KC_NO
+12: KC_TRNS
+13: KC_NO
+14: KC_TILD
+15: OSL(NUM)
+16: KC_NO
+17: KC_NO
+18: KC_LT
+19: KC_PLUS
+20: KC_LCBR
+21: KC_RCBR
+22: KC_EQL
+23: KC_TRNS
+24: KC_TRNS
+25: LGUI_T(KC_AMPR)
+26: LALT_T(KC_PERC)
+27: LCTL_T(KC_DLR)
+28: LSFT_T(KC_RABK)
+29: KC_BSLS
+30: KC_SCLN
+31: KC_EXLM
+32: KC_LPRN
+33: KC_RPRN
+34: KC_COLN
+35: KC_TRNS
+36: KC_TRNS
+37: KC_CIRC
+38: KC_PIPE
+39: KC_HASH
+40: KC_RBRC
+41: KC_NO
+42: KC_NO
+43: KC_NO
+44: KC_DQUO
+45: KC_ASTR
+46: KC_LBRC
+47: KC_QUES
+48: KC_COMM
+49: KC_TRNS
+50: KC_NO
+51: KC_NO
+52: KC_NO
+53: KC_NO
+54: QK_AREP
+55: KC_SPC
+56: KC_ENT
 57: KC_NO
 ```
 

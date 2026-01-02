@@ -69,6 +69,7 @@ class QMKTranslator:
         - "A" -> "KC_A"
         - "hrm:LGUI:A" -> "LGUI_T(KC_A)"
         - "lt:NAV:SPC" -> "LT(NAV, KC_SPC)"
+        - "osl:NAV" -> "OSL(NAV)"
         - "NONE" -> "KC_NO"
         - "bt:next" -> "KC_NO" (Bluetooth filtered for QMK)
 
