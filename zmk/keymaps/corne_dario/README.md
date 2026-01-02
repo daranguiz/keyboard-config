@@ -9,7 +9,7 @@
  1: &kp B
  2: &kp F
  3: &kp L
- 4: &kp D
+ 4: &kp K
  5: &kp Q
 
  6: &kp J
@@ -24,7 +24,7 @@
 14: &hml LALT S
 15: &hml LCTL H
 16: &hml LSFT T
-17: &kp K
+17: &kp D
 
 18: &kp Y
 19: &hmr LSFT C
@@ -437,7 +437,6 @@
   - . → /
   - C → Y
   - G → Y
-  - P → T
   - / → *
   - * → /
 

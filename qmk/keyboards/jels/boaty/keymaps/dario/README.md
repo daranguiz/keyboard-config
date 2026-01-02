@@ -41,7 +41,7 @@ qmk compile -kb jels/boaty -km dario
 23: KC_B
 24: KC_F
 25: KC_L
-26: KC_D
+26: KC_K
 27: KC_Q
 28: KC_J
 29: KC_G
@@ -55,7 +55,7 @@ qmk compile -kb jels/boaty -km dario
 37: LALT_T(KC_S)
 38: LCTL_T(KC_H)
 39: LSFT_T(KC_T)
-40: KC_K
+40: KC_D
 41: KC_Y
 42: LSFT_T(KC_C)
 43: LCTL_T(KC_A)

@@ -17,8 +17,8 @@ layers:
   BASE_PRIMARY:
     core: # (3x5)
       left:
-        - [B              , F              , L              , D              , Q              ]
-        - [hrm:LGUI:N     , hrm:LALT:S     , hrm:LCTL:H     , hrm:LSFT:T     , K              ]
+        - [B              , F              , L              , K              , Q              ]
+        - [hrm:LGUI:N     , hrm:LALT:S     , hrm:LCTL:H     , hrm:LSFT:T     , D              ]
         - [X              , V              , M              , P              , Z              ]
       right:
         - [J              , G              , O              , U              , sm:DOT:GRV     ]
@@ -192,7 +192,7 @@ magic_keys:
       ".": "/"
       C: Y
       G: Y
-      P: T
+      # P: T
 
       # "<": ">"
       # "[": "]"

@@ -31,7 +31,7 @@ qmk compile -kb lily58/rev1 -km dario
 13: KC_B
 14: KC_F
 15: KC_L
-16: KC_D
+16: KC_K
 17: KC_Q
 18: KC_J
 19: KC_G
@@ -44,7 +44,7 @@ qmk compile -kb lily58/rev1 -km dario
 26: LALT_T(KC_S)
 27: LCTL_T(KC_H)
 28: LSFT_T(KC_T)
-29: KC_K
+29: KC_D
 30: KC_Y
 31: LSFT_T(KC_C)
 32: LCTL_T(KC_A)
