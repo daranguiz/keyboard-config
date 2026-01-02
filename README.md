@@ -24,6 +24,9 @@ Magic key mappings are included at the bottom of each layout visualization.
 
 ### Row-Staggered Keyboards (macOS .keylayout)
 
+#### Gallium
+![Gallium Layout](docs/rowstagger/gallium.svg)
+
 #### Nightlight
 ![Nightlight Layout](docs/rowstagger/nightlight.svg)
 

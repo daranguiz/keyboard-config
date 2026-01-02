@@ -130,11 +130,11 @@ layers:
         - [NONE           , LEFT           , UP             , RGHT           , CAPS           ]
         - [END            , PGDN           , DOWN           , HOME           , INS            ]
       right:
-        - [BT_SEL_0       , BT_SEL_1       , BT_SEL_2       , BT_SEL_3       , BT_CLR         ]
-        - [NONE           , LSFT           , LCTL           , LALT           , LGUI           ]
+        - [NONE           , NONE           , NONE           , NONE           , NONE           ]
+        - [NONE      , LSFT           , LCTL           , LALT           , LGUI           ]
         - [NONE           , NONE           , NONE           , NONE           , NONE           ]
       thumbs:
-        - [DEL           , ENT            , BSPC            ]
+        - [DEL            , ENT            , BSPC            ]
         - [NONE           , NONE           , NONE           ]
     extensions:
       3x6_3:
@@ -148,7 +148,7 @@ layers:
         - [MNXT           , VOLU           , VOLD           , MPRV           , NONE           ]
         - [UNDO           , CUT            , COPY           , PASTE          , REDO           ]
       right:
-        - [NONE           , NONE           , NONE           , NONE           , NONE           ]
+        - [BT_SEL_0       , BT_SEL_1       , BT_SEL_2       , BT_SEL_3       , BT_CLR         ]
         - [NONE           , LSFT           , LCTL           , LALT           , LGUI           ]
         - [NONE           , NONE           , NONE           , NONE           , DFU            ]
       thumbs:

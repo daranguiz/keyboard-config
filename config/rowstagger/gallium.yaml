@@ -1,9 +1,9 @@
-# Sturdy keyboard layout
-# Left hand: v m l c p / s t r d y / k q g w z
-# Right hand: x f o u j / . n a e i - / b h ' ; ,
+# Gallium keyboard layout (GalileoBlues) (39 likes)
+# Left hand: b l d c v / n r t s g / x q m w z
+# Right hand: j f o u , / y h a e i / / k p ' ; .
 
-name: "Sturdy"
-id: "-12408"
+name: "Gallium"
+id: "-12409"
 group: "126"
 
 # Base layer - maps to QWERTY physical positions
@@ -12,9 +12,9 @@ group: "126"
 # Only customize alpha keys + bracket keys
 
 layout:
-  - [v,    m,    l,    c,    p,       x,    f,    o,    u,    j,     "[",  "]"]
-  - [s,    t,    r,    d,    y,       ".",  n,    a,    e,    i,     ";"     ]
-  - [k,    q,    g,    w,    z,       b,    h,    "'",  "/",  ","            ]
+  - [b,    l,    d,    c,    v,       j,    f,    o,    u,    ",",   "[",  "]"]
+  - [n,    r,    t,    s,    g,       y,    h,    a,    e,    i,     ";"       ]
+  - [x,    q,    m,    w,    z,       k,    p,    "'",  "/",  "."            ]
 
 # Fingermap (which finger presses each key)
 # 0=L-pinky, 1=L-ring, 2=L-middle, 3=L-index
