@@ -72,7 +72,7 @@ layers:
   SYM:
     core: # (3x5)
       left:
-        - [NONE           , TILD           , osl:NUM            , NONE           , NONE           ]
+        - [NONE           , NONE           , TILD           , osl:NUM            , NONE           ]
         - [hrm:LGUI:AMPR     , hrm:LALT:PERC     , hrm:LCTL:DLR     , hrm:LSFT:RABK     , BSLS              ]
         - [CIRC           , PIPE           , HASH           , RBRC           , NONE           ]
       right:
@@ -108,7 +108,7 @@ layers:
   NUM:
     core: # (3x5)
       left:
-        - [NONE           , TILD           , osl:SYM            , NONE           , NONE           ]
+        - [NONE           , NONE           , TILD            , osl:SYM           , NONE           ]
         - [hrm:LGUI:AMPR     , hrm:LALT:PERC     , hrm:LCTL:DLR     , hrm:LSFT:RABK     , BSLS              ]
         - [UNDO           , CUT            , COPY           , PASTE          , REDO           ]
       right:
