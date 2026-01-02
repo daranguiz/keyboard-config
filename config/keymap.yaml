@@ -17,9 +17,9 @@ layers:
   BASE_PRIMARY:
     core: # (3x5)
       left:
-        - [B              , F              , L              , K              , Q              ]
-        - [hrm:LGUI:N     , hrm:LALT:S     , hrm:LCTL:H     , hrm:LSFT:T     , M              ]
-        - [X              , V              , P              , D              , Z              ]
+        - [B              , F              , L              , D              , Q              ]
+        - [hrm:LGUI:N     , hrm:LALT:S     , hrm:LCTL:H     , hrm:LSFT:T     , K              ]
+        - [X              , V              , M              , P              , Z              ]
       right:
         - [J              , G              , O              , U              , sm:DOT:GRV     ]
         - [Y              , hrm:LSFT:C     , hrm:LCTL:A     , hrm:LALT:E     , hrm:LGUI:I     ]
@@ -53,9 +53,9 @@ layers:
   BASE_ALT2:
     core: # (3x5)
       left:
-        - [B              , F              , L              , D              , Q              ]
-        - [hrm:LGUI:N     , hrm:LALT:S     , hrm:LCTL:H     , hrm:LSFT:T     , K              ]
-        - [X              , V              , M              , P              , Z              ]
+        - [B              , F              , L              , K              , Q              ]
+        - [hrm:LGUI:N     , hrm:LALT:S     , hrm:LCTL:H     , hrm:LSFT:T     , M              ]
+        - [X              , V              , P              , D              , Z              ]
       right:
         - [J              , G              , O              , U              , sm:DOT:GRV     ]
         - [Y              , hrm:LSFT:C     , hrm:LCTL:A     , hrm:LALT:E     , hrm:LGUI:I     ]
