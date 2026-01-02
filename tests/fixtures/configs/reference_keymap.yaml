@@ -1,0 +1,122 @@
+# Reference Keymap for Translator Parity Testing
+# =============================================
+#
+# This is a FIXED reference config for deterministic testing.
+# DO NOT modify this file unless updating test expectations.
+#
+# Purpose:
+# - Exercises ALL syntax patterns (hrm, lt, mt, df, sm, bt, MAGIC)
+# - Uses known positions for predictable output
+# - Enables exhaustive parity testing between QMK and ZMK
+#
+# Position Map (36-key):
+# ┌─────┬─────┬─────┬─────┬─────┐   ┌─────┬─────┬─────┬─────┬─────┐
+# │  0  │  1  │  2  │  3  │  4  │   │  5  │  6  │  7  │  8  │  9  │
+# ├─────┼─────┼─────┼─────┼─────┤   ├─────┼─────┼─────┼─────┼─────┤
+# │ 10  │ 11  │ 12  │ 13  │ 14  │   │ 15  │ 16  │ 17  │ 18  │ 19  │
+# ├─────┼─────┼─────┼─────┼─────┤   ├─────┼─────┼─────┼─────┼─────┤
+# │ 20  │ 21  │ 22  │ 23  │ 24  │   │ 25  │ 26  │ 27  │ 28  │ 29  │
+# └─────┴─────┼─────┼─────┼─────┤   ├─────┼─────┼─────┼─────┴─────┘
+#             │ 30  │ 31  │ 32  │   │ 33  │ 34  │ 35  │
+#             └─────┴─────┴─────┘   └─────┴─────┴─────┘
+
+base_layers:
+  BASE_REF:
+    display_name: "REF"
+    description: "Reference test layer for parity testing"
+
+layers:
+  # ==========================================================================
+  # BASE_REF: Tests all behavior types
+  # ==========================================================================
+  # - Positions 0-9: Simple alpha keys (Q W E R T Y U I O P)
+  # - Positions 10-14: Left-hand home row mods (hrm:)
+  # - Positions 15-19: Right-hand home row mods (hrm:)
+  # - Positions 20-24: Simple keys + shift-morph (sm:)
+  # - Positions 25-29: Simple keys + shift-morph (sm:)
+  # - Positions 30-35: Thumb keys with lt:, mt:, MAGIC
+  # ==========================================================================
+  BASE_REF:
+    core:
+      left:
+        # Row 0 (positions 0-4): Simple alpha keys
+        - [Q, W, E, R, T]
+        # Row 1 (positions 10-14): Left-hand home row mods
+        - [hrm:LGUI:A, hrm:LALT:S, hrm:LCTL:D, hrm:LSFT:F, G]
+        # Row 2 (positions 20-24): Simple + shift-morph at pos 24
+        - [Z, X, C, V, sm:COMM:EXLM]
+      right:
+        # Row 0 (positions 5-9): Simple alpha keys
+        - [Y, U, I, O, P]
+        # Row 1 (positions 15-19): Right-hand home row mods
+        - [H, hrm:LSFT:J, hrm:LCTL:K, hrm:LALT:L, hrm:LGUI:SCLN]
+        # Row 2 (positions 25-29): Simple + shift-morphs
+        - [N, M, sm:DOT:QUES, sm:SLSH:BSLS, MINS]
+      thumbs:
+        # Positions 30-32: Left thumbs - layer-tap, magic, mod-tap
+        - [lt:NAV_REF:BSPC, MAGIC, mt:LSFT:DEL]
+        # Positions 33-35: Right thumbs - mod-tap, layer-tap, simple
+        - [mt:LSFT:TAB, lt:NAV_REF:SPC, ENT]
+    extensions:
+      3x6_3:
+        # Outer pinky columns for 42-key boards
+        outer_pinky_left: [GRV, LBRC, NONE]
+        outer_pinky_right: [RBRC, EQL, BSLS]
+
+  # ==========================================================================
+  # NAV_REF: Tests df:, bt:, navigation keys, pure modifiers
+  # ==========================================================================
+  NAV_REF:
+    core:
+      left:
+        # Row 0: df: at position 0, rest NONE
+        - [df:BASE_REF, NONE, NONE, NONE, NONE]
+        # Row 1: Pure modifiers (positions 10-14)
+        - [LGUI, LALT, LCTL, LSFT, NONE]
+        # Row 2: Bluetooth keys (positions 20-22), rest NONE
+        - [bt:clr, bt:prev, bt:next, NONE, NONE]
+      right:
+        # Row 0: Arrow up at position 7
+        - [NONE, NONE, UP, NONE, DFU]
+        # Row 1: Arrow keys (LEFT, DOWN, RIGHT at positions 16-18)
+        - [NONE, LEFT, DOWN, RGHT, NONE]
+        # Row 2: Navigation (HOME, PGDN, PGUP, END at positions 26-29)
+        - [NONE, HOME, PGDN, PGUP, END]
+      thumbs:
+        # All transparent (positions 30-35)
+        - [TRNS, TRNS, TRNS]
+        - [TRNS, TRNS, TRNS]
+    extensions:
+      3x6_3:
+        outer_pinky_left: [NONE, NONE, NONE]
+        outer_pinky_right: [NONE, NONE, NONE]
+
+# ==========================================================================
+# Combos: Test combo generation
+# ==========================================================================
+combos:
+  - name: ref_combo_esc
+    description: "Q+W produces ESC"
+    key_positions: [0, 1]
+    action: ESC
+    timeout_ms: 50
+    layers: [BASE_REF]
+
+  - name: ref_combo_caps
+    description: "F+J produces CAPS"
+    key_positions: [13, 16]
+    action: CAPS
+    timeout_ms: 50
+    layers: [BASE_REF]
+
+# ==========================================================================
+# Magic Keys: Test magic key generation
+# ==========================================================================
+magic_keys:
+  BASE_REF:
+    timeout_ms: 0
+    mappings:
+      " ": THE
+      ",": " BUT"
+      ".": "/"
+    default_repeat: true

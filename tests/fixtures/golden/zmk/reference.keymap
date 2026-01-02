@@ -1,0 +1,144 @@
+// AUTO-GENERATED - DO NOT EDIT
+// Reference keymap for parity testing
+// Source: tests/fixtures/configs/reference_keymap.yaml
+
+#include <behaviors.dtsi>
+#include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/bt.h>
+
+// =============================================================================
+// LAYER INDICES
+// =============================================================================
+#define BASE_REF 0
+#define NAV_REF 1
+
+/ {
+    // =========================================================================
+    // BEHAVIORS
+    // =========================================================================
+    behaviors {
+        // Home row mod - left hand
+        hml: home_row_mod_left {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <280>;
+            quick-tap-ms = <175>;
+            require-prior-idle-ms = <150>;
+            flavor = "balanced";
+            hold-trigger-key-positions = <5 6 7 8 9 15 16 17 18 19 25 26 27 28 29 33 34 35>;
+            bindings = <&kp>, <&kp>;
+        };
+
+        // Home row mod - right hand
+        hmr: home_row_mod_right {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <280>;
+            quick-tap-ms = <175>;
+            require-prior-idle-ms = <150>;
+            flavor = "balanced";
+            hold-trigger-key-positions = <0 1 2 3 4 10 11 12 13 14 20 21 22 23 24 30 31 32>;
+            bindings = <&kp>, <&kp>;
+        };
+
+        // Shift-morph: Comma -> Exclaim
+        sm_comm_exlm: shift_morph_comm_exlm {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp COMMA>, <&kp EXCL>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+        };
+
+        // Shift-morph: Dot -> Question
+        sm_dot_ques: shift_morph_dot_ques {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp DOT>, <&kp QMARK>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+        };
+
+        // Shift-morph: Slash -> Backslash
+        sm_slsh_bsls: shift_morph_slsh_bsls {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp FSLH>, <&kp BSLH>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+        };
+
+        // Magic key (adaptive key for BASE_REF)
+        ak_ref: adaptive_key_ref {
+            compatible = "zmk,behavior-adaptive-key";
+            #binding-cells = <0>;
+            bindings = <&kp SPACE>;
+            // Mappings defined in adaptive-key config
+        };
+    };
+
+    // =========================================================================
+    // COMBOS
+    // =========================================================================
+    combos {
+        compatible = "zmk,combos";
+
+        ref_combo_esc {
+            timeout-ms = <50>;
+            key-positions = <0 1>;
+            bindings = <&kp ESC>;
+            layers = <BASE_REF>;
+        };
+
+        ref_combo_caps {
+            timeout-ms = <50>;
+            key-positions = <13 16>;
+            bindings = <&kp CAPS>;
+            layers = <BASE_REF>;
+        };
+    };
+
+    // =========================================================================
+    // KEYMAP
+    // =========================================================================
+    keymap {
+        compatible = "zmk,keymap";
+
+        // =====================================================================
+        // BASE_REF: Main reference layer with all behavior types
+        // =====================================================================
+        BASE_REF {
+            bindings = <
+                // Row 0: Simple alpha keys
+                &kp Q           &kp W           &kp E           &kp R           &kp T
+                &kp Y           &kp U           &kp I           &kp O           &kp P
+                // Row 1: Home row mods (left hml, right hmr)
+                &hml LGUI A     &hml LALT S     &hml LCTL D     &hml LSFT F     &kp G
+                &kp H           &hmr LSFT J     &hmr LCTL K     &hmr LALT L     &hmr LGUI SEMI
+                // Row 2: Simple keys + shift-morph
+                &kp Z           &kp X           &kp C           &kp V           &sm_comm_exlm
+                &kp N           &kp M           &sm_dot_ques    &sm_slsh_bsls   &kp MINUS
+                // Thumbs: layer-tap, magic, mod-tap
+                &lt NAV_REF BSPC &ak_ref        &mt LSFT DEL
+                &mt LSFT TAB    &lt NAV_REF SPACE &kp ENTER
+            >;
+        };
+
+        // =====================================================================
+        // NAV_REF: Navigation layer with df:, bt:, arrows
+        // =====================================================================
+        NAV_REF {
+            bindings = <
+                // Row 0: df: at position 0
+                &to BASE_REF    &none           &none           &none           &none
+                &none           &none           &kp UP          &none           &bootloader
+                // Row 1: Pure modifiers
+                &kp LGUI        &kp LALT        &kp LCTL        &kp LSFT        &none
+                &none           &kp LEFT        &kp DOWN        &kp RIGHT       &none
+                // Row 2: Bluetooth
+                &bt BT_CLR      &bt BT_PRV      &bt BT_NXT      &none           &none
+                &none           &kp HOME        &kp PG_DN       &kp PG_UP       &kp END
+                // Thumbs: Transparent
+                &trans          &trans          &trans
+                &trans          &trans          &trans
+            >;
+        };
+    };
+};

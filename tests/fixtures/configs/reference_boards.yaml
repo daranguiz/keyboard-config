@@ -1,0 +1,42 @@
+# Reference Board Inventory for Parity Testing
+# =============================================
+#
+# These are FIXED test boards for deterministic testing.
+# They pair with reference_keymap.yaml for parity tests.
+#
+# Board definitions cover:
+# - QMK 36-key (3x5_3)
+# - ZMK 36-key (3x5_3)
+# - QMK 42-key (3x6_3)
+# - ZMK 42-key (3x6_3)
+
+boards:
+  # ========================================
+  # 36-key boards (core layout only)
+  # ========================================
+  ref_qmk_36:
+    name: "Reference QMK 36-key"
+    firmware: qmk
+    qmk_keyboard: "ref/board36"
+    layout_size: "3x5_3"
+
+  ref_zmk_36:
+    name: "Reference ZMK 36-key"
+    firmware: zmk
+    zmk_shield: "ref_corne"
+    layout_size: "3x5_3"
+
+  # ========================================
+  # 42-key boards (with outer pinky extensions)
+  # ========================================
+  ref_qmk_42:
+    name: "Reference QMK 42-key"
+    firmware: qmk
+    qmk_keyboard: "ref/board42"
+    layout_size: "3x6_3"
+
+  ref_zmk_42:
+    name: "Reference ZMK 42-key"
+    firmware: zmk
+    zmk_shield: "ref_lily"
+    layout_size: "3x6_3"
