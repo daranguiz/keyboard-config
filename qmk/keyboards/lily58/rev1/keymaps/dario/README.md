@@ -31,7 +31,7 @@ qmk compile -kb lily58/rev1 -km dario
 13: KC_B
 14: KC_F
 15: KC_L
-16: KC_K
+16: KC_D
 17: KC_Q
 18: KC_J
 19: KC_G
@@ -44,7 +44,7 @@ qmk compile -kb lily58/rev1 -km dario
 26: LALT_T(KC_S)
 27: LCTL_T(KC_H)
 28: LSFT_T(KC_T)
-29: KC_M
+29: KC_K
 30: KC_Y
 31: LSFT_T(KC_C)
 32: LCTL_T(KC_A)
@@ -54,8 +54,8 @@ qmk compile -kb lily58/rev1 -km dario
 36: KC_NO
 37: KC_X
 38: KC_V
-39: KC_P
-40: KC_D
+39: KC_M
+40: KC_P
 41: KC_Z
 42: KC_NO
 43: KC_NO
@@ -157,7 +157,7 @@ qmk compile -kb lily58/rev1 -km dario
 13: KC_B
 14: KC_F
 15: KC_L
-16: KC_D
+16: KC_K
 17: KC_Q
 18: KC_J
 19: KC_G
@@ -170,7 +170,7 @@ qmk compile -kb lily58/rev1 -km dario
 26: LALT_T(KC_S)
 27: LCTL_T(KC_H)
 28: LSFT_T(KC_T)
-29: KC_K
+29: KC_M
 30: KC_Y
 31: LSFT_T(KC_C)
 32: LCTL_T(KC_A)
@@ -180,8 +180,8 @@ qmk compile -kb lily58/rev1 -km dario
 36: KC_NO
 37: KC_X
 38: KC_V
-39: KC_M
-40: KC_P
+39: KC_P
+40: KC_D
 41: KC_Z
 42: KC_NO
 43: KC_NO
@@ -218,9 +218,9 @@ qmk compile -kb lily58/rev1 -km dario
 11: KC_NO
 12: KC_TRNS
 13: KC_NO
-14: KC_TILD
-15: OSL(NUM)
-16: KC_NO
+14: KC_NO
+15: KC_TILD
+16: OSL(NUM)
 17: KC_NO
 18: KC_LT
 19: KC_PLUS
@@ -281,9 +281,9 @@ qmk compile -kb lily58/rev1 -km dario
 11: KC_NO
 12: KC_TRNS
 13: KC_NO
-14: KC_TILD
-15: OSL(SYM_SHADOW)
-16: KC_NO
+14: KC_NO
+15: KC_TILD
+16: OSL(SYM_SHADOW)
 17: KC_NO
 18: KC_LBRC
 19: KC_7
@@ -470,9 +470,9 @@ qmk compile -kb lily58/rev1 -km dario
 11: KC_NO
 12: KC_TRNS
 13: KC_NO
-14: KC_TILD
-15: OSL(NUM)
-16: KC_NO
+14: KC_NO
+15: KC_TILD
+16: OSL(NUM)
 17: KC_NO
 18: KC_LT
 19: KC_PLUS

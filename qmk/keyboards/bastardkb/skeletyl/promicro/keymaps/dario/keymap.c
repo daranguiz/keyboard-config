@@ -27,9 +27,9 @@ enum magic_macros {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [BASE_PRIMARY] = LAYOUT_split_3x5_3(
-        KC_B                , KC_F                , KC_L                , KC_K                , KC_Q                , KC_J                , KC_G                , KC_O                , KC_U                , KC_DOT              ,
-        LGUI_T(KC_N)        , LALT_T(KC_S)        , LCTL_T(KC_H)        , LSFT_T(KC_T)        , KC_M                , KC_Y                , LSFT_T(KC_C)        , LCTL_T(KC_A)        , LALT_T(KC_E)        , LGUI_T(KC_I)        ,
-        KC_X                , KC_V                , KC_P                , KC_D                , KC_Z                , KC_QUOT             , KC_W                , KC_MINS             , KC_SLSH             , KC_COMM             ,
+        KC_B                , KC_F                , KC_L                , KC_D                , KC_Q                , KC_J                , KC_G                , KC_O                , KC_U                , KC_DOT              ,
+        LGUI_T(KC_N)        , LALT_T(KC_S)        , LCTL_T(KC_H)        , LSFT_T(KC_T)        , KC_K                , KC_Y                , LSFT_T(KC_C)        , LCTL_T(KC_A)        , LALT_T(KC_E)        , LGUI_T(KC_I)        ,
+        KC_X                , KC_V                , KC_M                , KC_P                , KC_Z                , KC_QUOT             , KC_W                , KC_MINS             , KC_SLSH             , KC_COMM             ,
                               LT(NUM, QK_AREP)    , LT(SYM, KC_R)       , LSFT_T(KC_BSPC)     , LSFT_T(KC_TAB)      , LT(NAV, KC_SPC)     , LT(MEDIA, KC_ENT)   
     ),
     [BASE_ALT] = LAYOUT_split_3x5_3(
@@ -39,19 +39,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                               LT(NUM, QK_AREP)    , LT(SYM, KC_R)       , LSFT_T(KC_BSPC)     , LSFT_T(KC_TAB)      , LT(NAV, KC_SPC)     , LT(MEDIA, KC_ENT)   
     ),
     [BASE_ALT2] = LAYOUT_split_3x5_3(
-        KC_B                , KC_F                , KC_L                , KC_D                , KC_Q                , KC_J                , KC_G                , KC_O                , KC_U                , KC_DOT              ,
-        LGUI_T(KC_N)        , LALT_T(KC_S)        , LCTL_T(KC_H)        , LSFT_T(KC_T)        , KC_K                , KC_Y                , LSFT_T(KC_C)        , LCTL_T(KC_A)        , LALT_T(KC_E)        , LGUI_T(KC_I)        ,
-        KC_X                , KC_V                , KC_M                , KC_P                , KC_Z                , KC_QUOT             , KC_W                , KC_MINS             , KC_SLSH             , KC_COMM             ,
+        KC_B                , KC_F                , KC_L                , KC_K                , KC_Q                , KC_J                , KC_G                , KC_O                , KC_U                , KC_DOT              ,
+        LGUI_T(KC_N)        , LALT_T(KC_S)        , LCTL_T(KC_H)        , LSFT_T(KC_T)        , KC_M                , KC_Y                , LSFT_T(KC_C)        , LCTL_T(KC_A)        , LALT_T(KC_E)        , LGUI_T(KC_I)        ,
+        KC_X                , KC_V                , KC_P                , KC_D                , KC_Z                , KC_QUOT             , KC_W                , KC_MINS             , KC_SLSH             , KC_COMM             ,
                               LT(NUM, QK_AREP)    , LT(SYM, KC_R)       , LSFT_T(KC_BSPC)     , LSFT_T(KC_TAB)      , LT(NAV, KC_SPC)     , LT(MEDIA, KC_ENT)   
     ),
     [SYM] = LAYOUT_split_3x5_3(
-        KC_NO               , KC_TILD             , OSL(NUM)            , KC_NO               , KC_NO               , KC_LT               , KC_PLUS             , KC_LCBR             , KC_RCBR             , KC_EQL              ,
+        KC_NO               , KC_NO               , KC_TILD             , OSL(NUM)            , KC_NO               , KC_LT               , KC_PLUS             , KC_LCBR             , KC_RCBR             , KC_EQL              ,
         LGUI_T(KC_AMPR)     , LALT_T(KC_PERC)     , LCTL_T(KC_DLR)      , LSFT_T(KC_RABK)     , KC_BSLS             , KC_SCLN             , KC_EXLM             , KC_LPRN             , KC_RPRN             , KC_COLN             ,
         KC_CIRC             , KC_PIPE             , KC_HASH             , KC_RBRC             , KC_NO               , KC_DQUO             , KC_ASTR             , KC_LBRC             , KC_QUES             , KC_COMM             ,
                               KC_NO               , KC_NO               , KC_NO               , QK_AREP             , KC_SPC              , KC_ENT              
     ),
     [NUM] = LAYOUT_split_3x5_3(
-        KC_NO               , KC_TILD             , OSL(SYM_SHADOW)     , KC_NO               , KC_NO               , KC_LBRC             , KC_7                , KC_8                , KC_9                , KC_DOT              ,
+        KC_NO               , KC_NO               , KC_TILD             , OSL(SYM_SHADOW)     , KC_NO               , KC_LBRC             , KC_7                , KC_8                , KC_9                , KC_DOT              ,
         LGUI_T(KC_AMPR)     , LALT_T(KC_PERC)     , LCTL_T(KC_DLR)      , LSFT_T(KC_RABK)     , KC_BSLS             , KC_RBRC             , KC_1                , KC_2                , KC_3                , KC_0                ,
         LGUI(KC_Z)          , LGUI(KC_X)          , LGUI(KC_C)          , LGUI(KC_V)          , SGUI(KC_Z)          , KC_HASH             , KC_4                , KC_5                , KC_6                , KC_COMM             ,
                               KC_NO               , KC_NO               , KC_NO               , QK_AREP             , KC_SPC              , KC_ENT              
@@ -69,7 +69,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                               KC_MUTE             , KC_MPLY             , KC_MSTP             , KC_NO               , KC_NO               , KC_NO               
     ),
     [SYM_SHADOW] = LAYOUT_split_3x5_3(
-        KC_NO               , KC_TILD             , OSL(NUM)            , KC_NO               , KC_NO               , KC_LT               , KC_PLUS             , KC_LCBR             , KC_RCBR             , KC_EQL              ,
+        KC_NO               , KC_NO               , KC_TILD             , OSL(NUM)            , KC_NO               , KC_LT               , KC_PLUS             , KC_LCBR             , KC_RCBR             , KC_EQL              ,
         LGUI_T(KC_AMPR)     , LALT_T(KC_PERC)     , LCTL_T(KC_DLR)      , LSFT_T(KC_RABK)     , KC_BSLS             , KC_SCLN             , KC_EXLM             , KC_LPRN             , KC_RPRN             , KC_COLN             ,
         KC_CIRC             , KC_PIPE             , KC_HASH             , KC_RBRC             , KC_NO               , KC_DQUO             , KC_ASTR             , KC_LBRC             , KC_QUES             , KC_COMM             ,
                               KC_NO               , KC_NO               , KC_NO               , QK_AREP             , KC_SPC              , KC_ENT              
@@ -94,7 +94,7 @@ enum combo_events {
 const uint16_t PROGMEM dfu_left_combo[] = {KC_B, KC_Q, KC_Z, COMBO_END};
 const uint16_t PROGMEM dfu_right_combo[] = {KC_J, KC_DOT, KC_QUOT, COMBO_END};
 const uint16_t PROGMEM github_url_combo[] = {KC_G, KC_O, KC_U, KC_DOT, COMBO_END};
-const uint16_t PROGMEM pd_to_ph_combo[] = {KC_P, KC_D, COMBO_END};
+const uint16_t PROGMEM pd_to_ph_combo[] = {KC_M, KC_P, COMBO_END};
 
 // Combo definitions
 combo_t key_combos[] = {

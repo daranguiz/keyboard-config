@@ -202,6 +202,32 @@ combos:
 # Used to provide alternate bigrams for uncomfortable key combinations
 magic_keys:
   BASE_PRIMARY:
+    timeout_ms: 1000
+    mappings:
+      " ": THE
+      ",": " BUT"
+      "-": ">"
+      ".": "/"
+      C: Y
+      G: Y
+
+      "<": ">"
+      "[": "]"
+      "(": "_"
+      "/": "*"
+      "*": "/"
+    default_repeat: true
+
+  BASE_ALT:
+    timeout_ms: 0
+    mappings:
+      " ": THE
+      ",": " BUT"
+      "-": ">"
+      ".": "/"
+    default_repeat: true
+
+  BASE_ALT2:
     timeout_ms: 1000  # 0 = no max idle constraint for adaptive key triggers
     mappings:
       " ": THE
@@ -221,32 +247,6 @@ magic_keys:
       Q: UE
       T: ION
       W: HICH
-
-      "<": ">"
-      "[": "]"
-      "(": "_"
-      "/": "*"
-      "*": "/"
-    default_repeat: true
-
-  BASE_ALT:
-    timeout_ms: 0
-    mappings:
-      " ": THE
-      ",": " BUT"
-      "-": ">"
-      ".": "/"
-    default_repeat: true
-
-  BASE_ALT2:
-    timeout_ms: 0
-    mappings:
-      " ": THE
-      ",": " BUT"
-      "-": ">"
-      ".": "/"
-      C: Y
-      G: Y
 
       "<": ">"
       "[": "]"

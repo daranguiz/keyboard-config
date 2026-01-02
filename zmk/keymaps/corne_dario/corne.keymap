@@ -832,9 +832,9 @@
 
         base_primary_layer {
             bindings = <
-                &none &kp B &kp F &ak_train_primary_l &kp K &kp Q &kp J &kp G &kp O &kp U &sm_dot_grv &none
-                &key_repeat &hml LGUI N &hml LALT S &hml LCTL H &hml LSFT T &kp M &ak_train_primary_y &hmr LSFT C &hmr LCTL A &hmr LALT E &hmr LGUI I &key_repeat
-                &none &kp X &kp V &ak_train_primary_p &kp D &kp Z &kp SQT &kp W &kp MINUS &ak_train_primary_fslh &sm_comm_at &none
+                &none &kp B &kp F &ak_train_primary_l &kp D &kp Q &kp J &kp G &kp O &kp U &sm_dot_grv &none
+                &key_repeat &hml LGUI N &hml LALT S &hml LCTL H &hml LSFT T &kp K &ak_train_primary_y &hmr LSFT C &hmr LCTL A &hmr LALT E &hmr LGUI I &key_repeat
+                &none &kp X &kp V &kp M &ak_train_primary_p &kp Z &kp SQT &kp W &kp MINUS &ak_train_primary_fslh &sm_comm_at &none
                 &lt_ak_primary NUM 0 &lt SYM R &mt LSFT BSPC &mt LSFT TAB &lt NAV SPACE &lt MEDIA ENTER
             >;
         };
@@ -850,16 +850,16 @@
 
         base_alt2_layer {
             bindings = <
-                &none &kp B &kp F &kp L &kp D &kp Q &kp J &kp G &kp O &kp U &sm_dot_grv &none
-                &key_repeat &hml LGUI N &hml LALT S &hml LCTL H &hml LSFT T &kp K &ak_train_alt2_y &hmr LSFT C &hmr LCTL A &hmr LALT E &hmr LGUI I &key_repeat
-                &none &kp X &kp V &kp M &kp P &kp Z &kp SQT &kp W &kp MINUS &ak_train_alt2_fslh &sm_comm_at &none
+                &none &kp B &kp F &kp L &kp K &kp Q &kp J &kp G &kp O &kp U &sm_dot_grv &none
+                &key_repeat &hml LGUI N &hml LALT S &hml LCTL H &hml LSFT T &kp M &ak_train_alt2_y &hmr LSFT C &hmr LCTL A &hmr LALT E &hmr LGUI I &key_repeat
+                &none &kp X &kp V &kp P &kp D &kp Z &kp SQT &kp W &kp MINUS &ak_train_alt2_fslh &sm_comm_at &none
                 &lt_ak_alt2 NUM 0 &lt SYM R &mt LSFT BSPC &mt LSFT TAB &lt NAV SPACE &lt MEDIA ENTER
             >;
         };
 
         sym_layer {
             bindings = <
-                &trans &none &kp TILDE &sl NUM &none &none &kp LT &kp PLUS &kp LBRC &kp RBRC &kp EQUAL &trans
+                &trans &none &none &kp TILDE &sl NUM &none &kp LT &kp PLUS &kp LBRC &kp RBRC &kp EQUAL &trans
                 &trans &hml LGUI AMPERSAND &hml LALT PERCENT &hml LCTL DOLLAR &hml LSFT GT &kp BSLH &kp SEMI &kp EXCL &kp LPAR &kp RPAR &kp COLON &trans
                 &trans &kp CARET &kp PIPE &kp HASH &ak_train_primary_rbkt &none &kp DQT &ak_train_primary_asterisk &kp LBKT &kp QUESTION &kp COMMA &trans
                 &none &none &none &ak_primary &kp SPACE &kp ENTER
@@ -868,7 +868,7 @@
 
         num_layer {
             bindings = <
-                &trans &none &kp TILDE &sl SYM_SHADOW &none &none &kp LBKT &kp N7 &kp N8 &kp N9 &kp DOT &trans
+                &trans &none &none &kp TILDE &sl SYM_SHADOW &none &kp LBKT &kp N7 &kp N8 &kp N9 &kp DOT &trans
                 &trans &hml LGUI AMPERSAND &hml LALT PERCENT &hml LCTL DOLLAR &hml LSFT GT &kp BSLH &ak_train_primary_rbkt &kp N1 &kp N2 &kp N3 &kp N0 &trans
                 &trans &kp LG(Z) &kp LG(X) &kp LG(C) &kp LG(V) &kp LG(LS(Z)) &kp HASH &kp N4 &kp N5 &kp N6 &kp COMMA &trans
                 &none &none &none &ak_primary &kp SPACE &kp ENTER
@@ -895,7 +895,7 @@
 
         sym_shadow_layer {
             bindings = <
-                &trans &none &kp TILDE &sl NUM &none &none &kp LT &kp PLUS &kp LBRC &kp RBRC &kp EQUAL &trans
+                &trans &none &none &kp TILDE &sl NUM &none &kp LT &kp PLUS &kp LBRC &kp RBRC &kp EQUAL &trans
                 &trans &hml LGUI AMPERSAND &hml LALT PERCENT &hml LCTL DOLLAR &hml LSFT GT &kp BSLH &kp SEMI &kp EXCL &kp LPAR &kp RPAR &kp COLON &trans
                 &trans &kp CARET &kp PIPE &kp HASH &ak_train_primary_rbkt &none &kp DQT &ak_train_primary_asterisk &kp LBKT &kp QUESTION &kp COMMA &trans
                 &none &none &none &ak_primary &kp SPACE &kp ENTER

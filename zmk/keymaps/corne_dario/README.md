@@ -9,7 +9,7 @@
  1: &kp B
  2: &kp F
  3: &kp L
- 4: &kp K
+ 4: &kp D
  5: &kp Q
 
  6: &kp J
@@ -24,7 +24,7 @@
 14: &hml LALT S
 15: &hml LCTL H
 16: &hml LSFT T
-17: &kp M
+17: &kp K
 
 18: &kp Y
 19: &hmr LSFT C
@@ -36,8 +36,8 @@
 24: &none
 25: &kp X
 26: &kp V
-27: &kp P
-28: &kp D
+27: &kp M
+28: &kp P
 29: &kp Z
 
 30: &kp SQT
@@ -115,7 +115,7 @@
  1: &kp B
  2: &kp F
  3: &kp L
- 4: &kp D
+ 4: &kp K
  5: &kp Q
 
  6: &kp J
@@ -130,7 +130,7 @@
 14: &hml LALT S
 15: &hml LCTL H
 16: &hml LSFT T
-17: &kp K
+17: &kp M
 
 18: &kp Y
 19: &hmr LSFT C
@@ -142,8 +142,8 @@
 24: &none
 25: &kp X
 26: &kp V
-27: &kp M
-28: &kp P
+27: &kp P
+28: &kp D
 29: &kp Z
 
 30: &kp SQT
@@ -166,9 +166,9 @@
 ```
  0: &trans
  1: &none
- 2: &kp TILDE
- 3: &sl NUM
- 4: &none
+ 2: &none
+ 3: &kp TILDE
+ 4: &sl NUM
  5: &none
 
  6: &kp LT
@@ -219,9 +219,9 @@
 ```
  0: &trans
  1: &none
- 2: &kp TILDE
- 3: &sl SYM_SHADOW
- 4: &none
+ 2: &none
+ 3: &kp TILDE
+ 4: &sl SYM_SHADOW
  5: &none
 
  6: &kp LBKT
@@ -378,9 +378,9 @@
 ```
  0: &trans
  1: &none
- 2: &kp TILDE
- 3: &sl NUM
- 4: &none
+ 2: &none
+ 3: &kp TILDE
+ 4: &sl NUM
  5: &none
 
  6: &kp LT
