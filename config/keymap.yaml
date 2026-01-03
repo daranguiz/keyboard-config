@@ -3,8 +3,8 @@
 # Base layer metadata
 base_layers:
   BASE_PRIMARY:
-    display_name: "NIGHT"
-    description: "LHM Night"
+    display_name: "NIGHT-LHM"
+    description: "Night reoptimized for better P placement"
   BASE_ALT:
     display_name: "NIGHT"
     description: "Vanilla Night"
