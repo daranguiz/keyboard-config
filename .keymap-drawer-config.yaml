@@ -12,8 +12,8 @@ parse_config:
   - MEDIA
   layer_legend_map:
     BASE_PRIMARY: MIDNIGHT
-    BASE_ALT: NIGHT
-    BASE_ALT2: NIGHT
+    BASE_ALT: XCC313R4N7
+    BASE_ALT2: BUNYA
   raw_binding_map:
     KC_NO: ''
     U_NA: ''
@@ -53,8 +53,8 @@ parse_config:
     DF(BASE_RACKET): RAET
     DF(BASE_DUSK): BUYA
     DF(BASE_PRIMARY): MIHT
-    DF(BASE_ALT): NIHT
-    DF(BASE_ALT2): NIHT
+    DF(BASE_ALT): XCN7
+    DF(BASE_ALT2): BUYA
 draw_config:
   ortho_layout:
     split: !!bool 'true'

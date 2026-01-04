@@ -9,8 +9,8 @@ base_layers:
     display_name: "NIGHT"
     description: "Vanilla Night"
   BASE_ALT2:
-    display_name: "NIGHT"
-    description: "Night with JP swap and magic"
+    display_name: "BUNYA"
+    description: "Bunya layout (GalileoBlues)"
 
 layers:
 
@@ -53,15 +53,15 @@ layers:
   BASE_ALT2:
     core: # (3x5)
       left:
-        - [B              , F              , L              , K              , Q              ]
-        - [hrm:LGUI:N     , hrm:LALT:S     , hrm:LCTL:H     , hrm:LSFT:T     , M              ]
-        - [X              , V              , P              , D              , Z              ]
+        - [B              , L              , M              , C              , Z              ]
+        - [hrm:LGUI:N     , hrm:LALT:R     , hrm:LCTL:T     , hrm:LSFT:D     , P              ]
+        - [X              , Q              , V              , G              , W              ]
       right:
-        - [J              , G              , O              , U              , sm:DOT:GRV     ]
-        - [Y              , hrm:LSFT:C     , hrm:LCTL:A     , hrm:LALT:E     , hrm:LGUI:I     ]
-        - [QUOT           , W              , MINS           , SLSH           , sm:COMM:AT     ]
+        - [J              , F              , O              , U              , sm:DOT:GRV     ]
+        - [Y              , hrm:LSFT:H     , hrm:LCTL:A     , hrm:LALT:E     , hrm:LGUI:I     ]
+        - [QUOT           , K              , MINS           , SLSH           , sm:COMM:AT     ]
       thumbs:
-        - [lt:NUM:MAGIC   , lt:SYM:R       , mt:LSFT:BSPC   ]
+        - [lt:NUM:MAGIC   , lt:SYM:S       , mt:LSFT:BSPC   ]
         - [mt:LSFT:TAB    , lt:NAV:SPC     , lt:MEDIA:ENT   ]
     extensions:
       3x6_3:
@@ -234,36 +234,15 @@ magic_keys:
       ".": "/"
       "/": "*"
       "*": "/"
-
-      C: Y
-      G: Y
-      P: Y
     default_repeat: true
 
   BASE_ALT2:
-    timeout_ms: 1000  # 0 = no max idle constraint for adaptive key triggers
+    timeout_ms: 0
     mappings:
       " ": THE
       ",": " BUT"
       "-": ">"
       ".": "/"
-      P: L
-      L: P
-      C: Y
-      G: Y
-
-      B: EFORE
-      I: ON
-      J: UST
-      M: ENT
-      N: ION
-      Q: UE
-      T: ION
-      W: HICH
-
-      "<": ">"
-      "[": "]"
-      "(": "_"
       "/": "*"
       "*": "/"
     default_repeat: true

@@ -10,16 +10,8 @@ enum magic_macros {
     MACRO_HT_TO_LM,
     MACRO_STH_TO_LLM,
     MACRO_CAE_TO_CYC,
-    MAGIC_ALT2_B,
     MAGIC_ALT2_CHR_32,
     MAGIC_ALT2_CHR_44,
-    MAGIC_ALT2_I,
-    MAGIC_ALT2_J,
-    MAGIC_ALT2_M,
-    MAGIC_ALT2_N,
-    MAGIC_ALT2_Q,
-    MAGIC_ALT2_T,
-    MAGIC_ALT2_W,
     MAGIC_ALT_CHR_32,
     MAGIC_ALT_CHR_44,
     MAGIC_PRIMARY_CHR_32,
@@ -35,16 +27,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                               LT(NUM, QK_AREP)    , LT(SYM, KC_R)       , LSFT_T(KC_BSPC)     , LSFT_T(KC_TAB)      , LT(NAV, KC_SPC)     , LT(MEDIA, KC_ENT)   
     ),
     [BASE_ALT] = LAYOUT_split_3x5_3(
-        KC_B                , KC_F                , KC_L                , KC_K                , KC_Q                , KC_P                , KC_G                , KC_O                , KC_U                , KC_DOT              ,
-        LGUI_T(KC_N)        , LALT_T(KC_S)        , LCTL_T(KC_H)        , LSFT_T(KC_T)        , KC_M                , KC_Y                , LSFT_T(KC_C)        , LCTL_T(KC_A)        , LALT_T(KC_E)        , LGUI_T(KC_I)        ,
-        KC_X                , KC_V                , KC_J                , KC_D                , KC_Z                , KC_QUOT             , KC_W                , KC_MINS             , KC_SLSH             , KC_COMM             ,
+        KC_F                , KC_P                , KC_D                , KC_M                , KC_X                , KC_J                , KC_W                , KC_O                , KC_U                , KC_DOT              ,
+        LGUI_T(KC_S)        , LALT_T(KC_N)        , LCTL_T(KC_T)        , LSFT_T(KC_H)        , KC_L                , KC_Y                , LSFT_T(KC_C)        , LCTL_T(KC_A)        , LALT_T(KC_E)        , LGUI_T(KC_I)        ,
+        KC_Z                , KC_B                , KC_K                , KC_V                , KC_Q                , KC_QUOT             , KC_G                , KC_MINS             , KC_SLSH             , KC_COMM             ,
                               LT(NUM, QK_AREP)    , LT(SYM, KC_R)       , LSFT_T(KC_BSPC)     , LSFT_T(KC_TAB)      , LT(NAV, KC_SPC)     , LT(MEDIA, KC_ENT)   
     ),
     [BASE_ALT2] = LAYOUT_split_3x5_3(
-        KC_B                , KC_F                , KC_L                , KC_K                , KC_Q                , KC_J                , KC_G                , KC_O                , KC_U                , KC_DOT              ,
-        LGUI_T(KC_N)        , LALT_T(KC_S)        , LCTL_T(KC_H)        , LSFT_T(KC_T)        , KC_M                , KC_Y                , LSFT_T(KC_C)        , LCTL_T(KC_A)        , LALT_T(KC_E)        , LGUI_T(KC_I)        ,
-        KC_X                , KC_V                , KC_P                , KC_D                , KC_Z                , KC_QUOT             , KC_W                , KC_MINS             , KC_SLSH             , KC_COMM             ,
-                              LT(NUM, QK_AREP)    , LT(SYM, KC_R)       , LSFT_T(KC_BSPC)     , LSFT_T(KC_TAB)      , LT(NAV, KC_SPC)     , LT(MEDIA, KC_ENT)   
+        KC_B                , KC_L                , KC_M                , KC_C                , KC_Z                , KC_J                , KC_F                , KC_O                , KC_U                , KC_DOT              ,
+        LGUI_T(KC_N)        , LALT_T(KC_R)        , LCTL_T(KC_T)        , LSFT_T(KC_D)        , KC_P                , KC_Y                , LSFT_T(KC_H)        , LCTL_T(KC_A)        , LALT_T(KC_E)        , LGUI_T(KC_I)        ,
+        KC_X                , KC_Q                , KC_V                , KC_G                , KC_W                , KC_QUOT             , KC_K                , KC_MINS             , KC_SLSH             , KC_COMM             ,
+                              LT(NUM, QK_AREP)    , LT(SYM, KC_S)       , LSFT_T(KC_BSPC)     , LSFT_T(KC_TAB)      , LT(NAV, KC_SPC)     , LT(MEDIA, KC_ENT)   
     ),
     [SYM] = LAYOUT_split_3x5_3(
         KC_AMPR             , KC_PERC             , KC_DLR              , OSL(NUM)            , KC_NO               , KC_HASH             , KC_PLUS             , KC_LCBR             , KC_RCBR             , KC_EQL              ,
@@ -201,9 +193,6 @@ uint16_t get_alt_repeat_key_keycode_user(uint16_t keycode, uint8_t mods) {
             case KC_DOT: return KC_SLSH;
             case KC_SLSH: return KC_ASTR;
             case KC_ASTR: return KC_SLSH;
-            case KC_C: return KC_Y;
-            case KC_G: return KC_Y;
-            case KC_P: return KC_Y;
         }
     }
 
@@ -214,21 +203,6 @@ uint16_t get_alt_repeat_key_keycode_user(uint16_t keycode, uint8_t mods) {
             case KC_COMM: return MAGIC_ALT2_CHR_44;
             case KC_MINS: return KC_GT;
             case KC_DOT: return KC_SLSH;
-            case KC_P: return KC_L;
-            case KC_L: return KC_P;
-            case KC_C: return KC_Y;
-            case KC_G: return KC_Y;
-            case KC_B: return MAGIC_ALT2_B;
-            case KC_I: return MAGIC_ALT2_I;
-            case KC_J: return MAGIC_ALT2_J;
-            case KC_M: return MAGIC_ALT2_M;
-            case KC_N: return MAGIC_ALT2_N;
-            case KC_Q: return MAGIC_ALT2_Q;
-            case KC_T: return MAGIC_ALT2_T;
-            case KC_W: return MAGIC_ALT2_W;
-            case KC_LT: return KC_GT;
-            case KC_LBRC: return KC_RBRC;
-            case KC_LPRN: return KC_UNDS;
             case KC_SLSH: return KC_ASTR;
             case KC_ASTR: return KC_SLSH;
         }
@@ -244,35 +218,11 @@ bool process_magic_record(uint16_t keycode, keyrecord_t *record) {
         return true;
     }
     switch (keycode) {
-        case MAGIC_ALT2_B:
-            SEND_STRING("efore");
-            return false;
         case MAGIC_ALT2_CHR_32:
             SEND_STRING("the");
             return false;
         case MAGIC_ALT2_CHR_44:
             SEND_STRING(" but");
-            return false;
-        case MAGIC_ALT2_I:
-            SEND_STRING("on");
-            return false;
-        case MAGIC_ALT2_J:
-            SEND_STRING("ust");
-            return false;
-        case MAGIC_ALT2_M:
-            SEND_STRING("ent");
-            return false;
-        case MAGIC_ALT2_N:
-            SEND_STRING("ion");
-            return false;
-        case MAGIC_ALT2_Q:
-            SEND_STRING("ue");
-            return false;
-        case MAGIC_ALT2_T:
-            SEND_STRING("ion");
-            return false;
-        case MAGIC_ALT2_W:
-            SEND_STRING("hich");
             return false;
         case MAGIC_ALT_CHR_32:
             SEND_STRING("the");
@@ -292,16 +242,8 @@ bool process_magic_record(uint16_t keycode, keyrecord_t *record) {
 
 uint16_t magic_training_first_keycode(uint16_t keycode) {
     switch (keycode) {
-        case MAGIC_ALT2_B: return KC_NO;
         case MAGIC_ALT2_CHR_32: return KC_NO;
         case MAGIC_ALT2_CHR_44: return KC_NO;
-        case MAGIC_ALT2_I: return KC_NO;
-        case MAGIC_ALT2_J: return KC_NO;
-        case MAGIC_ALT2_M: return KC_NO;
-        case MAGIC_ALT2_N: return KC_NO;
-        case MAGIC_ALT2_Q: return KC_NO;
-        case MAGIC_ALT2_T: return KC_NO;
-        case MAGIC_ALT2_W: return KC_NO;
         case MAGIC_ALT_CHR_32: return KC_NO;
         case MAGIC_ALT_CHR_44: return KC_NO;
         case MAGIC_PRIMARY_CHR_32: return KC_NO;

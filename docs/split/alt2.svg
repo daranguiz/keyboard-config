@@ -1,4 +1,4 @@
-<svg width="900" height="2218.0" viewBox="0 0 900.0 2218.0" class="keymap" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="900" height="1930.0" viewBox="0 0 900.0 1930.0" class="keymap" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <defs>/* start glyphs */
 <svg id="mdi:apple-keyboard-caps">
 <svg xmlns="http://www.w3.org/2000/svg" id="mdi-apple-keyboard-caps" viewBox="0 0 24 24"><path d="M15,14V8H17.17L12,2.83L6.83,8H9V14H15M12,0L22,10H17V16H7V10H2L12,0M7,18H17V24H7V18M15,20H9V22H15V20Z" /></svg>
@@ -220,44 +220,44 @@ path.combo {
     }
 
     /* Highlight layer activators (lt/osl) with bright green */
-    .layer-NIGHT .keypos-36 rect,
-    .layer-NIGHT .keypos-37 rect,
-    .layer-NIGHT .keypos-40 rect,
-    .layer-NIGHT .keypos-41 rect,
+    .layer-BUNYA .keypos-36 rect,
+    .layer-BUNYA .keypos-37 rect,
+    .layer-BUNYA .keypos-40 rect,
+    .layer-BUNYA .keypos-41 rect,
     .layer-SYM .keypos-4 rect,
     .layer-NUM .keypos-4 rect {
       fill: #4CAF50 !important;
       stroke: none !important;
       opacity: 1 !important;
     }
-    .layer-NIGHT .keypos-36 text,
-    .layer-NIGHT .keypos-37 text,
-    .layer-NIGHT .keypos-40 text,
-    .layer-NIGHT .keypos-41 text,
+    .layer-BUNYA .keypos-36 text,
+    .layer-BUNYA .keypos-37 text,
+    .layer-BUNYA .keypos-40 text,
+    .layer-BUNYA .keypos-41 text,
     .layer-SYM .keypos-4 text,
     .layer-NUM .keypos-4 text {
       fill: white !important;
     }
-    .layer-NIGHT .keypos-36 use,
-    .layer-NIGHT .keypos-37 use,
-    .layer-NIGHT .keypos-40 use,
-    .layer-NIGHT .keypos-41 use,
+    .layer-BUNYA .keypos-36 use,
+    .layer-BUNYA .keypos-37 use,
+    .layer-BUNYA .keypos-40 use,
+    .layer-BUNYA .keypos-41 use,
     .layer-SYM .keypos-4 use,
     .layer-NUM .keypos-4 use {
       fill: white !important;
     }
 
     /* Highlight home row mods and mod-tap keys with lighter green stroke on all BASE layers */
-    .layer-NIGHT .keypos-13 rect,
-    .layer-NIGHT .keypos-14 rect,
-    .layer-NIGHT .keypos-15 rect,
-    .layer-NIGHT .keypos-16 rect,
-    .layer-NIGHT .keypos-19 rect,
-    .layer-NIGHT .keypos-20 rect,
-    .layer-NIGHT .keypos-21 rect,
-    .layer-NIGHT .keypos-22 rect,
-    .layer-NIGHT .keypos-38 rect,
-    .layer-NIGHT .keypos-39 rect {
+    .layer-BUNYA .keypos-13 rect,
+    .layer-BUNYA .keypos-14 rect,
+    .layer-BUNYA .keypos-15 rect,
+    .layer-BUNYA .keypos-16 rect,
+    .layer-BUNYA .keypos-19 rect,
+    .layer-BUNYA .keypos-20 rect,
+    .layer-BUNYA .keypos-21 rect,
+    .layer-BUNYA .keypos-22 rect,
+    .layer-BUNYA .keypos-38 rect,
+    .layer-BUNYA .keypos-39 rect {
       stroke: #66BB6A !important;
       stroke-width: 2 !important;
     }
@@ -296,8 +296,8 @@ path.combo {
       opacity: 0.3 !important;
     }
 </style>
-<g transform="translate(30, 0)" class="layer-NIGHT">
-<text x="420" y="133" class="label" id="NIGHT" text-anchor="middle" dominant-baseline="middle" font-size="28" style="font-weight: 700; font-family: Helvetica, Arial, sans-serif; stroke: white; stroke-width: 4; paint-order: stroke; text-anchor: middle; dominant-baseline: middle;">NIGHT</text>
+<g transform="translate(30, 0)" class="layer-BUNYA">
+<text x="420" y="133" class="label" id="BUNYA" text-anchor="middle" dominant-baseline="middle" font-size="28" style="font-weight: 700; font-family: Helvetica, Arial, sans-serif; stroke: white; stroke-width: 4; paint-order: stroke; text-anchor: middle; dominant-baseline: middle;">BUNYA</text>
 <g transform="translate(0, 56)">
 <g transform="translate(28, 49)" class="key keypos-0">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
@@ -308,19 +308,19 @@ path.combo {
 </g>
 <g transform="translate(140, 35)" class="key keypos-2">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
-<text x="0" y="0" class="key tap" style="font-size: 28px; font-weight: 700; font-family: Helvetica, Arial, sans-serif">f</text>
+<text x="0" y="0" class="key tap" style="font-size: 28px; font-weight: 700; font-family: Helvetica, Arial, sans-serif">l</text>
 </g>
 <g transform="translate(196, 28)" class="key keypos-3">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
-<text x="0" y="0" class="key tap" style="font-size: 28px; font-weight: 700; font-family: Helvetica, Arial, sans-serif">l</text>
+<text x="0" y="0" class="key tap" style="font-size: 28px; font-weight: 700; font-family: Helvetica, Arial, sans-serif">m</text>
 </g>
 <g transform="translate(252, 35)" class="key keypos-4">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
-<text x="0" y="0" class="key tap" style="font-size: 28px; font-weight: 700; font-family: Helvetica, Arial, sans-serif">k</text>
+<text x="0" y="0" class="key tap" style="font-size: 28px; font-weight: 700; font-family: Helvetica, Arial, sans-serif">c</text>
 </g>
 <g transform="translate(308, 42)" class="key keypos-5">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
-<text x="0" y="0" class="key tap" style="font-size: 28px; font-weight: 700; font-family: Helvetica, Arial, sans-serif">q</text>
+<text x="0" y="0" class="key tap" style="font-size: 28px; font-weight: 700; font-family: Helvetica, Arial, sans-serif">z</text>
 </g>
 <g transform="translate(532, 42)" class="key keypos-6">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
@@ -328,7 +328,7 @@ path.combo {
 </g>
 <g transform="translate(588, 35)" class="key keypos-7">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
-<text x="0" y="0" class="key tap" style="font-size: 28px; font-weight: 700; font-family: Helvetica, Arial, sans-serif">g</text>
+<text x="0" y="0" class="key tap" style="font-size: 28px; font-weight: 700; font-family: Helvetica, Arial, sans-serif">f</text>
 </g>
 <g transform="translate(644, 28)" class="key keypos-8">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
@@ -357,22 +357,22 @@ path.combo {
 </g>
 <g transform="translate(140, 91)" class="key keypos-14">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
-<text x="0" y="0" class="key tap" style="font-size: 28px; font-weight: 700; font-family: Helvetica, Arial, sans-serif">s</text>
+<text x="0" y="0" class="key tap" style="font-size: 28px; font-weight: 700; font-family: Helvetica, Arial, sans-serif">r</text>
 <text x="0" y="24" class="key hold">LALT</text>
 </g>
 <g transform="translate(196, 84)" class="key keypos-15">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
-<text x="0" y="0" class="key tap" style="font-size: 28px; font-weight: 700; font-family: Helvetica, Arial, sans-serif">h</text>
+<text x="0" y="0" class="key tap" style="font-size: 28px; font-weight: 700; font-family: Helvetica, Arial, sans-serif">t</text>
 <text x="0" y="24" class="key hold">LCTL</text>
 </g>
 <g transform="translate(252, 91)" class="key keypos-16">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
-<text x="0" y="0" class="key tap" style="font-size: 28px; font-weight: 700; font-family: Helvetica, Arial, sans-serif">t</text>
+<text x="0" y="0" class="key tap" style="font-size: 28px; font-weight: 700; font-family: Helvetica, Arial, sans-serif">d</text>
 <text x="0" y="24" class="key hold">LSFT</text>
 </g>
 <g transform="translate(308, 98)" class="key keypos-17">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
-<text x="0" y="0" class="key tap" style="font-size: 28px; font-weight: 700; font-family: Helvetica, Arial, sans-serif">m</text>
+<text x="0" y="0" class="key tap" style="font-size: 28px; font-weight: 700; font-family: Helvetica, Arial, sans-serif">p</text>
 </g>
 <g transform="translate(532, 98)" class="key keypos-18">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
@@ -380,7 +380,7 @@ path.combo {
 </g>
 <g transform="translate(588, 91)" class="key keypos-19">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
-<text x="0" y="0" class="key tap" style="font-size: 28px; font-weight: 700; font-family: Helvetica, Arial, sans-serif">c</text>
+<text x="0" y="0" class="key tap" style="font-size: 28px; font-weight: 700; font-family: Helvetica, Arial, sans-serif">h</text>
 <text x="0" y="24" class="key hold">LSFT</text>
 </g>
 <g transform="translate(644, 84)" class="key keypos-20">
@@ -411,19 +411,19 @@ path.combo {
 </g>
 <g transform="translate(140, 147)" class="key keypos-26">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
-<text x="0" y="0" class="key tap" style="font-size: 28px; font-weight: 700; font-family: Helvetica, Arial, sans-serif">v</text>
+<text x="0" y="0" class="key tap" style="font-size: 28px; font-weight: 700; font-family: Helvetica, Arial, sans-serif">q</text>
 </g>
 <g transform="translate(196, 140)" class="key keypos-27">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
-<text x="0" y="0" class="key tap" style="font-size: 28px; font-weight: 700; font-family: Helvetica, Arial, sans-serif">p</text>
+<text x="0" y="0" class="key tap" style="font-size: 28px; font-weight: 700; font-family: Helvetica, Arial, sans-serif">v</text>
 </g>
 <g transform="translate(252, 147)" class="key keypos-28">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
-<text x="0" y="0" class="key tap" style="font-size: 28px; font-weight: 700; font-family: Helvetica, Arial, sans-serif">d</text>
+<text x="0" y="0" class="key tap" style="font-size: 28px; font-weight: 700; font-family: Helvetica, Arial, sans-serif">g</text>
 </g>
 <g transform="translate(308, 154)" class="key keypos-29">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
-<text x="0" y="0" class="key tap" style="font-size: 28px; font-weight: 700; font-family: Helvetica, Arial, sans-serif">z</text>
+<text x="0" y="0" class="key tap" style="font-size: 28px; font-weight: 700; font-family: Helvetica, Arial, sans-serif">w</text>
 </g>
 <g transform="translate(532, 154)" class="key keypos-30">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
@@ -431,7 +431,7 @@ path.combo {
 </g>
 <g transform="translate(588, 147)" class="key keypos-31">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
-<text x="0" y="0" class="key tap" style="font-size: 28px; font-weight: 700; font-family: Helvetica, Arial, sans-serif">w</text>
+<text x="0" y="0" class="key tap" style="font-size: 28px; font-weight: 700; font-family: Helvetica, Arial, sans-serif">k</text>
 </g>
 <g transform="translate(644, 140)" class="key keypos-32">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
@@ -457,7 +457,7 @@ path.combo {
 </a></g>
 <g transform="translate(286, 213) rotate(15.0)" class="key keypos-37">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
-<text x="0" y="0" class="key tap" style="font-size: 28px; font-weight: 700; font-family: Helvetica, Arial, sans-serif">r</text>
+<text x="0" y="0" class="key tap" style="font-size: 28px; font-weight: 700; font-family: Helvetica, Arial, sans-serif">s</text>
 <a href="#SYM">
 <text x="0" y="24" class="key hold layer-activator">SYM</text>
 </a></g>
@@ -1001,11 +1001,11 @@ path.combo {
 </g>
 <g transform="translate(140, 35)" class="key keypos-2">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
-<text x="0" y="0" class="key tap" style="font-size: 20px; font-weight: 400; font-family: Helvetica, Arial, sans-serif">NIHT</text>
+<text x="0" y="0" class="key tap" style="font-size: 20px; font-weight: 400; font-family: Helvetica, Arial, sans-serif">XCN7</text>
 </g>
 <g transform="translate(196, 28)" class="key keypos-3">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
-<text x="0" y="0" class="key tap" style="font-size: 20px; font-weight: 400; font-family: Helvetica, Arial, sans-serif">NIHT</text>
+<text x="0" y="0" class="key tap" style="font-size: 20px; font-weight: 400; font-family: Helvetica, Arial, sans-serif">BUYA</text>
 </g>
 <g transform="translate(252, 35)" class="key keypos-4">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
@@ -1150,7 +1150,7 @@ path.combo {
 </g>
 </g>
 </g>
-<rect x="0" y="1719.0" width="900.0" height="499.0" fill="white"/>
+<rect x="0" y="1719.0" width="900.0" height="211.0" fill="white"/>
 <text x="450.0" y="1739.0" text-anchor="middle" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; font-size: 22px; font-weight: 700; fill: #1a1a1a;">Magic Keys</text>
 <text x="130.0" y="1774.0" style="text-anchor: start; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; font-size: 15px; font-weight: 700; fill: #555;">WORDS &amp; SYMBOLS</text>
 <line x1="130.0" y1="1779.0" x2="770.0" y2="1779.0" stroke="#ddd" stroke-width="1"/>
@@ -1167,56 +1167,9 @@ path.combo {
 <text x="177.5" y="1861.0" text-anchor="middle" dominant-baseline="central" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: 700; fill: #555;">Period</text>
 <text x="227.0" y="1861.0" style="text-anchor: start; dominant-baseline: central; font-family: Arial, sans-serif; font-size: 18px; fill: #000;"><tspan style="font-family: Arial Bold, Arial-Bold, Arial; font-weight: bold;">.</tspan><tspan>/</tspan></text>
 <rect x="370.0" y="1848.0" width="75" height="26" rx="4" fill="#e8eaed"/>
-<text x="407.5" y="1861.0" text-anchor="middle" dominant-baseline="central" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: 700; fill: #555;">B</text>
-<text x="457.0" y="1861.0" style="text-anchor: start; dominant-baseline: central; font-family: Arial, sans-serif; font-size: 18px; fill: #000;"><tspan style="font-family: Arial Bold, Arial-Bold, Arial; font-weight: bold;">b</tspan><tspan>efore</tspan></text>
+<text x="407.5" y="1861.0" text-anchor="middle" dominant-baseline="central" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: 700; fill: #555;">/</text>
+<text x="457.0" y="1861.0" style="text-anchor: start; dominant-baseline: central; font-family: Arial, sans-serif; font-size: 18px; fill: #000;"><tspan style="font-family: Arial Bold, Arial-Bold, Arial; font-weight: bold;">/</tspan><tspan>*</tspan></text>
 <rect x="600.0" y="1848.0" width="75" height="26" rx="4" fill="#e8eaed"/>
-<text x="637.5" y="1861.0" text-anchor="middle" dominant-baseline="central" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: 700; fill: #555;">I</text>
-<text x="687.0" y="1861.0" style="text-anchor: start; dominant-baseline: central; font-family: Arial, sans-serif; font-size: 18px; fill: #000;"><tspan style="font-family: Arial Bold, Arial-Bold, Arial; font-weight: bold;">i</tspan><tspan>on</tspan></text>
-<rect x="140.0" y="1886.0" width="75" height="26" rx="4" fill="#e8eaed"/>
-<text x="177.5" y="1899.0" text-anchor="middle" dominant-baseline="central" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: 700; fill: #555;">J</text>
-<text x="227.0" y="1899.0" style="text-anchor: start; dominant-baseline: central; font-family: Arial, sans-serif; font-size: 18px; fill: #000;"><tspan style="font-family: Arial Bold, Arial-Bold, Arial; font-weight: bold;">j</tspan><tspan>ust</tspan></text>
-<rect x="370.0" y="1886.0" width="75" height="26" rx="4" fill="#e8eaed"/>
-<text x="407.5" y="1899.0" text-anchor="middle" dominant-baseline="central" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: 700; fill: #555;">M</text>
-<text x="457.0" y="1899.0" style="text-anchor: start; dominant-baseline: central; font-family: Arial, sans-serif; font-size: 18px; fill: #000;"><tspan style="font-family: Arial Bold, Arial-Bold, Arial; font-weight: bold;">m</tspan><tspan>ent</tspan></text>
-<rect x="600.0" y="1886.0" width="75" height="26" rx="4" fill="#e8eaed"/>
-<text x="637.5" y="1899.0" text-anchor="middle" dominant-baseline="central" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: 700; fill: #555;">N</text>
-<text x="687.0" y="1899.0" style="text-anchor: start; dominant-baseline: central; font-family: Arial, sans-serif; font-size: 18px; fill: #000;"><tspan style="font-family: Arial Bold, Arial-Bold, Arial; font-weight: bold;">n</tspan><tspan>ion</tspan></text>
-<rect x="140.0" y="1924.0" width="75" height="26" rx="4" fill="#e8eaed"/>
-<text x="177.5" y="1937.0" text-anchor="middle" dominant-baseline="central" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: 700; fill: #555;">Q</text>
-<text x="227.0" y="1937.0" style="text-anchor: start; dominant-baseline: central; font-family: Arial, sans-serif; font-size: 18px; fill: #000;"><tspan style="font-family: Arial Bold, Arial-Bold, Arial; font-weight: bold;">q</tspan><tspan>ue</tspan></text>
-<rect x="370.0" y="1924.0" width="75" height="26" rx="4" fill="#e8eaed"/>
-<text x="407.5" y="1937.0" text-anchor="middle" dominant-baseline="central" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: 700; fill: #555;">T</text>
-<text x="457.0" y="1937.0" style="text-anchor: start; dominant-baseline: central; font-family: Arial, sans-serif; font-size: 18px; fill: #000;"><tspan style="font-family: Arial Bold, Arial-Bold, Arial; font-weight: bold;">t</tspan><tspan>ion</tspan></text>
-<rect x="600.0" y="1924.0" width="75" height="26" rx="4" fill="#e8eaed"/>
-<text x="637.5" y="1937.0" text-anchor="middle" dominant-baseline="central" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: 700; fill: #555;">W</text>
-<text x="687.0" y="1937.0" style="text-anchor: start; dominant-baseline: central; font-family: Arial, sans-serif; font-size: 18px; fill: #000;"><tspan style="font-family: Arial Bold, Arial-Bold, Arial; font-weight: bold;">w</tspan><tspan>hich</tspan></text>
-<rect x="140.0" y="1962.0" width="75" height="26" rx="4" fill="#e8eaed"/>
-<text x="177.5" y="1975.0" text-anchor="middle" dominant-baseline="central" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: 700; fill: #555;">&lt;</text>
-<text x="227.0" y="1975.0" style="text-anchor: start; dominant-baseline: central; font-family: Arial, sans-serif; font-size: 18px; fill: #000;"><tspan style="font-family: Arial Bold, Arial-Bold, Arial; font-weight: bold;">&lt;</tspan><tspan>&gt;</tspan></text>
-<rect x="370.0" y="1962.0" width="75" height="26" rx="4" fill="#e8eaed"/>
-<text x="407.5" y="1975.0" text-anchor="middle" dominant-baseline="central" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: 700; fill: #555;">[</text>
-<text x="457.0" y="1975.0" style="text-anchor: start; dominant-baseline: central; font-family: Arial, sans-serif; font-size: 18px; fill: #000;"><tspan style="font-family: Arial Bold, Arial-Bold, Arial; font-weight: bold;">[</tspan><tspan>]</tspan></text>
-<rect x="600.0" y="1962.0" width="75" height="26" rx="4" fill="#e8eaed"/>
-<text x="637.5" y="1975.0" text-anchor="middle" dominant-baseline="central" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: 700; fill: #555;">(</text>
-<text x="687.0" y="1975.0" style="text-anchor: start; dominant-baseline: central; font-family: Arial, sans-serif; font-size: 18px; fill: #000;"><tspan style="font-family: Arial Bold, Arial-Bold, Arial; font-weight: bold;">(</tspan><tspan>_</tspan></text>
-<rect x="140.0" y="2000.0" width="75" height="26" rx="4" fill="#e8eaed"/>
-<text x="177.5" y="2013.0" text-anchor="middle" dominant-baseline="central" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: 700; fill: #555;">/</text>
-<text x="227.0" y="2013.0" style="text-anchor: start; dominant-baseline: central; font-family: Arial, sans-serif; font-size: 18px; fill: #000;"><tspan style="font-family: Arial Bold, Arial-Bold, Arial; font-weight: bold;">/</tspan><tspan>*</tspan></text>
-<rect x="370.0" y="2000.0" width="75" height="26" rx="4" fill="#e8eaed"/>
-<text x="407.5" y="2013.0" text-anchor="middle" dominant-baseline="central" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: 700; fill: #555;">*</text>
-<text x="457.0" y="2013.0" style="text-anchor: start; dominant-baseline: central; font-family: Arial, sans-serif; font-size: 18px; fill: #000;"><tspan style="font-family: Arial Bold, Arial-Bold, Arial; font-weight: bold;">*</tspan><tspan>/</tspan></text>
-<text x="130.0" y="2062.0" style="text-anchor: start; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; font-size: 15px; font-weight: 700; fill: #555;">LETTER ALTERNATIVES</text>
-<line x1="130.0" y1="2067.0" x2="770.0" y2="2067.0" stroke="#ddd" stroke-width="1"/>
-<rect x="140.0" y="2098.0" width="75" height="26" rx="4" fill="#e8eaed"/>
-<text x="177.5" y="2111.0" text-anchor="middle" dominant-baseline="central" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: 700; fill: #555;">C</text>
-<text x="227.0" y="2111.0" style="text-anchor: start; dominant-baseline: central; font-family: Arial, sans-serif; font-size: 18px; fill: #000;"><tspan style="font-family: Arial Bold, Arial-Bold, Arial; font-weight: bold;">c</tspan><tspan>y</tspan></text>
-<rect x="370.0" y="2098.0" width="75" height="26" rx="4" fill="#e8eaed"/>
-<text x="407.5" y="2111.0" text-anchor="middle" dominant-baseline="central" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: 700; fill: #555;">G</text>
-<text x="457.0" y="2111.0" style="text-anchor: start; dominant-baseline: central; font-family: Arial, sans-serif; font-size: 18px; fill: #000;"><tspan style="font-family: Arial Bold, Arial-Bold, Arial; font-weight: bold;">g</tspan><tspan>y</tspan></text>
-<rect x="600.0" y="2098.0" width="75" height="26" rx="4" fill="#e8eaed"/>
-<text x="637.5" y="2111.0" text-anchor="middle" dominant-baseline="central" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: 700; fill: #555;">L</text>
-<text x="687.0" y="2111.0" style="text-anchor: start; dominant-baseline: central; font-family: Arial, sans-serif; font-size: 18px; fill: #000;"><tspan style="font-family: Arial Bold, Arial-Bold, Arial; font-weight: bold;">l</tspan><tspan>p</tspan></text>
-<rect x="140.0" y="2136.0" width="75" height="26" rx="4" fill="#e8eaed"/>
-<text x="177.5" y="2149.0" text-anchor="middle" dominant-baseline="central" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: 700; fill: #555;">P</text>
-<text x="227.0" y="2149.0" style="text-anchor: start; dominant-baseline: central; font-family: Arial, sans-serif; font-size: 18px; fill: #000;"><tspan style="font-family: Arial Bold, Arial-Bold, Arial; font-weight: bold;">p</tspan><tspan>l</tspan></text>
+<text x="637.5" y="1861.0" text-anchor="middle" dominant-baseline="central" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: 700; fill: #555;">*</text>
+<text x="687.0" y="1861.0" style="text-anchor: start; dominant-baseline: central; font-family: Arial, sans-serif; font-size: 18px; fill: #000;"><tspan style="font-family: Arial Bold, Arial-Bold, Arial; font-weight: bold;">*</tspan><tspan>/</tspan></text>
 </svg>
