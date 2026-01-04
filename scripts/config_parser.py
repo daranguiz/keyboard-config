@@ -378,7 +378,8 @@ class YAMLConfigParser:
                 require_prior_idle_ms=combo_data.get('require_prior_idle_ms'),
                 layers=combo_data.get('layers'),
                 slow_release=combo_data.get('slow_release', False),
-                hold_ms=combo_data.get('hold_ms')  # DEPRECATED but kept for backwards compatibility
+                hold_ms=combo_data.get('hold_ms'),  # DEPRECATED but kept for backwards compatibility
+                training=combo_data.get('training', False)  # Default: training disabled
             )
 
             combo.validate()

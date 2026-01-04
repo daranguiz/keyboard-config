@@ -5,7 +5,7 @@ This module defines the core data structures used throughout the generator.
 """
 
 from dataclasses import dataclass, field
-from typing import List, Dict, Any, Optional, Literal, Union
+from typing import List, Dict, Any, Optional, Literal, Union, Tuple
 import re
 
 
@@ -434,6 +434,7 @@ class Combo:
     - layers: List of layer names where combo is active (None = all layers)
     - slow_release: ZMK-specific: require all keys released simultaneously (default: False)
     - hold_ms: DEPRECATED - use standard instant combos instead
+    - training: Enable combo training (punish sequential typing of output bigram)
     """
     name: str
     description: str
@@ -445,6 +446,7 @@ class Combo:
     layers: Optional[List[str]] = None  # None = active on all layers
     slow_release: bool = False  # ZMK: require simultaneous release
     hold_ms: Optional[int] = None  # DEPRECATED: For backwards compatibility
+    training: bool = False  # Enable combo training (default: off)
 
     def validate(self):
         """Validate combo configuration"""
@@ -478,6 +480,24 @@ class Combo:
             raise ValidationError(
                 f"Combo {self.name}: hold_ms must be positive"
             )
+
+    def get_training_bigram(self) -> Optional[Tuple[str, str]]:
+        """
+        Get the training bigram for this combo.
+
+        Only returns a bigram for exactly 2-character outputs to avoid training
+        on trigrams, URLs, or long text expansions.
+
+        Returns:
+            Tuple of (first_char, second_char) if macro_text is exactly 2 chars and training enabled,
+            None otherwise.
+        """
+        if not self.training or not self.macro_text:
+            return None
+        # Only train on exactly 2-character bigrams
+        if len(self.macro_text) != 2:
+            return None
+        return (self.macro_text[-2], self.macro_text[-1])
 
 
 @dataclass

@@ -53,9 +53,11 @@ from data_model import CompiledLayer, Board, ComboConfiguration, Combo, Validati
 class ZMKGenerator:
     """Generate ZMK devicetree keymap files"""
 
-    def __init__(self, magic_training: bool = False, special_keycodes: Dict[str, Dict[str, str]] = None,
+    def __init__(self, magic_training: bool = False, combo_training: bool = True,
+                 special_keycodes: Dict[str, Dict[str, str]] = None,
                  behaviors_dtsi_path: str = None):
         self.magic_training = magic_training
+        self.combo_training = combo_training
         self.special_keycodes = special_keycodes or {}
         self.char_token_map = self._build_char_token_map()
         # Track macro behaviors generated for magic/combos so bindings can reference them
@@ -237,6 +239,22 @@ class ZMKGenerator:
                 if training_behaviors:
                     behaviors_section += "\n" + training_behaviors
 
+        # Generate combo training behaviors
+        if combos and combos.combos and self.combo_training:
+            combo_training_behaviors, combo_training_replacements = self.generate_combo_training_section(
+                combos, compiled_layers
+            )
+            if combo_training_behaviors:
+                if behaviors_section:
+                    behaviors_section += "\n" + combo_training_behaviors
+                else:
+                    behaviors_section = "\n" + combo_training_behaviors
+            # Merge combo training replacements into training_replacements
+            for layer_name, replacements in combo_training_replacements.items():
+                if layer_name not in training_replacements:
+                    training_replacements[layer_name] = {}
+                training_replacements[layer_name].update(replacements)
+
         # Generate shift-morph (mod-morph) behaviors
         if shift_morphs:
             shift_morph_section = self.generate_shift_morph_behaviors(shift_morphs)
@@ -299,21 +317,28 @@ class ZMKGenerator:
 
         # Apply training replacements if applicable to this layer's base family
         keycodes = layer.keycodes
-        if training_replacements and magic_config:
-            # Determine base mapping for this layer
-            mapping = magic_config.get_mapping_for_layer(layer.name) if hasattr(magic_config, "get_mapping_for_layer") else None
-            if mapping:
-                base_layer = mapping.base_layer
-                if base_layer in training_replacements:
-                    replacement_map = training_replacements[base_layer]
-                    keycodes = [replacement_map.get(kc, kc) for kc in keycodes]
+        if training_replacements:
+            if magic_config:
+                # Determine base mapping for this layer
+                mapping = magic_config.get_mapping_for_layer(layer.name) if hasattr(magic_config, "get_mapping_for_layer") else None
+                if mapping:
+                    base_layer = mapping.base_layer
+                    if base_layer in training_replacements:
+                        replacement_map = training_replacements[base_layer]
+                        keycodes = [replacement_map.get(kc, kc) for kc in keycodes]
+                else:
+                    # For overlay layers (NUM, SYM, etc.) that aren't associated with a specific
+                    # base layer, apply training from ALL base layers. This ensures magic alternates
+                    # like COLON (from "1": ":") get trained even when typed on overlay layers.
+                    # If the same keycode has different training behaviors in different base layers,
+                    # we prefer the first one (typically PRIMARY).
+                    for base_layer, replacement_map in training_replacements.items():
+                        keycodes = [replacement_map.get(kc, kc) for kc in keycodes]
             else:
-                # For overlay layers (NUM, SYM, etc.) that aren't associated with a specific
-                # base layer, apply training from ALL base layers. This ensures magic alternates
-                # like COLON (from "1": ":") get trained even when typed on overlay layers.
-                # If the same keycode has different training behaviors in different base layers,
-                # we prefer the first one (typically PRIMARY).
-                for base_layer, replacement_map in training_replacements.items():
+                # No magic config - apply training replacements directly by layer name
+                # This handles combo training when no magic keys are defined
+                if layer.name in training_replacements:
+                    replacement_map = training_replacements[layer.name]
                     keycodes = [replacement_map.get(kc, kc) for kc in keycodes]
 
         bindings = self._format_bindings(keycodes, board.layout_size)
@@ -1193,6 +1218,157 @@ class ZMKGenerator:
         behaviors_code = "\n".join(code_lines) if len(code_lines) > 2 else ""
         return behaviors_code, replacement_map
 
+    def generate_combo_training_section(
+        self,
+        combos: 'ComboConfiguration',
+        compiled_layers: List[CompiledLayer]
+    ) -> Tuple[str, Dict[str, Dict[str, str]]]:
+        """
+        Generate combo training adaptive-key behaviors that emit '#' when combo
+        output bigrams are typed directly (instead of using the combo).
+
+        For each combo with macro_text (2+ chars), extracts the last 2 characters as
+        a training bigram. Creates adaptive-key behaviors for the second character
+        that guard against the first character.
+
+        Returns:
+            (behaviors_code, replacement_map) where replacement_map maps
+            base_layer -> {keycode: training_behavior_ref}
+        """
+        if not combos or not combos.combos:
+            return "", {}
+
+        # Collect training bigrams grouped by layer and second character
+        # Structure: {layer: {second_char: [(first_char, combo_name), ...]}}
+        layer_bigrams: Dict[str, Dict[str, List[Tuple[str, str]]]] = {}
+
+        for combo in combos.combos:
+            bigram = combo.get_training_bigram()
+            if not bigram:
+                continue
+
+            first_char, second_char = bigram
+            # Apply to all layers where this combo is active
+            target_layers = combo.layers if combo.layers else [l.name for l in compiled_layers if l.name.startswith("BASE_")]
+
+            for layer in target_layers:
+                if layer not in layer_bigrams:
+                    layer_bigrams[layer] = {}
+                if second_char not in layer_bigrams[layer]:
+                    layer_bigrams[layer][second_char] = []
+                layer_bigrams[layer][second_char].append((first_char, combo.name))
+
+        if not layer_bigrams:
+            return "", {}
+
+        code_lines = [
+            "    // Combo training behaviors: punish sequential typing of combo output bigrams",
+            "    behaviors {",
+        ]
+
+        replacement_map: Dict[str, Dict[str, str]] = {}
+        training_meta: Dict[str, Dict[str, Dict[str, str]]] = {}
+
+        for layer_name, second_chars in layer_bigrams.items():
+            behavior_suffix = layer_name.lower().replace("base_", "")
+            replacement_map[layer_name] = {}
+            training_meta[layer_name] = {}
+
+            for second_char, first_chars_info in second_chars.items():
+                second_zmk = self._translate_simple_keycode(second_char)
+                second_safe = self._sanitize_token(second_zmk)
+                behavior_name = f"ak_combo_train_{behavior_suffix}_{second_safe}"
+
+                # Collect unique trigger keys (first chars)
+                trigger_keys = []
+                for first_char, _ in first_chars_info:
+                    first_zmk = self._translate_simple_keycode(first_char)
+                    trigger_key = first_zmk.replace("&kp ", "")
+                    if trigger_key not in trigger_keys:
+                        trigger_keys.append(trigger_key)
+
+                # Generate adaptive-key behavior
+                code_lines.append(f"        {behavior_name}: {behavior_name} {{")
+                code_lines.append(f"            compatible = \"zmk,behavior-adaptive-key\";")
+                code_lines.append(f"            #binding-cells = <0>;")
+                code_lines.append(f"            bindings = <{second_zmk}>;")
+                code_lines.append(f"            guard_trigger {{")
+                code_lines.append(f"                trigger-keys = <{' '.join(trigger_keys)}>;")
+                code_lines.append(f"                bindings = <&kp HASH>;")
+                code_lines.append(f"            }};")
+                code_lines.append(f"        }};")
+                code_lines.append("")
+
+                # Add to replacement map
+                replacement_map[layer_name][second_zmk] = f"&{behavior_name}"
+                training_meta[layer_name][second_zmk] = {
+                    "behavior_name": behavior_name,
+                    "second_safe": second_safe,
+                    "behavior_suffix": behavior_suffix,
+                }
+
+        # Generate HRM training wrappers for combo-trained keys that are home-row mods
+        hrm_behavior_names: set = set()
+        for layer in compiled_layers:
+            if layer.name not in training_meta:
+                continue
+
+            for kc in layer.keycodes:
+                if not (kc.startswith("&hml") or kc.startswith("&hmr")):
+                    continue
+                parts = kc.split()
+                if len(parts) < 3:
+                    continue
+                mod = parts[1]
+                tap_key = parts[2]
+                tap_zmk = self._translate_simple_keycode(tap_key)
+
+                if tap_zmk not in training_meta[layer.name]:
+                    continue
+
+                meta = training_meta[layer.name][tap_zmk]
+                behavior_suffix = meta["behavior_suffix"]
+                second_safe = meta["second_safe"]
+                ak_train_ref = f"&{meta['behavior_name']}"
+
+                if kc.startswith("&hml"):
+                    hrm_name = f"hml_combo_train_{behavior_suffix}_{second_safe}"
+                    if hrm_name not in hrm_behavior_names:
+                        exclude_props = ['compatible', 'label', 'binding-cells', 'bindings']
+                        code_lines.append(f"        {hrm_name}: {hrm_name} {{")
+                        code_lines.append(f"            compatible = \"zmk,behavior-hold-tap\";")
+                        code_lines.append(f"            label = \"HML_COMBO_TRAIN_{behavior_suffix.upper()}_{second_safe.upper()}\";")
+                        code_lines.append(f"            #binding-cells = <2>;")
+                        code_lines.extend(self._emit_behavior_properties('hml', exclude=exclude_props))
+                        code_lines.append(f"            bindings = <&kp>, <{ak_train_ref}>;")
+                        code_lines.append(f"        }};")
+                        code_lines.append("")
+                        hrm_behavior_names.add(hrm_name)
+
+                    replacement_map.setdefault(layer.name, {})[kc] = f"&{hrm_name} {mod} 0"
+
+                elif kc.startswith("&hmr"):
+                    hrm_name = f"hmr_combo_train_{behavior_suffix}_{second_safe}"
+                    if hrm_name not in hrm_behavior_names:
+                        exclude_props = ['compatible', 'label', 'binding-cells', 'bindings']
+                        code_lines.append(f"        {hrm_name}: {hrm_name} {{")
+                        code_lines.append(f"            compatible = \"zmk,behavior-hold-tap\";")
+                        code_lines.append(f"            label = \"HMR_COMBO_TRAIN_{behavior_suffix.upper()}_{second_safe.upper()}\";")
+                        code_lines.append(f"            #binding-cells = <2>;")
+                        code_lines.extend(self._emit_behavior_properties('hmr', exclude=exclude_props))
+                        code_lines.append(f"            bindings = <&kp>, <{ak_train_ref}>;")
+                        code_lines.append(f"        }};")
+                        code_lines.append("")
+                        hrm_behavior_names.add(hrm_name)
+
+                    replacement_map.setdefault(layer.name, {})[kc] = f"&{hrm_name} {mod} 0"
+
+        code_lines.append("    };")
+        code_lines.append("")
+
+        behaviors_code = "\n".join(code_lines) if len(code_lines) > 2 else ""
+        return behaviors_code, replacement_map
+
     def _translate_simple_keycode(self, keycode) -> str:
         """
         Translate simple keycode to ZMK format (for magic key mappings)
@@ -1240,6 +1416,10 @@ class ZMKGenerator:
             if zmk_val:
                 return zmk_val
 
+        # Single letter - check this BEFORE the char_token_map lookup to avoid false errors
+        if isinstance(keycode, str) and len(keycode) == 1 and keycode.isalpha():
+            return f"&kp {keycode.upper()}"
+
         # Canonicalize single-character punctuation/digits to tokens based on keycodes.yaml
         if isinstance(keycode, str) and len(keycode) == 1:
             token = self.char_token_map.get(keycode)
@@ -1248,10 +1428,6 @@ class ZMKGenerator:
                 if zmk_val:
                     return zmk_val
             raise ValidationError(f"Unknown magic key '{keycode}' not found in keycodes.yaml")
-
-        # Single letter
-        if isinstance(keycode, str) and len(keycode) == 1 and keycode.isalpha():
-            return f"&kp {keycode.upper()}"
 
         # Already prefixed
         if keycode.startswith("&kp "):

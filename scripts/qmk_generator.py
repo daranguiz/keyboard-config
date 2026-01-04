@@ -13,10 +13,11 @@ from data_model import Board, CompiledLayer, ComboConfiguration, Combo, Validati
 class QMKGenerator:
     """Generate QMK C keymap files"""
 
-    def __init__(self, special_keycodes: Dict[str, Dict[str, str]] = None):
+    def __init__(self, special_keycodes: Dict[str, Dict[str, str]] = None, combo_training: bool = True):
         # Track magic macro strings for QMK (text expansions)
         self.magic_macros: Dict[str, str] = {}
         self.special_keycodes = special_keycodes or {}
+        self.combo_training = combo_training
         self.char_token_map = self._build_char_token_map()
 
     def generate_keymap(
@@ -139,6 +140,9 @@ enum {{
         if shift_morphs:
             key_override_code = "\n" + self.generate_key_overrides(shift_morphs)
 
+        # Generate combo training check function
+        combo_training_code = self.generate_combo_training_check(combos)
+
         return f"""// AUTO-GENERATED - DO NOT EDIT
 // Generated from config/keymap.yaml by scripts/generate.py
 // Board: {board.name}
@@ -150,7 +154,7 @@ enum {{
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {{
 {layers_code}
 }};
-{combo_code}{magic_code}{magic_handlers}{key_override_code}"""
+{combo_code}{magic_code}{magic_handlers}{combo_training_code}{key_override_code}"""
 
     def format_layer_definition(
         self,
@@ -1202,6 +1206,89 @@ combo_t key_combos[] = {{
             lines.append(f"        case {name}: return {keycode_str};")
         lines.append("    }")
         lines.append("    return keycode;")
+        lines.append("}")
+        lines.append("")
+
+        return "\n".join(lines)
+
+    def generate_combo_training_check(self, combos: 'ComboConfiguration') -> str:
+        """
+        Generate combo_training_check() function that detects sequential typing of combo outputs.
+
+        For each combo with macro_text (2+ chars), extracts the last 2 characters as a training
+        bigram. Returns a function that checks if (prev_kc, curr_kc) matches any such bigram.
+
+        Args:
+            combos: ComboConfiguration with combo definitions
+
+        Returns:
+            C code string with combo_training_check() function
+        """
+        # If combo training is disabled, return stub function
+        if not self.combo_training:
+            return """
+// Combo training check (disabled)
+bool combo_training_check(uint16_t prev_kc, uint16_t curr_kc) {
+    return false;
+}
+"""
+
+        if not combos or not combos.combos:
+            # Return stub function when no combos
+            return """
+// Combo training check (no combos defined)
+bool combo_training_check(uint16_t prev_kc, uint16_t curr_kc) {
+    return false;
+}
+"""
+
+        # Collect training bigrams: (first_char, second_char) -> combo name (for comments)
+        # Group by first character for efficient switch statement
+        bigrams_by_first: Dict[str, List[Tuple[str, str]]] = {}  # first_char -> [(second_char, combo_name), ...]
+        for combo in combos.combos:
+            bigram = combo.get_training_bigram()
+            if bigram:
+                first, second = bigram
+                if first not in bigrams_by_first:
+                    bigrams_by_first[first] = []
+                bigrams_by_first[first].append((second, combo.name))
+
+        if not bigrams_by_first:
+            # No trainable combos
+            return """
+// Combo training check (no trainable combos)
+bool combo_training_check(uint16_t prev_kc, uint16_t curr_kc) {
+    return false;
+}
+"""
+
+        lines = [
+            "",
+            "// Combo training: punish sequential typing of combo output bigrams",
+            "bool combo_training_check(uint16_t prev_kc, uint16_t curr_kc) {",
+            "    switch (prev_kc) {",
+        ]
+
+        for first_char in sorted(bigrams_by_first.keys()):
+            first_kc = self._char_to_qmk_keycode(first_char)
+            second_chars = bigrams_by_first[first_char]
+
+            if len(second_chars) == 1:
+                # Single second char - simple case
+                second_char, combo_name = second_chars[0]
+                second_kc = self._char_to_qmk_keycode(second_char)
+                lines.append(f"        case {first_kc}:  // {combo_name}: '{first_char}' -> '{second_char}'")
+                lines.append(f"            return curr_kc == {second_kc};")
+            else:
+                # Multiple second chars possible - need nested check
+                lines.append(f"        case {first_kc}:")
+                for second_char, combo_name in second_chars:
+                    second_kc = self._char_to_qmk_keycode(second_char)
+                    lines.append(f"            if (curr_kc == {second_kc}) return true;  // {combo_name}")
+                lines.append("            return false;")
+
+        lines.append("    }")
+        lines.append("    return false;")
         lines.append("}")
         lines.append("")
 

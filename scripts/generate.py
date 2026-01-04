@@ -141,7 +141,7 @@ def apply_osl_shadows(keymap_config: KeymapConfiguration) -> KeymapConfiguration
 class KeymapGenerator:
     """Main generator orchestrator"""
 
-    def __init__(self, repo_root: Path, verbose: bool = False, magic_training: bool = True):
+    def __init__(self, repo_root: Path, verbose: bool = False, magic_training: bool = True, combo_training: bool = True):
         """
         Initialize generator
 
@@ -149,11 +149,13 @@ class KeymapGenerator:
             repo_root: Repository root directory
             verbose: Enable verbose output
             magic_training: Enable magic-key training mode (punish direct bigrams)
+            combo_training: Enable combo training mode (punish sequential typing of combo outputs)
         """
         self.repo_root = repo_root
         self.config_dir = repo_root / "config"
         self.verbose = verbose
         self.magic_training = magic_training
+        self.combo_training = combo_training
 
         # Parse configuration
         self._log("📖 Parsing configuration...")
@@ -318,7 +320,7 @@ class KeymapGenerator:
 
     def _generate_qmk(self, board, compiled_layers, keymap_config):
         """Generate QMK keymap files"""
-        generator = QMKGenerator(special_keycodes=self.special_keycodes)
+        generator = QMKGenerator(special_keycodes=self.special_keycodes, combo_training=self.combo_training)
         output_dir = self.repo_root / board.get_output_directory()
 
         # Get shift-morphs collected during compilation
@@ -365,6 +367,7 @@ class KeymapGenerator:
         behaviors_dtsi = self.repo_root / "zmk" / "config" / "dario_behaviors.dtsi"
         generator = ZMKGenerator(
             magic_training=self.magic_training,
+            combo_training=self.combo_training,
             special_keycodes=self.special_keycodes,
             behaviors_dtsi_path=str(behaviors_dtsi) if behaviors_dtsi.exists() else None
         )
@@ -571,6 +574,11 @@ def main():
         action="store_true",
         help="Disable magic-key training (default is on; training replaces mapped bigrams with '#')"
     )
+    parser.add_argument(
+        "--no-combo-training",
+        action="store_true",
+        help="Disable combo training (default is on; training punishes sequential typing of combo outputs with '#')"
+    )
 
     args = parser.parse_args()
 
@@ -582,7 +590,8 @@ def main():
         generator = KeymapGenerator(
             repo_root,
             verbose=args.verbose,
-            magic_training=not args.no_magic_training
+            magic_training=not args.no_magic_training,
+            combo_training=not args.no_combo_training
         )
 
         if args.validate_only:

@@ -170,9 +170,9 @@ combos:
     timeout_ms: 100  # Slightly longer for 4-key combo
     layers: [BASE_PRIMARY, BASE_ALT, BASE_ALT2]
 
-  - name: sh_to_lm
-    description: SH combo produces LM"
-    key_positions: [11, 12]  # S and H on left hand home row
+  - name: ht_to_lm
+    description: HT combo produces LM"
+    key_positions: [12, 13]  # H and T on left hand home row
     action: MACRO_LM
     macro_text: "lm"
     timeout_ms: 20
@@ -186,13 +186,13 @@ combos:
     timeout_ms: 30
     layers: [BASE_PRIMARY]
 
-  - name: ht_to_pt
-    description: "HT combo produces PT"
-    key_positions: [12, 13]  # H and T on right hand home row
-    action: MACRO_PT
-    macro_text: "pt"
-    timeout_ms: 20
-    layers: [BASE_PRIMARY]
+  # - name: ht_to_pt
+  #   description: "HT combo produces PT"
+  #   key_positions: [12, 13]  # H and T on right hand home row
+  #   action: MACRO_PT
+  #   macro_text: "pt"
+  #   timeout_ms: 20
+  #   layers: [BASE_PRIMARY]
 
   - name: cae_to_cyc
     description: "CAE combo produces CYC"

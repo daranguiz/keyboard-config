@@ -9,7 +9,7 @@ enum magic_macros {
     MACRO_GITHUB_URL = SAFE_RANGE,
     MACRO_HT_TO_LM,
     MACRO_STH_TO_LLM,
-    MACRO_CA_TO_PT,
+    MACRO_CAE_TO_CYC,
     MAGIC_ALT2_B,
     MAGIC_ALT2_CHR_32,
     MAGIC_ALT2_CHR_44,
@@ -88,7 +88,7 @@ enum combo_events {
     COMBO_GITHUB_URL,
     COMBO_HT_TO_LM,
     COMBO_STH_TO_LLM,
-    COMBO_CA_TO_PT,
+    COMBO_CAE_TO_CYC,
     COMBO_LENGTH
 };
 
@@ -100,7 +100,7 @@ const uint16_t PROGMEM dfu_right_combo[] = {KC_J, KC_DOT, KC_QUOT, COMBO_END};
 const uint16_t PROGMEM github_url_combo[] = {KC_G, KC_O, KC_U, KC_DOT, COMBO_END};
 const uint16_t PROGMEM ht_to_lm_combo[] = {KC_H, KC_T, COMBO_END};
 const uint16_t PROGMEM sth_to_llm_combo[] = {KC_S, KC_H, KC_T, COMBO_END};
-const uint16_t PROGMEM ca_to_pt_combo[] = {KC_C, KC_A, COMBO_END};
+const uint16_t PROGMEM cae_to_cyc_combo[] = {KC_C, KC_A, KC_E, COMBO_END};
 
 // Combo definitions
 combo_t key_combos[] = {
@@ -109,7 +109,7 @@ combo_t key_combos[] = {
     [COMBO_GITHUB_URL] = COMBO(github_url_combo, MACRO_GITHUB_URL),
     [COMBO_HT_TO_LM] = COMBO(ht_to_lm_combo, MACRO_HT_TO_LM),
     [COMBO_STH_TO_LLM] = COMBO(sth_to_llm_combo, MACRO_STH_TO_LLM),
-    [COMBO_CA_TO_PT] = COMBO(ca_to_pt_combo, MACRO_CA_TO_PT)
+    [COMBO_CAE_TO_CYC] = COMBO(cae_to_cyc_combo, MACRO_CAE_TO_CYC)
 };
 
 
@@ -134,7 +134,7 @@ bool combo_should_trigger(uint16_t combo_index, combo_t *combo, uint16_t keycode
         case COMBO_STH_TO_LLM:
             // Only active on BASE_PRIMARY
             return (layer == BASE_PRIMARY);
-        case COMBO_CA_TO_PT:
+        case COMBO_CAE_TO_CYC:
             // Only active on BASE_PRIMARY
             return (layer == BASE_PRIMARY);
         default:
@@ -161,9 +161,9 @@ bool process_combo_macros(uint16_t keycode, keyrecord_t *record) {
                 SEND_STRING("llm");
             }
             return false;
-        case MACRO_CA_TO_PT:
+        case MACRO_CAE_TO_CYC:
             if (record->event.pressed) {
-                SEND_STRING("pt");
+                SEND_STRING("cyc");
             }
             return false;
         default:
@@ -301,6 +301,11 @@ uint16_t magic_training_first_keycode(uint16_t keycode) {
         case MAGIC_PRIMARY_CHR_44: return KC_NO;
     }
     return keycode;
+}
+
+// Combo training check (no trainable combos)
+bool combo_training_check(uint16_t prev_kc, uint16_t curr_kc) {
+    return false;
 }
 
 

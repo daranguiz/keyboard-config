@@ -10,6 +10,9 @@ extern bool process_magic_record(uint16_t keycode, keyrecord_t *record);
 // Training helper generated in keymap.c (maps magic macro to its first key)
 __attribute__((weak)) uint16_t magic_training_first_keycode(uint16_t keycode) { return keycode; }
 
+// Combo training helper generated in keymap.c (checks if prev+curr matches combo output bigram)
+__attribute__((weak)) bool combo_training_check(uint16_t prev_kc, uint16_t curr_kc) { return false; }
+
 #define MAGIC_LOG(...) uprintf(__VA_ARGS__)
 
 // Track previous tapped key for training (independent of QK_REP tracking)
@@ -143,6 +146,16 @@ bool magic_process_record(uint16_t keycode, keyrecord_t *record) {
                       last_key,
                       alt,
                       expected,
+                      get_highest_layer(layer_state));
+            tap_code16(KC_HASH);
+            return false;
+        }
+
+        // Combo training: check if previous+current key matches a combo output bigram
+        if (combo_training_check(last_key, tap)) {
+            MAGIC_LOG("COMBO_TRAIN block prev=%u curr=%u layer=%u\n",
+                      last_key,
+                      tap,
                       get_highest_layer(layer_state));
             tap_code16(KC_HASH);
             return false;

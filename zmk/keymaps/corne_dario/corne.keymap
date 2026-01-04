@@ -59,10 +59,10 @@
             layers = <0>;
         };
 
-        combo_ca_to_pt {
-            timeout-ms = <20>;
-            key-positions = <19 20>;
-            bindings = <&ca_to_pt>;
+        combo_cae_to_cyc {
+            timeout-ms = <30>;
+            key-positions = <19 20 21>;
+            bindings = <&cae_to_cyc>;
             layers = <0>;
         };
     };
@@ -88,14 +88,14 @@
                 , <&macro_tap &kp L &kp L &kp M>
                 ;
         };
-        ca_to_pt: ca_to_pt_macro {
+        cae_to_cyc: cae_to_cyc_macro {
             compatible = "zmk,behavior-macro";
-            label = "CA_TO_PT";
+            label = "CAE_TO_CYC";
             #binding-cells = <0>;
             bindings
                 = <&macro_wait_time 10>
                 , <&macro_tap_time 10>
-                , <&macro_tap &kp P &kp T>
+                , <&macro_tap &kp C &kp Y &kp C>
                 ;
         };
         magic_primary_chr_32: magic_primary_chr_32_macro {
