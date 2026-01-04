@@ -278,6 +278,11 @@
                 bindings = <&kp Y>;
                 max-prior-idle-ms = <1000>;
             };
+            g_trigger {
+                trigger-keys = <G>;
+                bindings = <&kp Y>;
+                max-prior-idle-ms = <1000>;
+            };
             fslh_trigger {
                 trigger-keys = <FSLH>;
                 bindings = <&kp ASTERISK>;
@@ -337,6 +342,28 @@
                 trigger-keys = <DOT>;
                 bindings = <&kp FSLH>;
                 strict-modifiers;
+            };
+            fslh_trigger {
+                trigger-keys = <FSLH>;
+                bindings = <&kp ASTERISK>;
+                strict-modifiers;
+            };
+            asterisk_trigger {
+                trigger-keys = <ASTERISK>;
+                bindings = <&kp FSLH>;
+                strict-modifiers;
+            };
+            c_trigger {
+                trigger-keys = <C>;
+                bindings = <&kp Y>;
+            };
+            g_trigger {
+                trigger-keys = <G>;
+                bindings = <&kp Y>;
+            };
+            p_trigger {
+                trigger-keys = <P>;
+                bindings = <&kp Y>;
             };
         };
 
@@ -555,7 +582,7 @@
             #binding-cells = <0>;
             bindings = <&kp Y>;
             guard_trigger {
-                trigger-keys = <C>;
+                trigger-keys = <C G>;
                 bindings = <&kp HASH>;
                 strict-modifiers;  // Disable training for shifted predecessors
                 max-prior-idle-ms = <1000>;
@@ -608,8 +635,29 @@
             #binding-cells = <0>;
             bindings = <&kp FSLH>;
             guard_trigger {
-                trigger-keys = <DOT>;
+                trigger-keys = <DOT ASTERISK>;
                 bindings = <&kp HASH>;
+            };
+        };
+
+        ak_train_alt_asterisk: ak_train_alt_asterisk {
+            compatible = "zmk,behavior-adaptive-key";
+            #binding-cells = <0>;
+            bindings = <&kp ASTERISK>;
+            guard_trigger {
+                trigger-keys = <FSLH>;
+                bindings = <&kp HASH>;
+            };
+        };
+
+        ak_train_alt_y: ak_train_alt_y {
+            compatible = "zmk,behavior-adaptive-key";
+            #binding-cells = <0>;
+            bindings = <&kp Y>;
+            guard_trigger {
+                trigger-keys = <C G P>;
+                bindings = <&kp HASH>;
+                strict-modifiers;  // Disable training for shifted predecessors
             };
         };
 
@@ -850,7 +898,7 @@
         base_alt_layer {
             bindings = <
                 &none &kp B &kp F &kp L &kp K &kp Q &kp P &kp G &kp O &kp U &sm_dot_grv &none
-                &none &hml LGUI N &hml LALT S &hml LCTL H &hml LSFT T &kp M &kp Y &hmr LSFT C &hmr LCTL A &hmr LALT E &hmr LGUI I &none
+                &none &hml LGUI N &hml LALT S &hml LCTL H &hml LSFT T &kp M &ak_train_alt_y &hmr LSFT C &hmr LCTL A &hmr LALT E &hmr LGUI I &none
                 &none &kp X &kp V &kp J &kp D &kp Z &kp SQT &kp W &kp MINUS &ak_train_alt_fslh &sm_comm_at &none
                 &lt_ak_alt NUM 0 &lt SYM R &mt LSFT BSPC &mt LSFT TAB &lt NAV SPACE &lt MEDIA ENTER
             >;

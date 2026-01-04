@@ -198,6 +198,35 @@ def get_combos_from_keymap_c(keymap_c_path: Path) -> List[str]:
     return list(dict.fromkeys(matches))
 
 
+def get_combo_keycodes_from_keymap_c(keymap_c_path: Path) -> dict:
+    """
+    Extract combo key sequences from QMK keymap.c file.
+
+    Args:
+        keymap_c_path: Path to keymap.c
+
+    Returns:
+        Dict mapping combo name to list of keycodes in the combo sequence.
+        Example: {"dfu_left": ["KC_B", "KC_Q", "KC_Z"]}
+    """
+    import re
+    with open(keymap_c_path) as f:
+        content = f.read()
+
+    # Match pattern: const uint16_t PROGMEM name_combo[] = {keycodes, COMBO_END};
+    combo_pattern = r'const uint16_t PROGMEM (\w+)_combo\[\] = \{([^}]+)\};'
+    matches = re.findall(combo_pattern, content)
+
+    result = {}
+    for name, keycodes_str in matches:
+        # Parse keycodes, removing COMBO_END
+        keycodes = [kc.strip() for kc in keycodes_str.split(',')]
+        keycodes = [kc for kc in keycodes if kc and kc != 'COMBO_END']
+        result[name] = keycodes
+
+    return result
+
+
 def assert_auto_generated_warning(file_path: Path):
     """
     Assert that file contains AUTO-GENERATED warning.

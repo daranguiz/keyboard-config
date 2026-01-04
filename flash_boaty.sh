@@ -28,14 +28,17 @@ echo -e "${GREEN}✓${NC} Found firmware: $FIRMWARE_FILE"
 echo ""
 
 # Show instructions
-echo -e "${YELLOW}Hold BOOT button while plugging in USB, then press ENTER${NC}"
-read -p ""
-
+echo -e "${YELLOW}To flash:${NC}"
+echo "  1. Unplug the keyboard"
+echo "  2. Hold the BOOT button while plugging in USB"
+echo "  3. Release BOOT after plugging in"
+echo "  4. QMK will auto-detect and flash"
 echo ""
-echo -e "${GREEN}Flashing firmware...${NC}"
+echo -e "${CYAN}QMK is waiting for bootloader...${NC}"
+echo "(Hold BOOT and plug in now)"
 echo ""
 
-# Use QMK's flash command
+# QMK flash will wait for the bootloader device
 qmk flash -m atmega328p "$FIRMWARE_FILE"
 
 echo ""

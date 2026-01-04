@@ -3,7 +3,7 @@
 # Base layer metadata
 base_layers:
   BASE_PRIMARY:
-    display_name: "NIGHT-LHM"
+    display_name: "MIDNIGHT"
     description: "Night reoptimized for better P placement"
   BASE_ALT:
     display_name: "NIGHT"
@@ -215,7 +215,7 @@ magic_keys:
       "-": ">"
       ".": "/"
       C: Y
-      # G: Y
+      G: Y
       # P: T
 
       # "<": ">"
@@ -232,6 +232,12 @@ magic_keys:
       ",": " BUT"
       "-": ">"
       ".": "/"
+      "/": "*"
+      "*": "/"
+
+      C: Y
+      G: Y
+      P: Y
     default_repeat: true
 
   BASE_ALT2:

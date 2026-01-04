@@ -32,18 +32,16 @@ echo ""
 echo -e "${CYAN}Note: This is a split keyboard - you need to flash each half separately.${NC}"
 echo ""
 echo -e "${YELLOW}To flash:${NC}"
-echo "  1. Double-tap the reset button on the Pro Micro"
+echo "  1. Run this script"
+echo "  2. Double-tap the reset button on the Pro Micro"
 echo "     (or use your DFU combo if configured)"
-echo "  2. The keyboard will appear as a serial device for ~8 seconds"
+echo "  3. QMK will auto-detect and flash"
 echo ""
-echo -e "${YELLOW}Press ENTER when ready to flash...${NC}"
-read -p ""
-
-echo ""
-echo -e "${GREEN}Flashing firmware...${NC}"
+echo -e "${CYAN}QMK is waiting for bootloader...${NC}"
+echo "(Double-tap reset now)"
 echo ""
 
-# Use QMK's flash command with caterina bootloader
+# QMK flash with caterina bootloader will wait for device automatically
 qmk flash -bl caterina "$FIRMWARE_FILE"
 
 echo ""

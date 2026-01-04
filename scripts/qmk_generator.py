@@ -13,11 +13,12 @@ from data_model import Board, CompiledLayer, ComboConfiguration, Combo, Validati
 class QMKGenerator:
     """Generate QMK C keymap files"""
 
-    def __init__(self, special_keycodes: Dict[str, Dict[str, str]] = None, combo_training: bool = True):
+    def __init__(self, special_keycodes: Dict[str, Dict[str, str]] = None, combo_training: bool = True, qmk_translator: 'QMKTranslator' = None):
         # Track magic macro strings for QMK (text expansions)
         self.magic_macros: Dict[str, str] = {}
         self.special_keycodes = special_keycodes or {}
         self.combo_training = combo_training
+        self.qmk_translator = qmk_translator
         self.char_token_map = self._build_char_token_map()
 
     def generate_keymap(
@@ -655,29 +656,31 @@ combo_t key_combos[] = {{
 
             raw_key = flat_keys[pos]
 
-            # Extract base key from HRM/LT/SM wrappers (e.g., "hrm:LGUI:N" -> "N")
-            if raw_key.startswith("hrm:") or raw_key.startswith("mt:"):
-                # Format: hrm:MOD:KEY or mt:MOD:KEY
-                parts = raw_key.split(":")
-                raw_key = parts[-1] if len(parts) >= 3 else raw_key
-            elif raw_key.startswith("lt:"):
-                # Format: lt:LAYER:KEY
-                parts = raw_key.split(":")
-                raw_key = parts[-1] if len(parts) >= 3 else raw_key
-            elif raw_key.startswith("sm:"):
-                # Format: sm:BASE:SHIFTED - extract the BASE key
-                parts = raw_key.split(":")
-                raw_key = parts[1] if len(parts) >= 3 else raw_key
-
-            # Skip transparent/none keys
+            # Skip transparent/none keys before translation
             if raw_key in ("NONE", "TRANS", "XXX", "_______"):
                 raise ValueError(
                     f"Combo '{combo.name}' references position {pos} which has a "
                     f"transparent/none key in layer '{target_layer_name}'"
                 )
 
-            # Convert to QMK keycode
-            qmk_keycode = f"KC_{raw_key}"
+            # Use QMK translator to get FULL keycode including mod-tap wrappers
+            # This ensures combos match the actual keycodes in the keymap matrix
+            # e.g., "hrm:LCTL:H" -> "LCTL_T(KC_H)" (not just "KC_H")
+            if self.qmk_translator:
+                qmk_keycode = self.qmk_translator.translate(raw_key)
+            else:
+                # Fallback if no translator (for backwards compatibility)
+                # Extract base key from wrappers
+                if raw_key.startswith("hrm:") or raw_key.startswith("mt:"):
+                    parts = raw_key.split(":")
+                    raw_key = parts[-1] if len(parts) >= 3 else raw_key
+                elif raw_key.startswith("lt:"):
+                    parts = raw_key.split(":")
+                    raw_key = parts[-1] if len(parts) >= 3 else raw_key
+                elif raw_key.startswith("sm:"):
+                    parts = raw_key.split(":")
+                    raw_key = parts[1] if len(parts) >= 3 else raw_key
+                qmk_keycode = f"KC_{raw_key}"
 
             keycodes.append(qmk_keycode)
 

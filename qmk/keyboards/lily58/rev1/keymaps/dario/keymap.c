@@ -111,9 +111,9 @@ enum combo_events {
 const uint16_t PROGMEM dfu_left_combo[] = {KC_B, KC_Q, KC_Z, COMBO_END};
 const uint16_t PROGMEM dfu_right_combo[] = {KC_J, KC_DOT, KC_QUOT, COMBO_END};
 const uint16_t PROGMEM github_url_combo[] = {KC_G, KC_O, KC_U, KC_DOT, COMBO_END};
-const uint16_t PROGMEM ht_to_lm_combo[] = {KC_H, KC_T, COMBO_END};
-const uint16_t PROGMEM sth_to_llm_combo[] = {KC_S, KC_H, KC_T, COMBO_END};
-const uint16_t PROGMEM cae_to_cyc_combo[] = {KC_C, KC_A, KC_E, COMBO_END};
+const uint16_t PROGMEM ht_to_lm_combo[] = {LCTL_T(KC_H), LSFT_T(KC_T), COMBO_END};
+const uint16_t PROGMEM sth_to_llm_combo[] = {LALT_T(KC_S), LCTL_T(KC_H), LSFT_T(KC_T), COMBO_END};
+const uint16_t PROGMEM cae_to_cyc_combo[] = {LSFT_T(KC_C), LCTL_T(KC_A), LALT_T(KC_E), COMBO_END};
 
 // Combo definitions
 combo_t key_combos[] = {
@@ -199,6 +199,7 @@ uint16_t get_alt_repeat_key_keycode_user(uint16_t keycode, uint8_t mods) {
             case KC_MINS: return KC_GT;
             case KC_DOT: return KC_SLSH;
             case KC_C: return KC_Y;
+            case KC_G: return KC_Y;
             case KC_SLSH: return KC_ASTR;
             case KC_ASTR: return KC_SLSH;
         }
@@ -211,6 +212,11 @@ uint16_t get_alt_repeat_key_keycode_user(uint16_t keycode, uint8_t mods) {
             case KC_COMM: return MAGIC_ALT_CHR_44;
             case KC_MINS: return KC_GT;
             case KC_DOT: return KC_SLSH;
+            case KC_SLSH: return KC_ASTR;
+            case KC_ASTR: return KC_SLSH;
+            case KC_C: return KC_Y;
+            case KC_G: return KC_Y;
+            case KC_P: return KC_Y;
         }
     }
 

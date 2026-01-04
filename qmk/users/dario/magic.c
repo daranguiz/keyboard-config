@@ -37,7 +37,15 @@ static uint16_t unwrap_tap_keycode(uint16_t keycode) {
         return tap;
     }
     if (IS_QK_LAYER_TAP(keycode)) {
-        return QK_LAYER_TAP_GET_TAP_KEYCODE(keycode);
+        uint16_t tap = QK_LAYER_TAP_GET_TAP_KEYCODE(keycode);
+        // QK_AREP (0x7C05) doesn't fit in layer-tap's 8-bit tap field; it truncates.
+        // Check for the truncated value (QK_AREP & 0xFF).
+        // NOTE: This may incorrectly match LT(x, KC_B) if the truncated value
+        // collides with KC_B. Verify keymap doesn't have LT with that base key.
+        if (tap == (QK_AREP & 0xFF)) {
+            return QK_AREP;
+        }
+        return tap;
     }
     return keycode;
 }
@@ -127,6 +135,7 @@ bool magic_process_record(uint16_t keycode, keyrecord_t *record) {
 
     uint16_t tap = unwrap_tap_keycode(keycode);
     const bool is_magic_mod_tap = IS_QK_MOD_TAP(keycode) && tap == QK_AREP;
+    const bool is_magic_layer_tap = IS_QK_LAYER_TAP(keycode) && tap == QK_AREP;
 
     // Training mode: if the previous key would trigger a magic alternate that
     // matches this key, emit '#' instead to encourage using MAGIC.
@@ -195,8 +204,37 @@ bool magic_process_record(uint16_t keycode, keyrecord_t *record) {
         return handle_magic_tap(keycode, record);
     }
 
-    // Alternate repeat key: emit mapped text or keycode based on last key
-    if (record->event.pressed && tap == QK_AREP) {
+    // For layer-tap magic key: only treat as tap on release when it was a real tap.
+    if (is_magic_layer_tap) {
+        if (record->event.pressed) {
+            MAGIC_LOG("AREP layertap press raw=%u tapcnt=%u interrupted=%u layer=%u\n",
+                      keycode,
+                      record->tap.count,
+                      record->tap.interrupted,
+                      get_highest_layer(layer_state));
+            return true;  // allow normal layer-tap processing (hold = layer)
+        }
+
+        // Release: tap.count==0 means it was a hold (layer). Non-zero == tap.
+        if (record->tap.count == 0 || record->tap.interrupted) {
+            MAGIC_LOG("AREP layertap hold skip raw=%u tapcnt=%u interrupted=%u layer=%u\n",
+                      keycode,
+                      record->tap.count,
+                      record->tap.interrupted,
+                      get_highest_layer(layer_state));
+            return true;
+        }
+
+        MAGIC_LOG("AREP layertap tap raw=%u tapcnt=%u interrupted=%u layer=%u\n",
+                  keycode,
+                  record->tap.count,
+                  record->tap.interrupted,
+                  get_highest_layer(layer_state));
+        return handle_magic_tap(keycode, record);
+    }
+
+    // Alternate repeat key (plain, not wrapped): emit mapped text or keycode based on last key
+    if (record->event.pressed && tap == QK_AREP && !IS_QK_MOD_TAP(keycode) && !IS_QK_LAYER_TAP(keycode)) {
         return handle_magic_tap(keycode, record);
     }
 

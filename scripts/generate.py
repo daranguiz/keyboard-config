@@ -320,7 +320,7 @@ class KeymapGenerator:
 
     def _generate_qmk(self, board, compiled_layers, keymap_config):
         """Generate QMK keymap files"""
-        generator = QMKGenerator(special_keycodes=self.special_keycodes, combo_training=self.combo_training)
+        generator = QMKGenerator(special_keycodes=self.special_keycodes, combo_training=self.combo_training, qmk_translator=self.qmk_translator)
         output_dir = self.repo_root / board.get_output_directory()
 
         # Get shift-morphs collected during compilation
