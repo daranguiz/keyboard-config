@@ -45,23 +45,57 @@
             layers = <0 1 2>;
         };
 
-        combo_pd_to_ph {
+        combo_ht_to_lm {
             timeout-ms = <20>;
-            key-positions = <27 28>;
-            bindings = <&pd_to_ph>;
+            key-positions = <15 16>;
+            bindings = <&ht_to_lm>;
+            layers = <0>;
+        };
+
+        combo_sth_to_llm {
+            timeout-ms = <30>;
+            key-positions = <14 15 16>;
+            bindings = <&sth_to_llm>;
+            layers = <0>;
+        };
+
+        combo_ca_to_pt {
+            timeout-ms = <20>;
+            key-positions = <19 20>;
+            bindings = <&ca_to_pt>;
             layers = <0>;
         };
     };
 
     macros {
-        pd_to_ph: pd_to_ph_macro {
+        ht_to_lm: ht_to_lm_macro {
             compatible = "zmk,behavior-macro";
-            label = "PD_TO_PH";
+            label = "HT_TO_LM";
             #binding-cells = <0>;
             bindings
                 = <&macro_wait_time 10>
                 , <&macro_tap_time 10>
-                , <&macro_tap &kp P &kp H>
+                , <&macro_tap &kp L &kp M>
+                ;
+        };
+        sth_to_llm: sth_to_llm_macro {
+            compatible = "zmk,behavior-macro";
+            label = "STH_TO_LLM";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_wait_time 10>
+                , <&macro_tap_time 10>
+                , <&macro_tap &kp L &kp L &kp M>
+                ;
+        };
+        ca_to_pt: ca_to_pt_macro {
+            compatible = "zmk,behavior-macro";
+            label = "CA_TO_PT";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_wait_time 10>
+                , <&macro_tap_time 10>
+                , <&macro_tap &kp P &kp T>
                 ;
         };
         magic_primary_chr_32: magic_primary_chr_32_macro {
@@ -237,16 +271,6 @@
                 trigger-keys = <DOT>;
                 bindings = <&kp FSLH>;
                 strict-modifiers;
-                max-prior-idle-ms = <1000>;
-            };
-            c_trigger {
-                trigger-keys = <C>;
-                bindings = <&kp Y>;
-                max-prior-idle-ms = <1000>;
-            };
-            g_trigger {
-                trigger-keys = <G>;
-                bindings = <&kp Y>;
                 max-prior-idle-ms = <1000>;
             };
             fslh_trigger {
@@ -517,18 +541,6 @@
             guard_trigger {
                 trigger-keys = <DOT ASTERISK>;
                 bindings = <&kp HASH>;
-                max-prior-idle-ms = <1000>;
-            };
-        };
-
-        ak_train_primary_y: ak_train_primary_y {
-            compatible = "zmk,behavior-adaptive-key";
-            #binding-cells = <0>;
-            bindings = <&kp Y>;
-            guard_trigger {
-                trigger-keys = <C G>;
-                bindings = <&kp HASH>;
-                strict-modifiers;  // Disable training for shifted predecessors
                 max-prior-idle-ms = <1000>;
             };
         };
@@ -812,7 +824,7 @@
         base_primary_layer {
             bindings = <
                 &none &kp B &kp F &kp L &kp K &kp Q &kp J &kp G &kp O &kp U &sm_dot_grv &none
-                &key_repeat &hml LGUI N &hml LALT S &hml LCTL H &hml LSFT T &kp D &ak_train_primary_y &hmr LSFT C &hmr LCTL A &hmr LALT E &hmr LGUI I &key_repeat
+                &key_repeat &hml LGUI N &hml LALT S &hml LCTL H &hml LSFT T &kp D &kp Y &hmr LSFT C &hmr LCTL A &hmr LALT E &hmr LGUI I &key_repeat
                 &none &kp X &kp V &kp M &kp P &kp Z &kp SQT &kp W &kp MINUS &ak_train_primary_fslh &sm_comm_at &none
                 &lt_ak_primary NUM 0 &lt SYM R &mt LSFT BSPC &mt LSFT TAB &lt NAV SPACE &lt MEDIA ENTER
             >;
