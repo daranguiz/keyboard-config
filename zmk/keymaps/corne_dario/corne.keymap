@@ -558,9 +558,9 @@
 
         base_alt_layer {
             bindings = <
-                &none &kp F &kp P &kp D &kp M &kp X &kp J &kp W &kp O &kp U &sm_dot_grv &none
-                &none &hml LGUI S &hml LALT N &hml LCTL T &hml LSFT H &kp L &kp Y &hmr LSFT C &hmr LCTL A &hmr LALT E &hmr LGUI I &none
-                &none &kp Z &kp B &kp K &kp V &kp Q &kp SQT &kp G &kp MINUS &ak_train_alt_fslh &sm_comm_at &none
+                &none &kp B &kp F &kp L &kp K &kp Q &kp P &kp G &kp O &kp U &sm_dot_grv &none
+                &none &hml LGUI N &hml LALT S &hml LCTL H &hml LSFT T &kp M &kp Y &hmr LSFT C &hmr LCTL A &hmr LALT E &hmr LGUI I &none
+                &none &kp X &kp V &kp J &kp D &kp Z &kp SQT &kp W &kp MINUS &ak_train_alt_fslh &sm_comm_at &none
                 &lt_ak_alt NUM 0 &lt SYM R &mt LSFT BSPC &mt LSFT TAB &lt NAV SPACE &lt MEDIA ENTER
             >;
         };
