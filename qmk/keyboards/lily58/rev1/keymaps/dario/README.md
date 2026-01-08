@@ -33,7 +33,7 @@ qmk compile -kb lily58/rev1 -km dario
 15: KC_L
 16: KC_K
 17: KC_Q
-18: KC_J
+18: KC_P
 19: KC_G
 20: KC_O
 21: KC_U
@@ -44,7 +44,7 @@ qmk compile -kb lily58/rev1 -km dario
 26: LALT_T(KC_S)
 27: LCTL_T(KC_H)
 28: LSFT_T(KC_T)
-29: KC_D
+29: KC_M
 30: KC_Y
 31: LSFT_T(KC_C)
 32: LCTL_T(KC_A)
@@ -54,8 +54,8 @@ qmk compile -kb lily58/rev1 -km dario
 36: KC_NO
 37: KC_X
 38: KC_V
-39: KC_M
-40: KC_P
+39: KC_J
+40: KC_D
 41: KC_Z
 42: KC_NO
 43: KC_NO
@@ -96,7 +96,7 @@ qmk compile -kb lily58/rev1 -km dario
 15: KC_L
 16: KC_K
 17: KC_Q
-18: KC_P
+18: KC_J
 19: KC_G
 20: KC_O
 21: KC_U
@@ -107,7 +107,7 @@ qmk compile -kb lily58/rev1 -km dario
 26: LALT_T(KC_S)
 27: LCTL_T(KC_H)
 28: LSFT_T(KC_T)
-29: KC_M
+29: KC_D
 30: KC_Y
 31: LSFT_T(KC_C)
 32: LCTL_T(KC_A)
@@ -117,8 +117,8 @@ qmk compile -kb lily58/rev1 -km dario
 36: KC_NO
 37: KC_X
 38: KC_V
-39: KC_J
-40: KC_D
+39: KC_M
+40: KC_P
 41: KC_Z
 42: KC_NO
 43: KC_NO

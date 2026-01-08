@@ -43,7 +43,7 @@ qmk compile -kb jels/boaty -km dario
 25: KC_L
 26: KC_K
 27: KC_Q
-28: KC_J
+28: KC_P
 29: KC_G
 30: KC_O
 31: KC_U
@@ -55,7 +55,7 @@ qmk compile -kb jels/boaty -km dario
 37: LALT_T(KC_S)
 38: LCTL_T(KC_H)
 39: LSFT_T(KC_T)
-40: KC_D
+40: KC_M
 41: KC_Y
 42: LSFT_T(KC_C)
 43: LCTL_T(KC_A)
@@ -64,8 +64,8 @@ qmk compile -kb jels/boaty -km dario
 46: KC_ENT
 47: KC_X
 48: KC_V
-49: KC_M
-50: KC_P
+49: KC_J
+50: KC_D
 51: KC_Z
 52: KC_QUOT
 53: KC_W
@@ -111,7 +111,7 @@ qmk compile -kb jels/boaty -km dario
 25: KC_L
 26: KC_K
 27: KC_Q
-28: KC_P
+28: KC_J
 29: KC_G
 30: KC_O
 31: KC_U
@@ -123,7 +123,7 @@ qmk compile -kb jels/boaty -km dario
 37: LALT_T(KC_S)
 38: LCTL_T(KC_H)
 39: LSFT_T(KC_T)
-40: KC_M
+40: KC_D
 41: KC_Y
 42: LSFT_T(KC_C)
 43: LCTL_T(KC_A)
@@ -132,8 +132,8 @@ qmk compile -kb jels/boaty -km dario
 46: KC_ENT
 47: KC_X
 48: KC_V
-49: KC_J
-50: KC_D
+49: KC_M
+50: KC_P
 51: KC_Z
 52: KC_QUOT
 53: KC_W

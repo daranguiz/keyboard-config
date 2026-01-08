@@ -217,44 +217,44 @@ path.combo {
     }
 
     /* Highlight layer activators (lt/osl) with bright green */
-    .layer-NIGHT .keypos-36 rect,
-    .layer-NIGHT .keypos-37 rect,
-    .layer-NIGHT .keypos-40 rect,
-    .layer-NIGHT .keypos-41 rect,
+    .layer-MIDNIGHT .keypos-36 rect,
+    .layer-MIDNIGHT .keypos-37 rect,
+    .layer-MIDNIGHT .keypos-40 rect,
+    .layer-MIDNIGHT .keypos-41 rect,
     .layer-SYM .keypos-4 rect,
     .layer-NUM .keypos-4 rect {
       fill: #4CAF50 !important;
       stroke: none !important;
       opacity: 1 !important;
     }
-    .layer-NIGHT .keypos-36 text,
-    .layer-NIGHT .keypos-37 text,
-    .layer-NIGHT .keypos-40 text,
-    .layer-NIGHT .keypos-41 text,
+    .layer-MIDNIGHT .keypos-36 text,
+    .layer-MIDNIGHT .keypos-37 text,
+    .layer-MIDNIGHT .keypos-40 text,
+    .layer-MIDNIGHT .keypos-41 text,
     .layer-SYM .keypos-4 text,
     .layer-NUM .keypos-4 text {
       fill: white !important;
     }
-    .layer-NIGHT .keypos-36 use,
-    .layer-NIGHT .keypos-37 use,
-    .layer-NIGHT .keypos-40 use,
-    .layer-NIGHT .keypos-41 use,
+    .layer-MIDNIGHT .keypos-36 use,
+    .layer-MIDNIGHT .keypos-37 use,
+    .layer-MIDNIGHT .keypos-40 use,
+    .layer-MIDNIGHT .keypos-41 use,
     .layer-SYM .keypos-4 use,
     .layer-NUM .keypos-4 use {
       fill: white !important;
     }
 
     /* Highlight home row mods and mod-tap keys with lighter green stroke on all BASE layers */
-    .layer-NIGHT .keypos-13 rect,
-    .layer-NIGHT .keypos-14 rect,
-    .layer-NIGHT .keypos-15 rect,
-    .layer-NIGHT .keypos-16 rect,
-    .layer-NIGHT .keypos-19 rect,
-    .layer-NIGHT .keypos-20 rect,
-    .layer-NIGHT .keypos-21 rect,
-    .layer-NIGHT .keypos-22 rect,
-    .layer-NIGHT .keypos-38 rect,
-    .layer-NIGHT .keypos-39 rect {
+    .layer-MIDNIGHT .keypos-13 rect,
+    .layer-MIDNIGHT .keypos-14 rect,
+    .layer-MIDNIGHT .keypos-15 rect,
+    .layer-MIDNIGHT .keypos-16 rect,
+    .layer-MIDNIGHT .keypos-19 rect,
+    .layer-MIDNIGHT .keypos-20 rect,
+    .layer-MIDNIGHT .keypos-21 rect,
+    .layer-MIDNIGHT .keypos-22 rect,
+    .layer-MIDNIGHT .keypos-38 rect,
+    .layer-MIDNIGHT .keypos-39 rect {
       stroke: #66BB6A !important;
       stroke-width: 2 !important;
     }
@@ -293,8 +293,8 @@ path.combo {
       opacity: 0.3 !important;
     }
 </style>
-<g transform="translate(30, 0)" class="layer-NIGHT">
-<text x="420" y="133" class="label" id="NIGHT" text-anchor="middle" dominant-baseline="middle" font-size="28" style="font-weight: 700; font-family: Helvetica, Arial, sans-serif; stroke: white; stroke-width: 4; paint-order: stroke; text-anchor: middle; dominant-baseline: middle;">NIGHT</text>
+<g transform="translate(30, 0)" class="layer-MIDNIGHT">
+<text x="420" y="133" class="label" id="MIDNIGHT" text-anchor="middle" dominant-baseline="middle" font-size="28" style="font-weight: 700; font-family: Helvetica, Arial, sans-serif; stroke: white; stroke-width: 4; paint-order: stroke; text-anchor: middle; dominant-baseline: middle;">MIDNIGHT</text>
 <g transform="translate(0, 56)">
 <g transform="translate(28, 49)" class="key keypos-0">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
@@ -321,7 +321,7 @@ path.combo {
 </g>
 <g transform="translate(532, 42)" class="key keypos-6">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
-<text x="0" y="0" class="key tap" style="font-size: 28px; font-weight: 700; font-family: Helvetica, Arial, sans-serif">p</text>
+<text x="0" y="0" class="key tap" style="font-size: 28px; font-weight: 700; font-family: Helvetica, Arial, sans-serif">j</text>
 </g>
 <g transform="translate(588, 35)" class="key keypos-7">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
@@ -368,7 +368,7 @@ path.combo {
 </g>
 <g transform="translate(308, 98)" class="key keypos-17">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
-<text x="0" y="0" class="key tap" style="font-size: 28px; font-weight: 700; font-family: Helvetica, Arial, sans-serif">m</text>
+<text x="0" y="0" class="key tap" style="font-size: 28px; font-weight: 700; font-family: Helvetica, Arial, sans-serif">d</text>
 </g>
 <g transform="translate(532, 98)" class="key keypos-18">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
@@ -410,11 +410,11 @@ path.combo {
 </g>
 <g transform="translate(196, 140)" class="key keypos-27">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
-<text x="0" y="0" class="key tap" style="font-size: 28px; font-weight: 700; font-family: Helvetica, Arial, sans-serif">j</text>
+<text x="0" y="0" class="key tap" style="font-size: 28px; font-weight: 700; font-family: Helvetica, Arial, sans-serif">m</text>
 </g>
 <g transform="translate(252, 147)" class="key keypos-28">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
-<text x="0" y="0" class="key tap" style="font-size: 28px; font-weight: 700; font-family: Helvetica, Arial, sans-serif">d</text>
+<text x="0" y="0" class="key tap" style="font-size: 28px; font-weight: 700; font-family: Helvetica, Arial, sans-serif">p</text>
 </g>
 <g transform="translate(308, 154)" class="key keypos-29">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
@@ -992,11 +992,11 @@ path.combo {
 </g>
 <g transform="translate(84, 49)" class="key keypos-1">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
-<text x="0" y="0" class="key tap" style="font-size: 20px; font-weight: 400; font-family: Helvetica, Arial, sans-serif">MIHT</text>
+<text x="0" y="0" class="key tap" style="font-size: 20px; font-weight: 400; font-family: Helvetica, Arial, sans-serif">NIHT</text>
 </g>
 <g transform="translate(140, 35)" class="key keypos-2">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
-<text x="0" y="0" class="key tap" style="font-size: 20px; font-weight: 400; font-family: Helvetica, Arial, sans-serif">NIHT</text>
+<text x="0" y="0" class="key tap" style="font-size: 20px; font-weight: 400; font-family: Helvetica, Arial, sans-serif">MIHT</text>
 </g>
 <g transform="translate(196, 28)" class="key keypos-3">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>

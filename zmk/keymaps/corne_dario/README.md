@@ -12,7 +12,7 @@
  4: &kp K
  5: &kp Q
 
- 6: &kp J
+ 6: &kp P
  7: &kp G
  8: &kp O
  9: &kp U
@@ -24,7 +24,7 @@
 14: &hml LALT S
 15: &hml LCTL H
 16: &hml LSFT T
-17: &kp D
+17: &kp M
 
 18: &kp Y
 19: &hmr LSFT C
@@ -36,8 +36,8 @@
 24: &none
 25: &kp X
 26: &kp V
-27: &kp M
-28: &kp P
+27: &kp J
+28: &kp D
 29: &kp Z
 
 30: &kp SQT
@@ -65,7 +65,7 @@
  4: &kp K
  5: &kp Q
 
- 6: &kp P
+ 6: &kp J
  7: &kp G
  8: &kp O
  9: &kp U
@@ -77,7 +77,7 @@
 14: &hml LALT S
 15: &hml LCTL H
 16: &hml LSFT T
-17: &kp M
+17: &kp D
 
 18: &kp Y
 19: &hmr LSFT C
@@ -89,8 +89,8 @@
 24: &none
 25: &kp X
 26: &kp V
-27: &kp J
-28: &kp D
+27: &kp M
+28: &kp P
 29: &kp Z
 
 30: &kp SQT
