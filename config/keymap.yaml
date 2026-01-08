@@ -3,11 +3,11 @@
 # Base layer metadata
 base_layers:
   BASE_PRIMARY:
-    display_name: "MIDNIGHT"
-    description: "Night reoptimized for better P placement"
-  BASE_ALT:
     display_name: "NIGHT"
     description: "Vanilla Night"
+  BASE_ALT:
+    display_name: "MIDNIGHT"
+    description: "Night reoptimized for better P placement"
   BASE_ALT2:
     display_name: "BUNYA"
     description: "Bunya layout (GalileoBlues)"
@@ -18,10 +18,10 @@ layers:
     core: # (3x5)
       left:
         - [B              , F              , L              , K              , Q              ]
-        - [hrm:LGUI:N     , hrm:LALT:S     , hrm:LCTL:H     , hrm:LSFT:T     , D              ]
-        - [X              , V              , M              , P              , Z              ]
+        - [hrm:LGUI:N     , hrm:LALT:S     , hrm:LCTL:H     , hrm:LSFT:T     , M              ]
+        - [X              , V              , J              , D              , Z              ]
       right:
-        - [J              , G              , O              , U              , sm:DOT:GRV     ]
+        - [P              , G              , O              , U              , sm:DOT:GRV     ]
         - [Y              , hrm:LSFT:C     , hrm:LCTL:A     , hrm:LALT:E     , hrm:LGUI:I     ]
         - [QUOT           , W              , MINS           , SLSH           , sm:COMM:AT     ]
       thumbs:
@@ -36,10 +36,10 @@ layers:
     core: # (3x5)
       left:
         - [B              , F              , L              , K              , Q              ]
-        - [hrm:LGUI:N     , hrm:LALT:S     , hrm:LCTL:H     , hrm:LSFT:T     , M              ]
-        - [X              , V              , J              , D              , Z              ]
+        - [hrm:LGUI:N     , hrm:LALT:S     , hrm:LCTL:H     , hrm:LSFT:T     , D              ]
+        - [X              , V              , M              , P              , Z              ]
       right:
-        - [P              , G              , O              , U              , sm:DOT:GRV     ]
+        - [J              , G              , O              , U              , sm:DOT:GRV     ]
         - [Y              , hrm:LSFT:C     , hrm:LCTL:A     , hrm:LALT:E     , hrm:LGUI:I     ]
         - [QUOT           , W              , MINS           , SLSH           , sm:COMM:AT     ]
       thumbs:
