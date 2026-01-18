@@ -54,55 +54,6 @@
 ## BASE_ALT Layer
 
 ```
- 0: &kp B
- 1: &kp F
- 2: &kp L
- 3: &kp K
- 4: &kp Q
- 5: &kp J
-
- 6: &kp G
- 7: &kp O
- 8: &kp U
- 9: &sm_dot_grv
-10: &hmr LGUI N
-11: &hmr LALT S
-
-12: &hml LCTL H
-13: &hml LSFT T
-14: &kp D
-15: &kp Y
-16: &hml LSFT C
-17: &hml LCTL A
-
-18: &hmr LALT E
-19: &hmr LGUI I
-20: &none
-21: &kp X
-22: &kp V
-23: &kp M
-
-24: &kp P
-25: &kp Z
-26: &kp SQT
-27: &kp W
-28: &kp MINUS
-29: &kp FSLH
-
-30: &sm_comm_at
-31: &none
-32: &lt_ak_alt NUM 0
-33: &lt SYM R
-34: &mt LSFT BSPC
-35: &mt LSFT TAB
-
-36: &lt NAV SPACE
-37: &lt MEDIA ENTER
-```
-
-## BASE_ALT2 Layer
-
-```
  0: &kp F
  1: &kp D
  2: &kp L
@@ -126,7 +77,7 @@
 
 18: &hmr LALT E
 19: &hmr LGUI I
-20: &key_repeat
+20: &none
 21: &kp X
 22: &kp K
 23: &kp M
@@ -139,9 +90,58 @@
 29: &kp FSLH
 
 30: &sm_comm_at
+31: &none
+32: &lt_ak_alt NUM 0
+33: &lt SYM R
+34: &mt LSFT BSPC
+35: &mt LSFT TAB
+
+36: &lt NAV SPACE
+37: &lt MEDIA ENTER
+```
+
+## BASE_ALT2 Layer
+
+```
+ 0: &kp B
+ 1: &kp L
+ 2: &kp M
+ 3: &kp C
+ 4: &kp Z
+ 5: &kp J
+
+ 6: &kp F
+ 7: &kp O
+ 8: &kp U
+ 9: &sm_dot_grv
+10: &hmr LGUI N
+11: &hmr LALT R
+
+12: &hml LCTL T
+13: &hml LSFT D
+14: &kp P
+15: &kp Y
+16: &hml LSFT H
+17: &hml LCTL A
+
+18: &hmr LALT E
+19: &hmr LGUI I
+20: &key_repeat
+21: &kp X
+22: &kp Q
+23: &kp V
+
+24: &kp G
+25: &kp W
+26: &kp SQT
+27: &kp K
+28: &kp MINUS
+29: &kp FSLH
+
+30: &sm_comm_at
 31: &key_repeat
 32: &lt_ak_alt2 NUM 0
-33: &lt SYM R
+33: &lt SYM S
 34: &mt LSFT BSPC
 35: &mt LSFT TAB
 

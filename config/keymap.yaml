@@ -56,13 +56,13 @@ layers:
   BASE_ALT:
     core: # (3x5)
       left:
-        - [B              , F              , L              , K              , Q              ]
-        - [hrm:LGUI:N     , hrm:LALT:S     , hrm:LCTL:H     , hrm:LSFT:T     , D              ]
-        - [X              , V              , M              , P              , Z              ]
+        - [F              , D              , L              , W              , J              ]
+        - [hrm:LGUI:S     , hrm:LALT:T     , hrm:LCTL:H     , hrm:LSFT:C     , Y              ]
+        - [X              , K              , M              , G              , V              ]
       right:
-        - [J              , G              , O              , U              , sm:DOT:GRV     ]
-        - [Y              , hrm:LSFT:C     , hrm:LCTL:A     , hrm:LALT:E     , hrm:LGUI:I     ]
-        - [QUOT           , W              , MINS           , SLSH           , sm:COMM:AT     ]
+        - [MINS           , B              , O              , U              , sm:DOT:GRV           ]
+        - [Q              , hrm:LSFT:N     , hrm:LCTL:A     , hrm:LALT:E     , hrm:LGUI:I     ]
+        - [Z              , P              , QUOT           , SLSH           , sm:COMM:AT            ]
       thumbs:
         - [lt:NUM:MAGIC   , lt:SYM:R       , mt:LSFT:BSPC   ]
         - [mt:LSFT:TAB    , lt:NAV:SPC     , lt:MEDIA:ENT   ]
@@ -74,15 +74,15 @@ layers:
   BASE_ALT2:
     core: # (3x5)
       left:
-        - [F              , D              , L              , W              , J              ]
-        - [hrm:LGUI:S     , hrm:LALT:T     , hrm:LCTL:H     , hrm:LSFT:C     , Y              ]
-        - [X              , K              , M              , G              , V              ]
+        - [B              , L              , M              , C              , Z              ]
+        - [hrm:LGUI:N     , hrm:LALT:R     , hrm:LCTL:T     , hrm:LSFT:D     , P              ]
+        - [X              , Q              , V              , G              , W              ]
       right:
-        - [MINS           , B              , O              , U              , sm:DOT:GRV           ]
-        - [Q              , hrm:LSFT:N     , hrm:LCTL:A     , hrm:LALT:E     , hrm:LGUI:I     ]
-        - [Z              , P              , QUOT           , SLSH           , sm:COMM:AT            ]
+        - [J              , F              , O              , U              , sm:DOT:GRV     ]
+        - [Y              , hrm:LSFT:H     , hrm:LCTL:A     , hrm:LALT:E     , hrm:LGUI:I     ]
+        - [QUOT           , K              , MINS           , SLSH           , sm:COMM:AT     ]
       thumbs:
-        - [lt:NUM:MAGIC   , lt:SYM:R       , mt:LSFT:BSPC   ]
+        - [lt:NUM:MAGIC   , lt:SYM:S       , mt:LSFT:BSPC   ]
         - [mt:LSFT:TAB    , lt:NAV:SPC     , lt:MEDIA:ENT   ]
     extensions:
       3x6_3:

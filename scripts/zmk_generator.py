@@ -225,31 +225,48 @@ class ZMKGenerator:
             ZMK behaviors section with hml and hmr definitions
         """
         # Calculate positions based on layout size
+        # For HRMs, we include:
+        # - hml (left hand mods): right hand keys + ALL thumb keys
+        # - hmr (right hand mods): left hand keys + ALL thumb keys
+        # All thumbs are included because thumb keys are for modifiers/layers, not alphas,
+        # so same-side thumb combos (like Ctrl+R) should trigger the hold behavior.
         if board.layout_size == "3x5_3":
             # 36 keys: rows of 10, thumbs of 6
-            # Left: 0-4, 10-14, 20-24, thumbs 30-32
-            # Right: 5-9, 15-19, 25-29, thumbs 33-35
-            left_positions = list(range(0, 5)) + list(range(10, 15)) + list(range(20, 25)) + list(range(30, 33))
-            right_positions = list(range(5, 10)) + list(range(15, 20)) + list(range(25, 30)) + list(range(33, 36))
+            # Left hand (no thumbs): 0-4, 10-14, 20-24
+            # Right hand (no thumbs): 5-9, 15-19, 25-29
+            # All thumbs: 30-35
+            left_hand = list(range(0, 5)) + list(range(10, 15)) + list(range(20, 25))
+            right_hand = list(range(5, 10)) + list(range(15, 20)) + list(range(25, 30))
+            all_thumbs = list(range(30, 36))
         elif board.layout_size == "3x6_3":
             # 42 keys: rows of 12 (with outer pinky), thumbs of 6
-            # Left: 0-5, 12-17, 24-29, thumbs 36-38
-            # Right: 6-11, 18-23, 30-35, thumbs 39-41
-            left_positions = list(range(0, 6)) + list(range(12, 18)) + list(range(24, 30)) + list(range(36, 39))
-            right_positions = list(range(6, 12)) + list(range(18, 24)) + list(range(30, 36)) + list(range(39, 42))
+            # Left hand (no thumbs): 0-5, 12-17, 24-29
+            # Right hand (no thumbs): 6-11, 18-23, 30-35
+            # All thumbs: 36-41
+            left_hand = list(range(0, 6)) + list(range(12, 18)) + list(range(24, 30))
+            right_hand = list(range(6, 12)) + list(range(18, 24)) + list(range(30, 36))
+            all_thumbs = list(range(36, 42))
         elif board.layout_size == "totem_38":
             # 38 keys: top/home rows of 10, bottom row of 12 (with pinky), thumbs of 6
-            # Left: 0-4, 10-14, 20-25 (pinky at 20), thumbs 32-34
-            # Right: 5-9, 15-19, 26-31 (pinky at 31), thumbs 35-37
-            left_positions = list(range(0, 5)) + list(range(10, 15)) + list(range(20, 26)) + list(range(32, 35))
-            right_positions = list(range(5, 10)) + list(range(15, 20)) + list(range(26, 32)) + list(range(35, 38))
+            # Left hand (no thumbs): 0-4, 10-14, 20-25 (pinky at 20)
+            # Right hand (no thumbs): 5-9, 15-19, 26-31 (pinky at 31)
+            # All thumbs: 32-37
+            left_hand = list(range(0, 5)) + list(range(10, 15)) + list(range(20, 26))
+            right_hand = list(range(5, 10)) + list(range(15, 20)) + list(range(26, 32))
+            all_thumbs = list(range(32, 38))
         else:
             # Default to 3x5_3 positions
-            left_positions = list(range(0, 5)) + list(range(10, 15)) + list(range(20, 25)) + list(range(30, 33))
-            right_positions = list(range(5, 10)) + list(range(15, 20)) + list(range(25, 30)) + list(range(33, 36))
+            left_hand = list(range(0, 5)) + list(range(10, 15)) + list(range(20, 25))
+            right_hand = list(range(5, 10)) + list(range(15, 20)) + list(range(25, 30))
+            all_thumbs = list(range(30, 36))
 
-        left_pos_str = " ".join(str(p) for p in left_positions)
-        right_pos_str = " ".join(str(p) for p in right_positions)
+        # hml triggers on right hand + all thumbs
+        # hmr triggers on left hand + all thumbs
+        hml_positions = right_hand + all_thumbs
+        hmr_positions = left_hand + all_thumbs
+
+        left_pos_str = " ".join(str(p) for p in hmr_positions)
+        right_pos_str = " ".join(str(p) for p in hml_positions)
 
         self._set_hrm_behavior_timings(left_pos_str, right_pos_str)
 
@@ -272,7 +289,7 @@ class ZMKGenerator:
             #binding-cells = <2>;
 {chr(10).join(hrm_props)}
             bindings = <&kp>, <&kp>;
-            hold-trigger-key-positions = <{right_pos_str}>;  // right hand + right thumbs
+            hold-trigger-key-positions = <{right_pos_str}>;  // right hand + all thumbs
             hold-trigger-on-release;
         }};
 
@@ -282,7 +299,7 @@ class ZMKGenerator:
             #binding-cells = <2>;
 {chr(10).join(hrm_props)}
             bindings = <&kp>, <&kp>;
-            hold-trigger-key-positions = <{left_pos_str}>;  // left hand + left thumbs
+            hold-trigger-key-positions = <{left_pos_str}>;  // left hand + all thumbs
             hold-trigger-on-release;
         }};
     }};

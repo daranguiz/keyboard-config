@@ -59,28 +59,28 @@
 
 ```
  0: &none
- 1: &kp B
- 2: &kp F
+ 1: &kp F
+ 2: &kp D
  3: &kp L
- 4: &kp K
- 5: &kp Q
+ 4: &kp W
+ 5: &kp J
 
- 6: &kp J
- 7: &kp G
+ 6: &kp MINUS
+ 7: &kp B
  8: &kp O
  9: &kp U
 10: &sm_dot_grv
 11: &none
 
 12: &none
-13: &hml LGUI N
-14: &hml LALT S
+13: &hml LGUI S
+14: &hml LALT T
 15: &hml LCTL H
-16: &hml LSFT T
-17: &kp D
+16: &hml LSFT C
+17: &kp Y
 
-18: &kp Y
-19: &hmr LSFT C
+18: &kp Q
+19: &hmr LSFT N
 20: &hmr LCTL A
 21: &hmr LALT E
 22: &hmr LGUI I
@@ -88,14 +88,14 @@
 
 24: &none
 25: &kp X
-26: &kp V
+26: &kp K
 27: &kp M
-28: &kp P
-29: &kp Z
+28: &kp G
+29: &kp V
 
-30: &kp SQT
-31: &kp W
-32: &kp MINUS
+30: &kp Z
+31: &kp P
+32: &kp SQT
 33: &kp FSLH
 34: &sm_comm_at
 35: &none
@@ -112,28 +112,28 @@
 
 ```
  0: &none
- 1: &kp F
- 2: &kp D
- 3: &kp L
- 4: &kp W
- 5: &kp J
+ 1: &kp B
+ 2: &kp L
+ 3: &kp M
+ 4: &kp C
+ 5: &kp Z
 
- 6: &kp MINUS
- 7: &kp B
+ 6: &kp J
+ 7: &kp F
  8: &kp O
  9: &kp U
 10: &sm_dot_grv
 11: &none
 
 12: &key_repeat
-13: &hml LGUI S
-14: &hml LALT T
-15: &hml LCTL H
-16: &hml LSFT C
-17: &kp Y
+13: &hml LGUI N
+14: &hml LALT R
+15: &hml LCTL T
+16: &hml LSFT D
+17: &kp P
 
-18: &kp Q
-19: &hmr LSFT N
+18: &kp Y
+19: &hmr LSFT H
 20: &hmr LCTL A
 21: &hmr LALT E
 22: &hmr LGUI I
@@ -141,20 +141,20 @@
 
 24: &none
 25: &kp X
-26: &kp K
-27: &kp M
+26: &kp Q
+27: &kp V
 28: &kp G
-29: &kp V
+29: &kp W
 
-30: &kp Z
-31: &kp P
-32: &kp SQT
+30: &kp SQT
+31: &kp K
+32: &kp MINUS
 33: &kp FSLH
 34: &sm_comm_at
 35: &none
 
 36: &lt_ak_alt2 NUM 0
-37: &lt SYM R
+37: &lt SYM S
 38: &mt LSFT BSPC
 39: &mt LSFT TAB
 40: &lt NAV SPACE

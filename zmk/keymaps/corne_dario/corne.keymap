@@ -184,7 +184,7 @@
             tapping-term-ms = <280>;
             quick-tap-ms = <200>;
             bindings = <&kp>, <&kp>;
-            hold-trigger-key-positions = <6 7 8 9 10 11 18 19 20 21 22 23 30 31 32 33 34 35 39 40 41>;  // right hand + right thumbs
+            hold-trigger-key-positions = <6 7 8 9 10 11 18 19 20 21 22 23 30 31 32 33 34 35 36 37 38 39 40 41>;  // right hand + all thumbs
             hold-trigger-on-release;
         };
 
@@ -197,7 +197,7 @@
             tapping-term-ms = <280>;
             quick-tap-ms = <200>;
             bindings = <&kp>, <&kp>;
-            hold-trigger-key-positions = <0 1 2 3 4 5 12 13 14 15 16 17 24 25 26 27 28 29 36 37 38>;  // left hand + left thumbs
+            hold-trigger-key-positions = <0 1 2 3 4 5 12 13 14 15 16 17 24 25 26 27 28 29 36 37 38 39 40 41>;  // left hand + all thumbs
             hold-trigger-on-release;
         };
     };
@@ -605,19 +605,19 @@
 
         base_alt_layer {
             bindings = <
-                &none &kp B &kp F &kp L &kp K &kp Q &kp J &kp G &kp O &kp U &sm_dot_grv &none
-                &none &hml LGUI N &hml LALT S &hml LCTL H &hml LSFT T &kp D &kp Y &hmr LSFT C &hmr LCTL A &hmr LALT E &hmr LGUI I &none
-                &none &kp X &kp V &kp M &kp P &kp Z &kp SQT &kp W &kp MINUS &ak_train_alt_fslh &sm_comm_at &none
+                &none &kp F &kp D &kp L &kp W &kp J &kp MINUS &kp B &kp O &kp U &sm_dot_grv &none
+                &none &hml LGUI S &hml LALT T &hml LCTL H &hml LSFT C &kp Y &kp Q &hmr LSFT N &hmr LCTL A &hmr LALT E &hmr LGUI I &none
+                &none &kp X &kp K &kp M &kp G &kp V &kp Z &kp P &kp SQT &ak_train_alt_fslh &sm_comm_at &none
                 &lt_ak_alt NUM 0 &lt SYM R &mt LSFT BSPC &mt LSFT TAB &lt NAV SPACE &lt MEDIA ENTER
             >;
         };
 
         base_alt2_layer {
             bindings = <
-                &none &kp F &kp D &kp L &kp W &kp J &kp MINUS &kp B &kp O &kp U &sm_dot_grv &none
-                &key_repeat &hml LGUI S &hml LALT T &hml LCTL H &hml LSFT C &kp Y &kp Q &hmr LSFT N &hmr LCTL A &hmr LALT E &hmr LGUI I &key_repeat
-                &none &kp X &kp K &kp M &kp G &kp V &kp Z &kp P &kp SQT &ak_train_alt2_fslh &sm_comm_at &none
-                &lt_ak_alt2 NUM 0 &lt SYM R &mt LSFT BSPC &mt LSFT TAB &lt NAV SPACE &lt MEDIA ENTER
+                &none &kp B &kp L &kp M &kp C &kp Z &kp J &kp F &kp O &kp U &sm_dot_grv &none
+                &key_repeat &hml LGUI N &hml LALT R &hml LCTL T &hml LSFT D &kp P &kp Y &hmr LSFT H &hmr LCTL A &hmr LALT E &hmr LGUI I &key_repeat
+                &none &kp X &kp Q &kp V &kp G &kp W &kp SQT &kp K &kp MINUS &ak_train_alt2_fslh &sm_comm_at &none
+                &lt_ak_alt2 NUM 0 &lt SYM S &mt LSFT BSPC &mt LSFT TAB &lt NAV SPACE &lt MEDIA ENTER
             >;
         };
 
