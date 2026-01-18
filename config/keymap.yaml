@@ -27,8 +27,8 @@ base_layers:
     display_name: "NIGHT"
     description: "Vanilla Night"
   BASE_ALT:
-    display_name: "MIDNIGHT"
-    description: "Night reoptimized for better P placement"
+    display_name: "RACKET"
+    description: "Racket with punctuation tweaks"
   BASE_ALT2:
     display_name: "BUNYA"
     description: "Bunya layout (GalileoBlues)"
@@ -74,15 +74,15 @@ layers:
   BASE_ALT2:
     core: # (3x5)
       left:
-        - [B              , L              , M              , C              , Z              ]
-        - [hrm:LGUI:N     , hrm:LALT:R     , hrm:LCTL:T     , hrm:LSFT:D     , P              ]
-        - [X              , Q              , V              , G              , W              ]
+        - [F              , D              , L              , W              , J              ]
+        - [hrm:LGUI:S     , hrm:LALT:T     , hrm:LCTL:H     , hrm:LSFT:C     , Y              ]
+        - [X              , K              , M              , G              , V              ]
       right:
-        - [J              , F              , O              , U              , sm:DOT:GRV     ]
-        - [Y              , hrm:LSFT:H     , hrm:LCTL:A     , hrm:LALT:E     , hrm:LGUI:I     ]
-        - [QUOT           , K              , MINS           , SLSH           , sm:COMM:AT     ]
+        - [MINS           , B              , O              , U              , sm:DOT:GRV           ]
+        - [Q              , hrm:LSFT:N     , hrm:LCTL:A     , hrm:LALT:E     , hrm:LGUI:I     ]
+        - [Z              , P              , QUOT           , SLSH           , sm:COMM:AT            ]
       thumbs:
-        - [lt:NUM:MAGIC   , lt:SYM:S       , mt:LSFT:BSPC   ]
+        - [lt:NUM:MAGIC   , lt:SYM:R       , mt:LSFT:BSPC   ]
         - [mt:LSFT:TAB    , lt:NAV:SPC     , lt:MEDIA:ENT   ]
     extensions:
       3x6_3:
@@ -237,7 +237,7 @@ magic_keys:
       ".": "/"
       C: Y
       G: Y
-      # P: T
+      P: Y
 
       # "<": ">"
       # "[": "]"

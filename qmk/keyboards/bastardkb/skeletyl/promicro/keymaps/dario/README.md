@@ -51,13 +51,13 @@ qmk compile -kb bastardkb/skeletyl/promicro -km dario
 ```
 
 ╭─────────┬─────────┬─────────┬─────────┬─────────╮   ╭─────────┬─────────┬─────────┬─────────┬─────────╮
-│ KC_B    │ KC_L    │ KC_M    │ KC_C    │ KC_Z    │   │ KC_Y    │ LSFT_T(KC_H) │ LCTL_T(KC_A) │ LALT_T(KC_E) │ LGUI_T(KC_I) │
+│ KC_F    │ KC_D    │ KC_L    │ KC_W    │ KC_J    │   │ KC_Q    │ LSFT_T(KC_N) │ LCTL_T(KC_A) │ LALT_T(KC_E) │ LGUI_T(KC_I) │
 ├─────────┼─────────┼─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┼─────────┼─────────┤
-│ KC_J    │ KC_F    │ KC_O    │ KC_U    │ KC_DOT  │   │ KC_X    │ KC_Q    │ KC_V    │ KC_G    │ KC_W    │
+│ KC_MINS │ KC_B    │ KC_O    │ KC_U    │ KC_DOT  │   │ KC_X    │ KC_K    │ KC_M    │ KC_G    │ KC_V    │
 ├─────────┼─────────┼─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┼─────────┼─────────┤
-│ LGUI_T(KC_N) │ LALT_T(KC_R) │ LCTL_T(KC_T) │ LSFT_T(KC_D) │ KC_P    │   │ KC_QUOT │ KC_K    │ KC_MINS │ KC_SLSH │ KC_COMM │
+│ LGUI_T(KC_S) │ LALT_T(KC_T) │ LCTL_T(KC_H) │ LSFT_T(KC_C) │ KC_Y    │   │ KC_Z    │ KC_P    │ KC_QUOT │ KC_SLSH │ KC_COMM │
 ╰─────────┴─────────┴─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┴─────────┴─────────╯
-                              │ LT(NUM, QK_AREP) │ LT(SYM, KC_S) │   │ LT(NAV, KC_SPC) │ LT(MEDIA, KC_ENT) │
+                              │ LT(NUM, QK_AREP) │ LT(SYM, KC_R) │   │ LT(NAV, KC_SPC) │ LT(MEDIA, KC_ENT) │
                               │ LSFT_T(KC_BSPC) │         │   │         │         │
                               ╰─────────┴─────────╯   ╰─────────┴─────────╯
 

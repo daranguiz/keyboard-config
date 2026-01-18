@@ -103,45 +103,45 @@
 ## BASE_ALT2 Layer
 
 ```
- 0: &kp B
- 1: &kp L
- 2: &kp M
- 3: &kp C
- 4: &kp Z
- 5: &kp J
+ 0: &kp F
+ 1: &kp D
+ 2: &kp L
+ 3: &kp W
+ 4: &kp J
+ 5: &kp MINUS
 
- 6: &kp F
+ 6: &kp B
  7: &kp O
  8: &kp U
  9: &sm_dot_grv
-10: &hmr LGUI N
-11: &hmr LALT R
+10: &hmr LGUI S
+11: &hmr LALT T
 
-12: &hml LCTL T
-13: &hml LSFT D
-14: &kp P
-15: &kp Y
-16: &hml LSFT H
+12: &hml LCTL H
+13: &hml LSFT C
+14: &kp Y
+15: &kp Q
+16: &hml LSFT N
 17: &hml LCTL A
 
 18: &hmr LALT E
 19: &hmr LGUI I
 20: &key_repeat
 21: &kp X
-22: &kp Q
-23: &kp V
+22: &kp K
+23: &kp M
 
 24: &kp G
-25: &kp W
-26: &kp SQT
-27: &kp K
-28: &kp MINUS
+25: &kp V
+26: &kp Z
+27: &kp P
+28: &kp SQT
 29: &kp FSLH
 
 30: &sm_comm_at
 31: &key_repeat
 32: &lt_ak_alt2 NUM 0
-33: &lt SYM S
+33: &lt SYM R
 34: &mt LSFT BSPC
 35: &mt LSFT TAB
 
@@ -405,6 +405,7 @@
   - . → /
   - C → Y
   - G → Y
+  - P → Y
   - / → *
   - * → /
 
