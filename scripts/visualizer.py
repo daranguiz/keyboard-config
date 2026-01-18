@@ -1567,6 +1567,42 @@ class KeymapVisualizer:
             traceback.print_exc()
             return None
 
+    def _generate_rowstagger_png(self, svg_path: Path, layout_name: str, display_name: str = None) -> Optional[Path]:
+        """Generate high-resolution PNG for row-stagger keyboard layout
+
+        Args:
+            svg_path: Path to source SVG
+            layout_name: Name for output file (e.g., "nightlight")
+            display_name: Name to show in PNG (e.g., "Nightlight"). Defaults to layout_name.
+        """
+        png_path = self.output_rowstagger_dir / f"{layout_name}.png"
+
+        try:
+            import cairosvg
+
+            # Read SVG content
+            svg_content = svg_path.read_text()
+
+            # Replace "Base:" with the display name (title case, underscores to spaces)
+            label = (display_name or layout_name).replace('_', ' ').title()
+            svg_content = svg_content.replace('>Base:</text>', f'>{label}</text>')
+            svg_content = svg_content.replace('id="Base"', f'id="{label}"')
+
+            # Convert SVG to PNG using cairosvg with 2x resolution for clarity
+            cairosvg.svg2png(
+                bytestring=svg_content.encode('utf-8'),
+                write_to=str(png_path),
+                scale=2.0  # 2x resolution for high-DPI displays
+            )
+
+            print(f"    🖼️  {png_path.name}")
+            return png_path
+        except Exception as e:
+            print(f"  ⚠️  PNG generation failed for {layout_name}: {e}")
+            import traceback
+            traceback.print_exc()
+            return None
+
     def _add_compact_magic_to_svg(self, svg_content: str, base_name: str, output_name: str) -> str:
         """
         Add a clean, print-friendly magic key reference below the keyboard SVG.
@@ -2398,6 +2434,9 @@ class KeymapVisualizer:
                 if result.returncode == 0 and svg_path.exists():
                     print(f"  ✅ {layout_name}.svg (rowstagger)")
 
+                    # Generate PNG for web/display (use config.name for display)
+                    self._generate_rowstagger_png(svg_path, layout_name, display_name=config.name)
+
                     # Generate color PDF for printing (use config.name for display)
                     self._generate_rowstagger_pdf(svg_path, layout_name, display_name=config.name)
 
@@ -2417,6 +2456,7 @@ class KeymapVisualizer:
                         )
 
                     if grayscale_result.returncode == 0 and grayscale_svg_path.exists():
+                        self._generate_rowstagger_png(grayscale_svg_path, f"{layout_name}_print", display_name=config.name)
                         self._generate_rowstagger_pdf(grayscale_svg_path, f"{layout_name}_print", display_name=config.name)
                         # Clean up intermediate grayscale SVG and YAML
                         grayscale_svg_path.unlink()
@@ -2534,6 +2574,8 @@ class KeymapVisualizer:
                     {{ fill: #999999 !important; }}
                     /* Increase legend size */
                     .tap {{ font-size: 32px; font-weight: 900; }}
+                    /* Remove strokes from all keys by default */
+                    rect {{ stroke: none !important; }}
                     /* Home row key borders (ASDF JKL; positions) */
                     .keypos-29 rect, .keypos-30 rect, .keypos-31 rect, .keypos-32 rect,
                     .keypos-35 rect, .keypos-36 rect, .keypos-37 rect, .keypos-38 rect {{

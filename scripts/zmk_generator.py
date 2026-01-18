@@ -44,10 +44,10 @@ Generates ZMK devicetree (.keymap) files from compiled layers
 #     - 'N' (shifted) then 'i' → training still fires (no strict-modifiers)
 # =============================================================================
 
-from typing import List, Dict, Tuple, Optional
+from typing import List, Dict, Tuple, Optional, Any
 import re
 from pathlib import Path
-from data_model import CompiledLayer, Board, ComboConfiguration, Combo, ValidationError
+from data_model import CompiledLayer, Board, ComboConfiguration, Combo, ValidationError, BehaviorConfig
 
 
 class ZMKGenerator:
@@ -55,10 +55,12 @@ class ZMKGenerator:
 
     def __init__(self, magic_training: bool = False, combo_training: bool = True,
                  special_keycodes: Dict[str, Dict[str, str]] = None,
-                 behaviors_dtsi_path: str = None):
+                 behaviors_dtsi_path: str = None,
+                 behavior_config: BehaviorConfig = None):
         self.magic_training = magic_training
         self.combo_training = combo_training
         self.special_keycodes = special_keycodes or {}
+        self.behavior_config = behavior_config or BehaviorConfig()
         self.char_token_map = self._build_char_token_map()
         # Track macro behaviors generated for magic/combos so bindings can reference them
         # Track generated macros to avoid duplicates
@@ -66,8 +68,37 @@ class ZMKGenerator:
         self.generated_macros: Dict[str, str] = {
             "github_url": "defined in dario_behaviors.dtsi"  # Skip - already defined
         }
-        # Parse behavior timings from dario_behaviors.dtsi
+        # Parse behavior timings from dario_behaviors.dtsi (fallback, behavior_config takes precedence)
         self.behavior_timings = self._parse_behaviors_dtsi(behaviors_dtsi_path) if behaviors_dtsi_path else {}
+        self._seed_behavior_timings_from_config()
+
+    def _seed_behavior_timings_from_config(self) -> None:
+        # Prefer keymap.yaml timings for lt/mt over any dtsi defaults.
+        self.behavior_timings['lt'] = self._timing_to_props(self.behavior_config.layer_tap)
+        self.behavior_timings['mt'] = self._timing_to_props(self.behavior_config.mod_tap)
+
+    def _timing_to_props(self, timing) -> Dict[str, Tuple[str, Any]]:
+        props = {
+            'tapping-term-ms': ('numeric', timing.tapping_term_ms),
+            'quick-tap-ms': ('numeric', timing.quick_tap_ms),
+            'flavor': ('string', timing.flavor),
+        }
+        if timing.require_prior_idle_ms is not None:
+            props['require-prior-idle-ms'] = ('numeric', timing.require_prior_idle_ms)
+        return props
+
+    def _set_hrm_behavior_timings(self, left_pos_str: str, right_pos_str: str) -> None:
+        base_props = self._timing_to_props(self.behavior_config.home_row_mods)
+
+        def _with_positions(pos_str: str) -> Dict[str, Tuple[str, Any]]:
+            props = dict(base_props)
+            props['hold-trigger-key-positions'] = ('numeric_list', pos_str)
+            props['hold-trigger-on-release'] = ('boolean', True)
+            return props
+
+        # hml uses right-hand trigger positions, hmr uses left-hand positions.
+        self.behavior_timings['hml'] = _with_positions(right_pos_str)
+        self.behavior_timings['hmr'] = _with_positions(left_pos_str)
 
     def _parse_behaviors_dtsi(self, dtsi_path: str) -> Dict[str, Dict[str, any]]:
         """
@@ -180,6 +211,83 @@ class ZMKGenerator:
 
         return lines
 
+    def _generate_hrm_behaviors(self, board: Board) -> str:
+        """
+        Generate board-specific home row mod behaviors with correct hold-trigger-key-positions.
+
+        The hold-trigger-key-positions must match the board's physical layout to ensure
+        HRMs only trigger when pressing keys on the opposite hand.
+
+        Args:
+            board: Board configuration with layout_size
+
+        Returns:
+            ZMK behaviors section with hml and hmr definitions
+        """
+        # Calculate positions based on layout size
+        if board.layout_size == "3x5_3":
+            # 36 keys: rows of 10, thumbs of 6
+            # Left: 0-4, 10-14, 20-24, thumbs 30-32
+            # Right: 5-9, 15-19, 25-29, thumbs 33-35
+            left_positions = list(range(0, 5)) + list(range(10, 15)) + list(range(20, 25)) + list(range(30, 33))
+            right_positions = list(range(5, 10)) + list(range(15, 20)) + list(range(25, 30)) + list(range(33, 36))
+        elif board.layout_size == "3x6_3":
+            # 42 keys: rows of 12 (with outer pinky), thumbs of 6
+            # Left: 0-5, 12-17, 24-29, thumbs 36-38
+            # Right: 6-11, 18-23, 30-35, thumbs 39-41
+            left_positions = list(range(0, 6)) + list(range(12, 18)) + list(range(24, 30)) + list(range(36, 39))
+            right_positions = list(range(6, 12)) + list(range(18, 24)) + list(range(30, 36)) + list(range(39, 42))
+        elif board.layout_size == "totem_38":
+            # 38 keys: top/home rows of 10, bottom row of 12 (with pinky), thumbs of 6
+            # Left: 0-4, 10-14, 20-25 (pinky at 20), thumbs 32-34
+            # Right: 5-9, 15-19, 26-31 (pinky at 31), thumbs 35-37
+            left_positions = list(range(0, 5)) + list(range(10, 15)) + list(range(20, 26)) + list(range(32, 35))
+            right_positions = list(range(5, 10)) + list(range(15, 20)) + list(range(26, 32)) + list(range(35, 38))
+        else:
+            # Default to 3x5_3 positions
+            left_positions = list(range(0, 5)) + list(range(10, 15)) + list(range(20, 25)) + list(range(30, 33))
+            right_positions = list(range(5, 10)) + list(range(15, 20)) + list(range(25, 30)) + list(range(33, 36))
+
+        left_pos_str = " ".join(str(p) for p in left_positions)
+        right_pos_str = " ".join(str(p) for p in right_positions)
+
+        self._set_hrm_behavior_timings(left_pos_str, right_pos_str)
+
+        # Get HRM timings from behavior config (keymap.yaml)
+        hrm = self.behavior_config.home_row_mods
+        hrm_props = [
+            f'            flavor = "{hrm.flavor}";',
+            f'            tapping-term-ms = <{hrm.tapping_term_ms}>;',
+            f'            quick-tap-ms = <{hrm.quick_tap_ms}>;',
+        ]
+        if hrm.require_prior_idle_ms is not None:
+            hrm_props.insert(1, f'            require-prior-idle-ms = <{hrm.require_prior_idle_ms}>;')
+
+        return f"""
+    // Board-specific home row mods (hold-trigger positions for {board.layout_size})
+    behaviors {{
+        hml: home_row_mod_left {{
+            compatible = "zmk,behavior-hold-tap";
+            label = "HOME_ROW_MOD_LEFT";
+            #binding-cells = <2>;
+{chr(10).join(hrm_props)}
+            bindings = <&kp>, <&kp>;
+            hold-trigger-key-positions = <{right_pos_str}>;  // right hand + right thumbs
+            hold-trigger-on-release;
+        }};
+
+        hmr: home_row_mod_right {{
+            compatible = "zmk,behavior-hold-tap";
+            label = "HOME_ROW_MOD_RIGHT";
+            #binding-cells = <2>;
+{chr(10).join(hrm_props)}
+            bindings = <&kp>, <&kp>;
+            hold-trigger-key-positions = <{left_pos_str}>;  // left hand + left thumbs
+            hold-trigger-on-release;
+        }};
+    }};
+"""
+
     def generate_keymap(
         self,
         board: Board,
@@ -227,11 +335,12 @@ class ZMKGenerator:
         if macro_defs:
             macros_section = "\n" + self._wrap_macros_section(macro_defs)
 
-        # Generate magic key behaviors section
-        behaviors_section = ""
+        # Generate board-specific HRM behaviors (hold-trigger-key-positions depend on layout)
+        behaviors_section = self._generate_hrm_behaviors(board)
+
         training_replacements: Dict[str, Dict[str, str]] = {}
         if magic_config and magic_config.mappings:
-            behaviors_section = "\n" + self.generate_magic_keys_section(magic_config, compiled_layers, macro_refs)
+            behaviors_section += "\n" + self.generate_magic_keys_section(magic_config, compiled_layers, macro_refs)
             if self.magic_training:
                 training_behaviors, training_replacements = self.generate_magic_training_section(
                     magic_config, compiled_layers, macro_refs
@@ -274,6 +383,23 @@ class ZMKGenerator:
 
         # Generate complete keymap file
         shield_or_board = board.zmk_shield if board.zmk_shield else board.zmk_board
+        # Generate behavior overrides from config
+        lt = self.behavior_config.layer_tap
+        mt = self.behavior_config.mod_tap
+        behavior_overrides = f"""// Behavior timing overrides (from config/keymap.yaml)
+&lt {{
+    tapping-term-ms = <{lt.tapping_term_ms}>;
+    quick-tap-ms = <{lt.quick_tap_ms}>;
+    flavor = "{lt.flavor}";
+}};
+
+&mt {{
+    tapping-term-ms = <{mt.tapping_term_ms}>;
+    quick-tap-ms = <{mt.quick_tap_ms}>;
+    flavor = "{mt.flavor}";
+}};
+"""
+
         return f"""// AUTO-GENERATED - DO NOT EDIT
 // Generated from config/keymap.yaml
 // Board: {board.name}
@@ -284,6 +410,7 @@ class ZMKGenerator:
 #include <dt-bindings/zmk/bt.h>
 #include "dario_behaviors.dtsi"
 
+{behavior_overrides}
 {layer_defines}
 / {{
 {combos_section}
@@ -357,7 +484,8 @@ class ZMKGenerator:
             keycodes: List of ZMK keycodes in row-wise order:
                       - 3x5_3: [0-9]=row1, [10-19]=row2, [20-29]=row3, [30-35]=thumbs
                       - 3x6_3: [0-11]=row1, [12-23]=row2, [24-35]=row3, [36-41]=thumbs
-            layout_size: Board layout size (e.g., "3x5_3", "3x6_3")
+                      - totem_38: [0-9]=row1, [10-19]=row2, [20-31]=row3+pinky, [32-37]=thumbs
+            layout_size: Board layout size (e.g., "3x5_3", "3x6_3", "totem_38")
 
         Returns:
             Formatted bindings string
@@ -365,7 +493,18 @@ class ZMKGenerator:
         # Input is row-wise from layer compiler:
         # 3x5_3: [left5 right5] per row, then [left3 right3] thumbs
         # 3x6_3: [pinky left5 right5 pinky] per row, then [left3 right3] thumbs
-        if layout_size == "3x6_3" and len(keycodes) == 42:
+        # totem_38: [left5 right5] for rows 0-1, [pinky left5 right5 pinky] for row 2, then thumbs
+        if layout_size == "totem_38" and len(keycodes) == 38:
+            # TOTEM 38-key layout:
+            # [0-9]=row1 (10 keys), [10-19]=row2 (10 keys),
+            # [20-31]=row3 with pinkies (12 keys), [32-37]=thumbs (6 keys)
+            rows = [
+                keycodes[0:10],     # Row 1: 10 keys (5 left + 5 right)
+                keycodes[10:20],    # Row 2: 10 keys (5 left + 5 right)
+                keycodes[20:32],    # Row 3: 12 keys (pinky + 5 left + 5 right + pinky)
+                keycodes[32:38],    # Thumbs: 6 keys
+            ]
+        elif layout_size == "3x6_3" and len(keycodes) == 42:
             # 3x6_3 layout: 12 keys per row (pinky + 5 left + 5 right + pinky)
             # Input is already row-wise: [0-11]=row1, [12-23]=row2, [24-35]=row3, [36-41]=thumbs
             rows = [
@@ -538,6 +677,22 @@ class ZMKGenerator:
                     new_pos = row * 12 + col + 1
                 else:  # Thumb keys (30-35 → 36-41)
                     new_pos = pos - 30 + 36
+                translated.append(new_pos)
+            return translated
+
+        # For TOTEM 38-key: only bottom row and thumbs need translation
+        # Top/home rows (0-19) unchanged, bottom row gets +1 offset for pinky,
+        # thumbs shift from 30-35 to 32-37
+        if board.layout_size == "totem_38":
+            translated = []
+            for pos in canonical_positions:
+                if pos < 20:  # Top and home rows: unchanged
+                    new_pos = pos
+                elif pos < 30:  # Bottom row: add 1 for left pinky offset
+                    # 20-24 → 21-25, 25-29 → 26-30
+                    new_pos = pos + 1
+                else:  # Thumbs: 30-35 → 32-37
+                    new_pos = pos + 2
                 translated.append(new_pos)
             return translated
 

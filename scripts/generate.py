@@ -369,7 +369,8 @@ class KeymapGenerator:
             magic_training=self.magic_training,
             combo_training=self.combo_training,
             special_keycodes=self.special_keycodes,
-            behaviors_dtsi_path=str(behaviors_dtsi) if behaviors_dtsi.exists() else None
+            behaviors_dtsi_path=str(behaviors_dtsi) if behaviors_dtsi.exists() else None,
+            behavior_config=self.keymap_config.behaviors
         )
         output_dir = self.repo_root / board.get_output_directory()
 

@@ -4,6 +4,18 @@
 
 Custom keyboard firmware for split ergonomic keyboards using a unified keymap code generation system.
 
+## Supported Keyboards
+
+| Board | Firmware | Layout |
+|-------|----------|--------|
+| Bastard Keyboards Skeletyl | QMK | 3x5+3 (36 keys) |
+| Boardsource Lulu | QMK | 3x6+3 (42 keys) |
+| Lily58 | QMK | 3x6+3 (42 keys) |
+| Chocofi | ZMK | 3x6+3 (42 keys) |
+| Corneish-Zen | ZMK | 3x6+3 (42 keys) |
+| GEIGEIGEIST TOTEM | ZMK | 3x5+1+3 (38 keys) |
+| Jels Boaty | QMK | Custom (63 keys) |
+
 ## Combos
 
 ### Bootloader Entry (DFU)

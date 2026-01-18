@@ -126,7 +126,7 @@ class TestBoardInventoryParsing:
 
     def test_layout_sizes_valid(self, board_inventory):
         """Layout sizes should be valid values"""
-        valid_sizes = ["3x5_3", "3x6_3"]
+        valid_sizes = ["3x5_3", "3x6_3", "totem_38"]
 
         for board in board_inventory.boards.values():
             assert (

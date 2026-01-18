@@ -185,7 +185,7 @@ class ConfigValidator:
             )
 
         # Validate layout_size
-        valid_sizes = ["3x5_3", "3x6_3"]
+        valid_sizes = ["3x5_3", "3x6_3", "totem_38"]
         if not (board.layout_size in valid_sizes or board.layout_size.startswith("custom_")):
             raise ValidationError(
                 f"Board {board.id}: invalid layout_size '{board.layout_size}'. "

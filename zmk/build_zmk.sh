@@ -81,23 +81,37 @@ echo -e "${YELLOW}Reading build targets from build.yaml...${NC}"
 declare -a BOARDS
 declare -a SHIELDS
 
+# Parse board+shield pairs properly - each entry starts with "- board:"
+# and optionally has a "shield:" line before the next entry
+CURRENT_BOARD=""
 while IFS= read -r line; do
-    if [[ $line =~ board:\ *([a-zA-Z0-9_]+) ]]; then
-        BOARDS+=("${BASH_REMATCH[1]}")
-    fi
-    if [[ $line =~ shield:\ *([a-zA-Z0-9_]+) ]]; then
-        SHIELDS+=("${BASH_REMATCH[1]}")
+    if [[ $line =~ -\ *board:\ *([a-zA-Z0-9_]+) ]]; then
+        # New entry - save previous if exists
+        if [ -n "$CURRENT_BOARD" ]; then
+            BOARDS+=("$CURRENT_BOARD")
+            SHIELDS+=("none")
+        fi
+        CURRENT_BOARD="${BASH_REMATCH[1]}"
+    elif [[ $line =~ shield:\ *([a-zA-Z0-9_]+) ]]; then
+        # Shield for current board
+        if [ -n "$CURRENT_BOARD" ]; then
+            BOARDS+=("$CURRENT_BOARD")
+            SHIELDS+=("${BASH_REMATCH[1]}")
+            CURRENT_BOARD=""
+        fi
     fi
 done < "$SCRIPT_DIR/build.yaml"
+
+# Don't forget the last entry if it had no shield
+if [ -n "$CURRENT_BOARD" ]; then
+    BOARDS+=("$CURRENT_BOARD")
+    SHIELDS+=("none")
+fi
 
 if [ ${#BOARDS[@]} -eq 0 ]; then
     echo -e "${RED}ERROR: No build targets found in build.yaml${NC}"
     exit 1
 fi
-
-while [ ${#SHIELDS[@]} -lt ${#BOARDS[@]} ]; do
-    SHIELDS+=("none")
-done
 
 echo -e "${GREEN}Found ${#BOARDS[@]} build target(s):${NC}"
 for i in "${!BOARDS[@]}"; do

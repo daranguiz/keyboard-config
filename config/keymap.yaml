@@ -1,5 +1,26 @@
 # Unified Keymap Configuration
 
+# Behavior timing configuration
+behaviors:
+  # Home row mods (hrm:MOD:KEY)
+  home_row_mods:
+    tapping_term_ms: 280
+    quick_tap_ms: 200
+    require_prior_idle_ms: 150
+    flavor: balanced
+
+  # Layer-tap (lt:LAYER:KEY)
+  layer_tap:
+    tapping_term_ms: 200
+    quick_tap_ms: 200
+    flavor: balanced
+
+  # Mod-tap (mt:MOD:KEY)
+  mod_tap:
+    tapping_term_ms: 200
+    quick_tap_ms: 200
+    flavor: hold-preferred
+
 # Base layer metadata
 base_layers:
   BASE_PRIMARY:

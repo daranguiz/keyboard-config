@@ -41,3 +41,10 @@ boards:
     qmk_keyboard: "jels/boaty"
     layout_size: "custom_boaty"  # 63-key boat-shaped layout
     keymap_file: "boaty.yaml"  # Board-specific keymap with L36() references
+
+  totem:
+    name: "GEIGEIGEIST TOTEM"
+    firmware: zmk
+    zmk_shield: "totem"
+    zmk_board: "seeeduino_xiao_ble"
+    layout_size: "totem_38"  # 38-key: 3x5 + 1 pinky per side + 3 thumbs per side

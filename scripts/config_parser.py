@@ -38,6 +38,8 @@ from data_model import (
     Board,
     BoardInventory,
     KeymapConfiguration,
+    BehaviorConfig,
+    BehaviorTiming,
     BehaviorAlias,
     RowStaggerConfig,
     Combo,
@@ -165,8 +167,41 @@ class YAMLConfigParser:
         # Get metadata if present
         metadata = data.get('metadata', {})
 
-        config = KeymapConfiguration(layers=layers, metadata=metadata)
+        # Parse behaviors if present
+        behaviors = YAMLConfigParser._parse_behaviors(data.get('behaviors', {}))
+
+        config = KeymapConfiguration(layers=layers, behaviors=behaviors, metadata=metadata)
         config.validate()
+
+        return config
+
+    @staticmethod
+    def _parse_behaviors(behaviors_data: dict) -> BehaviorConfig:
+        """
+        Parse behavior timing configuration from keymap.yaml
+
+        Args:
+            behaviors_data: The 'behaviors' section from keymap.yaml
+
+        Returns:
+            BehaviorConfig with parsed timings
+        """
+        def parse_timing(data: dict) -> BehaviorTiming:
+            return BehaviorTiming(
+                tapping_term_ms=data.get('tapping_term_ms', 200),
+                quick_tap_ms=data.get('quick_tap_ms', 200),
+                require_prior_idle_ms=data.get('require_prior_idle_ms'),
+                flavor=data.get('flavor', 'balanced')
+            )
+
+        config = BehaviorConfig()
+
+        if 'home_row_mods' in behaviors_data:
+            config.home_row_mods = parse_timing(behaviors_data['home_row_mods'])
+        if 'layer_tap' in behaviors_data:
+            config.layer_tap = parse_timing(behaviors_data['layer_tap'])
+        if 'mod_tap' in behaviors_data:
+            config.mod_tap = parse_timing(behaviors_data['mod_tap'])
 
         return config
 

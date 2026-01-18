@@ -155,6 +155,46 @@ class LayerCompiler:
         if layout_size == "3x5_3":
             return keycodes
 
+        # 38-key TOTEM: 3x5 + 1 pinky per side (home row position) + 3 thumbs
+        # Uses the home row key (index 1) from the 3x6 extension
+        elif layout_size == "totem_38":
+            # Get extension keys - use home row (index 1) for the single pinky key
+            if "3x6_3" in layer.extensions:
+                ext = layer.extensions["3x6_3"]
+                left_pinky = ext.keys.get("outer_pinky_left", ["NONE"] * 3)
+                right_pinky = ext.keys.get("outer_pinky_right", ["NONE"] * 3)
+                # Use the home row key (index 1) for TOTEM's pinky
+                left_pinky_key = left_pinky[1] if len(left_pinky) > 1 else "NONE"
+                right_pinky_key = right_pinky[1] if len(right_pinky) > 1 else "NONE"
+            else:
+                left_pinky_key = "NONE"
+                right_pinky_key = "NONE"
+
+            # Input is row-wise: 0-9 top, 10-19 home, 20-29 bottom, 30-35 thumbs
+            # Output: 38 keys with pinky on bottom row
+            # 0-9: top row (unchanged)
+            # 10-19: home row (unchanged)
+            # 20-31: bottom row (left pinky + left 5 + right 5 + right pinky)
+            # 32-37: thumbs (unchanged from core 30-35)
+            result = []
+
+            # Top row (0-9): unchanged
+            result.extend(keycodes[0:10])
+
+            # Home row (10-19): unchanged
+            result.extend(keycodes[10:20])
+
+            # Bottom row with pinkies (20-31)
+            result.append(left_pinky_key)           # 20: left pinky
+            result.extend(keycodes[20:25])          # 21-25: left main 5
+            result.extend(keycodes[25:30])          # 26-30: right main 5
+            result.append(right_pinky_key)          # 31: right pinky
+
+            # Thumbs (32-37): from core positions 30-35
+            result.extend(keycodes[30:36])
+
+            return result
+
         # 42-key boards (3x6_3): add outer pinky column (3 keys per side)
         # Need to interleave the extension keys into the 3x5 matrix
         elif layout_size == "3x6_3":

@@ -115,6 +115,36 @@ class KeyGrid:
 
 
 @dataclass
+class BehaviorTiming:
+    """Timing configuration for a behavior type (HRM, layer-tap, mod-tap)"""
+    tapping_term_ms: int = 200
+    quick_tap_ms: int = 200
+    require_prior_idle_ms: Optional[int] = None
+    flavor: str = "balanced"
+
+
+@dataclass
+class BehaviorConfig:
+    """Configuration for all behavior timings"""
+    home_row_mods: BehaviorTiming = field(default_factory=lambda: BehaviorTiming(
+        tapping_term_ms=280,
+        quick_tap_ms=200,
+        require_prior_idle_ms=150,
+        flavor="balanced"
+    ))
+    layer_tap: BehaviorTiming = field(default_factory=lambda: BehaviorTiming(
+        tapping_term_ms=200,
+        quick_tap_ms=200,
+        flavor="balanced"
+    ))
+    mod_tap: BehaviorTiming = field(default_factory=lambda: BehaviorTiming(
+        tapping_term_ms=200,
+        quick_tap_ms=200,
+        flavor="hold-preferred"
+    ))
+
+
+@dataclass
 class LayerExtension:
     """
     Represents additional keys for boards larger than 36-key
@@ -273,9 +303,11 @@ class KeymapConfiguration:
 
     Fields:
     - layers: All layer definitions indexed by layer name
+    - behaviors: Timing configuration for HRM, layer-tap, mod-tap
     - metadata: Optional metadata (author, version, description)
     """
     layers: Dict[str, Layer]
+    behaviors: BehaviorConfig = field(default_factory=BehaviorConfig)
     metadata: Dict[str, Any] = field(default_factory=dict)
 
     def validate(self):
