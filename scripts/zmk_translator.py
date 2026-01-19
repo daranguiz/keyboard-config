@@ -388,6 +388,22 @@ class ZMKTranslator:
                 return key_index < 39  # 36-38 left thumbs, 39-41 right thumbs
             col = key_index % 12
             return col < 6
+        elif self.layout_size == "totem_38":
+            # 38 keys: top/home rows have 10 keys, bottom row has 12 (pinky), thumbs have 6
+            # Top row (0-9): 5 left (0-4), 5 right (5-9)
+            # Home row (10-19): 5 left (10-14), 5 right (15-19)
+            # Bottom row (20-31): 6 left (20-25), 6 right (26-31)
+            # Thumbs (32-37): 3 left (32-34), 3 right (35-37)
+            if key_index >= 32:
+                return key_index < 35  # 32-34 left thumbs, 35-37 right thumbs
+            elif key_index >= 20:
+                # Bottom row with pinky: 12 keys, 6 per side
+                col = (key_index - 20) % 12
+                return col < 6
+            else:
+                # Top and home rows: 10 keys each, 5 per side
+                col = key_index % 10
+                return col < 5
         else:
             # Default: assume row-wise 42-key layout
             if key_index >= 36:

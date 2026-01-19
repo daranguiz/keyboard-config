@@ -16,15 +16,15 @@
  7: &kp O
  8: &kp U
  9: &sm_dot_grv
-10: &hmr LGUI N
-11: &hmr LALT S
+10: &hml LGUI N
+11: &hml LALT S
 
 12: &hml LCTL H
 13: &hml LSFT T
 14: &kp M
 15: &kp Y
-16: &hml LSFT C
-17: &hml LCTL A
+16: &hmr LSFT C
+17: &hmr LCTL A
 
 18: &hmr LALT E
 19: &hmr LGUI I
@@ -65,15 +65,15 @@
  7: &kp O
  8: &kp U
  9: &sm_dot_grv
-10: &hmr LGUI S
-11: &hmr LALT T
+10: &hml LGUI S
+11: &hml LALT T
 
 12: &hml LCTL H
 13: &hml LSFT C
 14: &kp Y
 15: &kp Q
-16: &hml LSFT N
-17: &hml LCTL A
+16: &hmr LSFT N
+17: &hmr LCTL A
 
 18: &hmr LALT E
 19: &hmr LGUI I
@@ -114,15 +114,15 @@
  7: &kp O
  8: &kp U
  9: &sm_dot_grv
-10: &hmr LGUI N
-11: &hmr LALT R
+10: &hml LGUI N
+11: &hml LALT R
 
 12: &hml LCTL T
 13: &hml LSFT D
 14: &kp P
 15: &kp Y
-16: &hml LSFT H
-17: &hml LCTL A
+16: &hmr LSFT H
+17: &hmr LCTL A
 
 18: &hmr LALT E
 19: &hmr LGUI I
@@ -163,8 +163,8 @@
  7: &kp LBRC
  8: &kp RBRC
  9: &kp EQUAL
-10: &hmr LGUI LT
-11: &hmr LALT GT
+10: &hml LGUI LT
+11: &hml LALT GT
 
 12: &hml LCTL LBKT
 13: &hml LSFT RBKT
@@ -212,8 +212,8 @@
  7: &kp N8
  8: &kp N9
  9: &kp DOT
-10: &hmr LGUI LT
-11: &hmr LALT GT
+10: &hml LGUI LT
+11: &hml LALT GT
 
 12: &hml LCTL LBKT
 13: &hml LSFT RBKT
@@ -359,8 +359,8 @@
  7: &kp LBRC
  8: &kp RBRC
  9: &kp EQUAL
-10: &hmr LGUI LT
-11: &hmr LALT GT
+10: &hml LGUI LT
+11: &hml LALT GT
 
 12: &hml LCTL LBKT
 13: &hml LSFT RBKT

@@ -275,6 +275,8 @@ class KeymapGenerator:
                 self.qmk_translator.clear_shift_morphs()
             else:
                 self.zmk_translator.clear_shift_morphs()
+                # Set layout_size for position-aware hrm translation (hml vs hmr)
+                self.zmk_translator.layout_size = board.layout_size
 
             # Compile all layers for this board
             compiled_layers = []
