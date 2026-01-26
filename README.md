@@ -15,6 +15,7 @@ Custom keyboard firmware for split ergonomic keyboards using a unified keymap co
 | Corneish-Zen | ZMK | 3x6+3 (42 keys) |
 | GEIGEIGEIST TOTEM | ZMK | 3x5+1+3 (38 keys) |
 | Jels Boaty | QMK | Custom (63 keys) |
+| Ripple (Cosmos Dactyl) | QMK | 3x5+3 (36 keys) |
 
 ## Combos
 

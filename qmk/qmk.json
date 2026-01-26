@@ -4,6 +4,8 @@
         ["bastardkb/skeletyl/promicro", "dario"],
         ["boardsource/lulu/rp2040", "dario"],
         ["lily58/rev1", "dario"],
-        ["jels/boaty", "dario"]
+        ["jels/boaty", "dario"],
+        ["ripple", "dario", {"MAKECMDGOALS": "uf2-split-left", "VIK_BUILD_LEFT": "yes", "TARGET": "ripple_dario_left"}],
+        ["ripple", "dario", {"MAKECMDGOALS": "uf2-split-right", "VIK_BUILD_RIGHT": "yes", "TARGET": "ripple_dario_right"}]
     ]
 }

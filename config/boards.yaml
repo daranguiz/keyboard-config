@@ -48,3 +48,9 @@ boards:
     zmk_shield: "totem"
     zmk_board: "seeeduino_xiao_ble"
     layout_size: "totem_38"  # 38-key: 3x5 + 1 pinky per side + 3 thumbs per side
+
+  ripple:
+    name: "Ripple (Cosmos Dactyl)"
+    firmware: qmk
+    qmk_keyboard: "ripple"
+    layout_size: "3x5_3"  # 36-key base
