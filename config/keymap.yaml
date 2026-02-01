@@ -30,8 +30,8 @@ base_layers:
     display_name: "RACKET"
     description: "Racket with punctuation tweaks"
   BASE_ALT2:
-    display_name: "BUNYA"
-    description: "Bunya layout (GalileoBlues)"
+    display_name: "DUSK-WP"
+    description: "Dusk-WP layout (kuurama)"
 
 layers:
 
@@ -60,9 +60,9 @@ layers:
         - [hrm:LGUI:S     , hrm:LALT:T     , hrm:LCTL:H     , hrm:LSFT:C     , Y              ]
         - [X              , K              , M              , G              , V              ]
       right:
-        - [MINS           , B              , O              , U              , sm:DOT:GRV           ]
+        - [MINS           , B              , O              , U              , sm:DOT:GRV     ]
         - [Q              , hrm:LSFT:N     , hrm:LCTL:A     , hrm:LALT:E     , hrm:LGUI:I     ]
-        - [Z              , P              , QUOT           , SLSH           , sm:COMM:AT            ]
+        - [Z              , P              , QUOT           , SLSH           , sm:COMM:AT     ]
       thumbs:
         - [lt:NUM:MAGIC   , lt:SYM:R       , mt:LSFT:BSPC   ]
         - [mt:LSFT:TAB    , lt:NAV:SPC     , lt:MEDIA:ENT   ]
@@ -74,15 +74,15 @@ layers:
   BASE_ALT2:
     core: # (3x5)
       left:
-        - [B              , L              , M              , C              , Z              ]
-        - [hrm:LGUI:N     , hrm:LALT:R     , hrm:LCTL:T     , hrm:LSFT:D     , P              ]
-        - [X              , Q              , V              , G              , W              ]
+        - [B              , F              , D              , W              , P              ]
+        - [hrm:LGUI:N     , hrm:LALT:S     , hrm:LCTL:T     , hrm:LSFT:C     , Y              ]
+        - [X              , V              , K              , G              , Q              ]
       right:
-        - [J              , F              , O              , U              , sm:DOT:GRV     ]
-        - [Y              , hrm:LSFT:H     , hrm:LCTL:A     , hrm:LALT:E     , hrm:LGUI:I     ]
-        - [QUOT           , K              , MINS           , SLSH           , sm:COMM:AT     ]
+        - [MINS           , M              , O              , U              , sm:DOT:GRV     ]
+        - [J              , hrm:LSFT:H     , hrm:LCTL:A     , hrm:LALT:E     , hrm:LGUI:I     ]
+        - [Z              , L              , QUOT           , SLSH           , sm:COMM:AT     ]
       thumbs:
-        - [lt:NUM:MAGIC   , lt:SYM:S       , mt:LSFT:BSPC   ]
+        - [lt:NUM:MAGIC   , lt:SYM:R       , mt:LSFT:BSPC   ]
         - [mt:LSFT:TAB    , lt:NAV:SPC     , lt:MEDIA:ENT   ]
     extensions:
       3x6_3:
